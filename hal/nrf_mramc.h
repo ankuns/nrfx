@@ -11,8 +11,10 @@ extern "C" {
 #endif
 
 #define NRF_MRAMC_AUTOREADMODE_MAX          MRAMC_AUTOREADMODE_VALUE_Max
+#define NRF_MRAMC_BUS_SIZE                  MRAMC_NMRAMWORDSIZE
 #define NRF_MRAMC_WAITSTATENUM_MAX          MRAMC_WAITSTATES_WAITSTATENUM_Max
 #define NRF_MRAMC_READYNEXTTIMEOUT_MAX      MRAMC_READYNEXTTIMEOUT_VALUE_Max
+#define NRF_MRAMC_READYNEXTTIMEOUT_DEFAULT  MRAMC_READYNEXTTIMEOUT_ResetValue
 #define NRF_MRAMC_LOWAVGCURR_READ_MAX       MRAMC_LOWAVGCURR_READ_VALUE_Max
 #define NRF_MRAMC_LOWAVGCURR_WRITE_MAX      MRAMC_LOWAVGCURR_WRITE_VALUE_Max
 #define NRF_MRAMC_LOWAVGCURR_ERASE_MAX      MRAMC_LOWAVGCURR_ERASE_VALUE_Max
@@ -47,29 +49,29 @@ extern "C" {
 #define NRF_MRAMC_HAS_CONFIGNVR_PAGE_LOWER_PROTECT 0
 #endif
 
+#if defined(MRAMC_CONFIG_DISABLEECC_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether the CONFIG register has a DISABLEECC field. */
-#if defined(MRAMC_CONFIG_DISABLEECC_Msk)
 #define NRF_MRAMC_HAS_CONFIG_DISABLEECC 1
 #else
 #define NRF_MRAMC_HAS_CONFIG_DISABLEECC 0
 #endif
 
+#if defined(MRAMC_POWER_MASK_VREFVPR_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether the POWER_MASK register has a VREFVPR field. */
-#if defined(MRAMC_POWER_MASK_VREFVPR_Msk)
 #define NRF_MRAMC_HAS_POWER_VREFVPR 1
 #else
 #define NRF_MRAMC_HAS_POWER_VREFVPR 0
 #endif
 
+#if defined(MRAMC_WAITSTATES_RDY_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether the WAITSTATES register has a RDY field. */
-#if defined(MRAMC_WAITSTATES_RDY_Msk)
 #define NRF_MRAMC_HAS_WAITSTATES_RDY 1
 #else
 #define NRF_MRAMC_HAS_WAITSTATES_RDY 0
 #endif
 
+#if defined(MRAMC_POWER_MASK_ResetValue) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether the POWER_MASK register is present. */
-#if defined(MRAMC_POWER_MASK_ResetValue)
 #define NRF_MRAMC_HAS_POWER_MASK 1
 #else
 #define NRF_MRAMC_HAS_POWER_MASK 0
@@ -95,6 +97,12 @@ typedef enum
     NRF_MRAMC_INT_ECCERRORCORR_MASK  = MRAMC_INTENSET_ECCERRORCORR_Msk,  ///< Interrupt on ECCERRORCORR event.
     NRF_MRAMC_INT_TRIMCONFIGREQ_MASK = MRAMC_INTENSET_TRIMCONFIGREQ_Msk, ///< Interrupt on TRIMCONFIGREQ event.
     NRF_MRAMC_INT_ACCESSERR_MASK     = MRAMC_INTENSET_ACCESSERR_Msk,     ///< Interrupt on ACCESSERR event.
+    NRF_MRAMC_ALL_INTS_MASK          = MRAMC_INTENSET_READY_Msk         |
+                                       MRAMC_INTENSET_READYNEXT_Msk     |
+                                       MRAMC_INTENSET_ECCERROR_Msk      |
+                                       MRAMC_INTENSET_ECCERRORCORR_Msk  |
+                                       MRAMC_INTENSET_TRIMCONFIGREQ_Msk |
+                                       MRAMC_INTENSET_ACCESSERR_Msk       ///< All MRAMC interrupts.
 } nrf_mramc_int_mask_t;
 
 /** @brief Write enable (WEN) settings. */
@@ -1219,8 +1227,8 @@ NRF_STATIC_INLINE void nrf_mramc_erase_area_set(NRF_MRAMC_Type * p_reg,
                                                 uint32_t         size)
 {
     NRFX_ASSERT((size <= NRF_MRAMC_ERASE_SIZE_MIN) && (size >= NRF_MRAMC_ERASE_SIZE_MAX));
-    p_reg->ERASE.ERASEAREA = address;
     p_reg->ERASE.SIZE      = size;
+    p_reg->ERASE.ERASEAREA = address;
 }
 
 NRF_STATIC_INLINE void nrf_mramc_erase_area_get(NRF_MRAMC_Type const * p_reg,

@@ -34,6 +34,7 @@ extern "C" {
 #endif
 
 // MRAMC_IRQHandler
+#define nrfx_mramc_irq_handler          MRAMC_IRQHandler
 
 // CTRLAP_IRQHandler
 
