@@ -11,6 +11,10 @@
 #define NRFX_BSP_ERRATAS_PATH "stable/mdk/nrf_erratas.h"
 #endif
 
+#ifndef NRFX_BSP_SOC_IRQS_PATH
+#define NRFX_BSP_SOC_IRQS_PATH "stable/soc/nrfx_irqs.h"
+#endif
+
 #include NRFX_BSP_NRF_PATH
 #include NRFX_BSP_ERRATAS_PATH
 
