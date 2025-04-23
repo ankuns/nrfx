@@ -4,7 +4,6 @@
 #define NRFY_TWIM_H__
 
 #include <nrfx.h>
-#include <nrf_erratas.h>
 #include <hal/nrf_twim.h>
 
 #ifdef __cplusplus

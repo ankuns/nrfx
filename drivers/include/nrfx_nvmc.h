@@ -6,7 +6,6 @@
 #include <nrfx.h>
 #include <hal/nrf_nvmc.h>
 #include <hal/nrf_ficr.h>
-#include <nrf_erratas.h>
 
 #ifdef __cplusplus
 extern "C" {

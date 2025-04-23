@@ -7,7 +7,6 @@
 #include <nrfx_qspi.h>
 #include <hal/nrf_clock.h>
 #include <hal/nrf_gpio.h>
-#include <nrf_erratas.h>
 
 #define NRFX_LOG_MODULE QSPI
 #include <nrfx_log.h>

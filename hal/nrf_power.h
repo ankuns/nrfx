@@ -4,7 +4,6 @@
 #define NRF_POWER_H__
 
 #include <nrfx.h>
-#include <nrf_erratas.h>
 
 #ifdef __cplusplus
 extern "C" {

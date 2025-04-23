@@ -4,7 +4,6 @@
 #define NRFX_USBD_ERRATA_H__
 
 #include <nrfx.h>
-#include <nrf_erratas.h>
 
 #ifndef NRFX_USBD_ERRATA_ENABLE
 /**
