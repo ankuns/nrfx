@@ -15,7 +15,12 @@
 #define NRFX_BSP_SOC_IRQS_PATH "stable/soc/nrfx_irqs.h"
 #endif
 
+#ifndef NRFX_BSP_NRFX_EXT_PATH
+#define NRFX_BSP_NRFX_EXT_PATH "stable/nrfx_ext.h"
+#endif
+
 #include NRFX_BSP_NRF_PATH
 #include NRFX_BSP_ERRATAS_PATH
+#include NRFX_BSP_NRFX_EXT_PATH
 
 #endif
