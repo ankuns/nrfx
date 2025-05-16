@@ -19,6 +19,10 @@
 #define NRFX_BSP_NRFX_EXT_PATH "stable/nrfx_ext.h"
 #endif
 
+#ifndef NRFX_BSP_NRFX_COREDEP_PATH
+#define NRFX_BSP_NRFX_COREDEP_PATH "stable/soc/nrfx_coredep_defs.h"
+#endif
+
 #include NRFX_BSP_NRF_PATH
 #include NRFX_BSP_ERRATAS_PATH
 #include NRFX_BSP_NRFX_EXT_PATH

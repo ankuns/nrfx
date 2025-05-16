@@ -3,7 +3,7 @@
 #ifndef NRFX_COREDEP_H__
 #define NRFX_COREDEP_H__
 
-#include <nrfx_coredep_defs.h>
+#include NRFX_BSP_NRFX_COREDEP_PATH
 
 #if NRFX_CHECK(ISA_RISCV)
 #include <hal/nrf_vpr_csr.h>
