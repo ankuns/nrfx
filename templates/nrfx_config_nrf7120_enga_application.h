@@ -40,15 +40,6 @@
 #endif
 
 /**
- * @brief NRFX_CLOCK_CONFIG_LF_CAL_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_CLOCK_CONFIG_LF_CAL_ENABLED
-#define NRFX_CLOCK_CONFIG_LF_CAL_ENABLED 0
-#endif
-
-/**
  * @brief NRFX_CLOCK_CONFIG_LFXO_TWO_STAGE_ENABLED
  *
  * Boolean. Accepted values: 0 and 1.
