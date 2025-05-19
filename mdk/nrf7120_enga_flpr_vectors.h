@@ -158,7 +158,6 @@ __WEAK void CLICSoftware_Handler(void)
  __HANDLER("Default_Handler") void GRTC_4_IRQHandler                                           (void);
  __HANDLER("Default_Handler") void GRTC_5_IRQHandler                                           (void);
  __HANDLER("Default_Handler") void TDM_IRQHandler                                              (void);
- __HANDLER("Default_Handler") void AUXPLL_AUXPM_IRQHandler                                     (void);
  __HANDLER("Default_Handler") void SERIAL23_IRQHandler                                         (void);
  __HANDLER("Default_Handler") void SERIAL24_IRQHandler                                         (void);
  __HANDLER("Default_Handler") void TAMPC_IRQHandler                                            (void);
@@ -176,11 +175,12 @@ __WEAK void CLICSoftware_Handler(void)
  __HANDLER("Default_Handler") void HFXO64M_IRQHandler                                          (void);
  __HANDLER("Default_Handler") void VREGMRAM_IRQHandler                                         (void);
  __HANDLER("Default_Handler") void VREGVBAT1V8_IRQHandler                                      (void);
- __HANDLER("Default_Handler") void LDOBUCK0V8_IRQHandler                                       (void);
  __HANDLER("Default_Handler") void LDOHLP0V8_IRQHandler                                        (void);
+ __HANDLER("Default_Handler") void LDOBUCK0V8_IRQHandler                                       (void);
  __HANDLER("Default_Handler") void VDETAO1V8_IRQHandler                                        (void);
  __HANDLER("Default_Handler") void VDETAO0V8_IRQHandler                                        (void);
  __HANDLER("Default_Handler") void HVBUCK_IRQHandler                                           (void);
+ __HANDLER("Default_Handler") void AUDIOPLL_AUDIOPLLM_IRQHandler                               (void);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector table
@@ -446,7 +446,7 @@ __VECTOR_TABLE_ATTRIBUTE const VECTOR_TABLE_Type __VECTOR_TABLE[] = {
     TDM_IRQHandler,
     0,
     0,
-    AUXPLL_AUXPM_IRQHandler,
+    0,
     0,
     SERIAL23_IRQHandler,
     SERIAL24_IRQHandler,
@@ -506,13 +506,16 @@ __VECTOR_TABLE_ATTRIBUTE const VECTOR_TABLE_Type __VECTOR_TABLE[] = {
     HFXO64M_IRQHandler,
     VREGMRAM_IRQHandler,
     VREGVBAT1V8_IRQHandler,
-    LDOBUCK0V8_IRQHandler,
     LDOHLP0V8_IRQHandler,
+    LDOBUCK0V8_IRQHandler,
     0,
     0,
     VDETAO1V8_IRQHandler,
     VDETAO0V8_IRQHandler,
     HVBUCK_IRQHandler,
+    0,
+    0,
+    AUDIOPLL_AUDIOPLLM_IRQHandler,
 };
 
 #if defined(__GNUC__)

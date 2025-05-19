@@ -247,13 +247,22 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define RPUHPQM_PRESENT 1
 #define RPUHPQM_COUNT 1
 
+/*Wi-Fi Information Configuration Registers*/
+#define WICR_PRESENT 1
+#define WICR_COUNT 1
+
+#define WICR_FIRMWARE 1                              /*!< (unspecified)                                                        */
+#define WICR_MACADDRESS 1                            /*!< (unspecified)                                                        */
+#define WICR_CALIBRATION 1                           /*!< (unspecified)                                                        */
+#define WICR_IPCCONFIG 1                             /*!< (unspecified)                                                        */
+
 /*Factory Information Configuration Registers*/
 #define FICR_PRESENT 1
 #define FICR_COUNT 1
 
 #define FICR_RAM_REPAIR_REGISTERS_MIN 0              /*!< Number of RAM repair registers                                       */
-#define FICR_RAM_REPAIR_REGISTERS_MAX 23             /*!< Number of RAM repair registers                                       */
-#define FICR_RAM_REPAIR_REGISTERS_SIZE 24            /*!< Number of RAM repair registers                                       */
+#define FICR_RAM_REPAIR_REGISTERS_MAX 25             /*!< Number of RAM repair registers                                       */
+#define FICR_RAM_REPAIR_REGISTERS_SIZE 26            /*!< Number of RAM repair registers                                       */
 
 /*User Information Configuration Registers*/
 #define UICR_PRESENT 1
@@ -309,6 +318,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPU00_COEXC 0                                /*!< (unspecified)                                                        */
 #define SPU00_ANTSWC 0                               /*!< (unspecified)                                                        */
 #define SPU00_TDD 0                                  /*!< (unspecified)                                                        */
+#define SPU00_RADIOPAPERSPIN 0                       /*!< (unspecified)                                                        */
 #define SPU00_SLAVE_BITS 4                           /*!< SLAVE_BITS=4 (number of address bits required to represent the
                                                           peripheral slave index)*/
 #define SPU00_SPU_NUM_CLOCK_POWER_PAIR_MIN 0         /*!< Number of clock/power pairs used by PCGC Slave - [0..0]              */
@@ -331,6 +341,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPU10_COEXC 0                                /*!< (unspecified)                                                        */
 #define SPU10_ANTSWC 0                               /*!< (unspecified)                                                        */
 #define SPU10_TDD 0                                  /*!< (unspecified)                                                        */
+#define SPU10_RADIOPAPERSPIN 0                       /*!< (unspecified)                                                        */
 #define SPU10_SLAVE_BITS 4                           /*!< SLAVE_BITS=4 (number of address bits required to represent the
                                                           peripheral slave index)*/
 #define SPU10_SPU_NUM_CLOCK_POWER_PAIR_MIN 0         /*!< Number of clock/power pairs used by PCGC Slave - [0..0]              */
@@ -353,6 +364,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPU20_COEXC 1                                /*!< (unspecified)                                                        */
 #define SPU20_ANTSWC 0                               /*!< (unspecified)                                                        */
 #define SPU20_TDD 0                                  /*!< (unspecified)                                                        */
+#define SPU20_RADIOPAPERSPIN 0                       /*!< (unspecified)                                                        */
 #define SPU20_SLAVE_BITS 4                           /*!< SLAVE_BITS=4 (number of address bits required to represent the
                                                           peripheral slave index)*/
 #define SPU20_SPU_NUM_CLOCK_POWER_PAIR_MIN 0         /*!< Number of clock/power pairs used by PCGC Slave - [0..0]              */
@@ -375,6 +387,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPU30_COEXC 0                                /*!< (unspecified)                                                        */
 #define SPU30_ANTSWC 0                               /*!< (unspecified)                                                        */
 #define SPU30_TDD 0                                  /*!< (unspecified)                                                        */
+#define SPU30_RADIOPAPERSPIN 0                       /*!< (unspecified)                                                        */
 #define SPU30_SLAVE_BITS 4                           /*!< SLAVE_BITS=4 (number of address bits required to represent the
                                                           peripheral slave index)*/
 #define SPU30_SPU_NUM_CLOCK_POWER_PAIR_MIN 0         /*!< Number of clock/power pairs used by PCGC Slave - [0..0]              */
@@ -387,7 +400,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define MPC_PRESENT 1
 #define MPC_COUNT 1
 
-#define MPC00_EXTEND_CLOCK_REQ 0                     /*!< (unspecified)                                                        */
+#define MPC00_EXTEND_CLOCK_REQ 1                     /*!< (unspecified)                                                        */
 #define MPC00_RTCHOKE 0                              /*!< (unspecified)                                                        */
 #define MPC00_OVERRIDE_GRAN 4096                     /*!< The override region granularity is 4096 bytes                        */
 
@@ -440,20 +453,20 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PPIB01_NTASKSEVENTS_SIZE 8                   /*!< (unspecified)                                                        */
 
 #define PPIB10_NTASKSEVENTS_MIN 0                    /*!< (unspecified)                                                        */
-#define PPIB10_NTASKSEVENTS_MAX 7                    /*!< (unspecified)                                                        */
-#define PPIB10_NTASKSEVENTS_SIZE 8                   /*!< (unspecified)                                                        */
+#define PPIB10_NTASKSEVENTS_MAX 11                   /*!< (unspecified)                                                        */
+#define PPIB10_NTASKSEVENTS_SIZE 12                  /*!< (unspecified)                                                        */
 
 #define PPIB11_NTASKSEVENTS_MIN 0                    /*!< (unspecified)                                                        */
-#define PPIB11_NTASKSEVENTS_MAX 7                    /*!< (unspecified)                                                        */
-#define PPIB11_NTASKSEVENTS_SIZE 8                   /*!< (unspecified)                                                        */
+#define PPIB11_NTASKSEVENTS_MAX 15                   /*!< (unspecified)                                                        */
+#define PPIB11_NTASKSEVENTS_SIZE 16                  /*!< (unspecified)                                                        */
 
 #define PPIB20_NTASKSEVENTS_MIN 0                    /*!< (unspecified)                                                        */
 #define PPIB20_NTASKSEVENTS_MAX 7                    /*!< (unspecified)                                                        */
 #define PPIB20_NTASKSEVENTS_SIZE 8                   /*!< (unspecified)                                                        */
 
 #define PPIB21_NTASKSEVENTS_MIN 0                    /*!< (unspecified)                                                        */
-#define PPIB21_NTASKSEVENTS_MAX 7                    /*!< (unspecified)                                                        */
-#define PPIB21_NTASKSEVENTS_SIZE 8                   /*!< (unspecified)                                                        */
+#define PPIB21_NTASKSEVENTS_MAX 15                   /*!< (unspecified)                                                        */
+#define PPIB21_NTASKSEVENTS_SIZE 16                  /*!< (unspecified)                                                        */
 
 #define PPIB22_NTASKSEVENTS_MIN 0                    /*!< (unspecified)                                                        */
 #define PPIB22_NTASKSEVENTS_MAX 3                    /*!< (unspecified)                                                        */
@@ -482,6 +495,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define AAR00_DMAERROR 1                             /*!< (unspecified)                                                        */
 #define AAR00_ERRORSTATUS 1                          /*!< (unspecified)                                                        */
 #define AAR00_ERROREVENT 1                           /*!< (unspecified)                                                        */
+#define AAR00_ERROREVENT_IRQ 1                       /*!< (unspecified)                                                        */
+#define AAR00_PREMATUREOUTPUTPTR 1                   /*!< (unspecified)                                                        */
 
 /*AES CCM Mode Encryption*/
 #define CCM_PRESENT 1
@@ -1135,12 +1150,16 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define MRAMC_NVRPAGELWSIZEVALUE_SIZE 16             /*!< (unspecified)                                                        */
 #define MRAMC_IMPROVEDBURSTMODE 1                    /*!< (unspecified)                                                        */
 #define MRAMC_STARTUPCONFIG 1                        /*!< (unspecified)                                                        */
+#define MRAMC_REGIONPROTECTION 1                     /*!< (unspecified)                                                        */
+#define MRAMC_REGIONCONFIGLOCK 1                     /*!< (unspecified)                                                        */
 
 /*GPIO high-speed pad control*/
 #define GPIOHSPADCTRL_PRESENT 1
 #define GPIOHSPADCTRL_COUNT 1
 
-#define GPIOHSPADCTRL_REPLICABIAS 0                  /*!< (unspecified)                                                        */
+#define GPIOHSPADCTRL_NUM_ELASTIC_BUFFERS_MIN 0      /*!< Number of elastic buffers                                            */
+#define GPIOHSPADCTRL_NUM_ELASTIC_BUFFERS_MAX 1      /*!< Number of elastic buffers                                            */
+#define GPIOHSPADCTRL_NUM_ELASTIC_BUFFERS_SIZE 2     /*!< Number of elastic buffers                                            */
 
 /*GPIO Port*/
 #define GPIO_PRESENT 1
@@ -1154,10 +1173,14 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define P2_PIN_NUM_MAX 11                            /*!< (unspecified)                                                        */
 #define P2_PIN_NUM_SIZE 12                           /*!< (unspecified)                                                        */
 #define P2_FEATURE_PINS_PRESENT 4095                 /*!< (unspecified)                                                        */
+#define P2_FEATURE_I5_LIBRARY 0                      /*!< (unspecified)                                                        */
 #define P2_PIN_SENSE_MECHANISM 0                     /*!< (unspecified)                                                        */
 #define P2_DRIVECTRL 0                               /*!< (unspecified)                                                        */
 #define P2_RETAIN 0                                  /*!< (unspecified)                                                        */
 #define P2_PWRCTRL 0                                 /*!< (unspecified)                                                        */
+#define P2_SLEWMODE 0                                /*!< (unspecified)                                                        */
+#define P2_PULLSTR 0                                 /*!< (unspecified)                                                        */
+#define P2_SUPPORT_1V2 0                             /*!< (unspecified)                                                        */
 #define P2_PWRCTRL_SEPARATE_REG 0                    /*!< (unspecified)                                                        */
 #define P2_VSS_FLOAT_DFT 0                           /*!< (unspecified)                                                        */
 #define P2_PIN_OWNER_SEC 0                           /*!< (unspecified)                                                        */
@@ -1171,13 +1194,17 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define P1_CTRLSEL_MAP3 0                            /*!< (unspecified)                                                        */
 #define P1_CTRLSEL_MAP4 1                            /*!< (unspecified)                                                        */
 #define P1_PIN_NUM_MIN 0                             /*!< (unspecified)                                                        */
-#define P1_PIN_NUM_MAX 19                            /*!< (unspecified)                                                        */
-#define P1_PIN_NUM_SIZE 20                           /*!< (unspecified)                                                        */
-#define P1_FEATURE_PINS_PRESENT 1048575              /*!< (unspecified)                                                        */
+#define P1_PIN_NUM_MAX 15                            /*!< (unspecified)                                                        */
+#define P1_PIN_NUM_SIZE 16                           /*!< (unspecified)                                                        */
+#define P1_FEATURE_PINS_PRESENT 65535                /*!< (unspecified)                                                        */
+#define P1_FEATURE_I5_LIBRARY 0                      /*!< (unspecified)                                                        */
 #define P1_PIN_SENSE_MECHANISM 1                     /*!< (unspecified)                                                        */
 #define P1_DRIVECTRL 0                               /*!< (unspecified)                                                        */
 #define P1_RETAIN 0                                  /*!< (unspecified)                                                        */
 #define P1_PWRCTRL 0                                 /*!< (unspecified)                                                        */
+#define P1_SLEWMODE 0                                /*!< (unspecified)                                                        */
+#define P1_PULLSTR 0                                 /*!< (unspecified)                                                        */
+#define P1_SUPPORT_1V2 0                             /*!< (unspecified)                                                        */
 #define P1_PWRCTRL_SEPARATE_REG 0                    /*!< (unspecified)                                                        */
 #define P1_VSS_FLOAT_DFT 0                           /*!< (unspecified)                                                        */
 #define P1_PIN_OWNER_SEC 0                           /*!< (unspecified)                                                        */
@@ -1191,13 +1218,17 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define P3_CTRLSEL_MAP3 0                            /*!< (unspecified)                                                        */
 #define P3_CTRLSEL_MAP4 1                            /*!< (unspecified)                                                        */
 #define P3_PIN_NUM_MIN 0                             /*!< (unspecified)                                                        */
-#define P3_PIN_NUM_MAX 12                            /*!< (unspecified)                                                        */
-#define P3_PIN_NUM_SIZE 13                           /*!< (unspecified)                                                        */
-#define P3_FEATURE_PINS_PRESENT 8191                 /*!< (unspecified)                                                        */
+#define P3_PIN_NUM_MAX 11                            /*!< (unspecified)                                                        */
+#define P3_PIN_NUM_SIZE 12                           /*!< (unspecified)                                                        */
+#define P3_FEATURE_PINS_PRESENT 4095                 /*!< (unspecified)                                                        */
+#define P3_FEATURE_I5_LIBRARY 0                      /*!< (unspecified)                                                        */
 #define P3_PIN_SENSE_MECHANISM 1                     /*!< (unspecified)                                                        */
 #define P3_DRIVECTRL 0                               /*!< (unspecified)                                                        */
 #define P3_RETAIN 0                                  /*!< (unspecified)                                                        */
 #define P3_PWRCTRL 0                                 /*!< (unspecified)                                                        */
+#define P3_SLEWMODE 0                                /*!< (unspecified)                                                        */
+#define P3_PULLSTR 0                                 /*!< (unspecified)                                                        */
+#define P3_SUPPORT_1V2 0                             /*!< (unspecified)                                                        */
 #define P3_PWRCTRL_SEPARATE_REG 0                    /*!< (unspecified)                                                        */
 #define P3_VSS_FLOAT_DFT 0                           /*!< (unspecified)                                                        */
 #define P3_PIN_OWNER_SEC 0                           /*!< (unspecified)                                                        */
@@ -1214,10 +1245,14 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define P4_PIN_NUM_MAX 11                            /*!< (unspecified)                                                        */
 #define P4_PIN_NUM_SIZE 12                           /*!< (unspecified)                                                        */
 #define P4_FEATURE_PINS_PRESENT 4095                 /*!< (unspecified)                                                        */
+#define P4_FEATURE_I5_LIBRARY 0                      /*!< (unspecified)                                                        */
 #define P4_PIN_SENSE_MECHANISM 1                     /*!< (unspecified)                                                        */
 #define P4_DRIVECTRL 0                               /*!< (unspecified)                                                        */
 #define P4_RETAIN 0                                  /*!< (unspecified)                                                        */
 #define P4_PWRCTRL 0                                 /*!< (unspecified)                                                        */
+#define P4_SLEWMODE 0                                /*!< (unspecified)                                                        */
+#define P4_PULLSTR 0                                 /*!< (unspecified)                                                        */
+#define P4_SUPPORT_1V2 0                             /*!< (unspecified)                                                        */
 #define P4_PWRCTRL_SEPARATE_REG 0                    /*!< (unspecified)                                                        */
 #define P4_VSS_FLOAT_DFT 0                           /*!< (unspecified)                                                        */
 #define P4_PIN_OWNER_SEC 0                           /*!< (unspecified)                                                        */
@@ -1231,13 +1266,17 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define P0_CTRLSEL_MAP3 0                            /*!< (unspecified)                                                        */
 #define P0_CTRLSEL_MAP4 1                            /*!< (unspecified)                                                        */
 #define P0_PIN_NUM_MIN 0                             /*!< (unspecified)                                                        */
-#define P0_PIN_NUM_MAX 9                             /*!< (unspecified)                                                        */
-#define P0_PIN_NUM_SIZE 10                           /*!< (unspecified)                                                        */
-#define P0_FEATURE_PINS_PRESENT 1023                 /*!< (unspecified)                                                        */
+#define P0_PIN_NUM_MAX 12                            /*!< (unspecified)                                                        */
+#define P0_PIN_NUM_SIZE 13                           /*!< (unspecified)                                                        */
+#define P0_FEATURE_PINS_PRESENT 8191                 /*!< (unspecified)                                                        */
+#define P0_FEATURE_I5_LIBRARY 0                      /*!< (unspecified)                                                        */
 #define P0_PIN_SENSE_MECHANISM 1                     /*!< (unspecified)                                                        */
 #define P0_DRIVECTRL 0                               /*!< (unspecified)                                                        */
 #define P0_RETAIN 0                                  /*!< (unspecified)                                                        */
 #define P0_PWRCTRL 0                                 /*!< (unspecified)                                                        */
+#define P0_SLEWMODE 0                                /*!< (unspecified)                                                        */
+#define P0_PULLSTR 0                                 /*!< (unspecified)                                                        */
+#define P0_SUPPORT_1V2 0                             /*!< (unspecified)                                                        */
 #define P0_PWRCTRL_SEPARATE_REG 0                    /*!< (unspecified)                                                        */
 #define P0_VSS_FLOAT_DFT 0                           /*!< (unspecified)                                                        */
 #define P0_PIN_OWNER_SEC 0                           /*!< (unspecified)                                                        */
@@ -1282,7 +1321,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TAD_TADFORCEON 0                             /*!< (unspecified)                                                        */
 #define TAD_TAD_HAS_TASKS 0                          /*!< (unspecified)                                                        */
 #define TAD_PDREQCLR 1                               /*!< (unspecified)                                                        */
-#define TAD_TAD_HAS_DBGWAKEUPREQ 0                   /*!< (unspecified)                                                        */
+#define TAD_TAD_HAS_DBGWAKEUPREQ 1                   /*!< (unspecified)                                                        */
 
 /*Timer/Counter*/
 #define TIMER_PRESENT 1
@@ -1433,10 +1472,11 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define USBHS_NOTFULLPCPZERO 1                       /*!< (unspecified)                                                        */
 #define USBHS_PENALTYTASKS 0                         /*!< (unspecified)                                                        */
 #define USBHS_SIMULATIONREGISTERS 0                  /*!< (unspecified)                                                        */
-#define USBHS_HAS_CORE_EVENT 1                       /*!< (unspecified)                                                        */
+#define USBHS_HAS_CORE_EVENT 0                       /*!< (unspecified)                                                        */
 #define USBHS_HAS_SOF_EVENT 1                        /*!< (unspecified)                                                        */
 #define USBHS_RTUNE_AVAILABLE 1                      /*!< (unspecified)                                                        */
 #define USBHS_HAS_BATTCHRG_EVENTS 1                  /*!< (unspecified)                                                        */
+#define USBHS_HAS_STATUS_REGISTER 0                  /*!< (unspecified)                                                        */
 
 /*Quad serial peripheral interface*/
 #define QSPI_PRESENT 1
@@ -1526,6 +1566,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SREGS00_POSTEDWRITESREGS 0                   /*!< (unspecified)                                                        */
 #define SREGS00_AXIPROLONGREQUESTREGS 0              /*!< (unspecified)                                                        */
 #define SREGS00_RADIOSIDEBANDREQUEST 0               /*!< (unspecified)                                                        */
+#define SREGS00_VPRSAVEADDR 0                        /*!< (unspecified)                                                        */
 
 #define SREGS10_NUM_TASKS_MIN 0                      /*!< (unspecified)                                                        */
 #define SREGS10_NUM_TASKS_MAX 1                      /*!< (unspecified)                                                        */
@@ -1559,6 +1600,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SREGS10_POSTEDWRITESREGS 1                   /*!< (unspecified)                                                        */
 #define SREGS10_AXIPROLONGREQUESTREGS 1              /*!< (unspecified)                                                        */
 #define SREGS10_RADIOSIDEBANDREQUEST 1               /*!< (unspecified)                                                        */
+#define SREGS10_VPRSAVEADDR 0                        /*!< (unspecified)                                                        */
 
 #define SREGS20_NUM_TASKS_MIN 0                      /*!< (unspecified)                                                        */
 #define SREGS20_NUM_TASKS_MAX 1                      /*!< (unspecified)                                                        */
@@ -1592,6 +1634,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SREGS20_POSTEDWRITESREGS 0                   /*!< (unspecified)                                                        */
 #define SREGS20_AXIPROLONGREQUESTREGS 1              /*!< (unspecified)                                                        */
 #define SREGS20_RADIOSIDEBANDREQUEST 0               /*!< (unspecified)                                                        */
+#define SREGS20_VPRSAVEADDR 0                        /*!< (unspecified)                                                        */
 
 #define SREGS30_NUM_TASKS_MIN 0                      /*!< (unspecified)                                                        */
 #define SREGS30_NUM_TASKS_MAX 1                      /*!< (unspecified)                                                        */
@@ -1625,6 +1668,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SREGS30_POSTEDWRITESREGS 0                   /*!< (unspecified)                                                        */
 #define SREGS30_AXIPROLONGREQUESTREGS 0              /*!< (unspecified)                                                        */
 #define SREGS30_RADIOSIDEBANDREQUEST 0               /*!< (unspecified)                                                        */
+#define SREGS30_VPRSAVEADDR 0                        /*!< (unspecified)                                                        */
 
 /*2.4 GHz radio*/
 #define RADIO_PRESENT 1
@@ -1832,12 +1876,27 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define MEMCONF_PRESENT 1
 #define MEMCONF_COUNT 2
 
+#define MEMCONF_NRAMS_MIN 0                          /*!< Number of RAMs: [0..1]                                               */
+#define MEMCONF_NRAMS_MAX 1                          /*!< Number of RAMs: [0..1]                                               */
+#define MEMCONF_NRAMS_SIZE 2                         /*!< Number of RAMs: [0..1]                                               */
 #define MEMCONF_RETTRIM 1                            /*!< (unspecified)                                                        */
 #define MEMCONF_REPAIR 0                             /*!< (unspecified)                                                        */
 #define MEMCONF_REPAIR_INTERNAL_DOC 1                /*!< (unspecified)                                                        */
+#define MEMCONF_NREPAIR_MIN 0                        /*!< Number of REPAIR bits: [0..15]                                       */
+#define MEMCONF_NREPAIR_MAX 15                       /*!< Number of REPAIR bits: [0..15]                                       */
+#define MEMCONF_NREPAIR_SIZE 16                      /*!< Number of REPAIR bits: [0..15]                                       */
 #define MEMCONF_POWER 1                              /*!< (unspecified)                                                        */
 #define MEMCONF_RET2 1                               /*!< (unspecified)                                                        */
 #define MEMCONF_TRIM_INTERNAL_DOC 1                  /*!< (unspecified)                                                        */
+#define MEMCONF_NBLOCKTYPES_MIN 0                    /*!< Number of block types: [0..3]                                        */
+#define MEMCONF_NBLOCKTYPES_MAX 3                    /*!< Number of block types: [0..3]                                        */
+#define MEMCONF_NBLOCKTYPES_SIZE 4                   /*!< Number of block types: [0..3]                                        */
+#define MEMCONF_NMEMTRIM_MIN 0                       /*!< Number of MEMTRIM bits: [0..5]                                       */
+#define MEMCONF_NMEMTRIM_MAX 5                       /*!< Number of MEMTRIM bits: [0..5]                                       */
+#define MEMCONF_NMEMTRIM_SIZE 6                      /*!< Number of MEMTRIM bits: [0..5]                                       */
+#define MEMCONF_NMEMRETTRIM_MIN 0                    /*!< Number of MEMRETTRIM bits: [0..3]                                    */
+#define MEMCONF_NMEMRETTRIM_MAX 3                    /*!< Number of MEMRETTRIM bits: [0..3]                                    */
+#define MEMCONF_NMEMRETTRIM_SIZE 4                   /*!< Number of MEMRETTRIM bits: [0..3]                                    */
 #define MEMCONF_NUMADDRBITS_MIN 0                    /*!< Number of bits in repair address at MEMCONF.REPAIR.BITLINE.ADDR :
                                                           [0..10]*/
 #define MEMCONF_NUMADDRBITS_MAX 10                   /*!< Number of bits in repair address at MEMCONF.REPAIR.BITLINE.ADDR :
@@ -1851,12 +1910,27 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define MEMCONF_RETENTION2_RESET_N0 0xFFFFFFFF       /*!< Reset value of register POWER[0].RET2: 0xFFFFFFFF                    */
 #define MEMCONF_RETENTION2_RESET_N1 0x00000000       /*!< Reset value of register POWER[1].RET2: 0x00000000                    */
 
+#define MEMCONF_WIFI_NRAMS_MIN 0                     /*!< Number of RAMs: [0..1]                                               */
+#define MEMCONF_WIFI_NRAMS_MAX 1                     /*!< Number of RAMs: [0..1]                                               */
+#define MEMCONF_WIFI_NRAMS_SIZE 2                    /*!< Number of RAMs: [0..1]                                               */
 #define MEMCONF_WIFI_RETTRIM 1                       /*!< (unspecified)                                                        */
 #define MEMCONF_WIFI_REPAIR 0                        /*!< (unspecified)                                                        */
 #define MEMCONF_WIFI_REPAIR_INTERNAL_DOC 1           /*!< (unspecified)                                                        */
+#define MEMCONF_WIFI_NREPAIR_MIN 0                   /*!< Number of REPAIR bits: [0..9]                                        */
+#define MEMCONF_WIFI_NREPAIR_MAX 9                   /*!< Number of REPAIR bits: [0..9]                                        */
+#define MEMCONF_WIFI_NREPAIR_SIZE 10                 /*!< Number of REPAIR bits: [0..9]                                        */
 #define MEMCONF_WIFI_POWER 1                         /*!< (unspecified)                                                        */
 #define MEMCONF_WIFI_RET2 1                          /*!< (unspecified)                                                        */
 #define MEMCONF_WIFI_TRIM_INTERNAL_DOC 1             /*!< (unspecified)                                                        */
+#define MEMCONF_WIFI_NBLOCKTYPES_MIN 0               /*!< Number of block types: [0..4]                                        */
+#define MEMCONF_WIFI_NBLOCKTYPES_MAX 4               /*!< Number of block types: [0..4]                                        */
+#define MEMCONF_WIFI_NBLOCKTYPES_SIZE 5              /*!< Number of block types: [0..4]                                        */
+#define MEMCONF_WIFI_NMEMTRIM_MIN 0                  /*!< Number of MEMTRIM bits: [0..6]                                       */
+#define MEMCONF_WIFI_NMEMTRIM_MAX 6                  /*!< Number of MEMTRIM bits: [0..6]                                       */
+#define MEMCONF_WIFI_NMEMTRIM_SIZE 7                 /*!< Number of MEMTRIM bits: [0..6]                                       */
+#define MEMCONF_WIFI_NMEMRETTRIM_MIN 0               /*!< Number of MEMRETTRIM bits: [0..3]                                    */
+#define MEMCONF_WIFI_NMEMRETTRIM_MAX 3               /*!< Number of MEMRETTRIM bits: [0..3]                                    */
+#define MEMCONF_WIFI_NMEMRETTRIM_SIZE 4              /*!< Number of MEMRETTRIM bits: [0..3]                                    */
 #define MEMCONF_WIFI_NUMADDRBITS_MIN 0               /*!< Number of bits in repair address at MEMCONF.REPAIR.BITLINE.ADDR :
                                                           [0..10]*/
 #define MEMCONF_WIFI_NUMADDRBITS_MAX 10              /*!< Number of bits in repair address at MEMCONF.REPAIR.BITLINE.ADDR :
@@ -1880,7 +1954,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PDM20_SAMPLE16 0                             /*!< (unspecified)                                                        */
 #define PDM20_SAMPLE48 1                             /*!< (unspecified)                                                        */
 #define PDM20_PRESCALER_PRESENT 1                    /*!< (unspecified)                                                        */
-#define PDM20_PDMV2 0                                /*!< (unspecified)                                                        */
+#define PDM20_PDMV2 1                                /*!< (unspecified)                                                        */
 #define PDM20_PCLK24M 0                              /*!< (unspecified)                                                        */
 #define PDM20_AUDIOPLL 1                             /*!< (unspecified)                                                        */
 #define PDM20_EASYDMALISTINCLUDED 0                  /*!< (unspecified)                                                        */
@@ -1896,7 +1970,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PDM21_SAMPLE16 0                             /*!< (unspecified)                                                        */
 #define PDM21_SAMPLE48 1                             /*!< (unspecified)                                                        */
 #define PDM21_PRESCALER_PRESENT 1                    /*!< (unspecified)                                                        */
-#define PDM21_PDMV2 0                                /*!< (unspecified)                                                        */
+#define PDM21_PDMV2 1                                /*!< (unspecified)                                                        */
 #define PDM21_PCLK24M 0                              /*!< (unspecified)                                                        */
 #define PDM21_AUDIOPLL 1                             /*!< (unspecified)                                                        */
 #define PDM21_EASYDMALISTINCLUDED 0                  /*!< (unspecified)                                                        */
@@ -1954,6 +2028,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SAADC_COUNT 1
 
 #define SAADC_EASYDMA5 0                             /*!< (unspecified)                                                        */
+#define SAADC_PWRUP2 0                               /*!< (unspecified)                                                        */
+#define SAADC_CHOPPING 1                             /*!< (unspecified)                                                        */
+#define SAADC_BURSTREG 1                             /*!< (unspecified)                                                        */
 #define SAADC_EASYDMATEMP 1                          /*!< (unspecified)                                                        */
 #define SAADC_PSEL_V2 1                              /*!< (unspecified)                                                        */
 #define SAADC_TASKS_CALIBRATEGAIN 1                  /*!< (unspecified)                                                        */
@@ -2057,7 +2134,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define GRTC_CLKSELREG 1                             /*!< (unspecified)                                                        */
 #define GRTC_CLKSELLFLPRC 1                          /*!< (unspecified)                                                        */
 #define GRTC_CCADD_WRITE_ONLY 0                      /*!< (unspecified)                                                        */
-#define GRTC_READY_STATUS_AND_EVENTS 0               /*!< (unspecified)                                                        */
+#define GRTC_READY_STATUS_AND_EVENTS 1               /*!< (unspecified)                                                        */
 #define GRTC_SYSCOUNTER_LOADED_STATUS 1              /*!< (unspecified)                                                        */
 #define GRTC_CC_PAST_STATUS 1                        /*!< (unspecified)                                                        */
 #define GRTC_SYSCOUNTER_WRITEABLE 1                  /*!< (unspecified)                                                        */
@@ -2113,14 +2190,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TDM_EASYDMA_CURRENT_AMOUNT_REGISTER_INCLUDED 1 /*!< (unspecified)                                                      */
 #define TDM_EASYDMASTOPTASKINCLUDED 1                /*!< (unspecified)                                                        */
 
-/*AUXPLL*/
-#define AUXPLL_PRESENT 1
-#define AUXPLL_COUNT 1
-
-/*AUXPM*/
-#define AUXPM_PRESENT 1
-#define AUXPM_COUNT 1
-
 /*Tamper controller*/
 #define TAMPC_PRESENT 1
 #define TAMPC_COUNT 1
@@ -2130,7 +2199,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TAMPC_CORESIGHT 0                            /*!< (unspecified)                                                        */
 #define TAMPC_APSPIDEN 0                             /*!< (unspecified)                                                        */
 #define TAMPC_PROTECT_INTRESETEN_CTRL_VALUE_RESET 1  /*!< Reset value of field VALUE in register PROTECT.INTRESETEN.CTRL: 1    */
-#define TAMPC_TAMPERSWITCH 0                         /*!< (unspecified)                                                        */
+#define TAMPC_TAMPERSWITCH 1                         /*!< (unspecified)                                                        */
 
 /*Coexistence controller*/
 #define COEXC_PRESENT 1
@@ -2162,6 +2231,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define COMP_GF22N 1                                 /*!< (unspecified)                                                        */
 #define COMP_TSMC22N 0                               /*!< (unspecified)                                                        */
+#define COMP_REFSEL_VDD 1                            /*!< (unspecified)                                                        */
 
 /*Low-power comparator*/
 #define LPCOMP_PRESENT 1
@@ -2191,6 +2261,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CLOCK_COUNT 1
 
 #define CLOCK_XOTUNE 0                               /*!< (unspecified)                                                        */
+#define CLOCK_XOCAL 0                                /*!< (unspecified)                                                        */
 #define CLOCK_PLL24M 1                               /*!< (unspecified)                                                        */
 
 /*Power control*/
@@ -2223,6 +2294,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define VREGUSB_COUNT 1
 
 #define VREGUSB_PROLONGED_WAKEUP 0                   /*!< (unspecified)                                                        */
+#define VREGUSB_VAR1 0                               /*!< (unspecified)                                                        */
 
 /*LFXO peripheral*/
 #define LFXO_PRESENT 1
@@ -2244,17 +2316,17 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define VREGAO1V8_PRESENT 1
 #define VREGAO1V8_COUNT 1
 
-/*VREGAO0V8 peripheral*/
-#define VREGAO0V8_PRESENT 1
-#define VREGAO0V8_COUNT 1
-
-#define LDOBUCK0V8_OVERRIDE_CFGDYNAMIC 1             /*!< (unspecified)                                                        */
-
 /*VREG1V0*/
 #define VREG1V0_PRESENT 1
 #define VREG1V0_COUNT 1
 
 #define LDOHLP0V8_ENABLE_HELPER_MODES 1              /*!< (unspecified)                                                        */
+
+/*VREGAO0V8 peripheral*/
+#define VREGAO0V8_PRESENT 1
+#define VREGAO0V8_COUNT 1
+
+#define LDOBUCK0V8_OVERRIDE_CFGDYNAMIC 1             /*!< (unspecified)                                                        */
 
 /*VREGSU peripheral*/
 #define VREGSU_PRESENT 1
@@ -2278,7 +2350,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define HVBUCK_BUCK1V1 1                             /*!< (unspecified)                                                        */
 #define HVBUCK_BUCK1V8 0                             /*!< (unspecified)                                                        */
-#define HVBUCK_UPSCALE2 0                            /*!< (unspecified)                                                        */
+#define HVBUCK_UPSCALE2 1                            /*!< (unspecified)                                                        */
 
 /*VDETIO peripheral*/
 #define VDETIO_PRESENT 1
@@ -2288,6 +2360,18 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define VDETIO_NPORTS_MIN 0                          /*!< Number of ports supported : 0..4                                     */
 #define VDETIO_NPORTS_MAX 4                          /*!< Number of ports supported : 0..4                                     */
 #define VDETIO_NPORTS_SIZE 5                         /*!< Number of ports supported : 0..4                                     */
+
+/*MBIAS peripheral*/
+#define MBIAS_PRESENT 1
+#define MBIAS_COUNT 1
+
+/*AUXPLL*/
+#define AUXPLL_PRESENT 1
+#define AUXPLL_COUNT 1
+
+/*AUXPM*/
+#define AUXPM_PRESENT 1
+#define AUXPM_COUNT 1
 
 /* ==================================================== Baudrate settings ==================================================== */
 /**
