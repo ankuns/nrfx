@@ -30,6 +30,19 @@ extern "C" {
 #define NRF_LFRC_HAS_RETENTION 0
 #endif
 
+#if defined (LFRC_INTPEND_ResetValue) || defined (__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether INTPEND register is present. */
+#define NRF_LFRC_HAS_INTPEND 1
+#else
+#define NRF_LFRC_HAS_INTPEND 0
+#endif
+
+#if defined (LFRC_INTENSET_CALDONE_Msk) || defined (__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the Low Frequency Clock calibration is present. */
+#define NRF_LFRC_HAS_CALIBRATION 1
+#else
+#define NRF_LFRC_HAS_CALIBRATION 0
+#endif
 /**
  * @brief LFRC tasks.
  *
@@ -359,6 +372,8 @@ NRF_STATIC_INLINE void nrf_lfrc_config_set(NRF_LFRC_Type *           p_reg,
       | ((p_config->retention_en          << LFRC_CONFIG_CFG_ENABLERETENTION_Pos)    &
               LFRC_CONFIG_CFG_ENABLERETENTION_Msk)
 #endif
+      | ((p_config->spare_en              << LFRC_CONFIG_CFG_SPARE_Pos)              &
+              LFRC_CONFIG_CFG_SPARE_Msk);
       | ((p_config->spare_en              << LFRC_CONFIG_CFG_SPARE_Pos)              &
               LFRC_CONFIG_CFG_SPARE_Msk);
 }
