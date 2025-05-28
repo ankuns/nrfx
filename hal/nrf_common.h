@@ -44,6 +44,10 @@ extern "C" {
 #endif // defined(NRF_RADIO)
 #endif // defined(DPPI_PRESENT)
 
+#if defined(ADDRESS_BUS_Msk)
+#define NRF_PERIPH_APB_MASK 0x1000UL
+#endif
+
 #if !defined(NRFY_CACHE_WB)
 #define NRFY_CACHE_WB(p_buffer, size)
 #endif

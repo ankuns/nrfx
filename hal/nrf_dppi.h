@@ -87,6 +87,18 @@ extern "C" {
         (*((volatile uint32_t *)(task_or_event + NRF_SUBSCRIBE_PUBLISH_OFFSET(task_or_event))) = 0)
 #endif
 
+#if defined(ADDRESS_BUS_Msk) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether DPPI instance can be mapped to a peripheral based on common APB. */
+#define NRF_DPPI_HAS_APB_MAPPING 1
+#else
+#define NRF_DPPI_HAS_APB_MAPPING 0
+#endif
+
+#if NRF_DPPI_HAS_APB_MAPPING
+/** @brief Symbol specifying bitmask for mapping specific DPPIC to a respective APB it belongs to. */
+#define NRF_DPPI_APB_MASK 0x10000UL
+#endif
+
 /** @brief DPPI channel groups. */
 typedef enum
 {
