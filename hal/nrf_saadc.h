@@ -133,6 +133,20 @@ extern "C" {
 /** @brief @deprecated Symbol specifying width of the 8-bit sample in bits. */
 #define NRF_SAADC_8BIT_SAMPLE_WIDTH 16
 
+#if defined SAADC_SAMPLERATE_CC_Min || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol specifying minimum capture and compare value for sample rate. */
+#define NRF_SAADC_SAMPLERATE_CC_MIN SAADC_SAMPLERATE_CC_Min
+#else
+#define NRF_SAADC_SAMPLERATE_CC_MIN (80UL)
+#endif
+
+#if defined SAADC_SAMPLERATE_CC_Max || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol specifying maximum capture and compare value for sample rate. */
+#define NRF_SAADC_SAMPLERATE_CC_MAX SAADC_SAMPLERATE_CC_Max
+#else
+#define NRF_SAADC_SAMPLERATE_CC_MAX (2047UL)
+#endif
+
 /** @brief Resolution of the analog-to-digital converter. */
 typedef enum
 {
@@ -842,7 +856,8 @@ NRF_STATIC_INLINE uint32_t nrf_saadc_oversample_sample_count_get(nrf_saadc_overs
  *
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  * @param[in] cc    Capture and compare value. Sample rate is 16 MHz/cc.
- *                  Valid @c CC range is from 80 to 2047.
+ *                  Valid @c CC range is from NRF_SAADC_SAMPLERATE_CC_MIN
+ *                  to NRF_SAADC_SAMPLERATE_CC_MAX.
  */
 NRF_STATIC_INLINE void nrf_saadc_continuous_mode_enable(NRF_SAADC_Type * p_reg,
                                                         uint16_t         cc);
@@ -1216,7 +1231,7 @@ NRF_STATIC_INLINE uint32_t nrf_saadc_oversample_sample_count_get(nrf_saadc_overs
 
 NRF_STATIC_INLINE void nrf_saadc_continuous_mode_enable(NRF_SAADC_Type * p_reg, uint16_t cc)
 {
-    NRFX_ASSERT((cc >= 80) && (cc <= 2047));
+    NRFX_ASSERT((cc >= NRF_SAADC_SAMPLERATE_CC_MIN) && (cc <= NRF_SAADC_SAMPLERATE_CC_MAX));
     p_reg->SAMPLERATE = (SAADC_SAMPLERATE_MODE_Timers << SAADC_SAMPLERATE_MODE_Pos)
                         | ((uint32_t)cc << SAADC_SAMPLERATE_CC_Pos);
 }
