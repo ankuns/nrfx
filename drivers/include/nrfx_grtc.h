@@ -341,7 +341,7 @@ nrfx_err_t nrfx_grtc_syscounter_cc_absolute_set(nrfx_grtc_channel_t * p_chan_dat
                                                 bool                  enable_irq);
 
 /**
- * @brief Function for setting the absolute compare value for the SYSCOUNTER.
+ * @brief Function for setting the absolute compare value for the SYSCOUNTER in an optimized way.
  *
  * Function must be called with interrupts locked. If @p safe_setting is true then
  * it means that previous CC for that channel did not yet expire and it
