@@ -1,9 +1,8 @@
 /*$$$LICENCE_NORDIC_STANDARD<2019>$$$*/
 
-#ifndef NRFX_CONFIG_H__
-#define NRFX_CONFIG_H__
+#ifndef NRFX_TEMPLATES_CONFIG_H__
+#define NRFX_TEMPLATES_CONFIG_H__
 
-#include <nrfx_config_common.h>
 #if defined(NRF51)
     #include <nrfx_config_nrf51.h>
 #elif defined(NRF52805_XXAA)
@@ -76,4 +75,4 @@
     #include "nrfx_config_ext.h"
 #endif
 
-#endif // NRFX_CONFIG_H__
+#endif // NRFX_TEMPLATES_CONFIG_H__
