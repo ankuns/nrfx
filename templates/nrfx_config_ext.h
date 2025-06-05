@@ -75,6 +75,10 @@
     #elif defined(NRF_UMAC)
         #include <nrfx_config_nrf7140_umac.h>
     #endif
+#elif defined(NRF54LS05B_ENGA_XXAA)
+    #if defined(NRF_APPLICATION)
+        #include <nrfx_config_nrf54ls05b_application.h>
+    #endif
 #else
     #error "Unknown device."
 #endif
