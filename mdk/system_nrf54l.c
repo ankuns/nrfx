@@ -52,7 +52,7 @@ NOTICE: This file has been modified by Nordic Semiconductor ASA.
     uint32_t SystemCoreClock __attribute__((used)) = __SYSTEM_CLOCK_DEFAULT;
 #elif defined ( __ICCARM__ )
     __root uint32_t SystemCoreClock = __SYSTEM_CLOCK_DEFAULT;
-#endif    
+#endif
 
 void SystemCoreClockUpdate(void)
 {
@@ -98,25 +98,40 @@ void SystemInit(void)
                 SCB->NSACR |= (3UL << 10ul);
             #endif
 
-            #ifndef NRF_SKIP_SAU_CONFIGURATION   
+            #ifndef NRF_SKIP_SAU_CONFIGURATION
                 configure_default_sau();
-            #endif          
+            #endif
 
             #if !defined (NRF_DISABLE_FICR_TRIMCNF)
                 /* Trimming of the device. Copy all the trimming values from FICR into the target addresses. Trim
                 until one ADDR is not initialized. */
                 uint32_t index = 0ul;
-                for (index = 0ul; index < FICR_TRIMCNF_MaxCount && NRF_FICR_NS->TRIMCNF[index].ADDR != 0xFFFFFFFFul && NRF_FICR_NS->TRIMCNF[index].ADDR != 0x00000000ul; index++) {
-                #if defined ( __ICCARM__ )
-                    /* IAR will complain about the order of volatile pointer accesses. */
-                    #pragma diag_suppress=Pa082
-                #endif
-                * ((volatile uint32_t*)NRF_FICR_NS->TRIMCNF[index].ADDR) = NRF_FICR_NS->TRIMCNF[index].DATA;
+
+                #if defined (NRF54LS05B_ENGA_XXAA)
+
+                    for (index = 0ul; index < FICR_TRIMCNF_MaxCount && NRF_FICR->TRIMCNF[index].ADDR != 0xFFFFFFFFul && NRF_FICR->TRIMCNF[index].ADDR != 0x00000000ul; index++) {
+                    #if defined ( __ICCARM__ )
+                        /* IAR will complain about the order of volatile pointer accesses. */
+                        #pragma diag_suppress=Pa082
+                    #endif
+                    * ((volatile uint32_t*)NRF_FICR->TRIMCNF[index].ADDR) = NRF_FICR->TRIMCNF[index].DATA;
+
+                #else
+
+                    for (index = 0ul; index < FICR_TRIMCNF_MaxCount && NRF_FICR_NS->TRIMCNF[index].ADDR != 0xFFFFFFFFul && NRF_FICR_NS->TRIMCNF[index].ADDR != 0x00000000ul; index++) {
+                    #if defined ( __ICCARM__ )
+                        /* IAR will complain about the order of volatile pointer accesses. */
+                        #pragma diag_suppress=Pa082
+                    #endif
+                    * ((volatile uint32_t*)NRF_FICR_NS->TRIMCNF[index].ADDR) = NRF_FICR_NS->TRIMCNF[index].DATA;
+
+                #endif  //NRF54LS05B_ENGA_XXAA
+
                 #if defined ( __ICCARM__ )
                     #pragma diag_default=Pa082
                 #endif
                 }
-            #endif
+            #endif //NRF_DISABLE_FICR_TRIMCNF
 
             /* Device configuration for ES PDK */
             #if defined (NRF54L05_XXAA) || defined (NRF54L10_XXAA) || defined (NRF54L15_XXAA)
@@ -174,7 +189,7 @@ void SystemInit(void)
         /* Enable the FPU if the compiler used floating point unit instructions. __FPU_USED is a MACRO defined by the
         * compiler. Since the FPU consumes energy, remember to disable FPU use in the compiler if floating point unit
         * operations are not used in your code. */
-        
+
         /* Allow Non-Secure code to run FPU instructions.
          * If only the secure code should control FPU power state these registers should be configured accordingly in the secure application code. */
         SCB->NSACR |= (3UL << 10ul);

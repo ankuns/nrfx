@@ -116,6 +116,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     #if defined(NRF_FLPR)
         #include "nrf54lm20a_enga_xxaa_flpr_memory.h"
     #endif
+#elif defined(NRF54LS05B_ENGA_XXAA)
+    #include "nrf54ls05b_enga_xxaa_application_memory.h"
 #elif defined(NRF54H20_XXAA)
     #if defined(NRF_SECURE)
         #include "nrf54h20_xxaa_secure_memory.h"
