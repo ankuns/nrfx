@@ -213,6 +213,16 @@ extern "C" {
    #define NRFX_PRS_BOX_4_ADDR     NRF_UARTE133
 #endif
 
+#if defined(NRF54LS05B_ENGA_XXAA)
+    #define NRF_PRS_BOX_EXT
+    // SPIM20, SPIS20, TWIM20, TWIS20, UARTE20
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE20
+    // SPIM21, SPIS21, TWIM21, TWIS21, UARTE21
+    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE21
+    // SPIM32, SPIS32, TWIM32, TWIS32, UARTE32
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE22
+#endif
+
 /*------------------------------------------------------------------------------------------------*/
 /* End of PRS Extended section                                                                    */
 /*------------------------------------------------------------------------------------------------*/
@@ -222,7 +232,8 @@ extern "C" {
 /*------------------------------------------------------------------------------------------------*/
 
 #if defined(NRF54L05_XXAA) || defined(NRF54L10_XXAA) || \
-    defined(NRF54L15_XXAA) || defined(NRF54LV10A_ENGA_XXAA)
+    defined(NRF54L15_XXAA) || defined(NRF54LS05B_ENGA_XXAA) || \
+    defined(NRF54LV10A_ENGA_XXAA)
 #define NRF_REGULATORS_ELV_MODE_ALL_MASK (REGULATORS_TRIM_ELVPDMAIN_Msk   | \
                                           REGULATORS_TRIM_ELVPDLP_Msk     | \
                                           REGULATORS_TRIM_ELVPDPERIPH_Msk | \
