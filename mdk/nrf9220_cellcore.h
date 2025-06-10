@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2010 - 2024, Nordic Semiconductor ASA
+Copyright (c) 2010 - 2025, Nordic Semiconductor ASA
 
 All rights reserved.
 
@@ -389,7 +389,7 @@ typedef enum {
 #define NRF_CELLCORE_LRCCONF0_NS          ((NRF_LRCCONF_Type*)                  NRF_CELLCORE_LRCCONF0_NS_BASE)
 #define NRF_CELLCORE_LRCCONF0_S           ((NRF_LRCCONF_Type*)                  NRF_CELLCORE_LRCCONF0_S_BASE)
 #define NRF_CELLCORE_MPC_S                ((NRF_MPC_Type*)                      NRF_CELLCORE_MPC_S_BASE)
-#define NRF_CELLCORE_CPUC_S               ((NRF_CM33SS_Type*)                   NRF_CELLCORE_CPUC_S_BASE)
+#define NRF_CELLCORE_CPUC_S               ((NRF_CPUC_Type*)                     NRF_CELLCORE_CPUC_S_BASE)
 #define NRF_CELLCORE_MVDMA_NS             ((NRF_MVDMA_Type*)                    NRF_CELLCORE_MVDMA_NS_BASE)
 #define NRF_CELLCORE_MVDMA_S              ((NRF_MVDMA_Type*)                    NRF_CELLCORE_MVDMA_S_BASE)
 #define NRF_CELLCORE_RAMC00_NS            ((NRF_RAMC_Type*)                     NRF_CELLCORE_RAMC00_NS_BASE)

@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2010 - 2024, Nordic Semiconductor ASA
+Copyright (c) 2010 - 2025, Nordic Semiconductor ASA
 
 All rights reserved.
 
@@ -378,7 +378,7 @@ typedef enum {
 #define NRF_SECURE_MEMCONF200_NS          ((NRF_MEMCONF_Type*)                  NRF_SECURE_MEMCONF200_NS_BASE)
 #define NRF_SECURE_ETM_NS                 ((NRF_ETM_Type*)                      NRF_SECURE_ETM_NS_BASE)
 #define NRF_SECURE_CTI_S                  ((NRF_CTI_Type*)                      NRF_SECURE_CTI_S_BASE)
-#define NRF_SECURE_CPUC_S                 ((NRF_CM33SS_Type*)                   NRF_SECURE_CPUC_S_BASE)
+#define NRF_SECURE_CPUC_S                 ((NRF_CPUC_Type*)                     NRF_SECURE_CPUC_S_BASE)
 #define NRF_SECURE_ICACHE_S               ((NRF_CACHE_Type*)                    NRF_SECURE_ICACHE_S_BASE)
 #define NRF_SECURE_DCACHE_S               ((NRF_CACHE_Type*)                    NRF_SECURE_DCACHE_S_BASE)
 #define NRF_SECURE_SPU000_S               ((NRF_SPU_Type*)                      NRF_SECURE_SPU000_S_BASE)

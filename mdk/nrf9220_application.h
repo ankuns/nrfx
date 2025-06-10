@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2010 - 2024, Nordic Semiconductor ASA
+Copyright (c) 2010 - 2025, Nordic Semiconductor ASA
 
 All rights reserved.
 
@@ -318,7 +318,7 @@ typedef enum {
 #define NRF_APPLICATION_DCACHE_S          ((NRF_CACHE_Type*)                    NRF_APPLICATION_DCACHE_S_BASE)
 #define NRF_APPLICATION_SPU000_S          ((NRF_SPU_Type*)                      NRF_APPLICATION_SPU000_S_BASE)
 #define NRF_APPLICATION_MPC_S             ((NRF_MPC_Type*)                      NRF_APPLICATION_MPC_S_BASE)
-#define NRF_APPLICATION_CPUC_S            ((NRF_CM33SS_Type*)                   NRF_APPLICATION_CPUC_S_BASE)
+#define NRF_APPLICATION_CPUC_S            ((NRF_CPUC_Type*)                     NRF_APPLICATION_CPUC_S_BASE)
 #define NRF_APPLICATION_MVDMA_NS          ((NRF_MVDMA_Type*)                    NRF_APPLICATION_MVDMA_NS_BASE)
 #define NRF_APPLICATION_MVDMA_S           ((NRF_MVDMA_Type*)                    NRF_APPLICATION_MVDMA_S_BASE)
 #define NRF_APPLICATION_RAMC_NS           ((NRF_RAMC_Type*)                     NRF_APPLICATION_RAMC_NS_BASE)
