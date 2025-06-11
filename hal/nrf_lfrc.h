@@ -16,6 +16,20 @@ extern "C" {
  * @brief   Hardware access layer for managing the Low Frequency 32 KHz RC Oscillator (LFRC).
  */
 
+#if defined (LFRC_CONFIG_CFG_CONTINUOUSTAILBIAS_Pos) || defined (__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether continuous tail bias is present. */
+#define NRF_LFRC_HAS_CONTINUOUS_TAIL_BIAS 1
+#else
+#define NRF_LFRC_HAS_CONTINUOUS_TAIL_BIAS 0
+#endif
+
+#if defined (LFRC_CONFIG_CFG_ENABLERETENTION_Pos) || defined (__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether CAL retention is present. */
+#define NRF_LFRC_HAS_RETENTION 1
+#else
+#define NRF_LFRC_HAS_RETENTION 0
+#endif
+
 /**
  * @brief LFRC tasks.
  *
@@ -47,8 +61,12 @@ typedef enum
 typedef struct
 {
     bool doubletailcurrent_en;  /**< Enable double tail current. */
+#if NRF_LFRC_HAS_CONTINUOUS_TAIL_BIAS
     bool continuoustailbias_en; /**< Enable continuous tail bias. */
+#endif
+#if NRF_LFRC_HAS_RETENTION
     bool retention_en;          /**< Enable retention for CAL. */
+#endif
     bool spare_en;              /**< Enable spare general purpose configuration bits. */
 } nrf_lfrc_config_t;
 
@@ -333,10 +351,14 @@ NRF_STATIC_INLINE void nrf_lfrc_config_set(NRF_LFRC_Type *           p_reg,
     p_reg->CONFIG.CFG =
         ((p_config->doubletailcurrent_en  << LFRC_CONFIG_CFG_DOUBLETAILCURRENT_Pos)  &
               LFRC_CONFIG_CFG_DOUBLETAILCURRENT_Msk)
+#if NRF_LFRC_HAS_CONTINUOUS_TAIL_BIAS
       | ((p_config->continuoustailbias_en << LFRC_CONFIG_CFG_CONTINUOUSTAILBIAS_Pos) &
               LFRC_CONFIG_CFG_CONTINUOUSTAILBIAS_Msk)
+#endif
+#if NRF_LFRC_HAS_RETENTION
       | ((p_config->retention_en          << LFRC_CONFIG_CFG_ENABLERETENTION_Pos)    &
               LFRC_CONFIG_CFG_ENABLERETENTION_Msk)
+#endif
       | ((p_config->spare_en              << LFRC_CONFIG_CFG_SPARE_Pos)              &
               LFRC_CONFIG_CFG_SPARE_Msk);
 }
