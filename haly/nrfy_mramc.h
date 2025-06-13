@@ -245,7 +245,7 @@ NRFY_STATIC_INLINE void nrfy_mramc_buffer_read(void *   dst,
                                                uint32_t num_bytes)
 {
     nrf_barrier_r();
-    memcpy(dst, (void *)address, num_bytes * NRFY_MRAMC_BYTES_IN_WORD);
+    memcpy(dst, (void *)address, num_bytes);
     nrf_barrier_r();
 }
 
