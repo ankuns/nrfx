@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-#if defined(LUMOS_XXAA)
+#if defined(LUMOS_XXAA) && !defined(GRTC_IRQn)
 #if defined(NRF_APPLICATION) && defined(NRF_TRUSTZONE_NONSECURE)
 #define GRTC_IRQn       GRTC_1_IRQn
 #define GRTC_IRQHandler GRTC_1_IRQHandler
@@ -20,7 +20,7 @@ extern "C" {
 #define GRTC_IRQn       GRTC_0_IRQn
 #define GRTC_IRQHandler GRTC_0_IRQHandler
 #endif
-#endif
+#endif // defined(LUMOS_XXAA) && !defined(GRTC_IRQn)
 
 #if defined(HALTIUM_XXAA)
 #if (defined(ISA_ARM) && defined(NRF_TRUSTZONE_NONSECURE)) || defined(ISA_RISCV)

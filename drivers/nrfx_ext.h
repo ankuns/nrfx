@@ -94,6 +94,10 @@ extern "C" {
     #endif
 #endif
 
+#if defined(NRF54LS05B_ENGA_XXAA)
+#define NRF_GPIOTE_SECURE_SUFFIX NONSECURE
+#endif
+
 /*------------------------------------------------------------------------------------------------*/
 /* End of GPIOTE Extended section                                                                 */
 /*------------------------------------------------------------------------------------------------*/
@@ -135,6 +139,11 @@ extern "C" {
     #define GRTC_IRQn       GRTC_1_IRQn
     #define GRTC_IRQHandler GRTC_1_IRQHandler
     #endif
+#endif
+
+#if defined(NRF54LS05B_ENGA_XXAA)
+    #define GRTC_IRQn       GRTC_0_IRQn
+    #define GRTC_IRQHandler GRTC_0_IRQHandler
 #endif
 
 /*------------------------------------------------------------------------------------------------*/
@@ -311,6 +320,13 @@ extern "C" {
 /*------------------------------------------------------------------------------------------------*/
 /* Start of RAM Control Extended section                                                          */
 /*------------------------------------------------------------------------------------------------*/
+
+#if defined(NRF54LS05B_ENGA_XXAA)
+#define RAM_SECTION_UNIT_SIZE          (32UL * 1024UL)
+#define RAM_UNIFORM_BLOCKS             1
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 2
+#define RAM_UNIFORM_SECTIONS_TOTAL     2
+#endif
 
 /*------------------------------------------------------------------------------------------------*/
 /* End of RAM Control Extended section                                                            */
