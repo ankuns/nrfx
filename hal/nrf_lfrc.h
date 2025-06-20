@@ -374,8 +374,6 @@ NRF_STATIC_INLINE void nrf_lfrc_config_set(NRF_LFRC_Type *           p_reg,
 #endif
       | ((p_config->spare_en              << LFRC_CONFIG_CFG_SPARE_Pos)              &
               LFRC_CONFIG_CFG_SPARE_Msk);
-      | ((p_config->spare_en              << LFRC_CONFIG_CFG_SPARE_Pos)              &
-              LFRC_CONFIG_CFG_SPARE_Msk);
 }
 
 NRF_STATIC_INLINE void nrf_lfrc_cal_cycle_length_set(NRF_LFRC_Type *             p_reg,
