@@ -11,7 +11,11 @@
 #include <soc/nrfx_coredep.h>
 
 /* TRNG HW chosen configuration options */
+#if defined(NRF54L15_XXAA) || defined(NRF54L10_XXAA) || defined(NRF54L05_XXAA)
 #define TRNG_CLK_DIV                0
+#else
+#define TRNG_CLK_DIV                1
+#endif
 #define TRNG_OFF_TIMER_VAL          0
 #define TRNG_INIT_WAIT_VAL        512
 #define TRNG_NUMBER_128BIT_BLOCKS   4
@@ -58,7 +62,9 @@ static void trng_init(void)
     nrf_cracen_rng_control_set(NRF_CRACENCORE, &control_reset);
 
     /* Change from configuration defaults to what we prefer: */
+#if NRF_CRACEN_RNG_HAS_IDLE_TIMER
     nrf_cracen_rng_off_timer_set(NRF_CRACENCORE, TRNG_OFF_TIMER_VAL);
+#endif
     nrf_cracen_rng_clk_div_set(NRF_CRACENCORE, TRNG_CLK_DIV);
     nrf_cracen_rng_init_wait_val_set(NRF_CRACENCORE, TRNG_INIT_WAIT_VAL);
 
@@ -66,6 +72,9 @@ static void trng_init(void)
     static const nrf_cracen_rng_control_t control_enable = {
             .enable = true,
             .number_128_blocks = TRNG_NUMBER_128BIT_BLOCKS,
+#if NRF_CRACEN_RNG_HAS_BLENDING
+            .blending_method = NRF_CRACEN_RNG_BLENDING_CONCATENATION,
+#endif
     };
 
     nrf_cracen_rng_control_set(NRF_CRACENCORE, &control_enable);
