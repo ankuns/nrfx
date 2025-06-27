@@ -188,15 +188,18 @@ static void anomaly_198_disable(void)
 
 static void spim_abort(NRF_SPIM_Type * p_spim, spim_control_block_t * p_cb)
 {
-    nrfy_spim_abort(p_spim, NULL);
-    bool stopped;
-    uint32_t stopped_mask = NRFY_EVENT_TO_INT_BITMASK(NRF_SPIM_EVENT_STOPPED);
-    NRFX_WAIT_FOR(nrfy_spim_events_process(p_spim, stopped_mask, NULL), 100, 1, stopped);
-    if (!stopped)
+    if (p_cb->transfer_in_progress)
     {
-        NRFX_LOG_ERROR("Failed to stop instance with base address: %p.", (void *)p_spim);
+        nrfy_spim_abort(p_spim, NULL);
+        bool stopped;
+        uint32_t stopped_mask = NRFY_EVENT_TO_INT_BITMASK(NRF_SPIM_EVENT_STOPPED);
+        NRFX_WAIT_FOR(nrfy_spim_events_process(p_spim, stopped_mask, NULL), 100, 1, stopped);
+        if (!stopped)
+        {
+            NRFX_LOG_ERROR("Failed to stop instance with base address: %p.", (void *)p_spim);
+        }
+        p_cb->transfer_in_progress = false;
     }
-    p_cb->transfer_in_progress = false;
 #if defined(HALTIUM_XXAA)
     if (p_cb->disable_on_xfer_end)
 #endif
