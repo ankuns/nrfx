@@ -1275,8 +1275,7 @@ NRF_STATIC_INLINE void nrf_spim_enable(NRF_SPIM_Type * p_reg)
 
 NRF_STATIC_INLINE void nrf_spim_disable(NRF_SPIM_Type * p_reg)
 {
-#if NRF52_ERRATA_89_ENABLE_WORKAROUND
-    if (nrf52_errata_89())
+    if (NRF_ERRATA_DYNAMIC_CHECK(52, 89))
     {
         uint32_t temp1 = *(volatile uint32_t *)((uint8_t *)p_reg + 0x508UL);
         uint32_t temp2 = *(volatile uint32_t *)((uint8_t *)p_reg + 0x50CUL);
@@ -1291,7 +1290,6 @@ NRF_STATIC_INLINE void nrf_spim_disable(NRF_SPIM_Type * p_reg)
         *(volatile uint32_t *)((uint8_t *)p_reg + 0x50C) = temp2;
     }
     else
-#endif
     {
         p_reg->ENABLE = (SPIM_ENABLE_ENABLE_Disabled << SPIM_ENABLE_ENABLE_Pos);
     }
