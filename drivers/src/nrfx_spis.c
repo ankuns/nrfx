@@ -399,11 +399,15 @@ void nrfx_spis_uninit(nrfx_spis_t const * p_instance)
     }
 #endif
 
-    #define DISABLE_ALL 0xFFFFFFFF
     nrf_spis_disable(p_spis);
     NRFX_IRQ_DISABLE(nrfx_get_irq_number(p_instance->p_reg));
-    nrf_spis_int_disable(p_spis, DISABLE_ALL);
-    #undef  DISABLE_ALL
+    nrf_spis_int_disable(p_spis, UINT32_MAX);
+
+    if (NRF_ERRATA_DYNAMIC_CHECK(52, 214))
+    {
+        *(volatile uint32_t *)(p_spis + 0xA4ul) = 1UL;
+        *(volatile uint32_t *)(p_spis + 0xACul) = 1UL;
+    }
 
     if (!p_cb->skip_gpio_cfg)
     {
