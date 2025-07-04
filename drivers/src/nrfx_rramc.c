@@ -159,7 +159,7 @@ static nrfx_err_t rramc_configure(nrfx_rramc_config_t const * p_config)
 
     if (m_cb.handler)
     {
-        nrfy_rramc_int_init(NRF_RRAMC, NRF_RRAMC_ALL_INTS_MASK, p_config->irq_priority, false);
+        nrfy_rramc_int_init(NRF_RRAMC, NRF_RRAMC_ALL_INTS_MASK, p_config->irq_priority, true);
     }
     return NRFX_SUCCESS;
 }
