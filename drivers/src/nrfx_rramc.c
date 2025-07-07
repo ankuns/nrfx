@@ -230,6 +230,21 @@ uint32_t nrfx_rramc_memory_size_get(void)
     return total_memory_size_get();
 }
 
+void nrfx_rramc_write_buffer_commit(void)
+{
+    nrfy_rramc_task_trigger(NRF_RRAMC, NRF_RRAMC_TASK_COMMIT_WRITEBUF);
+}
+
+void nrfx_rramc_wake_up(void)
+{
+    nrfy_rramc_task_trigger(NRF_RRAMC, NRF_RRAMC_TASK_WAKEUP);
+}
+
+bool nrfx_rramc_write_buffer_empty_check(void)
+{
+    return nrfy_rramc_empty_buffer_check(NRF_RRAMC);
+}
+
 void nrfx_rramc_irq_handler(void)
 {
     NRFX_ASSERT(m_cb.handler);
