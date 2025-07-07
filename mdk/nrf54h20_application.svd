@@ -171810,7 +171810,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Included</name>
-                  <description>Include even parity bit</description>
+                  <description>Include parity bit</description>
                   <value>0x7</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -187165,7 +187165,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
         </register>
         <register>
           <name>EVENTS_STARTED</name>
-          <description>The ADC has started</description>
+          <description>The ADC DMA has started</description>
           <addressOffset>0x100</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
@@ -187173,7 +187173,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>EVENTS_STARTED</name>
-              <description>The ADC has started</description>
+              <description>The ADC DMA has started</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
@@ -187305,7 +187305,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
         </register>
         <register>
           <name>EVENTS_STOPPED</name>
-          <description>The ADC has stopped</description>
+          <description>The ADC DMA has stopped</description>
           <addressOffset>0x114</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
@@ -187313,7 +187313,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>EVENTS_STOPPED</name>
-              <description>The ADC has stopped</description>
+              <description>The ADC DMA has stopped</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
@@ -189930,7 +189930,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Busy</name>
-                  <description>ADC is busy. Single conversion in progress.</description>
+                  <description>ADC is busy. Conversion is in progress.</description>
                   <value>0x1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -190045,7 +190045,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             </field>
             <field>
               <name>POWERDOWNANA</name>
-              <description>Power down analog between samples. See text for more info.</description>
+              <description>Power down analog between samples.</description>
               <lsb>8</lsb>
               <msb>8</msb>
               <enumeratedValues>
@@ -190093,7 +190093,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
               </field>
               <field>
                 <name>INTERNAL</name>
-                <description>Internal input selection for Analog positive input when CH[n].PSELP.CONNECT = Internal</description>
+                <description>Internal input selection for analog positive input when CH[n].PSELP.CONNECT = Internal</description>
                 <lsb>12</lsb>
                 <msb>13</msb>
                 <enumeratedValues>
@@ -190425,7 +190425,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>REGRESULT</name>
-              <description>Result of the previous ADC conversion</description>
+              <description>Result of the previous ADC conversion, as written to RAM</description>
               <lsb>0</lsb>
               <msb>31</msb>
             </field>
@@ -190659,7 +190659,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </register>
           <register>
             <name>MAXCNT</name>
-            <description>Maximum number of buffer bytes to transfer</description>
+            <description>Maximum number of buffer bytes to transfer. Note that one sample is two bytes.</description>
             <addressOffset>0x008</addressOffset>
             <access>read-write</access>
             <resetValue>0x00000000</resetValue>
@@ -190667,7 +190667,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             <fields>
               <field>
                 <name>MAXCNT</name>
-                <description>Maximum number of buffer bytes to transfer</description>
+                <description>Maximum number of buffer bytes to transfer. Note that one sample is two bytes.</description>
                 <lsb>0</lsb>
                 <msb>14</msb>
               </field>
@@ -190979,7 +190979,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>NOISESHAPE</name>
-              <description>Enable noise shaping</description>
+              <description>Noise shaping configuration</description>
               <lsb>0</lsb>
               <msb>1</msb>
               <enumeratedValues>

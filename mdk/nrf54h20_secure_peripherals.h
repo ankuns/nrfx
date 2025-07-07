@@ -786,7 +786,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TAMPC_COUNT 1
 
 #define TAMPC_ERASEPROTECT 0                         /*!< (unspecified)                                                        */
+#define TAMPC_WARMBOOT 1                             /*!< (unspecified)                                                        */
+#define TAMPC_CORESIGHT 1                            /*!< (unspecified)                                                        */
+#define TAMPC_APSPIDEN 1                             /*!< (unspecified)                                                        */
 #define TAMPC_PROTECT_INTRESETEN_CTRL_VALUE_RESET 1  /*!< Reset value of field VALUE in register PROTECT.INTRESETEN.CTRL: 1    */
+#define TAMPC_TAMPERSWITCH 1                         /*!< (unspecified)                                                        */
+#define TAMPC_SM4DISABLECM 1                         /*!< (unspecified)                                                        */
+#define TAMPC_PROTECTRESETBEHAVIOR 0                 /*!< (unspecified)                                                        */
 
 /*MUTEX*/
 #define MUTEX_PRESENT 1

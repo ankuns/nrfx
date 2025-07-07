@@ -1596,13 +1596,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <fields>
             <field>
               <name>READ</name>
-              <description>Read access</description>
+              <description>Read access. Must be enabled in order for the Arm Cortex CPU to start executing from RRAM.</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>NotAllowed</name>
-                  <description>Reading from the region is not allowed</description>
+                  <description>Reading from the region is not allowed.</description>
                   <value>0x0</value>
                 </enumeratedValue>
                 <enumeratedValue>
@@ -5111,7 +5111,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
               <dim>0x18</dim>
               <dimIncrement>0x4</dimIncrement>
               <name>CH[%s]</name>
-              <description>Description collection: Configuration of features for channel n of DPPIC</description>
+              <description>Description collection: Security configuration for channel n of DPPIC</description>
               <addressOffset>0x000</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -5185,7 +5185,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
               <dim>0x8</dim>
               <dimIncrement>0x4</dimIncrement>
               <name>CHG[%s]</name>
-              <description>Description collection: Configuration of features for channel group n of DPPIC</description>
+              <description>Description collection: Security configuration for channel group n of DPPIC</description>
               <addressOffset>0x060</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -5268,7 +5268,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
               <dim>0x8</dim>
               <dimIncrement>0x4</dimIncrement>
               <name>CH[%s]</name>
-              <description>Description collection: Configuration of features for channel o of GPIOTE[n]</description>
+              <description>Description collection: Security configuration for channel o of GPIOTE[n]</description>
               <addressOffset>0x000</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -5342,7 +5342,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
               <dim>0x8</dim>
               <dimIncrement>0x4</dimIncrement>
               <name>INTERRUPT[%s]</name>
-              <description>Description collection: Configuration of features for interrupt o of GPIOTE[n]</description>
+              <description>Description collection: Security configuration for interrupt o of GPIOTE[n]</description>
               <addressOffset>0x020</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -5425,7 +5425,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
               <dim>0x20</dim>
               <dimIncrement>0x4</dimIncrement>
               <name>PIN[%s]</name>
-              <description>Description collection: Configuration of features for GPIO[n] PIN[o]</description>
+              <description>Description collection: Security configuration for GPIO[n] PIN[o]</description>
               <addressOffset>0x000</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -5586,7 +5586,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
               <dim>0x18</dim>
               <dimIncrement>0x4</dimIncrement>
               <name>CC[%s]</name>
-              <description>Description collection: Configuration of features for CC n of GRTC</description>
+              <description>Description collection: Security configuration for CC n of GRTC</description>
               <addressOffset>0x000</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -5658,7 +5658,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </register>
             <register>
               <name>PWMCONFIG</name>
-              <description>Configuration of feature for PWMCONFIG of GRTC</description>
+              <description>Security Configuration for PWMCONFIG of GRTC</description>
               <addressOffset>0x074</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -5730,7 +5730,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </register>
             <register>
               <name>CLK</name>
-              <description>Configuration of features for CLKOUT/CLKCFG of GRTC</description>
+              <description>Security configuration for CLKOUT/CLKCFG of GRTC</description>
               <addressOffset>0x078</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -5802,7 +5802,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </register>
             <register>
               <name>SYSCOUNTER</name>
-              <description>Configuration of features for SYSCOUNTERL/SYSCOUNTERH of GRTC</description>
+              <description>Security configuration for SYSCOUNTERL/SYSCOUNTERH of GRTC</description>
               <addressOffset>0x07C</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -5876,7 +5876,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
               <dim>0x10</dim>
               <dimIncrement>0x4</dimIncrement>
               <name>INTERRUPT[%s]</name>
-              <description>Description collection: Configuration of features for interrupt n of GRTC</description>
+              <description>Description collection: Security configuration for interrupt n of GRTC</description>
               <addressOffset>0x080</addressOffset>
               <access>read-write</access>
               <resetValue>0x00100010</resetValue>
@@ -6610,6 +6610,40 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </fields>
           </register>
         </cluster>
+        <register>
+          <name>EXTENDCLKREQ</name>
+          <description>Extend clock request configuration</description>
+          <addressOffset>0x418</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000003</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>INIT</name>
+              <description>Initial value of the down counter used for extending the clock request.</description>
+              <lsb>0</lsb>
+              <msb>15</msb>
+            </field>
+            <field>
+              <name>ENABLE</name>
+              <description>Enable the extend clock request feature</description>
+              <lsb>31</lsb>
+              <msb>31</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Disable</name>
+                  <description>Disable</description>
+                  <value>0x0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enable</name>
+                  <description>Enable</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
         <cluster>
           <dim>8</dim>
           <dimIncrement>0x010</dimIncrement>
@@ -23671,16 +23705,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                   <description>1 megabaud when UARTE has 16 MHz peripheral clock frequency</description>
                   <value>0x10000000</value>
                 </enumeratedValue>
-                <enumeratedValue>
-                  <name>Baud2M</name>
-                  <description>2 megabaud when UARTE has 16 MHz peripheral clock frequency</description>
-                  <value>0x20000000</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Baud4M</name>
-                  <description>4 megabaud when UARTE has 16 MHz peripheral clock frequency</description>
-                  <value>0x40000000</value>
-                </enumeratedValue>
               </enumeratedValues>
             </field>
           </fields>
@@ -36181,13 +36205,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <fields>
             <field>
               <name>HSBIAS</name>
-              <description>Bias setting for high-speed pad</description>
+              <description>Slew setting for high-speed pad (higher value is faster)</description>
               <lsb>0</lsb>
               <msb>1</msb>
             </field>
             <field>
               <name>REPLICABIAS</name>
-              <description>Bias setting for replica pad</description>
+              <description>Slew setting for replica clock (used by the VPR coprocessor for emulating a QSPI peripheral)</description>
               <lsb>2</lsb>
               <msb>2</msb>
             </field>
@@ -36240,7 +36264,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </register>
         <register>
           <name>CTRL</name>
-          <description>HS pad control register</description>
+          <description>Input sampling and buffering control (used by the VPR coprocessor for emulating a QSPI peripheral)</description>
           <addressOffset>0x38</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
@@ -36248,7 +36272,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <fields>
             <field>
               <name>RXDELAY</name>
-              <description>RXDELAY setting</description>
+              <description>Delay selection</description>
               <lsb>0</lsb>
               <msb>2</msb>
             </field>
@@ -36257,24 +36281,72 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
               <description>Enable SCK</description>
               <lsb>3</lsb>
               <msb>3</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Delay chain is reset and delayed sampling is disabled</description>
+                  <value>0x0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Delay chain and delayed sampling is active</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
             <field>
               <name>SCKPHASE</name>
               <description>SCK phase</description>
               <lsb>4</lsb>
               <msb>4</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Inverted</name>
+                  <description>Invert SCK phase</description>
+                  <value>0x0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>NonInverted</name>
+                  <description>Non-inverted SCK phase</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
             <field>
               <name>CSNEN</name>
-              <description>CSN enable</description>
+              <description>Enable CSN synchronization of sampling</description>
               <lsb>5</lsb>
               <msb>5</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Delay chain is reset on active edge of CSN</description>
+                  <value>0x0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Delay chain is not reset on active edge of CSN</description>
+                  <value>0x1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
             <field>
               <name>DATAENABLE</name>
-              <description>Enable re-clocking for data bit 0-3 through pad-sync module</description>
+              <description>Enable delayed sampling</description>
               <lsb>6</lsb>
               <msb>9</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Delayed sampling is disabled</description>
+                  <value>0x0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Delayed sampling is enabled</description>
+                  <value>0xF</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
           </fields>
         </register>
@@ -38875,6 +38947,36 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           </fields>
         </register>
         <register>
+          <name>VPRSAVEADDR</name>
+          <description>VPR context save address.</description>
+          <addressOffset>0x590</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x2004EE80</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>LOWER</name>
+              <description>VPR context store address, lower range (static)</description>
+              <lsb>0</lsb>
+              <msb>2</msb>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>ADDRESS</name>
+              <description>VPR context store address</description>
+              <lsb>3</lsb>
+              <msb>19</msb>
+            </field>
+            <field>
+              <name>UPPER</name>
+              <description>VPR context store address, upper range (static)</description>
+              <lsb>20</lsb>
+              <msb>31</msb>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
           <dim>0x1</dim>
           <dimIncrement>0x4</dimIncrement>
           <name>MAINREG[%s]</name>
@@ -38892,9 +38994,42 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           </fields>
         </register>
         <register>
+          <dim>0x1</dim>
+          <dimIncrement>0x4</dimIncrement>
+          <name>AOREG[%s]</name>
+          <description>Description collection: Spare register n in PD_AO</description>
+          <addressOffset>0x700</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>VALUE</name>
+              <lsb>0</lsb>
+              <msb>3</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>AODFT</name>
+          <description>AO control of DFT features</description>
+          <addressOffset>0x704</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>DTBENABLE</name>
+              <description>Output DTB on GPIO pins through Always-On pin muxing</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>PDSELECT</name>
           <description>Power domain status selection</description>
-          <addressOffset>0x680</addressOffset>
+          <addressOffset>0x780</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <size>0x20</size>
@@ -39034,39 +39169,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                   <value>0xB</value>
                 </enumeratedValue>
               </enumeratedValues>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <dim>0x1</dim>
-          <dimIncrement>0x4</dimIncrement>
-          <name>AOREG[%s]</name>
-          <description>Description collection: Spare register n in PD_AO</description>
-          <addressOffset>0x700</addressOffset>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <size>0x20</size>
-          <fields>
-            <field>
-              <name>VALUE</name>
-              <lsb>0</lsb>
-              <msb>3</msb>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>AODFT</name>
-          <description>AO control of DFT features</description>
-          <addressOffset>0x704</addressOffset>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <size>0x20</size>
-          <fields>
-            <field>
-              <name>DTBENABLE</name>
-              <description>Output DTB on GPIO pins through Always-On pin muxing</description>
-              <lsb>0</lsb>
-              <msb>0</msb>
             </field>
           </fields>
         </register>
@@ -70704,6 +70806,36 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           </fields>
         </register>
         <register>
+          <name>VPRSAVEADDR</name>
+          <description>VPR context save address.</description>
+          <addressOffset>0x590</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x2004EE80</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>LOWER</name>
+              <description>VPR context store address, lower range (static)</description>
+              <lsb>0</lsb>
+              <msb>2</msb>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>ADDRESS</name>
+              <description>VPR context store address</description>
+              <lsb>3</lsb>
+              <msb>19</msb>
+            </field>
+            <field>
+              <name>UPPER</name>
+              <description>VPR context store address, upper range (static)</description>
+              <lsb>20</lsb>
+              <msb>31</msb>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
           <dim>0x1</dim>
           <dimIncrement>0x4</dimIncrement>
           <name>MAINREG[%s]</name>
@@ -70721,9 +70853,42 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           </fields>
         </register>
         <register>
+          <dim>0x1</dim>
+          <dimIncrement>0x4</dimIncrement>
+          <name>AOREG[%s]</name>
+          <description>Description collection: Spare register n in PD_AO</description>
+          <addressOffset>0x700</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>VALUE</name>
+              <lsb>0</lsb>
+              <msb>3</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>AODFT</name>
+          <description>AO control of DFT features</description>
+          <addressOffset>0x704</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>DTBENABLE</name>
+              <description>Output DTB on GPIO pins through Always-On pin muxing</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>PDSELECT</name>
           <description>Power domain status selection</description>
-          <addressOffset>0x680</addressOffset>
+          <addressOffset>0x780</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <size>0x20</size>
@@ -70863,39 +71028,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                   <value>0xB</value>
                 </enumeratedValue>
               </enumeratedValues>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <dim>0x1</dim>
-          <dimIncrement>0x4</dimIncrement>
-          <name>AOREG[%s]</name>
-          <description>Description collection: Spare register n in PD_AO</description>
-          <addressOffset>0x700</addressOffset>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <size>0x20</size>
-          <fields>
-            <field>
-              <name>VALUE</name>
-              <lsb>0</lsb>
-              <msb>3</msb>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>AODFT</name>
-          <description>AO control of DFT features</description>
-          <addressOffset>0x704</addressOffset>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <size>0x20</size>
-          <fields>
-            <field>
-              <name>DTBENABLE</name>
-              <description>Output DTB on GPIO pins through Always-On pin muxing</description>
-              <lsb>0</lsb>
-              <msb>0</msb>
             </field>
           </fields>
         </register>
@@ -116598,6 +116730,36 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           </fields>
         </register>
         <register>
+          <name>VPRSAVEADDR</name>
+          <description>VPR context save address.</description>
+          <addressOffset>0x590</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x2004EE80</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>LOWER</name>
+              <description>VPR context store address, lower range (static)</description>
+              <lsb>0</lsb>
+              <msb>2</msb>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>ADDRESS</name>
+              <description>VPR context store address</description>
+              <lsb>3</lsb>
+              <msb>19</msb>
+            </field>
+            <field>
+              <name>UPPER</name>
+              <description>VPR context store address, upper range (static)</description>
+              <lsb>20</lsb>
+              <msb>31</msb>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
           <dim>0x1</dim>
           <dimIncrement>0x4</dimIncrement>
           <name>MAINREG[%s]</name>
@@ -116615,9 +116777,42 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           </fields>
         </register>
         <register>
+          <dim>0x1</dim>
+          <dimIncrement>0x4</dimIncrement>
+          <name>AOREG[%s]</name>
+          <description>Description collection: Spare register n in PD_AO</description>
+          <addressOffset>0x700</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>VALUE</name>
+              <lsb>0</lsb>
+              <msb>3</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>AODFT</name>
+          <description>AO control of DFT features</description>
+          <addressOffset>0x704</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>DTBENABLE</name>
+              <description>Output DTB on GPIO pins through Always-On pin muxing</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>PDSELECT</name>
           <description>Power domain status selection</description>
-          <addressOffset>0x680</addressOffset>
+          <addressOffset>0x780</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <size>0x20</size>
@@ -116757,39 +116952,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                   <value>0xB</value>
                 </enumeratedValue>
               </enumeratedValues>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <dim>0x1</dim>
-          <dimIncrement>0x4</dimIncrement>
-          <name>AOREG[%s]</name>
-          <description>Description collection: Spare register n in PD_AO</description>
-          <addressOffset>0x700</addressOffset>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <size>0x20</size>
-          <fields>
-            <field>
-              <name>VALUE</name>
-              <lsb>0</lsb>
-              <msb>3</msb>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>AODFT</name>
-          <description>AO control of DFT features</description>
-          <addressOffset>0x704</addressOffset>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <size>0x20</size>
-          <fields>
-            <field>
-              <name>DTBENABLE</name>
-              <description>Output DTB on GPIO pins through Always-On pin muxing</description>
-              <lsb>0</lsb>
-              <msb>0</msb>
             </field>
           </fields>
         </register>
@@ -124470,6 +124632,36 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           </fields>
         </register>
         <register>
+          <name>VPRSAVEADDR</name>
+          <description>VPR context save address.</description>
+          <addressOffset>0x590</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x2004EE80</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>LOWER</name>
+              <description>VPR context store address, lower range (static)</description>
+              <lsb>0</lsb>
+              <msb>2</msb>
+              <access>read-only</access>
+            </field>
+            <field>
+              <name>ADDRESS</name>
+              <description>VPR context store address</description>
+              <lsb>3</lsb>
+              <msb>19</msb>
+            </field>
+            <field>
+              <name>UPPER</name>
+              <description>VPR context store address, upper range (static)</description>
+              <lsb>20</lsb>
+              <msb>31</msb>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+        <register>
           <dim>0x1</dim>
           <dimIncrement>0x4</dimIncrement>
           <name>MAINREG[%s]</name>
@@ -124487,9 +124679,42 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           </fields>
         </register>
         <register>
+          <dim>0x1</dim>
+          <dimIncrement>0x4</dimIncrement>
+          <name>AOREG[%s]</name>
+          <description>Description collection: Spare register n in PD_AO</description>
+          <addressOffset>0x700</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>VALUE</name>
+              <lsb>0</lsb>
+              <msb>3</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>AODFT</name>
+          <description>AO control of DFT features</description>
+          <addressOffset>0x704</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <size>0x20</size>
+          <fields>
+            <field>
+              <name>DTBENABLE</name>
+              <description>Output DTB on GPIO pins through Always-On pin muxing</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>PDSELECT</name>
           <description>Power domain status selection</description>
-          <addressOffset>0x680</addressOffset>
+          <addressOffset>0x780</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <size>0x20</size>
@@ -124629,39 +124854,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                   <value>0xB</value>
                 </enumeratedValue>
               </enumeratedValues>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <dim>0x1</dim>
-          <dimIncrement>0x4</dimIncrement>
-          <name>AOREG[%s]</name>
-          <description>Description collection: Spare register n in PD_AO</description>
-          <addressOffset>0x700</addressOffset>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <size>0x20</size>
-          <fields>
-            <field>
-              <name>VALUE</name>
-              <lsb>0</lsb>
-              <msb>3</msb>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>AODFT</name>
-          <description>AO control of DFT features</description>
-          <addressOffset>0x704</addressOffset>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <size>0x20</size>
-          <fields>
-            <field>
-              <name>DTBENABLE</name>
-              <description>Output DTB on GPIO pins through Always-On pin muxing</description>
-              <lsb>0</lsb>
-              <msb>0</msb>
             </field>
           </fields>
         </register>
@@ -125377,6 +125569,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                       <value>0x2</value>
                     </enumeratedValue>
                     <enumeratedValue>
+                      <name>RdyPkd1Pkd2</name>
                       <description>READY, PKD_1 and PKD_2 on DTB makes it easier to measure start-up time in the lab since edge of READY can be used as reference start-point, while PKD outputs can be used as reference stop-points</description>
                       <value>0x3</value>
                     </enumeratedValue>

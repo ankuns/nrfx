@@ -95936,15 +95936,11 @@ typedef struct {
 
 
 /* RADIO_ACQINJDMA_PTR: ACQ DMA pointer */
-  #define RADIO_ACQINJDMA_PTR_ResetValue (0x00000000UL) /*!< Reset value of PTR register.                                      */
+  #define RADIO_ACQINJDMA_PTR_ResetValue (0x01000000UL) /*!< Reset value of PTR register.                                      */
 
-/* OFFSET @Bits 0..15 : (unspecified) */
-  #define RADIO_ACQINJDMA_PTR_OFFSET_Pos (0UL)       /*!< Position of OFFSET field.                                            */
-  #define RADIO_ACQINJDMA_PTR_OFFSET_Msk (0xFFFFUL << RADIO_ACQINJDMA_PTR_OFFSET_Pos) /*!< Bit mask of OFFSET field.           */
-
-/* BASE @Bit 29 : (unspecified) */
-  #define RADIO_ACQINJDMA_PTR_BASE_Pos (29UL)        /*!< Position of BASE field.                                              */
-  #define RADIO_ACQINJDMA_PTR_BASE_Msk (0x1UL << RADIO_ACQINJDMA_PTR_BASE_Pos) /*!< Bit mask of BASE field.                    */
+/* PTR @Bits 0..31 : Data pointer */
+  #define RADIO_ACQINJDMA_PTR_PTR_Pos (0UL)          /*!< Position of PTR field.                                               */
+  #define RADIO_ACQINJDMA_PTR_PTR_Msk (0xFFFFFFFFUL << RADIO_ACQINJDMA_PTR_PTR_Pos) /*!< Bit mask of PTR field.                */
 
 
 /* RADIO_ACQINJDMA_MAXCNT: Maximum number of 32-bit words to transfer */
@@ -96566,7 +96562,7 @@ typedef struct {
   #define RADIO_SPHYNXANA_RXCTRL_ENCWLOOPBACK_Msk (0x1UL << RADIO_SPHYNXANA_RXCTRL_ENCWLOOPBACK_Pos) /*!< Bit mask of
                                                                             ENCWLOOPBACK field.*/
 
-/* RXTUNEIN @Bits 25..30 : Controls TX_PWR_0V8/PWRCTR_TX_0V9 when in RX or Loopback */
+/* RXTUNEIN @Bits 25..30 : Controls TX_PWR_0V8 when in RX or Loopback */
   #define RADIO_SPHYNXANA_RXCTRL_RXTUNEIN_Pos (25UL) /*!< Position of RXTUNEIN field.                                          */
   #define RADIO_SPHYNXANA_RXCTRL_RXTUNEIN_Msk (0x3FUL << RADIO_SPHYNXANA_RXCTRL_RXTUNEIN_Pos) /*!< Bit mask of RXTUNEIN field. */
 
@@ -97153,7 +97149,7 @@ typedef struct {
 /* RADIO_TIMINGENGINE_TIMINGTX2: Timing parameters for signals activated in Tx mode */
   #define RADIO_TIMINGENGINE_TIMINGTX2_ResetValue (0x00060078UL) /*!< Reset value of TIMINGTX2 register.                       */
 
-/* TPWRUPTXPA @Bits 0..7 : Timing control of PwrupTxPa (unit: 0.25us) */
+/* TPWRUPTXPA @Bits 0..7 : Timing control of PwrupTxPa and PwrupTxPaPre (unit: 0.25us) */
   #define RADIO_TIMINGENGINE_TIMINGTX2_TPWRUPTXPA_Pos (0UL) /*!< Position of TPWRUPTXPA field.                                 */
   #define RADIO_TIMINGENGINE_TIMINGTX2_TPWRUPTXPA_Msk (0xFFUL << RADIO_TIMINGENGINE_TIMINGTX2_TPWRUPTXPA_Pos) /*!< Bit mask of
                                                                             TPWRUPTXPA field.*/
@@ -97345,7 +97341,7 @@ typedef struct {
   #define RADIO_TIMINGENGINE_OVRENRXTX_OVRENPWRUPTXPWRCTRL_Msk (0x1UL << RADIO_TIMINGENGINE_OVRENRXTX_OVRENPWRUPTXPWRCTRL_Pos)
                                                                             /*!< Bit mask of OVRENPWRUPTXPWRCTRL field.*/
 
-/* OVRENPWRUPTXPA @Bit 24 : Override enable of PwrupTxPa */
+/* OVRENPWRUPTXPA @Bit 24 : Override enable of PwrupTxPa and PwrupTxPaPre */
   #define RADIO_TIMINGENGINE_OVRENRXTX_OVRENPWRUPTXPA_Pos (24UL) /*!< Position of OVRENPWRUPTXPA field.                        */
   #define RADIO_TIMINGENGINE_OVRENRXTX_OVRENPWRUPTXPA_Msk (0x1UL << RADIO_TIMINGENGINE_OVRENRXTX_OVRENPWRUPTXPA_Pos) /*!< Bit
                                                                             mask of OVRENPWRUPTXPA field.*/
@@ -97538,7 +97534,7 @@ typedef struct {
   #define RADIO_TIMINGENGINE_OVRVALRXTX_OVRVALPWRUPTXPWRCTRL_Msk (0x1UL << RADIO_TIMINGENGINE_OVRVALRXTX_OVRVALPWRUPTXPWRCTRL_Pos)
                                                                             /*!< Bit mask of OVRVALPWRUPTXPWRCTRL field.*/
 
-/* OVRVALPWRUPTXPA @Bit 24 : Override value of PwrupTxPa */
+/* OVRVALPWRUPTXPA @Bit 24 : Override value of PwrupTxPa and PwrupTxPaPre */
   #define RADIO_TIMINGENGINE_OVRVALRXTX_OVRVALPWRUPTXPA_Pos (24UL) /*!< Position of OVRVALPWRUPTXPA field.                     */
   #define RADIO_TIMINGENGINE_OVRVALRXTX_OVRVALPWRUPTXPA_Msk (0x1UL << RADIO_TIMINGENGINE_OVRVALRXTX_OVRVALPWRUPTXPA_Pos) /*!<
                                                                             Bit mask of OVRVALPWRUPTXPA field.*/
@@ -97704,7 +97700,7 @@ typedef struct {
 /* RADIO_RXAGC_CALIBRATION: Calibrate RSSI and Energy Detect values */
   #define RADIO_RXAGC_CALIBRATION_ResetValue (0x00000000UL) /*!< Reset value of CALIBRATION register.                          */
 
-/* RSSICAL @Bits 0..6 : RSSI calibration value */
+/* RSSICAL @Bits 0..6 : RSSI calibration value (this field affects the value of both RSSISAMPLE and EDSAMPLE) */
   #define RADIO_RXAGC_CALIBRATION_RSSICAL_Pos (0UL)  /*!< Position of RSSICAL field.                                           */
   #define RADIO_RXAGC_CALIBRATION_RSSICAL_Msk (0x7FUL << RADIO_RXAGC_CALIBRATION_RSSICAL_Pos) /*!< Bit mask of RSSICAL field.  */
 
@@ -98782,7 +98778,7 @@ typedef struct {
   #define RADIO_PSEL_DFEGPIO_PORT_Pos (5UL)          /*!< Position of PORT field.                                              */
   #define RADIO_PSEL_DFEGPIO_PORT_Msk (0xFUL << RADIO_PSEL_DFEGPIO_PORT_Pos) /*!< Bit mask of PORT field.                      */
   #define RADIO_PSEL_DFEGPIO_PORT_Min (0x0UL)        /*!< Min value of PORT field.                                             */
-  #define RADIO_PSEL_DFEGPIO_PORT_Max (0x1UL)        /*!< Max size of PORT field.                                              */
+  #define RADIO_PSEL_DFEGPIO_PORT_Max (0xFUL)        /*!< Max size of PORT field.                                              */
 
 /* CONNECT @Bit 31 : Connection */
   #define RADIO_PSEL_DFEGPIO_CONNECT_Pos (31UL)      /*!< Position of CONNECT field.                                           */
@@ -98810,13 +98806,9 @@ typedef struct {
 /* RADIO_DFEPACKET_PTR: Data pointer */
   #define RADIO_DFEPACKET_PTR_ResetValue (0x01000000UL) /*!< Reset value of PTR register.                                      */
 
-/* OFFSET @Bits 0..15 : Data pointer */
-  #define RADIO_DFEPACKET_PTR_OFFSET_Pos (0UL)       /*!< Position of OFFSET field.                                            */
-  #define RADIO_DFEPACKET_PTR_OFFSET_Msk (0xFFFFUL << RADIO_DFEPACKET_PTR_OFFSET_Pos) /*!< Bit mask of OFFSET field.           */
-
-/* BASE @Bit 29 : (unspecified) */
-  #define RADIO_DFEPACKET_PTR_BASE_Pos (29UL)        /*!< Position of BASE field.                                              */
-  #define RADIO_DFEPACKET_PTR_BASE_Msk (0x1UL << RADIO_DFEPACKET_PTR_BASE_Pos) /*!< Bit mask of BASE field.                    */
+/* PTR @Bits 0..31 : Data pointer */
+  #define RADIO_DFEPACKET_PTR_PTR_Pos (0UL)          /*!< Position of PTR field.                                               */
+  #define RADIO_DFEPACKET_PTR_PTR_Msk (0xFFFFFFFFUL << RADIO_DFEPACKET_PTR_PTR_Pos) /*!< Bit mask of PTR field.                */
 
 
 /* RADIO_DFEPACKET_MAXCNT: Maximum number of bytes to transfer */
@@ -98916,7 +98908,7 @@ typedef struct {
   __OM  uint32_t  DMASTART;                          /*!< (@ 0x000000C4) (unspecified)                                         */
   __OM  uint32_t  DMASTOP;                           /*!< (@ 0x000000C8) (unspecified)                                         */
   __IOM uint32_t  DMAENABLE;                         /*!< (@ 0x000000CC) (unspecified)                                         */
-  __IOM uint32_t  PACKETPTR;                         /*!< (@ 0x000000D0) (unspecified)                                         */
+  __IOM uint32_t  PACKETPTR;                         /*!< (@ 0x000000D0) Packet pointer                                        */
   __IM  uint32_t  DMAAMOUNT;                         /*!< (@ 0x000000D4) (unspecified)                                         */
   __IOM uint32_t  DMAMAXCNT;                         /*!< (@ 0x000000D8) (unspecified)                                         */
 } NRF_RADIO_LBMAC_Type;                              /*!< Size = 220 (0x0DC)                                                   */
@@ -99346,8 +99338,8 @@ typedef struct {
 /* LEN @Bits 0..1 : CRC length in number of bytes. */
   #define RADIO_LBMAC_CRCCNF_LEN_Pos (0UL)           /*!< Position of LEN field.                                               */
   #define RADIO_LBMAC_CRCCNF_LEN_Msk (0x3UL << RADIO_LBMAC_CRCCNF_LEN_Pos) /*!< Bit mask of LEN field.                         */
-  #define RADIO_LBMAC_CRCCNF_LEN_Min (0x1UL)         /*!< Min value of LEN field.                                              */
-  #define RADIO_LBMAC_CRCCNF_LEN_Max (0x3UL)         /*!< Max size of LEN field.                                               */
+  #define RADIO_LBMAC_CRCCNF_LEN_Min (0x0UL)         /*!< Min enumerator value of LEN field.                                   */
+  #define RADIO_LBMAC_CRCCNF_LEN_Max (0x3UL)         /*!< Max enumerator value of LEN field.                                   */
   #define RADIO_LBMAC_CRCCNF_LEN_Disabled (0x0UL)    /*!< CRC length is zero and CRC calculation is disabled                   */
   #define RADIO_LBMAC_CRCCNF_LEN_One (0x1UL)         /*!< CRC length is one byte and CRC calculation is enabled                */
   #define RADIO_LBMAC_CRCCNF_LEN_Two (0x2UL)         /*!< CRC length is two bytes and CRC calculation is enabled               */
@@ -99359,10 +99351,9 @@ typedef struct {
   #define RADIO_LBMAC_CRCCNF_SKIPADDR_Min (0x0UL)    /*!< Min enumerator value of SKIPADDR field.                              */
   #define RADIO_LBMAC_CRCCNF_SKIPADDR_Max (0x2UL)    /*!< Max enumerator value of SKIPADDR field.                              */
   #define RADIO_LBMAC_CRCCNF_SKIPADDR_Include (0x0UL) /*!< CRC calculation includes address field                              */
-  #define RADIO_LBMAC_CRCCNF_SKIPADDR_Skip (0x1UL)   /*!< CRC calculation does not include address field. The CRC calculation
-                                                          will start at the first byte after the address.*/
-  #define RADIO_LBMAC_CRCCNF_SKIPADDR_Ieee802154 (0x2UL) /*!< CRC calculation as per 802.15.4 standard. Starting at first byte
-                                                              after length field.*/
+  #define RADIO_LBMAC_CRCCNF_SKIPADDR_Skip (0x1UL)   /*!< CRC calculation starting at first byte after address field.          */
+  #define RADIO_LBMAC_CRCCNF_SKIPADDR_Ieee802154 (0x2UL) /*!< CRC calculation starting at first byte after length field (as per
+                                                              802.15.4 standard).*/
 
 
 /* RADIO_LBMAC_CRCPOLY: CRC polynomial */
@@ -99824,16 +99815,12 @@ typedef struct {
   #define RADIO_LBMAC_DMAENABLE_ENABLE_Msk (0x1UL << RADIO_LBMAC_DMAENABLE_ENABLE_Pos) /*!< Bit mask of ENABLE field.          */
 
 
-/* RADIO_LBMAC_PACKETPTR: (unspecified) */
-  #define RADIO_LBMAC_PACKETPTR_ResetValue (0x00000000UL) /*!< Reset value of PACKETPTR register.                              */
+/* RADIO_LBMAC_PACKETPTR: Packet pointer */
+  #define RADIO_LBMAC_PACKETPTR_ResetValue (0x01000000UL) /*!< Reset value of PACKETPTR register.                              */
 
-/* OFFSET @Bits 0..15 : (unspecified) */
-  #define RADIO_LBMAC_PACKETPTR_OFFSET_Pos (0UL)     /*!< Position of OFFSET field.                                            */
-  #define RADIO_LBMAC_PACKETPTR_OFFSET_Msk (0xFFFFUL << RADIO_LBMAC_PACKETPTR_OFFSET_Pos) /*!< Bit mask of OFFSET field.       */
-
-/* BASE @Bit 29 : (unspecified) */
-  #define RADIO_LBMAC_PACKETPTR_BASE_Pos (29UL)      /*!< Position of BASE field.                                              */
-  #define RADIO_LBMAC_PACKETPTR_BASE_Msk (0x1UL << RADIO_LBMAC_PACKETPTR_BASE_Pos) /*!< Bit mask of BASE field.                */
+/* PTR @Bits 0..31 : Data pointer */
+  #define RADIO_LBMAC_PACKETPTR_PTR_Pos (0UL)        /*!< Position of PTR field.                                               */
+  #define RADIO_LBMAC_PACKETPTR_PTR_Msk (0xFFFFFFFFUL << RADIO_LBMAC_PACKETPTR_PTR_Pos) /*!< Bit mask of PTR field.            */
 
 
 /* RADIO_LBMAC_DMAAMOUNT: (unspecified) */
@@ -99942,10 +99929,14 @@ typedef struct {
 /* RADIO_CSTONES_FFOSOURCE: Source of FFO */
   #define RADIO_CSTONES_FFOSOURCE_ResetValue (0x00000001UL) /*!< Reset value of FFOSOURCE register.                            */
 
-/* FFOSOURCE @Bit 0 : 0: Use FFOIN 1: Calc FFO from CnAcc */
+/* FFOSOURCE @Bit 0 : Use external or internal FFOSOURCE */
   #define RADIO_CSTONES_FFOSOURCE_FFOSOURCE_Pos (0UL) /*!< Position of FFOSOURCE field.                                        */
   #define RADIO_CSTONES_FFOSOURCE_FFOSOURCE_Msk (0x1UL << RADIO_CSTONES_FFOSOURCE_FFOSOURCE_Pos) /*!< Bit mask of FFOSOURCE
                                                                             field.*/
+  #define RADIO_CSTONES_FFOSOURCE_FFOSOURCE_Min (0x0UL) /*!< Min enumerator value of FFOSOURCE field.                          */
+  #define RADIO_CSTONES_FFOSOURCE_FFOSOURCE_Max (0x1UL) /*!< Max enumerator value of FFOSOURCE field.                          */
+  #define RADIO_CSTONES_FFOSOURCE_FFOSOURCE_External (0x0UL) /*!< Use FFOIN                                                    */
+  #define RADIO_CSTONES_FFOSOURCE_FFOSOURCE_Internal (0x1UL) /*!< Calc FFO from CnAcc                                          */
 
 
 /* RADIO_CSTONES_FAEPEER: FAEPEER (Frequency Actuation Error) of peer if known. Used during Mode 0 steps. */
@@ -99968,7 +99959,7 @@ typedef struct {
 /* RADIO_CSTONES_NUMSAMPLESCOEFF: Parameter used in TPM, provided by software */
   #define RADIO_CSTONES_NUMSAMPLESCOEFF_ResetValue (0x0000199AUL) /*!< Reset value of NUMSAMPLESCOEFF register.                */
 
-/* NUMSAMPLESCOEFF @Bits 0..15 : Coefficient 1/(numSamples/16) in Q1.15 format (Default numsamples value is 160) */
+/* NUMSAMPLESCOEFF @Bits 0..15 : Coefficient 2**16/(numSamples/16) in Q1.15 format (Default numsamples value is 160) */
   #define RADIO_CSTONES_NUMSAMPLESCOEFF_NUMSAMPLESCOEFF_Pos (0UL) /*!< Position of NUMSAMPLESCOEFF field.                      */
   #define RADIO_CSTONES_NUMSAMPLESCOEFF_NUMSAMPLESCOEFF_Msk (0xFFFFUL << RADIO_CSTONES_NUMSAMPLESCOEFF_NUMSAMPLESCOEFF_Pos) /*!<
                                                                             Bit mask of NUMSAMPLESCOEFF field.*/
@@ -100192,11 +100183,10 @@ typedef struct {
   #define RADIO_DFT_DTB0CONFIG_SELMUX_Pos (0UL)      /*!< Position of SELMUX field.                                            */
   #define RADIO_DFT_DTB0CONFIG_SELMUX_Msk (0x3UL << RADIO_DFT_DTB0CONFIG_SELMUX_Pos) /*!< Bit mask of SELMUX field.            */
   #define RADIO_DFT_DTB0CONFIG_SELMUX_Min (0x0UL)    /*!< Min enumerator value of SELMUX field.                                */
-  #define RADIO_DFT_DTB0CONFIG_SELMUX_Max (0x3UL)    /*!< Max enumerator value of SELMUX field.                                */
+  #define RADIO_DFT_DTB0CONFIG_SELMUX_Max (0x2UL)    /*!< Max enumerator value of SELMUX field.                                */
   #define RADIO_DFT_DTB0CONFIG_SELMUX_AnaDtb00 (0x0UL) /*!< SPHYNX_DTB0_AO_0V8[0]                                              */
   #define RADIO_DFT_DTB0CONFIG_SELMUX_AafDcCalI (0x1UL) /*!< SPHYNX_AAF_DCCAL_I_AO_0V8                                         */
   #define RADIO_DFT_DTB0CONFIG_SELMUX_RxPkDet0 (0x2UL) /*!< SPHYNX_RX_PKDET_AO_0V8[0]                                          */
-  #define RADIO_DFT_DTB0CONFIG_SELMUX_Spare (0x3UL)  /*!< None selected, logic 0                                               */
 
 /* EN @Bit 31 : Enable the digital test bus */
   #define RADIO_DFT_DTB0CONFIG_EN_Pos (31UL)         /*!< Position of EN field.                                                */
@@ -100214,11 +100204,10 @@ typedef struct {
   #define RADIO_DFT_DTB1CONFIG_SELMUX_Pos (0UL)      /*!< Position of SELMUX field.                                            */
   #define RADIO_DFT_DTB1CONFIG_SELMUX_Msk (0x3UL << RADIO_DFT_DTB1CONFIG_SELMUX_Pos) /*!< Bit mask of SELMUX field.            */
   #define RADIO_DFT_DTB1CONFIG_SELMUX_Min (0x0UL)    /*!< Min enumerator value of SELMUX field.                                */
-  #define RADIO_DFT_DTB1CONFIG_SELMUX_Max (0x3UL)    /*!< Max enumerator value of SELMUX field.                                */
+  #define RADIO_DFT_DTB1CONFIG_SELMUX_Max (0x2UL)    /*!< Max enumerator value of SELMUX field.                                */
   #define RADIO_DFT_DTB1CONFIG_SELMUX_AnaDtb01 (0x0UL) /*!< SPHYNX_DTB0_AO_0V8[1]                                              */
   #define RADIO_DFT_DTB1CONFIG_SELMUX_AafDcCalQ (0x1UL) /*!< SPHYNX_AAF_DCCAL_Q_AO_0V8                                         */
   #define RADIO_DFT_DTB1CONFIG_SELMUX_RfPkDet1 (0x2UL) /*!< SPHYNX_RX_PKDET_AO_0V8[1]                                          */
-  #define RADIO_DFT_DTB1CONFIG_SELMUX_Spare (0x3UL)  /*!< None selected, logic 0                                               */
 
 /* EN @Bit 31 : Enable the digital test bus */
   #define RADIO_DFT_DTB1CONFIG_EN_Pos (31UL)         /*!< Position of EN field.                                                */
@@ -100236,11 +100225,9 @@ typedef struct {
   #define RADIO_DFT_DTB2CONFIG_SELMUX_Pos (0UL)      /*!< Position of SELMUX field.                                            */
   #define RADIO_DFT_DTB2CONFIG_SELMUX_Msk (0x3UL << RADIO_DFT_DTB2CONFIG_SELMUX_Pos) /*!< Bit mask of SELMUX field.            */
   #define RADIO_DFT_DTB2CONFIG_SELMUX_Min (0x0UL)    /*!< Min enumerator value of SELMUX field.                                */
-  #define RADIO_DFT_DTB2CONFIG_SELMUX_Max (0x3UL)    /*!< Max enumerator value of SELMUX field.                                */
+  #define RADIO_DFT_DTB2CONFIG_SELMUX_Max (0x1UL)    /*!< Max enumerator value of SELMUX field.                                */
   #define RADIO_DFT_DTB2CONFIG_SELMUX_AnaDtb02 (0x0UL) /*!< SPHYNX_DTB0_AO_0V8[2]                                              */
   #define RADIO_DFT_DTB2CONFIG_SELMUX_PllSettled (0x1UL) /*!< pllSettled                                                       */
-  #define RADIO_DFT_DTB2CONFIG_SELMUX_FsSpareOutputs0 (0x2UL) /*!< SPHYNX_FS_SPARE_OUTPUTS_AO_0V8[0]                           */
-  #define RADIO_DFT_DTB2CONFIG_SELMUX_Spare (0x3UL)  /*!< None selected, logic 0                                               */
 
 /* EN @Bit 31 : Enable the digital test bus */
   #define RADIO_DFT_DTB2CONFIG_EN_Pos (31UL)         /*!< Position of EN field.                                                */
@@ -100258,11 +100245,10 @@ typedef struct {
   #define RADIO_DFT_DTB3CONFIG_SELMUX_Pos (0UL)      /*!< Position of SELMUX field.                                            */
   #define RADIO_DFT_DTB3CONFIG_SELMUX_Msk (0x3UL << RADIO_DFT_DTB3CONFIG_SELMUX_Pos) /*!< Bit mask of SELMUX field.            */
   #define RADIO_DFT_DTB3CONFIG_SELMUX_Min (0x0UL)    /*!< Min enumerator value of SELMUX field.                                */
-  #define RADIO_DFT_DTB3CONFIG_SELMUX_Max (0x3UL)    /*!< Max enumerator value of SELMUX field.                                */
+  #define RADIO_DFT_DTB3CONFIG_SELMUX_Max (0x2UL)    /*!< Max enumerator value of SELMUX field.                                */
   #define RADIO_DFT_DTB3CONFIG_SELMUX_AnaDtb03 (0x0UL) /*!< SPHYNX_DTB0_AO_0V8[3]                                              */
   #define RADIO_DFT_DTB3CONFIG_SELMUX_FsTxDataReq (0x1UL) /*!< SPHYNX_FS_TXDATAREQ_AO_0V8                                      */
   #define RADIO_DFT_DTB3CONFIG_SELMUX_CalCmpRcCal (0x2UL) /*!< SPHYNX_CAL_CMP_RCCAL_AO_0V8                                     */
-  #define RADIO_DFT_DTB3CONFIG_SELMUX_Spare (0x3UL)  /*!< None selected, logic 0                                               */
 
 /* EN @Bit 31 : Enable the digital test bus */
   #define RADIO_DFT_DTB3CONFIG_EN_Pos (31UL)         /*!< Position of EN field.                                                */
@@ -100489,10 +100475,12 @@ typedef struct {
     __OM uint32_t TASKS_CCASTOP;                     /*!< (@ 0x0000002C) Stop the clear channel assessment                     */
     __OM uint32_t TASKS_DFESTART;                    /*!< (@ 0x00000030) Start DFE operation                                   */
     __OM uint32_t TASKS_DFESTOP;                     /*!< (@ 0x00000034) Stop DFE operation                                    */
-    __OM uint32_t TASKS_ACQINJ0DMASTART;             /*!< (@ 0x00000038) Start DMA transaction                                 */
-    __OM uint32_t TASKS_ACQINJ0DMASTOP;              /*!< (@ 0x0000003C) Stop ongoing DMA transaction                          */
-    __OM uint32_t TASKS_ACQINJ1DMASTART;             /*!< (@ 0x00000040) Start DMA transaction                                 */
-    __OM uint32_t TASKS_ACQINJ1DMASTOP;              /*!< (@ 0x00000044) Stop ongoing DMA transaction                          */
+    __OM uint32_t TASKS_ACQINJ0DMASTART;             /*!< (@ 0x00000038) Start DMA transaction of acquisition/injection DMA 0  */
+    __OM uint32_t TASKS_ACQINJ0DMASTOP;              /*!< (@ 0x0000003C) Stop ongoing DMA transaction of acquisition/injection
+                                                                         DMA 0*/
+    __OM uint32_t TASKS_ACQINJ1DMASTART;             /*!< (@ 0x00000040) Start DMA transaction of acquisition/injection DMA 1  */
+    __OM uint32_t TASKS_ACQINJ1DMASTOP;              /*!< (@ 0x00000044) Stop ongoing DMA transaction of acquisition/injection
+                                                                         DMA 1*/
     __IM uint32_t RESERVED[3];
     __OM uint32_t TASKS_LOOPBACKEN;                  /*!< (@ 0x00000054) Enable RADIO in LOOPBACK mode                         */
     __OM uint32_t TASKS_CALSTART;                    /*!< (@ 0x00000058) Start calibration                                     */
@@ -100766,13 +100754,13 @@ typedef struct {
                                                                          frequency outside the 2.4 GHz band*/
     __IM uint32_t RESERVED35[3];
     __IOM uint32_t ADPLLTRIMCOMMAND0;                /*!< (@ 0x000008A0) This value is written to the AdPll when powering up the
-                                                                         digital island. Never reset with SOFTRESET*/
+                                                                         digital island. Never reset with SOFTRESET.*/
     __IOM uint32_t ADPLLTRIMCOMMAND1;                /*!< (@ 0x000008A4) This value is written to the AdPll when powering up the
-                                                                         digital island. Never reset with SOFTRESET*/
+                                                                         digital island. Never reset with SOFTRESET.*/
     __IOM uint32_t ADPLLTRIMCOMMAND2;                /*!< (@ 0x000008A8) This value is written to the AdPll when powering up the
-                                                                         digital island. NEVER reset with SOFTRESET*/
+                                                                         digital island. Never reset with SOFTRESET.*/
     __IOM uint32_t ADPLLTRIMCOMMAND3;                /*!< (@ 0x000008AC) This value is written to the AdPll when powering up the
-                                                                         digital island. NEVER reset with SOFTRESET*/
+                                                                         digital island. Never reset with SOFTRESET.*/
     __IOM uint32_t ADPLLSTARTUPCOMMAND0;             /*!< (@ 0x000008B0) This value is written to the AdPll when powering up the
                                                                          digital island*/
     __IOM uint32_t ADPLLSTARTUPCOMMAND1;             /*!< (@ 0x000008B4) This value is written to the AdPll when powering up the
@@ -100918,7 +100906,7 @@ typedef struct {
     __OM uint32_t DMASTART;                          /*!< (@ 0x00000EC4) (unspecified)                                         */
     __OM uint32_t DMASTOP;                           /*!< (@ 0x00000EC8) (unspecified)                                         */
     __IOM uint32_t DMAENABLE;                        /*!< (@ 0x00000ECC) (unspecified)                                         */
-    __IOM uint32_t PACKETPTR;                        /*!< (@ 0x00000ED0) (unspecified)                                         */
+    __IOM uint32_t PACKETPTR;                        /*!< (@ 0x00000ED0) Packet pointer                                        */
     __IM uint32_t DMAAMOUNT;                         /*!< (@ 0x00000ED4) (unspecified)                                         */
     __IOM uint32_t DMAMAXCNT;                        /*!< (@ 0x00000ED8) (unspecified)                                         */
     __IM uint32_t RESERVED46[9];
@@ -101103,10 +101091,10 @@ typedef struct {
   #define RADIO_TASKS_DFESTOP_TASKS_DFESTOP_Trigger (0x1UL) /*!< Trigger task                                                  */
 
 
-/* RADIO_TASKS_ACQINJ0DMASTART: Start DMA transaction */
+/* RADIO_TASKS_ACQINJ0DMASTART: Start DMA transaction of acquisition/injection DMA 0 */
   #define RADIO_TASKS_ACQINJ0DMASTART_ResetValue (0x00000000UL) /*!< Reset value of TASKS_ACQINJ0DMASTART register.            */
 
-/* TASKS_ACQINJ0DMASTART @Bit 0 : Start DMA transaction */
+/* TASKS_ACQINJ0DMASTART @Bit 0 : Start DMA transaction of acquisition/injection DMA 0 */
   #define RADIO_TASKS_ACQINJ0DMASTART_TASKS_ACQINJ0DMASTART_Pos (0UL) /*!< Position of TASKS_ACQINJ0DMASTART field.            */
   #define RADIO_TASKS_ACQINJ0DMASTART_TASKS_ACQINJ0DMASTART_Msk (0x1UL << RADIO_TASKS_ACQINJ0DMASTART_TASKS_ACQINJ0DMASTART_Pos)
                                                                             /*!< Bit mask of TASKS_ACQINJ0DMASTART field.*/
@@ -101117,10 +101105,10 @@ typedef struct {
   #define RADIO_TASKS_ACQINJ0DMASTART_TASKS_ACQINJ0DMASTART_Trigger (0x1UL) /*!< Trigger task                                  */
 
 
-/* RADIO_TASKS_ACQINJ0DMASTOP: Stop ongoing DMA transaction */
+/* RADIO_TASKS_ACQINJ0DMASTOP: Stop ongoing DMA transaction of acquisition/injection DMA 0 */
   #define RADIO_TASKS_ACQINJ0DMASTOP_ResetValue (0x00000000UL) /*!< Reset value of TASKS_ACQINJ0DMASTOP register.              */
 
-/* TASKS_ACQINJ0DMASTOP @Bit 0 : Stop ongoing DMA transaction */
+/* TASKS_ACQINJ0DMASTOP @Bit 0 : Stop ongoing DMA transaction of acquisition/injection DMA 0 */
   #define RADIO_TASKS_ACQINJ0DMASTOP_TASKS_ACQINJ0DMASTOP_Pos (0UL) /*!< Position of TASKS_ACQINJ0DMASTOP field.               */
   #define RADIO_TASKS_ACQINJ0DMASTOP_TASKS_ACQINJ0DMASTOP_Msk (0x1UL << RADIO_TASKS_ACQINJ0DMASTOP_TASKS_ACQINJ0DMASTOP_Pos)
                                                                             /*!< Bit mask of TASKS_ACQINJ0DMASTOP field.*/
@@ -101129,10 +101117,10 @@ typedef struct {
   #define RADIO_TASKS_ACQINJ0DMASTOP_TASKS_ACQINJ0DMASTOP_Trigger (0x1UL) /*!< Trigger task                                    */
 
 
-/* RADIO_TASKS_ACQINJ1DMASTART: Start DMA transaction */
+/* RADIO_TASKS_ACQINJ1DMASTART: Start DMA transaction of acquisition/injection DMA 1 */
   #define RADIO_TASKS_ACQINJ1DMASTART_ResetValue (0x00000000UL) /*!< Reset value of TASKS_ACQINJ1DMASTART register.            */
 
-/* TASKS_ACQINJ1DMASTART @Bit 0 : Start DMA transaction */
+/* TASKS_ACQINJ1DMASTART @Bit 0 : Start DMA transaction of acquisition/injection DMA 1 */
   #define RADIO_TASKS_ACQINJ1DMASTART_TASKS_ACQINJ1DMASTART_Pos (0UL) /*!< Position of TASKS_ACQINJ1DMASTART field.            */
   #define RADIO_TASKS_ACQINJ1DMASTART_TASKS_ACQINJ1DMASTART_Msk (0x1UL << RADIO_TASKS_ACQINJ1DMASTART_TASKS_ACQINJ1DMASTART_Pos)
                                                                             /*!< Bit mask of TASKS_ACQINJ1DMASTART field.*/
@@ -101143,10 +101131,10 @@ typedef struct {
   #define RADIO_TASKS_ACQINJ1DMASTART_TASKS_ACQINJ1DMASTART_Trigger (0x1UL) /*!< Trigger task                                  */
 
 
-/* RADIO_TASKS_ACQINJ1DMASTOP: Stop ongoing DMA transaction */
+/* RADIO_TASKS_ACQINJ1DMASTOP: Stop ongoing DMA transaction of acquisition/injection DMA 1 */
   #define RADIO_TASKS_ACQINJ1DMASTOP_ResetValue (0x00000000UL) /*!< Reset value of TASKS_ACQINJ1DMASTOP register.              */
 
-/* TASKS_ACQINJ1DMASTOP @Bit 0 : Stop ongoing DMA transaction */
+/* TASKS_ACQINJ1DMASTOP @Bit 0 : Stop ongoing DMA transaction of acquisition/injection DMA 1 */
   #define RADIO_TASKS_ACQINJ1DMASTOP_TASKS_ACQINJ1DMASTOP_Pos (0UL) /*!< Position of TASKS_ACQINJ1DMASTOP field.               */
   #define RADIO_TASKS_ACQINJ1DMASTOP_TASKS_ACQINJ1DMASTOP_Msk (0x1UL << RADIO_TASKS_ACQINJ1DMASTOP_TASKS_ACQINJ1DMASTOP_Pos)
                                                                             /*!< Bit mask of TASKS_ACQINJ1DMASTOP field.*/
@@ -105935,7 +105923,7 @@ typedef struct {
   #define RADIO_MODE_MODE_Nrf_4Mbit_0BT6 (0x9UL)     /*!< 4 Mbps Nordic proprietary radio mode (BT=0.6/h=0.5)                  */
   #define RADIO_MODE_MODE_Nrf_4Mbit_0BT4 (0xAUL)     /*!< 4 Mbps Nordic proprietary radio mode (BT=0.4/h=0.5)                  */
   #define RADIO_MODE_MODE_Test_Ble_1Mbit (0xCUL)     /*!< Production test mode based on 1 Mbps BLE                             */
-  #define RADIO_MODE_MODE_Ieee802154_250Kbit (0xFUL) /*!< IEEE 802.15.4-2015 250 kbps                                          */
+  #define RADIO_MODE_MODE_Ieee802154_250Kbit (0xFUL) /*!< IEEE 802.15.4 250 kbps                                               */
 
 
 /* RADIO_MODEINTERNAL: Internal mode setting, active only when MODEPROGENABLE==1 */
@@ -106049,15 +106037,15 @@ typedef struct {
   #define RADIO_STATE_STATE_Msk (0xFUL << RADIO_STATE_STATE_Pos) /*!< Bit mask of STATE field.                                 */
   #define RADIO_STATE_STATE_Min (0x0UL)              /*!< Min enumerator value of STATE field.                                 */
   #define RADIO_STATE_STATE_Max (0xCUL)              /*!< Max enumerator value of STATE field.                                 */
-  #define RADIO_STATE_STATE_Disabled (0x0UL)         /*!< RADIO is in the Disabled state                                       */
+  #define RADIO_STATE_STATE_Disabled (0x0UL)         /*!< RADIO is in the DISABLED state                                       */
   #define RADIO_STATE_STATE_RxRu (0x1UL)             /*!< RADIO is in the RXRU state                                           */
   #define RADIO_STATE_STATE_RxIdle (0x2UL)           /*!< RADIO is in the RXIDLE state                                         */
   #define RADIO_STATE_STATE_Rx (0x3UL)               /*!< RADIO is in the RX state                                             */
-  #define RADIO_STATE_STATE_RxDisable (0x4UL)        /*!< RADIO is in the RXDISABLED state                                     */
+  #define RADIO_STATE_STATE_RxDisable (0x4UL)        /*!< RADIO is in the RXDISABLE state                                      */
   #define RADIO_STATE_STATE_TxRu (0x9UL)             /*!< RADIO is in the TXRU state                                           */
   #define RADIO_STATE_STATE_TxIdle (0xAUL)           /*!< RADIO is in the TXIDLE state                                         */
   #define RADIO_STATE_STATE_Tx (0xBUL)               /*!< RADIO is in the TX state                                             */
-  #define RADIO_STATE_STATE_TxDisable (0xCUL)        /*!< RADIO is in the TXDISABLED state                                     */
+  #define RADIO_STATE_STATE_TxDisable (0xCUL)        /*!< RADIO is in the TXDISABLE state                                      */
 
 
 /* RADIO_EDCTRL: IEEE 802.15.4 energy detect control */
@@ -106072,6 +106060,9 @@ typedef struct {
 
   #define RADIO_EDCTRL_EDPERIOD_Pos (24UL)           /*!< Position of EDPERIOD field.                                          */
   #define RADIO_EDCTRL_EDPERIOD_Msk (0x3FUL << RADIO_EDCTRL_EDPERIOD_Pos) /*!< Bit mask of EDPERIOD field.                     */
+  #define RADIO_EDCTRL_EDPERIOD_Min (0x20UL)         /*!< Min enumerator value of EDPERIOD field.                              */
+  #define RADIO_EDCTRL_EDPERIOD_Max (0x20UL)         /*!< Max enumerator value of EDPERIOD field.                              */
+  #define RADIO_EDCTRL_EDPERIOD_Default (0x20UL)     /*!< (unspecified)                                                        */
 
 
 /* RADIO_EDSAMPLE: IEEE 802.15.4 energy detect level */
@@ -106259,6 +106250,7 @@ typedef struct {
   #define RADIO_TXPOWER_TXPOWER_Msk (0x1FUL << RADIO_TXPOWER_TXPOWER_Pos) /*!< Bit mask of TXPOWER field.                      */
   #define RADIO_TXPOWER_TXPOWER_Min (0x0UL)          /*!< Min enumerator value of TXPOWER field.                               */
   #define RADIO_TXPOWER_TXPOWER_Max (0x1FUL)         /*!< Max enumerator value of TXPOWER field.                               */
+  #define RADIO_TXPOWER_TXPOWER_MaxdBm (0x01FUL)     /*!< +10 dBm                                                              */
   #define RADIO_TXPOWER_TXPOWER_Pos10dBm (0x01FUL)   /*!< +10 dBm                                                              */
   #define RADIO_TXPOWER_TXPOWER_Pos9dBm (0x01DUL)    /*!< +9 dBm                                                               */
   #define RADIO_TXPOWER_TXPOWER_Pos8dBm (0x01CUL)    /*!< +8 dBm                                                               */
@@ -106280,6 +106272,7 @@ typedef struct {
   #define RADIO_TXPOWER_TXPOWER_Neg30dBm (0x002UL)   /*!< -30 dBm                                                              */
   #define RADIO_TXPOWER_TXPOWER_Neg40dBm (0x001UL)   /*!< -40 dBm                                                              */
   #define RADIO_TXPOWER_TXPOWER_Neg70dBm (0x000UL)   /*!< -70 dBm                                                              */
+  #define RADIO_TXPOWER_TXPOWER_MindBm (0x000UL)     /*!< -70 dBm                                                              */
 
 
 /* RADIO_TIFS: Interframe spacing in us */
@@ -106836,7 +106829,9 @@ typedef struct {
   #define RADIO_OVERRIDEFREQ_OVREN_Msk (0x1UL << RADIO_OVERRIDEFREQ_OVREN_Pos) /*!< Bit mask of OVREN field.                   */
 
 
-/* RADIO_ADPLLTRIMCOMMAND0: This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET */
+/* RADIO_ADPLLTRIMCOMMAND0: This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET.
+                             */
+
   #define RADIO_ADPLLTRIMCOMMAND0_ResetValue (0x80000000UL) /*!< Reset value of ADPLLTRIMCOMMAND0 register.                    */
 
 /* VALUE @Bits 0..15 : The value to be written the register in the digital island */
@@ -106853,7 +106848,9 @@ typedef struct {
                                                                             DONOTTRANSFER field.*/
 
 
-/* RADIO_ADPLLTRIMCOMMAND1: This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET */
+/* RADIO_ADPLLTRIMCOMMAND1: This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET.
+                             */
+
   #define RADIO_ADPLLTRIMCOMMAND1_ResetValue (0x80000000UL) /*!< Reset value of ADPLLTRIMCOMMAND1 register.                    */
 
 /* VALUE @Bits 0..15 : The value to be written the register in the digital island */
@@ -106870,7 +106867,9 @@ typedef struct {
                                                                             DONOTTRANSFER field.*/
 
 
-/* RADIO_ADPLLTRIMCOMMAND2: This value is written to the AdPll when powering up the digital island. NEVER reset with SOFTRESET */
+/* RADIO_ADPLLTRIMCOMMAND2: This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET.
+                             */
+
   #define RADIO_ADPLLTRIMCOMMAND2_ResetValue (0x80000000UL) /*!< Reset value of ADPLLTRIMCOMMAND2 register.                    */
 
 /* VALUE @Bits 0..15 : The value to be written the register in the digital island */
@@ -106887,7 +106886,9 @@ typedef struct {
                                                                             DONOTTRANSFER field.*/
 
 
-/* RADIO_ADPLLTRIMCOMMAND3: This value is written to the AdPll when powering up the digital island. NEVER reset with SOFTRESET */
+/* RADIO_ADPLLTRIMCOMMAND3: This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET.
+                             */
+
   #define RADIO_ADPLLTRIMCOMMAND3_ResetValue (0x80000000UL) /*!< Reset value of ADPLLTRIMCOMMAND3 register.                    */
 
 /* VALUE @Bits 0..15 : The value to be written the register in the digital island */
@@ -107945,16 +107946,16 @@ typedef struct {
 /* RADIO_DRIFTLR: Drift Controls in Long Range */
   #define RADIO_DRIFTLR_ResetValue (0x0000033CUL)    /*!< Reset value of DRIFTLR register.                                     */
 
-/* DRIFTHALPHA125 @Bits 0..7 : Override value for IIR feedback , drift estimator (despreadLELLong) */
+/* DRIFTHALPHA125 @Bits 0..7 : Value for IIR feedback , drift estimator (despreadLELLong) */
   #define RADIO_DRIFTLR_DRIFTHALPHA125_Pos (0UL)     /*!< Position of DRIFTHALPHA125 field.                                    */
   #define RADIO_DRIFTLR_DRIFTHALPHA125_Msk (0xFFUL << RADIO_DRIFTLR_DRIFTHALPHA125_Pos) /*!< Bit mask of DRIFTHALPHA125 field. */
 
-/* DRIFTVALIDTH125 @Bits 8..16 : Override value for driftValidTh, drift estimator (despreadLELLong) */
+/* DRIFTVALIDTH125 @Bits 8..16 : Value for driftValidTh, drift estimator (despreadLELLong) */
   #define RADIO_DRIFTLR_DRIFTVALIDTH125_Pos (8UL)    /*!< Position of DRIFTVALIDTH125 field.                                   */
   #define RADIO_DRIFTLR_DRIFTVALIDTH125_Msk (0x1FFUL << RADIO_DRIFTLR_DRIFTVALIDTH125_Pos) /*!< Bit mask of DRIFTVALIDTH125
                                                                             field.*/
 
-/* DRIFTLOWTH125 @Bits 24..29 : Override value for driftLowTh, drift estimator (despreadLELLong) */
+/* DRIFTLOWTH125 @Bits 24..29 : Value for driftLowTh, drift estimator (despreadLELLong) */
   #define RADIO_DRIFTLR_DRIFTLOWTH125_Pos (24UL)     /*!< Position of DRIFTLOWTH125 field.                                     */
   #define RADIO_DRIFTLR_DRIFTLOWTH125_Msk (0x3FUL << RADIO_DRIFTLR_DRIFTLOWTH125_Pos) /*!< Bit mask of DRIFTLOWTH125 field.    */
 
@@ -107962,11 +107963,11 @@ typedef struct {
 /* RADIO_DRIFT1: Drift Estimator configuration */
   #define RADIO_DRIFT1_ResetValue (0x00002820UL)     /*!< Reset value of DRIFT1 register.                                      */
 
-/* ALPHA @Bits 0..7 : Override value for IIR feedback , drift estimator (hypermode) */
+/* ALPHA @Bits 0..7 : Value for IIR feedback , drift estimator (hypermode) */
   #define RADIO_DRIFT1_ALPHA_Pos (0UL)               /*!< Position of ALPHA field.                                             */
   #define RADIO_DRIFT1_ALPHA_Msk (0xFFUL << RADIO_DRIFT1_ALPHA_Pos) /*!< Bit mask of ALPHA field.                              */
 
-/* VALIDTH @Bits 8..16 : Override value for driftValidTh, drift estimator (hypermode) */
+/* VALIDTH @Bits 8..16 : Value for driftValidTh, drift estimator (hypermode) */
   #define RADIO_DRIFT1_VALIDTH_Pos (8UL)             /*!< Position of VALIDTH field.                                           */
   #define RADIO_DRIFT1_VALIDTH_Msk (0x1FFUL << RADIO_DRIFT1_VALIDTH_Pos) /*!< Bit mask of VALIDTH field.                       */
 
@@ -107978,15 +107979,15 @@ typedef struct {
 /* RADIO_DRIFT2: Drift Estimator configuration */
   #define RADIO_DRIFT2_ResetValue (0x0C8A0008UL)     /*!< Reset value of DRIFT2 register.                                      */
 
-/* LOWTH @Bits 0..8 : Override value for driftLowTh, drift estimator (hypermode) */
+/* LOWTH @Bits 0..8 : Value for driftLowTh, drift estimator (hypermode) */
   #define RADIO_DRIFT2_LOWTH_Pos (0UL)               /*!< Position of LOWTH field.                                             */
   #define RADIO_DRIFT2_LOWTH_Msk (0x1FFUL << RADIO_DRIFT2_LOWTH_Pos) /*!< Bit mask of LOWTH field.                             */
 
-/* MAXDIST @Bits 16..19 : Override value for driftMaxDist, drift estimator (hypermode) */
+/* MAXDIST @Bits 16..19 : Value for driftMaxDist, drift estimator (hypermode) */
   #define RADIO_DRIFT2_MAXDIST_Pos (16UL)            /*!< Position of MAXDIST field.                                           */
   #define RADIO_DRIFT2_MAXDIST_Msk (0xFUL << RADIO_DRIFT2_MAXDIST_Pos) /*!< Bit mask of MAXDIST field.                         */
 
-/* DELAYTH @Bits 20..28 : Override value for driftDelayTh, drift estimator (hypermode) */
+/* DELAYTH @Bits 20..28 : Value for driftDelayTh, drift estimator (hypermode) */
   #define RADIO_DRIFT2_DELAYTH_Pos (20UL)            /*!< Position of DELAYTH field.                                           */
   #define RADIO_DRIFT2_DELAYTH_Msk (0x1FFUL << RADIO_DRIFT2_DELAYTH_Pos) /*!< Bit mask of DELAYTH field.                       */
 
@@ -107994,11 +107995,11 @@ typedef struct {
 /* RADIO_DSSS: DSSS synchronizer trim values */
   #define RADIO_DSSS_ResetValue (0x00000202UL)       /*!< Reset value of DSSS register.                                        */
 
-/* PEAKDISTTOL @Bits 0..2 : Override for dsssPeakDistanceTolerance */
+/* PEAKDISTTOL @Bits 0..2 : Minimum tolerance of peak distance */
   #define RADIO_DSSS_PEAKDISTTOL_Pos (0UL)           /*!< Position of PEAKDISTTOL field.                                       */
   #define RADIO_DSSS_PEAKDISTTOL_Msk (0x7UL << RADIO_DSSS_PEAKDISTTOL_Pos) /*!< Bit mask of PEAKDISTTOL field.                 */
 
-/* MINPEAKCOUNT @Bits 8..10 : Override for dsssMinPeakCount */
+/* MINPEAKCOUNT @Bits 8..10 : Minimum number of peaks */
   #define RADIO_DSSS_MINPEAKCOUNT_Pos (8UL)          /*!< Position of MINPEAKCOUNT field.                                      */
   #define RADIO_DSSS_MINPEAKCOUNT_Msk (0x7UL << RADIO_DSSS_MINPEAKCOUNT_Pos) /*!< Bit mask of MINPEAKCOUNT field.              */
 
@@ -109043,8 +109044,8 @@ typedef struct {
 /* LEN @Bits 0..1 : CRC length in number of bytes. */
   #define RADIO_CRCCNF_LEN_Pos (0UL)                 /*!< Position of LEN field.                                               */
   #define RADIO_CRCCNF_LEN_Msk (0x3UL << RADIO_CRCCNF_LEN_Pos) /*!< Bit mask of LEN field.                                     */
-  #define RADIO_CRCCNF_LEN_Min (0x1UL)               /*!< Min value of LEN field.                                              */
-  #define RADIO_CRCCNF_LEN_Max (0x3UL)               /*!< Max size of LEN field.                                               */
+  #define RADIO_CRCCNF_LEN_Min (0x0UL)               /*!< Min enumerator value of LEN field.                                   */
+  #define RADIO_CRCCNF_LEN_Max (0x3UL)               /*!< Max enumerator value of LEN field.                                   */
   #define RADIO_CRCCNF_LEN_Disabled (0x0UL)          /*!< CRC length is zero and CRC calculation is disabled                   */
   #define RADIO_CRCCNF_LEN_One (0x1UL)               /*!< CRC length is one byte and CRC calculation is enabled                */
   #define RADIO_CRCCNF_LEN_Two (0x2UL)               /*!< CRC length is two bytes and CRC calculation is enabled               */
@@ -109056,10 +109057,9 @@ typedef struct {
   #define RADIO_CRCCNF_SKIPADDR_Min (0x0UL)          /*!< Min enumerator value of SKIPADDR field.                              */
   #define RADIO_CRCCNF_SKIPADDR_Max (0x2UL)          /*!< Max enumerator value of SKIPADDR field.                              */
   #define RADIO_CRCCNF_SKIPADDR_Include (0x0UL)      /*!< CRC calculation includes address field                               */
-  #define RADIO_CRCCNF_SKIPADDR_Skip (0x1UL)         /*!< CRC calculation does not include address field. The CRC calculation
-                                                          will start at the first byte after the address.*/
-  #define RADIO_CRCCNF_SKIPADDR_Ieee802154 (0x2UL)   /*!< CRC calculation as per 802.15.4 standard. Starting at first byte after
-                                                          length field.*/
+  #define RADIO_CRCCNF_SKIPADDR_Skip (0x1UL)         /*!< CRC calculation starting at first byte after address field.          */
+  #define RADIO_CRCCNF_SKIPADDR_Ieee802154 (0x2UL)   /*!< CRC calculation starting at first byte after length field (as per
+                                                          802.15.4 standard).*/
 
 
 /* RADIO_CRCPOLY: CRC polynomial */
@@ -109515,16 +109515,12 @@ typedef struct {
   #define RADIO_DMAENABLE_ENABLE_Msk (0x1UL << RADIO_DMAENABLE_ENABLE_Pos) /*!< Bit mask of ENABLE field.                      */
 
 
-/* RADIO_PACKETPTR: (unspecified) */
-  #define RADIO_PACKETPTR_ResetValue (0x00000000UL)  /*!< Reset value of PACKETPTR register.                                   */
+/* RADIO_PACKETPTR: Packet pointer */
+  #define RADIO_PACKETPTR_ResetValue (0x01000000UL)  /*!< Reset value of PACKETPTR register.                                   */
 
-/* OFFSET @Bits 0..15 : (unspecified) */
-  #define RADIO_PACKETPTR_OFFSET_Pos (0UL)           /*!< Position of OFFSET field.                                            */
-  #define RADIO_PACKETPTR_OFFSET_Msk (0xFFFFUL << RADIO_PACKETPTR_OFFSET_Pos) /*!< Bit mask of OFFSET field.                   */
-
-/* BASE @Bit 29 : (unspecified) */
-  #define RADIO_PACKETPTR_BASE_Pos (29UL)            /*!< Position of BASE field.                                              */
-  #define RADIO_PACKETPTR_BASE_Msk (0x1UL << RADIO_PACKETPTR_BASE_Pos) /*!< Bit mask of BASE field.                            */
+/* PTR @Bits 0..31 : Data pointer */
+  #define RADIO_PACKETPTR_PTR_Pos (0UL)              /*!< Position of PTR field.                                               */
+  #define RADIO_PACKETPTR_PTR_Msk (0xFFFFFFFFUL << RADIO_PACKETPTR_PTR_Pos) /*!< Bit mask of PTR field.                        */
 
 
 /* RADIO_DMAAMOUNT: (unspecified) */
@@ -115005,7 +115001,7 @@ typedef struct {
   #define SAADC_CH_PSELP_PORT_Pos (8UL)              /*!< Position of PORT field.                                              */
   #define SAADC_CH_PSELP_PORT_Msk (0xFUL << SAADC_CH_PSELP_PORT_Pos) /*!< Bit mask of PORT field.                              */
 
-/* INTERNAL @Bits 12..13 : Internal input selection for Analog positive input when CH[n].PSELP.CONNECT = Internal */
+/* INTERNAL @Bits 12..13 : Internal input selection for analog positive input when CH[n].PSELP.CONNECT = Internal */
   #define SAADC_CH_PSELP_INTERNAL_Pos (12UL)         /*!< Position of INTERNAL field.                                          */
   #define SAADC_CH_PSELP_INTERNAL_Msk (0x3UL << SAADC_CH_PSELP_INTERNAL_Pos) /*!< Bit mask of INTERNAL field.                  */
   #define SAADC_CH_PSELP_INTERNAL_Min (0x0UL)        /*!< Min enumerator value of INTERNAL field.                              */
@@ -115155,7 +115151,8 @@ typedef struct {
                                                                          value on the dmaChannelPeripheralEnable output. (which
                                                                          is not connected)*/
   __IOM uint32_t  PTR;                               /*!< (@ 0x00000004) Data pointer                                          */
-  __IOM uint32_t  MAXCNT;                            /*!< (@ 0x00000008) Maximum number of buffer bytes to transfer            */
+  __IOM uint32_t  MAXCNT;                            /*!< (@ 0x00000008) Maximum number of buffer bytes to transfer. Note that
+                                                                         one sample is two bytes.*/
   __IM  uint32_t  AMOUNT;                            /*!< (@ 0x0000000C) Number of buffer bytes transferred since last START,
                                                                          updated after the END or STOPPED events*/
   __IM  uint32_t  CURRENTAMOUNT;                     /*!< (@ 0x00000010) Number of buffer bytes transferred since last START,
@@ -115180,10 +115177,10 @@ typedef struct {
   #define SAADC_RESULT_PTR_PTR_Msk (0xFFFFFFFFUL << SAADC_RESULT_PTR_PTR_Pos) /*!< Bit mask of PTR field.                      */
 
 
-/* SAADC_RESULT_MAXCNT: Maximum number of buffer bytes to transfer */
+/* SAADC_RESULT_MAXCNT: Maximum number of buffer bytes to transfer. Note that one sample is two bytes. */
   #define SAADC_RESULT_MAXCNT_ResetValue (0x00000000UL) /*!< Reset value of MAXCNT register.                                   */
 
-/* MAXCNT @Bits 0..14 : Maximum number of buffer bytes to transfer */
+/* MAXCNT @Bits 0..14 : Maximum number of buffer bytes to transfer. Note that one sample is two bytes. */
   #define SAADC_RESULT_MAXCNT_MAXCNT_Pos (0UL)       /*!< Position of MAXCNT field.                                            */
   #define SAADC_RESULT_MAXCNT_MAXCNT_Msk (0x7FFFUL << SAADC_RESULT_MAXCNT_MAXCNT_Pos) /*!< Bit mask of MAXCNT field.           */
 
@@ -115408,7 +115405,7 @@ typedef struct {
     __IOM uint32_t SUBSCRIBE_CALIBRATEGAIN;          /*!< (@ 0x00000094) Subscribe configuration for task CALIBRATEGAIN        */
     __IOM uint32_t SUBSCRIBE_STOPDMA;                /*!< (@ 0x00000098) Subscribe configuration for task STOPDMA              */
     __IM uint32_t RESERVED1[25];
-    __IOM uint32_t EVENTS_STARTED;                   /*!< (@ 0x00000100) The ADC has started                                   */
+    __IOM uint32_t EVENTS_STARTED;                   /*!< (@ 0x00000100) The ADC DMA has started                               */
     __IOM uint32_t EVENTS_END;                       /*!< (@ 0x00000104) The ADC has filled up the Result buffer               */
     __IOM uint32_t EVENTS_DONE;                      /*!< (@ 0x00000108) A conversion task has been completed. Depending on the
                                                                          mode, multiple conversions might be needed for a result
@@ -115416,7 +115413,7 @@ typedef struct {
     __IOM uint32_t EVENTS_RESULTDONE;                /*!< (@ 0x0000010C) A result is ready to get transferred to RAM. Result is
                                                                          available in REGRESULT register*/
     __IOM uint32_t EVENTS_CALIBRATEDONE;             /*!< (@ 0x00000110) Calibration is complete                               */
-    __IOM uint32_t EVENTS_STOPPED;                   /*!< (@ 0x00000114) The ADC has stopped                                   */
+    __IOM uint32_t EVENTS_STOPPED;                   /*!< (@ 0x00000114) The ADC DMA has stopped                               */
     __IOM NRF_SAADC_EVENTS_CH_Type EVENTS_CH[8];     /*!< (@ 0x00000118) Peripheral events.                                    */
     __IOM uint32_t EVENTS_AHBERROR;                  /*!< (@ 0x00000158) EasyDMA encountered AHB error.                        */
     __IM uint32_t RESERVED2[9];
@@ -115696,10 +115693,10 @@ typedef struct {
   #define SAADC_SUBSCRIBE_STOPDMA_EN_Enabled (0x1UL) /*!< Enable subscription                                                  */
 
 
-/* SAADC_EVENTS_STARTED: The ADC has started */
+/* SAADC_EVENTS_STARTED: The ADC DMA has started */
   #define SAADC_EVENTS_STARTED_ResetValue (0x00000000UL) /*!< Reset value of EVENTS_STARTED register.                          */
 
-/* EVENTS_STARTED @Bit 0 : The ADC has started */
+/* EVENTS_STARTED @Bit 0 : The ADC DMA has started */
   #define SAADC_EVENTS_STARTED_EVENTS_STARTED_Pos (0UL) /*!< Position of EVENTS_STARTED field.                                 */
   #define SAADC_EVENTS_STARTED_EVENTS_STARTED_Msk (0x1UL << SAADC_EVENTS_STARTED_EVENTS_STARTED_Pos) /*!< Bit mask of
                                                                             EVENTS_STARTED field.*/
@@ -115763,10 +115760,10 @@ typedef struct {
   #define SAADC_EVENTS_CALIBRATEDONE_EVENTS_CALIBRATEDONE_Generated (0x1UL) /*!< Event generated                               */
 
 
-/* SAADC_EVENTS_STOPPED: The ADC has stopped */
+/* SAADC_EVENTS_STOPPED: The ADC DMA has stopped */
   #define SAADC_EVENTS_STOPPED_ResetValue (0x00000000UL) /*!< Reset value of EVENTS_STOPPED register.                          */
 
-/* EVENTS_STOPPED @Bit 0 : The ADC has stopped */
+/* EVENTS_STOPPED @Bit 0 : The ADC DMA has stopped */
   #define SAADC_EVENTS_STOPPED_EVENTS_STOPPED_Pos (0UL) /*!< Position of EVENTS_STOPPED field.                                 */
   #define SAADC_EVENTS_STOPPED_EVENTS_STOPPED_Msk (0x1UL << SAADC_EVENTS_STOPPED_EVENTS_STOPPED_Pos) /*!< Bit mask of
                                                                             EVENTS_STOPPED field.*/
@@ -116742,7 +116739,7 @@ typedef struct {
   #define SAADC_STATUS_STATUS_Min (0x0UL)            /*!< Min enumerator value of STATUS field.                                */
   #define SAADC_STATUS_STATUS_Max (0x1UL)            /*!< Max enumerator value of STATUS field.                                */
   #define SAADC_STATUS_STATUS_Ready (0x0UL)          /*!< ADC is ready. No on-going conversion.                                */
-  #define SAADC_STATUS_STATUS_Busy (0x1UL)           /*!< ADC is busy. Single conversion in progress.                          */
+  #define SAADC_STATUS_STATUS_Busy (0x1UL)           /*!< ADC is busy. Conversion is in progress.                              */
 
 
 /* SAADC_PCRMSTATUS: PCRM Status */
@@ -116780,7 +116777,7 @@ typedef struct {
   #define SAADC_ENABLE_ENABLE_Disabled (0x0UL)       /*!< Disable ADC                                                          */
   #define SAADC_ENABLE_ENABLE_Enabled (0x1UL)        /*!< Enable ADC                                                           */
 
-/* POWERDOWNANA @Bit 8 : Power down analog between samples. See text for more info. */
+/* POWERDOWNANA @Bit 8 : Power down analog between samples. */
   #define SAADC_ENABLE_POWERDOWNANA_Pos (8UL)        /*!< Position of POWERDOWNANA field.                                      */
   #define SAADC_ENABLE_POWERDOWNANA_Msk (0x1UL << SAADC_ENABLE_POWERDOWNANA_Pos) /*!< Bit mask of POWERDOWNANA field.          */
   #define SAADC_ENABLE_POWERDOWNANA_Min (0x0UL)      /*!< Min enumerator value of POWERDOWNANA field.                          */
@@ -116792,7 +116789,7 @@ typedef struct {
 /* SAADC_REGRESULT: Last conversion result */
   #define SAADC_REGRESULT_ResetValue (0x00000000UL)  /*!< Reset value of REGRESULT register.                                   */
 
-/* REGRESULT @Bits 0..31 : Result of the previous ADC conversion */
+/* REGRESULT @Bits 0..31 : Result of the previous ADC conversion, as written to RAM */
   #define SAADC_REGRESULT_REGRESULT_Pos (0UL)        /*!< Position of REGRESULT field.                                         */
   #define SAADC_REGRESULT_REGRESULT_Msk (0xFFFFFFFFUL << SAADC_REGRESULT_REGRESULT_Pos) /*!< Bit mask of REGRESULT field.      */
 
@@ -116994,7 +116991,7 @@ typedef struct {
 /* SAADC_NOISESHAPE: Enable noise shaping */
   #define SAADC_NOISESHAPE_ResetValue (0x00000000UL) /*!< Reset value of NOISESHAPE register.                                  */
 
-/* NOISESHAPE @Bits 0..1 : Enable noise shaping */
+/* NOISESHAPE @Bits 0..1 : Noise shaping configuration */
   #define SAADC_NOISESHAPE_NOISESHAPE_Pos (0UL)      /*!< Position of NOISESHAPE field.                                        */
   #define SAADC_NOISESHAPE_NOISESHAPE_Msk (0x3UL << SAADC_NOISESHAPE_NOISESHAPE_Pos) /*!< Bit mask of NOISESHAPE field.        */
   #define SAADC_NOISESHAPE_NOISESHAPE_Min (0x0UL)    /*!< Min enumerator value of NOISESHAPE field.                            */
@@ -128163,7 +128160,7 @@ typedef struct {
   #define TAMPC_PROTECT_DFT_ENABLE_CTRL_VALUE_Low (0x0UL) /*!< Signal is logic 0.                                              */
   #define TAMPC_PROTECT_DFT_ENABLE_CTRL_VALUE_High (0x1UL) /*!< Signal is logic 1.                                             */
 
-/* LOCK @Bit 1 : Lock this register to prevent changes to the VALUE field until next reset. */
+/* LOCK @Bit 1 : Lock this register to prevent changes to the VALUE field until next power-on or brown-out reset. */
   #define TAMPC_PROTECT_DFT_ENABLE_CTRL_LOCK_Pos (1UL) /*!< Position of LOCK field.                                            */
   #define TAMPC_PROTECT_DFT_ENABLE_CTRL_LOCK_Msk (0x1UL << TAMPC_PROTECT_DFT_ENABLE_CTRL_LOCK_Pos) /*!< Bit mask of LOCK field.*/
   #define TAMPC_PROTECT_DFT_ENABLE_CTRL_LOCK_Min (0x0UL) /*!< Min enumerator value of LOCK field.                              */
@@ -128660,9 +128657,7 @@ typedef struct {
 
 /* ============================================= Struct TAMPC_PROTECT_EXTRESETEN ============================================= */
 /**
-  * @brief EXTRESETEN [TAMPC_PROTECT_EXTRESETEN] Trigger a reset when tamper is detected by the active shield or tamper switch
-            detector.
-
+  * @brief EXTRESETEN [TAMPC_PROTECT_EXTRESETEN] Trigger a reset when tamper is detected by the external tamper detectors.
   */
 typedef struct {
   __IOM uint32_t  CTRL;                              /*!< (@ 0x00000000) Control register for external tamper reset enable
@@ -128887,7 +128882,7 @@ typedef union {
     __IOM NRF_TAMPC_PROTECT_GLITCHFASTDOMAIN_Type GLITCHFASTDOMAIN; /*!< (@ 0x00000448) Enable fast domain glitch detectors.   */
     __IM uint32_t RESERVED3[8];
     __IOM NRF_TAMPC_PROTECT_EXTRESETEN_Type EXTRESETEN; /*!< (@ 0x00000470) Trigger a reset when tamper is detected by the
-                                                                            active shield or tamper switch detector.*/
+                                                                            external tamper detectors.*/
     __IOM NRF_TAMPC_PROTECT_INTRESETEN_Type INTRESETEN; /*!< (@ 0x00000478) Trigger a reset when tamper is detected by the
                                                                             glitch detectors, signal protector or CRACEN tamper
                                                                             detector.*/
@@ -140920,7 +140915,7 @@ typedef struct {
   #define UARTE_CONFIG_PARITY_Min (0x0UL)            /*!< Min enumerator value of PARITY field.                                */
   #define UARTE_CONFIG_PARITY_Max (0x7UL)            /*!< Max enumerator value of PARITY field.                                */
   #define UARTE_CONFIG_PARITY_Excluded (0x0UL)       /*!< Exclude parity bit                                                   */
-  #define UARTE_CONFIG_PARITY_Included (0x7UL)       /*!< Include even parity bit                                              */
+  #define UARTE_CONFIG_PARITY_Included (0x7UL)       /*!< Include parity bit                                                   */
 
 /* STOP @Bit 4 : Stop bits */
   #define UARTE_CONFIG_STOP_Pos (4UL)                /*!< Position of STOP field.                                              */

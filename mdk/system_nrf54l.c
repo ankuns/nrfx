@@ -52,7 +52,7 @@ NOTICE: This file has been modified by Nordic Semiconductor ASA.
     uint32_t SystemCoreClock __attribute__((used)) = __SYSTEM_CLOCK_DEFAULT;
 #elif defined ( __ICCARM__ )
     __root uint32_t SystemCoreClock = __SYSTEM_CLOCK_DEFAULT;
-#endif
+#endif    
 
 void SystemCoreClockUpdate(void)
 {
@@ -89,6 +89,14 @@ void SystemInit(void)
                 NRF_KMU->STATUS;
             #endif
 
+            #if NRF54L_ERRATA_37_ENABLE_WORKAROUND
+                /* Workaround for Errata 37 */
+                if (nrf54l_errata_37())
+                {
+                    *((volatile uint32_t *)0x5005340C) = 1ul;
+                }
+            #endif
+
             #ifndef NRF_SKIP_TAMPC_SETUP
                 nrf54l_handle_approtect();
             #endif
@@ -98,9 +106,9 @@ void SystemInit(void)
                 SCB->NSACR |= (3UL << 10ul);
             #endif
 
-            #ifndef NRF_SKIP_SAU_CONFIGURATION
+            #ifndef NRF_SKIP_SAU_CONFIGURATION   
                 configure_default_sau();
-            #endif
+            #endif          
 
             #if !defined (NRF_DISABLE_FICR_TRIMCNF)
                 /* Trimming of the device. Copy all the trimming values from FICR into the target addresses. Trim
@@ -167,6 +175,17 @@ void SystemInit(void)
                 }
             #endif
 
+            #if NRF54L_ERRATA_48_ENABLE_WORKAROUND
+                /* Workaround for Errata 48 */
+                if (nrf54l_errata_48())
+                {
+                    if (NRF_RESET->RESETREAS & RESET_RESETREAS_RESETPIN_Msk)
+                    {
+                        NRF_RESET->RESETREAS =  ~RESET_RESETREAS_RESETPIN_Msk;
+                    }
+                }
+            #endif
+
             #ifndef NRF_DISABLE_RRAM_POWER_OFF
                 /* Allow RRAMC to go into poweroff mode during System on idle for lower power consumption at a penalty of 9us extra RRAM ready time */
                 NRF_RRAMC->POWER.LOWPOWERCONFIG = (RRAMC_POWER_LOWPOWERCONFIG_MODE_PowerOff << RRAMC_POWER_LOWPOWERCONFIG_MODE_Pos);
@@ -189,7 +208,7 @@ void SystemInit(void)
         /* Enable the FPU if the compiler used floating point unit instructions. __FPU_USED is a MACRO defined by the
         * compiler. Since the FPU consumes energy, remember to disable FPU use in the compiler if floating point unit
         * operations are not used in your code. */
-
+        
         /* Allow Non-Secure code to run FPU instructions.
          * If only the secure code should control FPU power state these registers should be configured accordingly in the secure application code. */
         SCB->NSACR |= (3UL << 10ul);
@@ -248,7 +267,7 @@ void SystemInit(void)
             #endif
         #endif
 
-        #if !defined(NRF_TRUSTZONE_NONSECURE) && !defined (NRF_SKIP_GLITCHDETECTOR_DISABLE)
+        #if !defined(NRF_TRUSTZONE_NONSECURE) && !defined (NRF_SKIP_GLITCHDETECTOR_DISABLE) && defined(GLITCHDET_PRESENT)
             /* Disable glitch detector */
             #if defined (GLITCHDET_GLITCHDETECTORS)
                 NRF_GLITCHDET_S->GLITCHDETECTOR.CONFIG = (GLITCHDET_GLITCHDETECTOR_CONFIG_ENABLE_Disable << GLITCHDET_GLITCHDETECTOR_CONFIG_ENABLE_Pos);

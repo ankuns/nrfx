@@ -43,9 +43,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NRF_H
 
 /* MDK version */
-#define MDK_MAJOR_VERSION   8
-#define MDK_MINOR_VERSION   71
-#define MDK_MICRO_VERSION   1
+#define MDK_MAJOR_VERSION   8 
+#define MDK_MINOR_VERSION   72 
+#define MDK_MICRO_VERSION   0 
 
 
 /* Define coprocessor domains */
@@ -346,6 +346,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #elif defined (NRF54H20_XXAA)
     #if !defined(EXCLUDE_HEADER)
         #include "nrf54h20.h"
+        #include "nrf54h20_interim.h"
     #endif
     #if !defined(EXCLUDE_PORTABILITY)
         #include "haltium_name_change.h"
@@ -355,6 +356,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #elif defined (NRF54L05_XXAA)
     #if !defined(EXCLUDE_HEADER)
         #include "nrf54l05.h"
+        #include "nrf54l05_interim.h"
     #endif
     #if !defined(EXCLUDE_PORTABILITY)
         #include "nrf54l05_name_change.h"
@@ -363,6 +365,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #elif defined (NRF54LV10A_ENGA_XXAA)
     #if !defined(EXCLUDE_HEADER)
         #include "nrf54lv10a_enga.h"
+        #include "nrf54lv10a_enga_interim.h"
     #endif
     #if !defined(EXCLUDE_PORTABILITY)
         #include "nrf54lv10a_enga_name_change.h"
@@ -371,6 +374,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #elif defined (NRF54L10_XXAA)
     #if !defined(EXCLUDE_HEADER)
         #include "nrf54l10.h"
+        #include "nrf54l10_interim.h"
     #endif
     #if !defined(EXCLUDE_PORTABILITY)
         #include "nrf54l10_name_change.h"
@@ -379,6 +383,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #elif defined (NRF54L15_XXAA)
     #if !defined(EXCLUDE_HEADER)
         #include "nrf54l15.h"
+        #include "nrf54l15_interim.h"
     #endif
     #if !defined(EXCLUDE_PORTABILITY)
         #include "nrf54l15_name_change.h"
@@ -387,6 +392,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #elif defined (NRF54LM20A_ENGA_XXAA)
     #if !defined(EXCLUDE_HEADER)
         #include "nrf54lm20a_enga.h"
+        #include "nrf54lm20a_enga_interim.h"
     #endif
     #if !defined(EXCLUDE_PORTABILITY)
         #include "nrf54lm20a_enga_name_change.h"

@@ -32463,7 +32463,7 @@ typedef struct {
   #define PDM_RATIO_RATIO_Ratio64 (0x2UL)            /*!< Ratio of 64                                                          */
   #define PDM_RATIO_RATIO_Ratio80 (0x3UL)            /*!< Ratio of 80                                                          */
   #define PDM_RATIO_RATIO_Ratio96 (0x4UL)            /*!< Ratio of 96                                                          */
-  #define PDM_RATIO_RATIO_Ratio150 (0x5UL)           /*!< Ratio of 100                                                         */
+  #define PDM_RATIO_RATIO_Ratio150 (0x5UL)           /*!< Ratio of 150                                                         */
   #define PDM_RATIO_RATIO_Ratio192 (0x6UL)           /*!< Ratio of 192                                                         */
   #define PDM_RATIO_RATIO_Custom (0x7UL)             /*!< Custom. The decimation rate can be changed using the
                                                           FILTER.CTRL[31:25] bits*/
@@ -32518,7 +32518,8 @@ typedef struct {
     __IOM uint32_t EVENTS_POFWARN;                   /*!< (@ 0x00000130) Power failure warning                                 */
     __IOM uint32_t EVENTS_SLEEPENTER;                /*!< (@ 0x00000134) CPU entered WFI/WFE sleep                             */
     __IOM uint32_t EVENTS_SLEEPEXIT;                 /*!< (@ 0x00000138) CPU exited WFI/WFE sleep                              */
-    __IM uint32_t RESERVED3[30];
+    __IM uint32_t RESERVED3[29];
+    __IOM uint32_t PUBLISH_POFWARN;                  /*!< (@ 0x000001B0) Publish configuration for event POFWARN               */
     __IOM uint32_t PUBLISH_SLEEPENTER;               /*!< (@ 0x000001B4) Publish configuration for event SLEEPENTER            */
     __IOM uint32_t PUBLISH_SLEEPEXIT;                /*!< (@ 0x000001B8) Publish configuration for event SLEEPEXIT             */
     __IM uint32_t RESERVED4[81];
@@ -32636,6 +32637,24 @@ typedef struct {
   #define POWER_EVENTS_SLEEPEXIT_EVENTS_SLEEPEXIT_Max (0x1UL) /*!< Max enumerator value of EVENTS_SLEEPEXIT field.             */
   #define POWER_EVENTS_SLEEPEXIT_EVENTS_SLEEPEXIT_NotGenerated (0x0UL) /*!< Event not generated                                */
   #define POWER_EVENTS_SLEEPEXIT_EVENTS_SLEEPEXIT_Generated (0x1UL) /*!< Event generated                                       */
+
+
+/* POWER_PUBLISH_POFWARN: Publish configuration for event POFWARN */
+  #define POWER_PUBLISH_POFWARN_ResetValue (0x00000000UL) /*!< Reset value of PUBLISH_POFWARN register.                        */
+
+/* CHIDX @Bits 0..7 : DPPI channel that event POFWARN will publish to */
+  #define POWER_PUBLISH_POFWARN_CHIDX_Pos (0UL)      /*!< Position of CHIDX field.                                             */
+  #define POWER_PUBLISH_POFWARN_CHIDX_Msk (0xFFUL << POWER_PUBLISH_POFWARN_CHIDX_Pos) /*!< Bit mask of CHIDX field.            */
+  #define POWER_PUBLISH_POFWARN_CHIDX_Min (0x00UL)   /*!< Min value of CHIDX field.                                            */
+  #define POWER_PUBLISH_POFWARN_CHIDX_Max (0xFFUL)   /*!< Max size of CHIDX field.                                             */
+
+/* EN @Bit 31 : (unspecified) */
+  #define POWER_PUBLISH_POFWARN_EN_Pos (31UL)        /*!< Position of EN field.                                                */
+  #define POWER_PUBLISH_POFWARN_EN_Msk (0x1UL << POWER_PUBLISH_POFWARN_EN_Pos) /*!< Bit mask of EN field.                      */
+  #define POWER_PUBLISH_POFWARN_EN_Min (0x0UL)       /*!< Min enumerator value of EN field.                                    */
+  #define POWER_PUBLISH_POFWARN_EN_Max (0x1UL)       /*!< Max enumerator value of EN field.                                    */
+  #define POWER_PUBLISH_POFWARN_EN_Disabled (0x0UL)  /*!< Disable publishing                                                   */
+  #define POWER_PUBLISH_POFWARN_EN_Enabled (0x1UL)   /*!< Enable publishing                                                    */
 
 
 /* POWER_PUBLISH_SLEEPENTER: Publish configuration for event SLEEPENTER */
@@ -46155,7 +46174,7 @@ typedef struct {
   #define RADIO_TXPOWER_TXPOWER_Neg28dBm (0x001UL)   /*!< -28 dBm                                                              */
   #define RADIO_TXPOWER_TXPOWER_Neg40dBm (0x130UL)   /*!< -40 dBm                                                              */
   #define RADIO_TXPOWER_TXPOWER_Neg46dBm (0x110UL)   /*!< -46 dBm                                                              */
-  #define RADIO_TXPOWER_TXPOWER_MindBm (0x110UL)     /*!< -46 dBm                                                              */
+  #define RADIO_TXPOWER_TXPOWER_MindBm (0x000UL)     /*!< Minimum output power                                                 */
   #define RADIO_TXPOWER_TXPOWER_Neg100dBm (0x000UL)  /*!< -100 dBm                                                             */
 
 
@@ -51386,9 +51405,9 @@ typedef struct {
   #define RRAMC_REGION_CONFIG_LOCK_Disabled (0x0UL)  /*!< Lock disabled for region [n]                                         */
   #define RRAMC_REGION_CONFIG_LOCK_Enabled (0x1UL)   /*!< Lock enabled for region [n]                                          */
 
-/* SIZE @Bits 16..20 : Size in KBytes of region [n] */
+/* SIZE @Bits 16..22 : Size in KBytes of region [n] */
   #define RRAMC_REGION_CONFIG_SIZE_Pos (16UL)        /*!< Position of SIZE field.                                              */
-  #define RRAMC_REGION_CONFIG_SIZE_Msk (0x1FUL << RRAMC_REGION_CONFIG_SIZE_Pos) /*!< Bit mask of SIZE field.                   */
+  #define RRAMC_REGION_CONFIG_SIZE_Msk (0x7FUL << RRAMC_REGION_CONFIG_SIZE_Pos) /*!< Bit mask of SIZE field.                   */
 
 
 
@@ -58471,8 +58490,7 @@ typedef struct {
                                                                          specific AXI/AHB bus masters*/
     __IOM uint32_t AXIPROLONGREQUEST;                /*!< (@ 0x00000588) Configuration of the AxiRequestProlonger module.      */
     __IOM uint32_t RADIOSIDEBANDREQUEST;             /*!< (@ 0x0000058C) Sideband request from Radio to LRC.                   */
-    __IOM uint32_t VPRSAVEADDR;                      /*!< (@ 0x00000590) VPR context save address.                             */
-    __IM uint32_t RESERVED2[27];
+    __IM uint32_t RESERVED2[28];
     __IOM uint32_t MAINREG[1];                       /*!< (@ 0x00000600) Spare register n in PD_MAIN                           */
     __IM uint32_t RESERVED3[63];
     __IOM uint32_t AOREG[1];                         /*!< (@ 0x00000700) Spare register n in PD_AO                             */
@@ -58589,22 +58607,6 @@ typedef struct {
   #define SREGS_RADIOSIDEBANDREQUEST_SIDEBAND_Max (0x1UL) /*!< Max enumerator value of SIDEBAND field.                         */
   #define SREGS_RADIOSIDEBANDREQUEST_SIDEBAND_Disabled (0x0UL) /*!< Disable sideband request                                   */
   #define SREGS_RADIOSIDEBANDREQUEST_SIDEBAND_Enabled (0x1UL) /*!< Enable sideband request                                     */
-
-
-/* SREGS_VPRSAVEADDR: VPR context save address. */
-  #define SREGS_VPRSAVEADDR_ResetValue (0x2004EE80UL) /*!< Reset value of VPRSAVEADDR register.                                */
-
-/* LOWER @Bits 0..2 : VPR context store address, lower range (static) */
-  #define SREGS_VPRSAVEADDR_LOWER_Pos (0UL)          /*!< Position of LOWER field.                                             */
-  #define SREGS_VPRSAVEADDR_LOWER_Msk (0x7UL << SREGS_VPRSAVEADDR_LOWER_Pos) /*!< Bit mask of LOWER field.                     */
-
-/* ADDRESS @Bits 3..19 : VPR context store address */
-  #define SREGS_VPRSAVEADDR_ADDRESS_Pos (3UL)        /*!< Position of ADDRESS field.                                           */
-  #define SREGS_VPRSAVEADDR_ADDRESS_Msk (0x1FFFFUL << SREGS_VPRSAVEADDR_ADDRESS_Pos) /*!< Bit mask of ADDRESS field.           */
-
-/* UPPER @Bits 20..31 : VPR context store address, upper range (static) */
-  #define SREGS_VPRSAVEADDR_UPPER_Pos (20UL)         /*!< Position of UPPER field.                                             */
-  #define SREGS_VPRSAVEADDR_UPPER_Msk (0xFFFUL << SREGS_VPRSAVEADDR_UPPER_Pos) /*!< Bit mask of UPPER field.                   */
 
 
 /* SREGS_MAINREG: Spare register n in PD_MAIN */
@@ -70391,9 +70393,9 @@ typedef struct {
   #define UICR_BOOTCONF_LOCK_Enabled (0x1UL)         /*!< Lock is enabled, and the RRAMC configuration registers for the
                                                           immutable boot region are read-only.*/
 
-/* SIZE @Bits 16..20 : Immutable boot region size */
+/* SIZE @Bits 16..22 : Immutable boot region size */
   #define UICR_BOOTCONF_SIZE_Pos (16UL)              /*!< Position of SIZE field.                                              */
-  #define UICR_BOOTCONF_SIZE_Msk (0x1FUL << UICR_BOOTCONF_SIZE_Pos) /*!< Bit mask of SIZE field.                               */
+  #define UICR_BOOTCONF_SIZE_Msk (0x7FUL << UICR_BOOTCONF_SIZE_Pos) /*!< Bit mask of SIZE field.                               */
 
 
 /* UICR_OTP: One time programmable memory */
@@ -70822,6 +70824,10 @@ typedef struct {
 /* ID @Bit 31 : Overrides OTG ID pin signal */
   #define USBHS_PHY_OVERRIDEVALUES_ID_Pos (31UL)     /*!< Position of ID field.                                                */
   #define USBHS_PHY_OVERRIDEVALUES_ID_Msk (0x1UL << USBHS_PHY_OVERRIDEVALUES_ID_Pos) /*!< Bit mask of ID field.                */
+  #define USBHS_PHY_OVERRIDEVALUES_ID_Min (0x0UL)    /*!< Min enumerator value of ID field.                                    */
+  #define USBHS_PHY_OVERRIDEVALUES_ID_Max (0x1UL)    /*!< Max enumerator value of ID field.                                    */
+  #define USBHS_PHY_OVERRIDEVALUES_ID_Device (0x1UL) /*!< Role is Device                                                       */
+  #define USBHS_PHY_OVERRIDEVALUES_ID_Host (0x0UL)   /*!< Role is Host.                                                        */
 
 
 /* USBHS_PHY_BISTOVERRIDE: This register enables a set of overrides with fixed values in addition to the overrides with
@@ -71235,8 +71241,8 @@ typedef struct {
   #define USBHS_PUBLISH_SOF_CHIDX_Min (0x00UL)       /*!< Min value of CHIDX field.                                            */
   #define USBHS_PUBLISH_SOF_CHIDX_Max (0xFFUL)       /*!< Max size of CHIDX field.                                             */
 
-/* EN @Bit 8 : Enable publishing of SOF event */
-  #define USBHS_PUBLISH_SOF_EN_Pos (8UL)             /*!< Position of EN field.                                                */
+/* EN @Bit 31 : Enable publishing of SOF event */
+  #define USBHS_PUBLISH_SOF_EN_Pos (31UL)            /*!< Position of EN field.                                                */
   #define USBHS_PUBLISH_SOF_EN_Msk (0x1UL << USBHS_PUBLISH_SOF_EN_Pos) /*!< Bit mask of EN field.                              */
   #define USBHS_PUBLISH_SOF_EN_Min (0x0UL)           /*!< Min enumerator value of EN field.                                    */
   #define USBHS_PUBLISH_SOF_EN_Max (0x1UL)           /*!< Max enumerator value of EN field.                                    */
@@ -71817,7 +71823,7 @@ typedef struct {
     __IM uint32_t RESERVED[2];
     __IOM uint32_t GGPIO;                            /*!< (@ 0x00000038) General Purpose Input/Output Register                 */
     __IOM uint32_t GUID;                             /*!< (@ 0x0000003C) User ID Register                                      */
-    __IOM uint32_t GSNPSID;                          /*!< (@ 0x00000040) Synopsys ID Register                                  */
+    __IOM uint32_t GSNPSID;                          /*!< (@ 0x00000040) Identification register                               */
     __IOM uint32_t GHWCFG1;                          /*!< (@ 0x00000044) User Hardware Configuration 1 Register                */
     __IOM uint32_t GHWCFG2;                          /*!< (@ 0x00000048) User Hardware Configuration 2 Register                */
     __IOM uint32_t GHWCFG3;                          /*!< (@ 0x0000004C) User Hardware Configuration 3 Register                */
@@ -73190,17 +73196,16 @@ typedef struct {
   #define USBHSCORE_GUID_GUID_Msk (0xFFFFFFFFUL << USBHSCORE_GUID_GUID_Pos) /*!< Bit mask of GUID field.                       */
 
 
-/* USBHSCORE_GSNPSID: Synopsys ID Register */
-  #define USBHSCORE_GSNPSID_ResetValue (0x4F54430AUL) /*!< Reset value of GSNPSID register.                                    */
+/* USBHSCORE_GSNPSID: Identification register */
+  #define USBHSCORE_GSNPSID_ResetValue (0x4F54500BUL) /*!< Reset value of GSNPSID register.                                    */
 
-/* SYNOPSYSID @Bits 0..31 : Release number of the controller being used currently. */
-  #define USBHSCORE_GSNPSID_SYNOPSYSID_Pos (0UL)     /*!< Position of SYNOPSYSID field.                                        */
-  #define USBHSCORE_GSNPSID_SYNOPSYSID_Msk (0xFFFFFFFFUL << USBHSCORE_GSNPSID_SYNOPSYSID_Pos) /*!< Bit mask of SYNOPSYSID
-                                                                            field.*/
+/* GSNPSID @Bits 0..31 : Release number of the controller being used currently. */
+  #define USBHSCORE_GSNPSID_GSNPSID_Pos (0UL)        /*!< Position of GSNPSID field.                                           */
+  #define USBHSCORE_GSNPSID_GSNPSID_Msk (0xFFFFFFFFUL << USBHSCORE_GSNPSID_GSNPSID_Pos) /*!< Bit mask of GSNPSID field.        */
 
 
 /* USBHSCORE_GHWCFG1: User Hardware Configuration 1 Register */
-  #define USBHSCORE_GHWCFG1_ResetValue (0xAA555000UL) /*!< Reset value of GHWCFG1 register.                                    */
+  #define USBHSCORE_GHWCFG1_ResetValue (0x00000000UL) /*!< Reset value of GHWCFG1 register.                                    */
 
 /* EPDIR @Bits 0..31 : This 32-bit field uses two bits per */
   #define USBHSCORE_GHWCFG1_EPDIR_Pos (0UL)          /*!< Position of EPDIR field.                                             */
@@ -73208,7 +73213,7 @@ typedef struct {
 
 
 /* USBHSCORE_GHWCFG2: User Hardware Configuration 2 Register */
-  #define USBHSCORE_GHWCFG2_ResetValue (0x228BFC72UL) /*!< Reset value of GHWCFG2 register.                                    */
+  #define USBHSCORE_GHWCFG2_ResetValue (0x22AFFC72UL) /*!< Reset value of GHWCFG2 register.                                    */
 
 /* OTGMODE @Bits 0..2 : Mode of Operation (OtgMode) */
   #define USBHSCORE_GHWCFG2_OTGMODE_Pos (0UL)        /*!< Position of OTGMODE field.                                           */
@@ -73355,7 +73360,7 @@ typedef struct {
 
 
 /* USBHSCORE_GHWCFG3: User Hardware Configuration 3 Register */
-  #define USBHSCORE_GHWCFG3_ResetValue (0x0BEAC0E8UL) /*!< Reset value of GHWCFG3 register.                                    */
+  #define USBHSCORE_GHWCFG3_ResetValue (0x0BE0C0E8UL) /*!< Reset value of GHWCFG3 register.                                    */
 
 /* XFERSIZEWIDTH @Bits 0..3 : Width of Transfer Size Counters (XferSizeWidth) */
   #define USBHSCORE_GHWCFG3_XFERSIZEWIDTH_Pos (0UL)  /*!< Position of XFERSIZEWIDTH field.                                     */
@@ -73464,7 +73469,7 @@ typedef struct {
 
 
 /* USBHSCORE_GHWCFG4: User Hardware Configuration 4 Register */
-  #define USBHSCORE_GHWCFG4_ResetValue (0x1E10AA60UL) /*!< Reset value of GHWCFG4 register.                                    */
+  #define USBHSCORE_GHWCFG4_ResetValue (0x3E10AA60UL) /*!< Reset value of GHWCFG4 register.                                    */
 
 /* NUMDEVPERIOEPS @Bits 0..3 : Number of Device Mode Periodic IN Endpoints (NumDevPerioEps) */
   #define USBHSCORE_GHWCFG4_NUMDEVPERIOEPS_Pos (0UL) /*!< Position of NUMDEVPERIOEPS field.                                    */
@@ -82827,7 +82832,7 @@ typedef struct {
   * @brief MINTTHRESH [VPRCSR_MINTTHRESH] M-mode Interrupt-level Threshold
   */
   #define VPRCSR_MINTTHRESH (0x00000347ul)
-  #define VPRCSR_MINTTHRESH_ResetValue (0x00000000UL) /*!< Reset value of MINTTHRESH register.                                 */
+  #define VPRCSR_MINTTHRESH_ResetValue (0x0000001FUL) /*!< Reset value of MINTTHRESH register.                                 */
 
 /* TH @Bits 0..7 : M-Mode Interrupt-level Threshold */
   #define VPRCSR_MINTTHRESH_TH_Pos (0UL)             /*!< Position of TH field.                                                */

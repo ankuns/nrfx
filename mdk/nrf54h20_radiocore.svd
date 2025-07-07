@@ -109972,7 +109972,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
         </register>
         <register>
           <name>TASKS_ACQINJ0DMASTART</name>
-          <description>Start DMA transaction</description>
+          <description>Start DMA transaction of acquisition/injection DMA 0</description>
           <addressOffset>0x038</addressOffset>
           <access>write-only</access>
           <resetValue>0x00000000</resetValue>
@@ -109980,7 +109980,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>TASKS_ACQINJ0DMASTART</name>
-              <description>Start DMA transaction</description>
+              <description>Start DMA transaction of acquisition/injection DMA 0</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
@@ -109995,7 +109995,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
         </register>
         <register>
           <name>TASKS_ACQINJ0DMASTOP</name>
-          <description>Stop ongoing DMA transaction</description>
+          <description>Stop ongoing DMA transaction of acquisition/injection DMA 0</description>
           <addressOffset>0x03C</addressOffset>
           <access>write-only</access>
           <resetValue>0x00000000</resetValue>
@@ -110003,7 +110003,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>TASKS_ACQINJ0DMASTOP</name>
-              <description>Stop ongoing DMA transaction</description>
+              <description>Stop ongoing DMA transaction of acquisition/injection DMA 0</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
@@ -110018,7 +110018,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
         </register>
         <register>
           <name>TASKS_ACQINJ1DMASTART</name>
-          <description>Start DMA transaction</description>
+          <description>Start DMA transaction of acquisition/injection DMA 1</description>
           <addressOffset>0x040</addressOffset>
           <access>write-only</access>
           <resetValue>0x00000000</resetValue>
@@ -110026,7 +110026,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>TASKS_ACQINJ1DMASTART</name>
-              <description>Start DMA transaction</description>
+              <description>Start DMA transaction of acquisition/injection DMA 1</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
@@ -110041,7 +110041,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
         </register>
         <register>
           <name>TASKS_ACQINJ1DMASTOP</name>
-          <description>Stop ongoing DMA transaction</description>
+          <description>Stop ongoing DMA transaction of acquisition/injection DMA 1</description>
           <addressOffset>0x044</addressOffset>
           <access>write-only</access>
           <resetValue>0x00000000</resetValue>
@@ -110049,7 +110049,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>TASKS_ACQINJ1DMASTOP</name>
-              <description>Stop ongoing DMA transaction</description>
+              <description>Stop ongoing DMA transaction of acquisition/injection DMA 1</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
@@ -121341,7 +121341,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Ieee802154_250Kbit</name>
-                  <description>IEEE 802.15.4-2015 250 kbps</description>
+                  <description>IEEE 802.15.4 250 kbps</description>
                   <value>0xF</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -121571,7 +121571,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
               <enumeratedValues>
                 <enumeratedValue>
                   <name>Disabled</name>
-                  <description>RADIO is in the Disabled state</description>
+                  <description>RADIO is in the DISABLED state</description>
                   <value>0x0</value>
                 </enumeratedValue>
                 <enumeratedValue>
@@ -121591,7 +121591,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>RxDisable</name>
-                  <description>RADIO is in the RXDISABLED state</description>
+                  <description>RADIO is in the RXDISABLE state</description>
                   <value>0x4</value>
                 </enumeratedValue>
                 <enumeratedValue>
@@ -121611,7 +121611,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>TxDisable</name>
-                  <description>RADIO is in the TXDISABLED state</description>
+                  <description>RADIO is in the TXDISABLE state</description>
                   <value>0xC</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -121637,6 +121637,13 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
               <description>IEEE 802.15.4 energy detect period, 4us resolution, no averaging except the IEEE 802.15.4 ED range 128us (32)</description>
               <lsb>24</lsb>
               <msb>29</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Default</name>
+                  <description>Unspecified</description>
+                  <value>0x20</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
           </fields>
         </register>
@@ -121934,18 +121941,14 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             <description>Description cluster: ACQ DMA pointer</description>
             <addressOffset>0x004</addressOffset>
             <access>read-write</access>
-            <resetValue>0x00000000</resetValue>
+            <resetValue>0x01000000</resetValue>
             <size>0x20</size>
             <fields>
               <field>
-                <name>OFFSET</name>
+                <name>PTR</name>
+                <description>Data pointer</description>
                 <lsb>0</lsb>
-                <msb>15</msb>
-              </field>
-              <field>
-                <name>BASE</name>
-                <lsb>29</lsb>
-                <msb>29</msb>
+                <msb>31</msb>
               </field>
             </fields>
           </register>
@@ -122606,6 +122609,11 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
               <msb>4</msb>
               <enumeratedValues>
                 <enumeratedValue>
+                  <name>MaxdBm</name>
+                  <description>+10 dBm</description>
+                  <value>0x01F</value>
+                </enumeratedValue>
+                <enumeratedValue>
                   <name>Pos10dBm</name>
                   <description>+10 dBm</description>
                   <value>0x01F</value>
@@ -122707,6 +122715,11 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Neg70dBm</name>
+                  <description>-70 dBm</description>
+                  <value>0x000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>MindBm</name>
                   <description>-70 dBm</description>
                   <value>0x000</value>
                 </enumeratedValue>
@@ -123184,7 +123197,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
               </field>
               <field>
                 <name>RXTUNEIN</name>
-                <description>Controls TX_PWR_0V8/PWRCTR_TX_0V9 when in RX or Loopback</description>
+                <description>Controls TX_PWR_0V8 when in RX or Loopback</description>
                 <lsb>25</lsb>
                 <msb>30</msb>
               </field>
@@ -124046,7 +124059,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             <fields>
               <field>
                 <name>TPWRUPTXPA</name>
-                <description>Timing control of PwrupTxPa (unit: 0.25us)</description>
+                <description>Timing control of PwrupTxPa and PwrupTxPaPre (unit: 0.25us)</description>
                 <lsb>0</lsb>
                 <msb>7</msb>
               </field>
@@ -124292,7 +124305,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
               </field>
               <field>
                 <name>OVRENPWRUPTXPA</name>
-                <description>Override enable of PwrupTxPa</description>
+                <description>Override enable of PwrupTxPa and PwrupTxPaPre</description>
                 <lsb>24</lsb>
                 <msb>24</msb>
               </field>
@@ -124534,7 +124547,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
               </field>
               <field>
                 <name>OVRVALPWRUPTXPA</name>
-                <description>Override value of PwrupTxPa</description>
+                <description>Override value of PwrupTxPa and PwrupTxPaPre</description>
                 <lsb>24</lsb>
                 <msb>24</msb>
               </field>
@@ -124743,7 +124756,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             <fields>
               <field>
                 <name>RSSICAL</name>
-                <description>RSSI calibration value</description>
+                <description>RSSI calibration value (this field affects the value of both RSSISAMPLE and EDSAMPLE)</description>
                 <lsb>0</lsb>
                 <msb>6</msb>
               </field>
@@ -125632,8 +125645,8 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLTRIMCOMMAND0</name>
-          <description>This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET</description>
+          <name>ADPLLTRIMCOMMAND_0</name>
+          <description>This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET.</description>
           <addressOffset>0x08A0</addressOffset>
           <access>read-write</access>
           <resetValue>0x80000000</resetValue>
@@ -125660,8 +125673,8 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLTRIMCOMMAND1</name>
-          <description>This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET</description>
+          <name>ADPLLTRIMCOMMAND_1</name>
+          <description>This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET.</description>
           <addressOffset>0x08A4</addressOffset>
           <access>read-write</access>
           <resetValue>0x80000000</resetValue>
@@ -125688,8 +125701,8 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLTRIMCOMMAND2</name>
-          <description>This value is written to the AdPll when powering up the digital island. NEVER reset with SOFTRESET</description>
+          <name>ADPLLTRIMCOMMAND_2</name>
+          <description>This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET.</description>
           <addressOffset>0x08A8</addressOffset>
           <access>read-write</access>
           <resetValue>0x80000000</resetValue>
@@ -125716,8 +125729,8 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLTRIMCOMMAND3</name>
-          <description>This value is written to the AdPll when powering up the digital island. NEVER reset with SOFTRESET</description>
+          <name>ADPLLTRIMCOMMAND_3</name>
+          <description>This value is written to the AdPll when powering up the digital island. Never reset with SOFTRESET.</description>
           <addressOffset>0x08AC</addressOffset>
           <access>read-write</access>
           <resetValue>0x80000000</resetValue>
@@ -125744,7 +125757,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLSTARTUPCOMMAND0</name>
+          <name>ADPLLSTARTUPCOMMAND_0</name>
           <description>This value is written to the AdPll when powering up the digital island</description>
           <addressOffset>0x08B0</addressOffset>
           <access>read-write</access>
@@ -125772,7 +125785,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLSTARTUPCOMMAND1</name>
+          <name>ADPLLSTARTUPCOMMAND_1</name>
           <description>This value is written to the AdPll when powering up the digital island</description>
           <addressOffset>0x08B4</addressOffset>
           <access>read-write</access>
@@ -125800,7 +125813,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLSTARTUPCOMMAND2</name>
+          <name>ADPLLSTARTUPCOMMAND_2</name>
           <description>This value is written to the AdPll when powering up the digital island</description>
           <addressOffset>0x08B8</addressOffset>
           <access>read-write</access>
@@ -125828,7 +125841,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLSTARTUPCOMMAND3</name>
+          <name>ADPLLSTARTUPCOMMAND_3</name>
           <description>This value is written to the AdPll when powering up the digital island</description>
           <addressOffset>0x08BC</addressOffset>
           <access>read-write</access>
@@ -125856,7 +125869,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLSTARTUPCOMMAND4</name>
+          <name>ADPLLSTARTUPCOMMAND_4</name>
           <description>This value is written to the AdPll when powering up the digital island</description>
           <addressOffset>0x08C0</addressOffset>
           <access>read-write</access>
@@ -125884,7 +125897,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLSTARTUPCOMMAND5</name>
+          <name>ADPLLSTARTUPCOMMAND_5</name>
           <description>This value is written to the AdPll when powering up the digital island</description>
           <addressOffset>0x08C4</addressOffset>
           <access>read-write</access>
@@ -125912,7 +125925,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLSTARTUPCOMMAND6</name>
+          <name>ADPLLSTARTUPCOMMAND_6</name>
           <description>This value is written to the AdPll when powering up the digital island</description>
           <addressOffset>0x08C8</addressOffset>
           <access>read-write</access>
@@ -125940,7 +125953,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </fields>
         </register>
         <register>
-          <name>ADPLLSTARTUPCOMMAND7</name>
+          <name>ADPLLSTARTUPCOMMAND_7</name>
           <description>This value is written to the AdPll when powering up the digital island</description>
           <addressOffset>0x08CC</addressOffset>
           <access>read-write</access>
@@ -129313,19 +129326,19 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>DRIFTHALPHA125</name>
-              <description>Override value for IIR feedback , drift estimator (despreadLELLong)</description>
+              <description>Value for IIR feedback , drift estimator (despreadLELLong)</description>
               <lsb>0</lsb>
               <msb>7</msb>
             </field>
             <field>
               <name>DRIFTVALIDTH125</name>
-              <description>Override value for driftValidTh, drift estimator (despreadLELLong)</description>
+              <description>Value for driftValidTh, drift estimator (despreadLELLong)</description>
               <lsb>8</lsb>
               <msb>16</msb>
             </field>
             <field>
               <name>DRIFTLOWTH125</name>
-              <description>Override value for driftLowTh, drift estimator (despreadLELLong)</description>
+              <description>Value for driftLowTh, drift estimator (despreadLELLong)</description>
               <lsb>24</lsb>
               <msb>29</msb>
             </field>
@@ -129341,13 +129354,13 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>ALPHA</name>
-              <description>Override value for IIR feedback , drift estimator (hypermode)</description>
+              <description>Value for IIR feedback , drift estimator (hypermode)</description>
               <lsb>0</lsb>
               <msb>7</msb>
             </field>
             <field>
               <name>VALIDTH</name>
-              <description>Override value for driftValidTh, drift estimator (hypermode)</description>
+              <description>Value for driftValidTh, drift estimator (hypermode)</description>
               <lsb>8</lsb>
               <msb>16</msb>
             </field>
@@ -129369,19 +129382,19 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>LOWTH</name>
-              <description>Override value for driftLowTh, drift estimator (hypermode)</description>
+              <description>Value for driftLowTh, drift estimator (hypermode)</description>
               <lsb>0</lsb>
               <msb>8</msb>
             </field>
             <field>
               <name>MAXDIST</name>
-              <description>Override value for driftMaxDist, drift estimator (hypermode)</description>
+              <description>Value for driftMaxDist, drift estimator (hypermode)</description>
               <lsb>16</lsb>
               <msb>19</msb>
             </field>
             <field>
               <name>DELAYTH</name>
-              <description>Override value for driftDelayTh, drift estimator (hypermode)</description>
+              <description>Value for driftDelayTh, drift estimator (hypermode)</description>
               <lsb>20</lsb>
               <msb>28</msb>
             </field>
@@ -129397,13 +129410,13 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>PEAKDISTTOL</name>
-              <description>Override for dsssPeakDistanceTolerance</description>
+              <description>Minimum tolerance of peak distance</description>
               <lsb>0</lsb>
               <msb>2</msb>
             </field>
             <field>
               <name>MINPEAKCOUNT</name>
-              <description>Override for dsssMinPeakCount</description>
+              <description>Minimum number of peaks</description>
               <lsb>8</lsb>
               <msb>10</msb>
             </field>
@@ -130596,15 +130609,10 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             <size>0x20</size>
             <fields>
               <field>
-                <name>OFFSET</name>
+                <name>PTR</name>
                 <description>Data pointer</description>
                 <lsb>0</lsb>
-                <msb>15</msb>
-              </field>
-              <field>
-                <name>BASE</name>
-                <lsb>29</lsb>
-                <msb>29</msb>
+                <msb>31</msb>
               </field>
             </fields>
           </register>
@@ -131640,12 +131648,12 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Skip</name>
-                  <description>CRC calculation does not include address field. The CRC calculation will start at the first byte after the address.</description>
+                  <description>CRC calculation starting at first byte after address field.</description>
                   <value>0x1</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Ieee802154</name>
-                  <description>CRC calculation as per 802.15.4 standard. Starting at first byte after length field.</description>
+                  <description>CRC calculation starting at first byte after length field (as per 802.15.4 standard).</description>
                   <value>0x2</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -132580,21 +132588,17 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
         </register>
         <register>
           <name>PACKETPTR</name>
-          <description>Unspecified</description>
+          <description>Packet pointer</description>
           <addressOffset>0xED0</addressOffset>
           <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
+          <resetValue>0x01000000</resetValue>
           <size>0x20</size>
           <fields>
             <field>
-              <name>OFFSET</name>
+              <name>PTR</name>
+              <description>Data pointer</description>
               <lsb>0</lsb>
-              <msb>15</msb>
-            </field>
-            <field>
-              <name>BASE</name>
-              <lsb>29</lsb>
-              <msb>29</msb>
+              <msb>31</msb>
             </field>
           </fields>
         </register>
@@ -133514,12 +133518,12 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                   </enumeratedValue>
                   <enumeratedValue>
                     <name>Skip</name>
-                    <description>CRC calculation does not include address field. The CRC calculation will start at the first byte after the address.</description>
+                    <description>CRC calculation starting at first byte after address field.</description>
                     <value>0x1</value>
                   </enumeratedValue>
                   <enumeratedValue>
                     <name>Ieee802154</name>
-                    <description>CRC calculation as per 802.15.4 standard. Starting at first byte after length field.</description>
+                    <description>CRC calculation starting at first byte after length field (as per 802.15.4 standard).</description>
                     <value>0x2</value>
                   </enumeratedValue>
                 </enumeratedValues>
@@ -134454,21 +134458,17 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </register>
           <register>
             <name>PACKETPTR</name>
-            <description>Unspecified</description>
+            <description>Packet pointer</description>
             <addressOffset>0x0D0</addressOffset>
             <access>read-write</access>
-            <resetValue>0x00000000</resetValue>
+            <resetValue>0x01000000</resetValue>
             <size>0x20</size>
             <fields>
               <field>
-                <name>OFFSET</name>
+                <name>PTR</name>
+                <description>Data pointer</description>
                 <lsb>0</lsb>
-                <msb>15</msb>
-              </field>
-              <field>
-                <name>BASE</name>
-                <lsb>29</lsb>
-                <msb>29</msb>
+                <msb>31</msb>
               </field>
             </fields>
           </register>
@@ -134613,9 +134613,21 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             <fields>
               <field>
                 <name>FFOSOURCE</name>
-                <description>0: Use FFOIN 1: Calc FFO from CnAcc</description>
+                <description>Use external or internal FFOSOURCE</description>
                 <lsb>0</lsb>
                 <msb>0</msb>
+                <enumeratedValues>
+                  <enumeratedValue>
+                    <name>External</name>
+                    <description>Use FFOIN</description>
+                    <value>0x0</value>
+                  </enumeratedValue>
+                  <enumeratedValue>
+                    <name>Internal</name>
+                    <description>Calc FFO from CnAcc</description>
+                    <value>0x1</value>
+                  </enumeratedValue>
+                </enumeratedValues>
               </field>
             </fields>
           </register>
@@ -134661,7 +134673,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             <fields>
               <field>
                 <name>NUMSAMPLESCOEFF</name>
-                <description>Coefficient 1/(numSamples/16) in Q1.15 format (Default numsamples value is 160)</description>
+                <description>Coefficient 2**16/(numSamples/16) in Q1.15 format (Default numsamples value is 160)</description>
                 <lsb>0</lsb>
                 <msb>15</msb>
               </field>
@@ -135052,11 +135064,6 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                     <description>SPHYNX_RX_PKDET_AO_0V8[0]</description>
                     <value>0x2</value>
                   </enumeratedValue>
-                  <enumeratedValue>
-                    <name>Spare</name>
-                    <description>None selected, logic 0</description>
-                    <value>0x3</value>
-                  </enumeratedValue>
                 </enumeratedValues>
               </field>
               <field>
@@ -135108,11 +135115,6 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                     <description>SPHYNX_RX_PKDET_AO_0V8[1]</description>
                     <value>0x2</value>
                   </enumeratedValue>
-                  <enumeratedValue>
-                    <name>Spare</name>
-                    <description>None selected, logic 0</description>
-                    <value>0x3</value>
-                  </enumeratedValue>
                 </enumeratedValues>
               </field>
               <field>
@@ -135158,16 +135160,6 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                     <name>PllSettled</name>
                     <description>pllSettled</description>
                     <value>0x1</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>FsSpareOutputs0</name>
-                    <description>SPHYNX_FS_SPARE_OUTPUTS_AO_0V8[0]</description>
-                    <value>0x2</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>Spare</name>
-                    <description>None selected, logic 0</description>
-                    <value>0x3</value>
                   </enumeratedValue>
                 </enumeratedValues>
               </field>
@@ -135219,11 +135211,6 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                     <name>CalCmpRcCal</name>
                     <description>SPHYNX_CAL_CMP_RCCAL_AO_0V8</description>
                     <value>0x2</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>Spare</name>
-                    <description>None selected, logic 0</description>
-                    <value>0x3</value>
                   </enumeratedValue>
                 </enumeratedValues>
               </field>
@@ -216820,7 +216807,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Included</name>
-                  <description>Include even parity bit</description>
+                  <description>Include parity bit</description>
                   <value>0x7</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -230544,7 +230531,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
         </register>
         <register>
           <name>EVENTS_STARTED</name>
-          <description>The ADC has started</description>
+          <description>The ADC DMA has started</description>
           <addressOffset>0x100</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
@@ -230552,7 +230539,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>EVENTS_STARTED</name>
-              <description>The ADC has started</description>
+              <description>The ADC DMA has started</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
@@ -230684,7 +230671,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
         </register>
         <register>
           <name>EVENTS_STOPPED</name>
-          <description>The ADC has stopped</description>
+          <description>The ADC DMA has stopped</description>
           <addressOffset>0x114</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
@@ -230692,7 +230679,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>EVENTS_STOPPED</name>
-              <description>The ADC has stopped</description>
+              <description>The ADC DMA has stopped</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
@@ -233309,7 +233296,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Busy</name>
-                  <description>ADC is busy. Single conversion in progress.</description>
+                  <description>ADC is busy. Conversion is in progress.</description>
                   <value>0x1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -233424,7 +233411,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             </field>
             <field>
               <name>POWERDOWNANA</name>
-              <description>Power down analog between samples. See text for more info.</description>
+              <description>Power down analog between samples.</description>
               <lsb>8</lsb>
               <msb>8</msb>
               <enumeratedValues>
@@ -233472,7 +233459,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
               </field>
               <field>
                 <name>INTERNAL</name>
-                <description>Internal input selection for Analog positive input when CH[n].PSELP.CONNECT = Internal</description>
+                <description>Internal input selection for analog positive input when CH[n].PSELP.CONNECT = Internal</description>
                 <lsb>12</lsb>
                 <msb>13</msb>
                 <enumeratedValues>
@@ -233804,7 +233791,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>REGRESULT</name>
-              <description>Result of the previous ADC conversion</description>
+              <description>Result of the previous ADC conversion, as written to RAM</description>
               <lsb>0</lsb>
               <msb>31</msb>
             </field>
@@ -234038,7 +234025,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           </register>
           <register>
             <name>MAXCNT</name>
-            <description>Maximum number of buffer bytes to transfer</description>
+            <description>Maximum number of buffer bytes to transfer. Note that one sample is two bytes.</description>
             <addressOffset>0x008</addressOffset>
             <access>read-write</access>
             <resetValue>0x00000000</resetValue>
@@ -234046,7 +234033,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
             <fields>
               <field>
                 <name>MAXCNT</name>
-                <description>Maximum number of buffer bytes to transfer</description>
+                <description>Maximum number of buffer bytes to transfer. Note that one sample is two bytes.</description>
                 <lsb>0</lsb>
                 <msb>14</msb>
               </field>
@@ -234358,7 +234345,7 @@ unexpectedly or might not fire. Reads of the TRCRSCTLRn might return UNKNOWN.</d
           <fields>
             <field>
               <name>NOISESHAPE</name>
-              <description>Enable noise shaping</description>
+              <description>Noise shaping configuration</description>
               <lsb>0</lsb>
               <msb>1</msb>
               <enumeratedValues>

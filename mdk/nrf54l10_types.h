@@ -553,6 +553,8 @@ typedef struct {
 /* MAXRESOLVED @Bits 0..11 : The maximum number of IRKs to resolve */
   #define AAR_MAXRESOLVED_MAXRESOLVED_Pos (0UL)      /*!< Position of MAXRESOLVED field.                                       */
   #define AAR_MAXRESOLVED_MAXRESOLVED_Msk (0xFFFUL << AAR_MAXRESOLVED_MAXRESOLVED_Pos) /*!< Bit mask of MAXRESOLVED field.     */
+  #define AAR_MAXRESOLVED_MAXRESOLVED_Min (0x001UL)  /*!< Min value of MAXRESOLVED field.                                      */
+  #define AAR_MAXRESOLVED_MAXRESOLVED_Max (0xFFFUL)  /*!< Max size of MAXRESOLVED field.                                       */
 
 
 #endif                                               /*!< !defined(__ASSEMBLER__) && !defined(__ASSEMBLY__)                    */
@@ -13636,19 +13638,24 @@ typedef struct {
     __IM uint32_t RESERVED[12];
     __IOM uint32_t BIAS;                             /*!< (@ 0x00000030) Bias control                                          */
     __IOM uint32_t OVERRIDE;                         /*!< (@ 0x00000034) Override control                                      */
-    __IOM uint32_t CTRL;                             /*!< (@ 0x00000038) HS pad control register                               */
+    __IOM uint32_t CTRL;                             /*!< (@ 0x00000038) Input sampling and buffering control (used by the VPR
+                                                                         coprocessor for emulating a QSPI peripheral)*/
   } NRF_GPIOHSPADCTRL_Type;                          /*!< Size = 60 (0x03C)                                                    */
 
 /* GPIOHSPADCTRL_BIAS: Bias control */
   #define GPIOHSPADCTRL_BIAS_ResetValue (0x00000000UL) /*!< Reset value of BIAS register.                                      */
 
-/* HSBIAS @Bits 0..1 : Bias setting for high-speed pad */
+/* HSBIAS @Bits 0..1 : Slew setting for high-speed pad (higher value is faster) */
   #define GPIOHSPADCTRL_BIAS_HSBIAS_Pos (0UL)        /*!< Position of HSBIAS field.                                            */
   #define GPIOHSPADCTRL_BIAS_HSBIAS_Msk (0x3UL << GPIOHSPADCTRL_BIAS_HSBIAS_Pos) /*!< Bit mask of HSBIAS field.                */
+  #define GPIOHSPADCTRL_BIAS_HSBIAS_Min (0x0UL)      /*!< Min value of HSBIAS field.                                           */
+  #define GPIOHSPADCTRL_BIAS_HSBIAS_Max (0x3UL)      /*!< Max size of HSBIAS field.                                            */
 
-/* REPLICABIAS @Bit 2 : Bias setting for replica pad */
+/* REPLICABIAS @Bit 2 : Slew setting for replica clock (used by the VPR coprocessor for emulating a QSPI peripheral) */
   #define GPIOHSPADCTRL_BIAS_REPLICABIAS_Pos (2UL)   /*!< Position of REPLICABIAS field.                                       */
   #define GPIOHSPADCTRL_BIAS_REPLICABIAS_Msk (0x1UL << GPIOHSPADCTRL_BIAS_REPLICABIAS_Pos) /*!< Bit mask of REPLICABIAS field. */
+  #define GPIOHSPADCTRL_BIAS_REPLICABIAS_Min (0x0UL) /*!< Min value of REPLICABIAS field.                                      */
+  #define GPIOHSPADCTRL_BIAS_REPLICABIAS_Max (0x1UL) /*!< Max size of REPLICABIAS field.                                       */
 
 
 /* GPIOHSPADCTRL_OVERRIDE: Override control */
@@ -13673,28 +13680,44 @@ typedef struct {
                                                                             field.*/
 
 
-/* GPIOHSPADCTRL_CTRL: HS pad control register */
+/* GPIOHSPADCTRL_CTRL: Input sampling and buffering control (used by the VPR coprocessor for emulating a QSPI peripheral) */
   #define GPIOHSPADCTRL_CTRL_ResetValue (0x00000000UL) /*!< Reset value of CTRL register.                                      */
 
-/* RXDELAY @Bits 0..2 : RXDELAY setting */
+/* RXDELAY @Bits 0..2 : Delay selection */
   #define GPIOHSPADCTRL_CTRL_RXDELAY_Pos (0UL)       /*!< Position of RXDELAY field.                                           */
   #define GPIOHSPADCTRL_CTRL_RXDELAY_Msk (0x7UL << GPIOHSPADCTRL_CTRL_RXDELAY_Pos) /*!< Bit mask of RXDELAY field.             */
 
 /* SCKEN @Bit 3 : Enable SCK */
   #define GPIOHSPADCTRL_CTRL_SCKEN_Pos (3UL)         /*!< Position of SCKEN field.                                             */
   #define GPIOHSPADCTRL_CTRL_SCKEN_Msk (0x1UL << GPIOHSPADCTRL_CTRL_SCKEN_Pos) /*!< Bit mask of SCKEN field.                   */
+  #define GPIOHSPADCTRL_CTRL_SCKEN_Min (0x0UL)       /*!< Min enumerator value of SCKEN field.                                 */
+  #define GPIOHSPADCTRL_CTRL_SCKEN_Max (0x1UL)       /*!< Max enumerator value of SCKEN field.                                 */
+  #define GPIOHSPADCTRL_CTRL_SCKEN_Disabled (0x0UL)  /*!< Delay chain is reset and delayed sampling is disabled                */
+  #define GPIOHSPADCTRL_CTRL_SCKEN_Enabled (0x1UL)   /*!< Delay chain and delayed sampling is active                           */
 
 /* SCKPHASE @Bit 4 : SCK phase */
   #define GPIOHSPADCTRL_CTRL_SCKPHASE_Pos (4UL)      /*!< Position of SCKPHASE field.                                          */
   #define GPIOHSPADCTRL_CTRL_SCKPHASE_Msk (0x1UL << GPIOHSPADCTRL_CTRL_SCKPHASE_Pos) /*!< Bit mask of SCKPHASE field.          */
+  #define GPIOHSPADCTRL_CTRL_SCKPHASE_Min (0x0UL)    /*!< Min enumerator value of SCKPHASE field.                              */
+  #define GPIOHSPADCTRL_CTRL_SCKPHASE_Max (0x1UL)    /*!< Max enumerator value of SCKPHASE field.                              */
+  #define GPIOHSPADCTRL_CTRL_SCKPHASE_Inverted (0x0UL) /*!< Invert SCK phase                                                   */
+  #define GPIOHSPADCTRL_CTRL_SCKPHASE_NonInverted (0x1UL) /*!< Non-inverted SCK phase                                          */
 
-/* CSNEN @Bit 5 : CSN enable */
+/* CSNEN @Bit 5 : Enable CSN synchronization of sampling */
   #define GPIOHSPADCTRL_CTRL_CSNEN_Pos (5UL)         /*!< Position of CSNEN field.                                             */
   #define GPIOHSPADCTRL_CTRL_CSNEN_Msk (0x1UL << GPIOHSPADCTRL_CTRL_CSNEN_Pos) /*!< Bit mask of CSNEN field.                   */
+  #define GPIOHSPADCTRL_CTRL_CSNEN_Min (0x0UL)       /*!< Min enumerator value of CSNEN field.                                 */
+  #define GPIOHSPADCTRL_CTRL_CSNEN_Max (0x1UL)       /*!< Max enumerator value of CSNEN field.                                 */
+  #define GPIOHSPADCTRL_CTRL_CSNEN_Enabled (0x0UL)   /*!< Delay chain is reset on active edge of CSN                           */
+  #define GPIOHSPADCTRL_CTRL_CSNEN_Disabled (0x1UL)  /*!< Delay chain is not reset on active edge of CSN                       */
 
-/* DATAENABLE @Bits 6..9 : Enable re-clocking for data bit 0-3 through pad-sync module */
+/* DATAENABLE @Bits 6..9 : Enable delayed sampling */
   #define GPIOHSPADCTRL_CTRL_DATAENABLE_Pos (6UL)    /*!< Position of DATAENABLE field.                                        */
   #define GPIOHSPADCTRL_CTRL_DATAENABLE_Msk (0xFUL << GPIOHSPADCTRL_CTRL_DATAENABLE_Pos) /*!< Bit mask of DATAENABLE field.    */
+  #define GPIOHSPADCTRL_CTRL_DATAENABLE_Min (0x0UL)  /*!< Min enumerator value of DATAENABLE field.                            */
+  #define GPIOHSPADCTRL_CTRL_DATAENABLE_Max (0xFUL)  /*!< Max enumerator value of DATAENABLE field.                            */
+  #define GPIOHSPADCTRL_CTRL_DATAENABLE_Disabled (0x0UL) /*!< Delayed sampling is disabled                                     */
+  #define GPIOHSPADCTRL_CTRL_DATAENABLE_Enabled (0xFUL) /*!< Delayed sampling is enabled                                       */
 
 
 #endif                                               /*!< !defined(__ASSEMBLER__) && !defined(__ASSEMBLY__)                    */
@@ -22244,7 +22267,8 @@ typedef struct {
     __IOM NRF_MPC_MEMACCERR_Type MEMACCERR;          /*!< (@ 0x00000400) Memory Access Error status registers                  */
     __IM uint32_t RESERVED3[2];
     __IOM NRF_MPC_GLOBALSLAVE_Type GLOBALSLAVE;      /*!< (@ 0x00000410) Global slave master port connection information       */
-    __IM uint32_t RESERVED4[122];
+    __IOM uint32_t EXTENDCLKREQ;                     /*!< (@ 0x00000418) Extend clock request configuration                    */
+    __IM uint32_t RESERVED4[121];
     __IOM NRF_MPC_REGION_Type REGION[8];             /*!< (@ 0x00000600) Memory region to slave decoding table                 */
     __IM uint32_t RESERVED5[96];
     __IOM NRF_MPC_OVERRIDE_Type OVERRIDE[7];         /*!< (@ 0x00000800) Special privilege tables                              */
@@ -22299,6 +22323,22 @@ typedef struct {
   #define MPC_INTENCLR_MEMACCERR_Clear (0x1UL)       /*!< Disable                                                              */
   #define MPC_INTENCLR_MEMACCERR_Disabled (0x0UL)    /*!< Read: Disabled                                                       */
   #define MPC_INTENCLR_MEMACCERR_Enabled (0x1UL)     /*!< Read: Enabled                                                        */
+
+
+/* MPC_EXTENDCLKREQ: Extend clock request configuration */
+  #define MPC_EXTENDCLKREQ_ResetValue (0x00000003UL) /*!< Reset value of EXTENDCLKREQ register.                                */
+
+/* INIT @Bits 0..15 : Initial value of the down counter used for extending the clock request. */
+  #define MPC_EXTENDCLKREQ_INIT_Pos (0UL)            /*!< Position of INIT field.                                              */
+  #define MPC_EXTENDCLKREQ_INIT_Msk (0xFFFFUL << MPC_EXTENDCLKREQ_INIT_Pos) /*!< Bit mask of INIT field.                       */
+
+/* ENABLE @Bit 31 : Enable the extend clock request feature */
+  #define MPC_EXTENDCLKREQ_ENABLE_Pos (31UL)         /*!< Position of ENABLE field.                                            */
+  #define MPC_EXTENDCLKREQ_ENABLE_Msk (0x1UL << MPC_EXTENDCLKREQ_ENABLE_Pos) /*!< Bit mask of ENABLE field.                    */
+  #define MPC_EXTENDCLKREQ_ENABLE_Min (0x0UL)        /*!< Min enumerator value of ENABLE field.                                */
+  #define MPC_EXTENDCLKREQ_ENABLE_Max (0x1UL)        /*!< Max enumerator value of ENABLE field.                                */
+  #define MPC_EXTENDCLKREQ_ENABLE_Disable (0x0UL)    /*!< Disable                                                              */
+  #define MPC_EXTENDCLKREQ_ENABLE_Enable (0x1UL)     /*!< Enable                                                               */
 
 
 #endif                                               /*!< !defined(__ASSEMBLER__) && !defined(__ASSEMBLY__)                    */
@@ -25732,10 +25772,10 @@ typedef struct {
                                                                             READY. Clock is divided down to 4 MHz internally*/
   #define OSCILLATORS_XOSC32M_CONFIG_DTBCFG_PKDVCO_PixoVcoComp (0x2UL) /*!< Output from PIXO VCO calibration comparator and
                                                                             output from capacitor calibration comparator*/
-  #define OSCILLATORS_XOSC32M_CONFIG_DTBCFG_PKDVCO (0x3UL) /*!< READY, PKD_1 and PKD_2 on DTB makes it easier to measure
-                                                                start-up time in the lab since edge of READY can be used as
-                                                                reference start-point, while PKD outputs can be used as
-                                                                reference stop-points*/
+  #define OSCILLATORS_XOSC32M_CONFIG_DTBCFG_PKDVCO_RdyPkd1Pkd2 (0x3UL) /*!< READY, PKD_1 and PKD_2 on DTB makes it easier to
+                                                                            measure start-up time in the lab since edge of READY
+                                                                            can be used as reference start-point, while PKD
+                                                                            outputs can be used as reference stop-points*/
 
 /* DTB0TOMUX @Bit 2 : Connect DTB0 to internal MUX */
   #define OSCILLATORS_XOSC32M_CONFIG_DTBCFG_DTB0TOMUX_Pos (2UL) /*!< Position of DTB0TOMUX field.                              */
@@ -53803,11 +53843,11 @@ typedef struct {
   * @brief DPPIC [SPU_FEATURE_DPPIC] (unspecified)
   */
 typedef struct {
-  __IOM uint32_t  CH[24];                            /*!< (@ 0x00000000) Configuration of features for channel n of DPPIC      */
-  __IOM uint32_t  CHG[8];                            /*!< (@ 0x00000060) Configuration of features for channel group n of DPPIC*/
+  __IOM uint32_t  CH[24];                            /*!< (@ 0x00000000) Security configuration for channel n of DPPIC         */
+  __IOM uint32_t  CHG[8];                            /*!< (@ 0x00000060) Security configuration for channel group n of DPPIC   */
 } NRF_SPU_FEATURE_DPPIC_Type;                        /*!< Size = 128 (0x080)                                                   */
 
-/* SPU_FEATURE_DPPIC_CH: Configuration of features for channel n of DPPIC */
+/* SPU_FEATURE_DPPIC_CH: Security configuration for channel n of DPPIC */
   #define SPU_FEATURE_DPPIC_CH_MaxCount (24UL)       /*!< Max size of CH[24] array.                                            */
   #define SPU_FEATURE_DPPIC_CH_MaxIndex (23UL)       /*!< Max index of CH[24] array.                                           */
   #define SPU_FEATURE_DPPIC_CH_MinIndex (0UL)        /*!< Min index of CH[24] array.                                           */
@@ -53844,7 +53884,7 @@ typedef struct {
   #define SPU_FEATURE_DPPIC_CH_OWNERID_Max (0xFUL)   /*!< Max size of OWNERID field.                                           */
 
 
-/* SPU_FEATURE_DPPIC_CHG: Configuration of features for channel group n of DPPIC */
+/* SPU_FEATURE_DPPIC_CHG: Security configuration for channel group n of DPPIC */
   #define SPU_FEATURE_DPPIC_CHG_MaxCount (8UL)       /*!< Max size of CHG[8] array.                                            */
   #define SPU_FEATURE_DPPIC_CHG_MaxIndex (7UL)       /*!< Max index of CHG[8] array.                                           */
   #define SPU_FEATURE_DPPIC_CHG_MinIndex (0UL)       /*!< Min index of CHG[8] array.                                           */
@@ -53887,14 +53927,14 @@ typedef struct {
   * @brief GPIOTE [SPU_FEATURE_GPIOTE] (unspecified)
   */
 typedef struct {
-  __IOM uint32_t  CH[8];                             /*!< (@ 0x00000000) Configuration of features for channel o of GPIOTE[n]  */
-  __IOM uint32_t  INTERRUPT[8];                      /*!< (@ 0x00000020) Configuration of features for interrupt o of GPIOTE[n]*/
+  __IOM uint32_t  CH[8];                             /*!< (@ 0x00000000) Security configuration for channel o of GPIOTE[n]     */
+  __IOM uint32_t  INTERRUPT[8];                      /*!< (@ 0x00000020) Security configuration for interrupt o of GPIOTE[n]   */
 } NRF_SPU_FEATURE_GPIOTE_Type;                       /*!< Size = 64 (0x040)                                                    */
   #define SPU_FEATURE_GPIOTE_MaxCount (2UL)          /*!< Size of GPIOTE[2] array.                                             */
   #define SPU_FEATURE_GPIOTE_MaxIndex (1UL)          /*!< Max index of GPIOTE[2] array.                                        */
   #define SPU_FEATURE_GPIOTE_MinIndex (0UL)          /*!< Min index of GPIOTE[2] array.                                        */
 
-/* SPU_FEATURE_GPIOTE_CH: Configuration of features for channel o of GPIOTE[n] */
+/* SPU_FEATURE_GPIOTE_CH: Security configuration for channel o of GPIOTE[n] */
   #define SPU_FEATURE_GPIOTE_CH_MaxCount (8UL)       /*!< Max size of CH[8] array.                                             */
   #define SPU_FEATURE_GPIOTE_CH_MaxIndex (7UL)       /*!< Max index of CH[8] array.                                            */
   #define SPU_FEATURE_GPIOTE_CH_MinIndex (0UL)       /*!< Min index of CH[8] array.                                            */
@@ -53931,7 +53971,7 @@ typedef struct {
   #define SPU_FEATURE_GPIOTE_CH_OWNERID_Max (0xFUL)  /*!< Max size of OWNERID field.                                           */
 
 
-/* SPU_FEATURE_GPIOTE_INTERRUPT: Configuration of features for interrupt o of GPIOTE[n] */
+/* SPU_FEATURE_GPIOTE_INTERRUPT: Security configuration for interrupt o of GPIOTE[n] */
   #define SPU_FEATURE_GPIOTE_INTERRUPT_MaxCount (8UL) /*!< Max size of INTERRUPT[8] array.                                     */
   #define SPU_FEATURE_GPIOTE_INTERRUPT_MaxIndex (7UL) /*!< Max index of INTERRUPT[8] array.                                    */
   #define SPU_FEATURE_GPIOTE_INTERRUPT_MinIndex (0UL) /*!< Min index of INTERRUPT[8] array.                                    */
@@ -53977,13 +54017,13 @@ typedef struct {
   * @brief GPIO [SPU_FEATURE_GPIO] (unspecified)
   */
 typedef struct {
-  __IOM uint32_t  PIN[32];                           /*!< (@ 0x00000000) Configuration of features for GPIO[n] PIN[o]          */
+  __IOM uint32_t  PIN[32];                           /*!< (@ 0x00000000) Security configuration for GPIO[n] PIN[o]             */
 } NRF_SPU_FEATURE_GPIO_Type;                         /*!< Size = 128 (0x080)                                                   */
   #define SPU_FEATURE_GPIO_MaxCount (3UL)            /*!< Size of GPIO[3] array.                                               */
   #define SPU_FEATURE_GPIO_MaxIndex (2UL)            /*!< Max index of GPIO[3] array.                                          */
   #define SPU_FEATURE_GPIO_MinIndex (0UL)            /*!< Min index of GPIO[3] array.                                          */
 
-/* SPU_FEATURE_GPIO_PIN: Configuration of features for GPIO[n] PIN[o] */
+/* SPU_FEATURE_GPIO_PIN: Security configuration for GPIO[n] PIN[o] */
   #define SPU_FEATURE_GPIO_PIN_MaxCount (32UL)       /*!< Max size of PIN[32] array.                                           */
   #define SPU_FEATURE_GPIO_PIN_MaxIndex (31UL)       /*!< Max index of PIN[32] array.                                          */
   #define SPU_FEATURE_GPIO_PIN_MinIndex (0UL)        /*!< Min index of PIN[32] array.                                          */
@@ -54069,16 +54109,16 @@ typedef struct {
   * @brief GRTC [SPU_FEATURE_GRTC] (unspecified)
   */
 typedef struct {
-  __IOM uint32_t  CC[24];                            /*!< (@ 0x00000000) Configuration of features for CC n of GRTC            */
+  __IOM uint32_t  CC[24];                            /*!< (@ 0x00000000) Security configuration for CC n of GRTC               */
   __IM  uint32_t  RESERVED[5];
-  __IOM uint32_t  PWMCONFIG;                         /*!< (@ 0x00000074) Configuration of feature for PWMCONFIG of GRTC        */
-  __IOM uint32_t  CLK;                               /*!< (@ 0x00000078) Configuration of features for CLKOUT/CLKCFG of GRTC   */
-  __IOM uint32_t  SYSCOUNTER;                        /*!< (@ 0x0000007C) Configuration of features for SYSCOUNTERL/SYSCOUNTERH
-                                                                         of GRTC*/
-  __IOM uint32_t  INTERRUPT[16];                     /*!< (@ 0x00000080) Configuration of features for interrupt n of GRTC     */
+  __IOM uint32_t  PWMCONFIG;                         /*!< (@ 0x00000074) Security Configuration for PWMCONFIG of GRTC          */
+  __IOM uint32_t  CLK;                               /*!< (@ 0x00000078) Security configuration for CLKOUT/CLKCFG of GRTC      */
+  __IOM uint32_t  SYSCOUNTER;                        /*!< (@ 0x0000007C) Security configuration for SYSCOUNTERL/SYSCOUNTERH of
+                                                                         GRTC*/
+  __IOM uint32_t  INTERRUPT[16];                     /*!< (@ 0x00000080) Security configuration for interrupt n of GRTC        */
 } NRF_SPU_FEATURE_GRTC_Type;                         /*!< Size = 192 (0x0C0)                                                   */
 
-/* SPU_FEATURE_GRTC_CC: Configuration of features for CC n of GRTC */
+/* SPU_FEATURE_GRTC_CC: Security configuration for CC n of GRTC */
   #define SPU_FEATURE_GRTC_CC_MaxCount (24UL)        /*!< Max size of CC[24] array.                                            */
   #define SPU_FEATURE_GRTC_CC_MaxIndex (23UL)        /*!< Max index of CC[24] array.                                           */
   #define SPU_FEATURE_GRTC_CC_MinIndex (0UL)         /*!< Min index of CC[24] array.                                           */
@@ -54115,7 +54155,7 @@ typedef struct {
   #define SPU_FEATURE_GRTC_CC_OWNERID_Max (0xFUL)    /*!< Max size of OWNERID field.                                           */
 
 
-/* SPU_FEATURE_GRTC_PWMCONFIG: Configuration of feature for PWMCONFIG of GRTC */
+/* SPU_FEATURE_GRTC_PWMCONFIG: Security Configuration for PWMCONFIG of GRTC */
   #define SPU_FEATURE_GRTC_PWMCONFIG_ResetValue (0x00100010UL) /*!< Reset value of PWMCONFIG register.                         */
 
 /* SECATTR @Bit 4 : SECATTR feature */
@@ -54151,7 +54191,7 @@ typedef struct {
   #define SPU_FEATURE_GRTC_PWMCONFIG_OWNERID_Max (0xFUL) /*!< Max size of OWNERID field.                                       */
 
 
-/* SPU_FEATURE_GRTC_CLK: Configuration of features for CLKOUT/CLKCFG of GRTC */
+/* SPU_FEATURE_GRTC_CLK: Security configuration for CLKOUT/CLKCFG of GRTC */
   #define SPU_FEATURE_GRTC_CLK_ResetValue (0x00100010UL) /*!< Reset value of CLK register.                                     */
 
 /* SECATTR @Bit 4 : SECATTR feature */
@@ -54185,7 +54225,7 @@ typedef struct {
   #define SPU_FEATURE_GRTC_CLK_OWNERID_Max (0xFUL)   /*!< Max size of OWNERID field.                                           */
 
 
-/* SPU_FEATURE_GRTC_SYSCOUNTER: Configuration of features for SYSCOUNTERL/SYSCOUNTERH of GRTC */
+/* SPU_FEATURE_GRTC_SYSCOUNTER: Security configuration for SYSCOUNTERL/SYSCOUNTERH of GRTC */
   #define SPU_FEATURE_GRTC_SYSCOUNTER_ResetValue (0x00100010UL) /*!< Reset value of SYSCOUNTER register.                       */
 
 /* SECATTR @Bit 4 : SECATTR feature */
@@ -54221,7 +54261,7 @@ typedef struct {
   #define SPU_FEATURE_GRTC_SYSCOUNTER_OWNERID_Max (0xFUL) /*!< Max size of OWNERID field.                                      */
 
 
-/* SPU_FEATURE_GRTC_INTERRUPT: Configuration of features for interrupt n of GRTC */
+/* SPU_FEATURE_GRTC_INTERRUPT: Security configuration for interrupt n of GRTC */
   #define SPU_FEATURE_GRTC_INTERRUPT_MaxCount (16UL) /*!< Max size of INTERRUPT[16] array.                                     */
   #define SPU_FEATURE_GRTC_INTERRUPT_MaxIndex (15UL) /*!< Max index of INTERRUPT[16] array.                                    */
   #define SPU_FEATURE_GRTC_INTERRUPT_MinIndex (0UL)  /*!< Min index of INTERRUPT[16] array.                                    */
@@ -54449,14 +54489,15 @@ typedef struct {
                                                                          specific AXI/AHB bus masters*/
     __IOM uint32_t AXIPROLONGREQUEST;                /*!< (@ 0x00000588) Configuration of the AxiRequestProlonger module.      */
     __IOM uint32_t RADIOSIDEBANDREQUEST;             /*!< (@ 0x0000058C) Sideband request from Radio to LRC.                   */
-    __IM uint32_t RESERVED2[28];
+    __IOM uint32_t VPRSAVEADDR;                      /*!< (@ 0x00000590) VPR context save address.                             */
+    __IM uint32_t RESERVED2[27];
     __IOM uint32_t MAINREG[1];                       /*!< (@ 0x00000600) Spare register n in PD_MAIN                           */
-    __IM uint32_t RESERVED3[31];
-    __IOM uint32_t PDSELECT;                         /*!< (@ 0x00000680) Power domain status selection                         */
-    __IM uint32_t RESERVED4[31];
+    __IM uint32_t RESERVED3[63];
     __IOM uint32_t AOREG[1];                         /*!< (@ 0x00000700) Spare register n in PD_AO                             */
     __IOM uint32_t AODFT;                            /*!< (@ 0x00000704) AO control of DFT features                            */
-  } NRF_SREGS_Type;                                  /*!< Size = 1800 (0x708)                                                  */
+    __IM uint32_t RESERVED4[30];
+    __IOM uint32_t PDSELECT;                         /*!< (@ 0x00000780) Power domain status selection                         */
+  } NRF_SREGS_Type;                                  /*!< Size = 1924 (0x784)                                                  */
 
 /* SREGS_REG: Spare register n */
   #define SREGS_REG_MaxCount (2UL)                   /*!< Max size of REG[2] array.                                            */
@@ -54568,6 +54609,22 @@ typedef struct {
   #define SREGS_RADIOSIDEBANDREQUEST_SIDEBAND_Enabled (0x1UL) /*!< Enable sideband request                                     */
 
 
+/* SREGS_VPRSAVEADDR: VPR context save address. */
+  #define SREGS_VPRSAVEADDR_ResetValue (0x2004EE80UL) /*!< Reset value of VPRSAVEADDR register.                                */
+
+/* LOWER @Bits 0..2 : VPR context store address, lower range (static) */
+  #define SREGS_VPRSAVEADDR_LOWER_Pos (0UL)          /*!< Position of LOWER field.                                             */
+  #define SREGS_VPRSAVEADDR_LOWER_Msk (0x7UL << SREGS_VPRSAVEADDR_LOWER_Pos) /*!< Bit mask of LOWER field.                     */
+
+/* ADDRESS @Bits 3..19 : VPR context store address */
+  #define SREGS_VPRSAVEADDR_ADDRESS_Pos (3UL)        /*!< Position of ADDRESS field.                                           */
+  #define SREGS_VPRSAVEADDR_ADDRESS_Msk (0x1FFFFUL << SREGS_VPRSAVEADDR_ADDRESS_Pos) /*!< Bit mask of ADDRESS field.           */
+
+/* UPPER @Bits 20..31 : VPR context store address, upper range (static) */
+  #define SREGS_VPRSAVEADDR_UPPER_Pos (20UL)         /*!< Position of UPPER field.                                             */
+  #define SREGS_VPRSAVEADDR_UPPER_Msk (0xFFFUL << SREGS_VPRSAVEADDR_UPPER_Pos) /*!< Bit mask of UPPER field.                   */
+
+
 /* SREGS_MAINREG: Spare register n in PD_MAIN */
   #define SREGS_MAINREG_MaxCount (1UL)               /*!< Max size of MAINREG[1] array.                                        */
   #define SREGS_MAINREG_MaxIndex (0UL)               /*!< Max index of MAINREG[1] array.                                       */
@@ -54577,6 +54634,25 @@ typedef struct {
 /* VALUE @Bits 0..7 : (unspecified) */
   #define SREGS_MAINREG_VALUE_Pos (0UL)              /*!< Position of VALUE field.                                             */
   #define SREGS_MAINREG_VALUE_Msk (0xFFUL << SREGS_MAINREG_VALUE_Pos) /*!< Bit mask of VALUE field.                            */
+
+
+/* SREGS_AOREG: Spare register n in PD_AO */
+  #define SREGS_AOREG_MaxCount (1UL)                 /*!< Max size of AOREG[1] array.                                          */
+  #define SREGS_AOREG_MaxIndex (0UL)                 /*!< Max index of AOREG[1] array.                                         */
+  #define SREGS_AOREG_MinIndex (0UL)                 /*!< Min index of AOREG[1] array.                                         */
+  #define SREGS_AOREG_ResetValue (0x00000000UL)      /*!< Reset value of AOREG[1] register.                                    */
+
+/* VALUE @Bits 0..3 : (unspecified) */
+  #define SREGS_AOREG_VALUE_Pos (0UL)                /*!< Position of VALUE field.                                             */
+  #define SREGS_AOREG_VALUE_Msk (0xFUL << SREGS_AOREG_VALUE_Pos) /*!< Bit mask of VALUE field.                                 */
+
+
+/* SREGS_AODFT: AO control of DFT features */
+  #define SREGS_AODFT_ResetValue (0x00000000UL)      /*!< Reset value of AODFT register.                                       */
+
+/* DTBENABLE @Bit 0 : Output DTB on GPIO pins through Always-On pin muxing */
+  #define SREGS_AODFT_DTBENABLE_Pos (0UL)            /*!< Position of DTBENABLE field.                                         */
+  #define SREGS_AODFT_DTBENABLE_Msk (0x1UL << SREGS_AODFT_DTBENABLE_Pos) /*!< Bit mask of DTBENABLE field.                     */
 
 
 /* SREGS_PDSELECT: Power domain status selection */
@@ -54617,25 +54693,6 @@ typedef struct {
   #define SREGS_PDSELECT_PIN1_VregMainPwrupLdo (0x9UL) /*!< VREGMAIN (PwrDcdcLdo) power-up LDO signal                          */
   #define SREGS_PDSELECT_PIN1_VregMainPwrupPfm (0xAUL) /*!< VREGMAIN (PwrDcdcLdo) power-up PFM signal                          */
   #define SREGS_PDSELECT_PIN1_VregMainPwrupPwm (0xBUL) /*!< VREGMAIN (PwrDcdcLdo) power-up PWM signal                          */
-
-
-/* SREGS_AOREG: Spare register n in PD_AO */
-  #define SREGS_AOREG_MaxCount (1UL)                 /*!< Max size of AOREG[1] array.                                          */
-  #define SREGS_AOREG_MaxIndex (0UL)                 /*!< Max index of AOREG[1] array.                                         */
-  #define SREGS_AOREG_MinIndex (0UL)                 /*!< Min index of AOREG[1] array.                                         */
-  #define SREGS_AOREG_ResetValue (0x00000000UL)      /*!< Reset value of AOREG[1] register.                                    */
-
-/* VALUE @Bits 0..3 : (unspecified) */
-  #define SREGS_AOREG_VALUE_Pos (0UL)                /*!< Position of VALUE field.                                             */
-  #define SREGS_AOREG_VALUE_Msk (0xFUL << SREGS_AOREG_VALUE_Pos) /*!< Bit mask of VALUE field.                                 */
-
-
-/* SREGS_AODFT: AO control of DFT features */
-  #define SREGS_AODFT_ResetValue (0x00000000UL)      /*!< Reset value of AODFT register.                                       */
-
-/* DTBENABLE @Bit 0 : Output DTB on GPIO pins through Always-On pin muxing */
-  #define SREGS_AODFT_DTBENABLE_Pos (0UL)            /*!< Position of DTBENABLE field.                                         */
-  #define SREGS_AODFT_DTBENABLE_Msk (0x1UL << SREGS_AODFT_DTBENABLE_Pos) /*!< Bit mask of DTBENABLE field.                     */
 
 
 #endif                                               /*!< !defined(__ASSEMBLER__) && !defined(__ASSEMBLY__)                    */
@@ -64211,12 +64268,12 @@ typedef struct {
 /* UICR_BOOTCONF: Immutable boot region configuration. */
   #define UICR_BOOTCONF_ResetValue (0xFFFFFFFFUL)    /*!< Reset value of BOOTCONF register.                                    */
 
-/* READ @Bit 0 : Read access */
+/* READ @Bit 0 : Read access. Must be enabled in order for the Arm Cortex CPU to start executing from RRAM. */
   #define UICR_BOOTCONF_READ_Pos (0UL)               /*!< Position of READ field.                                              */
   #define UICR_BOOTCONF_READ_Msk (0x1UL << UICR_BOOTCONF_READ_Pos) /*!< Bit mask of READ field.                                */
   #define UICR_BOOTCONF_READ_Min (0x0UL)             /*!< Min enumerator value of READ field.                                  */
   #define UICR_BOOTCONF_READ_Max (0x1UL)             /*!< Max enumerator value of READ field.                                  */
-  #define UICR_BOOTCONF_READ_NotAllowed (0x0UL)      /*!< Reading from the region is not allowed                               */
+  #define UICR_BOOTCONF_READ_NotAllowed (0x0UL)      /*!< Reading from the region is not allowed.                              */
   #define UICR_BOOTCONF_READ_Allowed (0x1UL)         /*!< Reading from the region is allowed                                   */
 
 /* WRITE @Bit 1 : Write access */
@@ -70515,6 +70572,134 @@ typedef struct {
   #define VPRCSR_NORDIC_INB_PIN15_Max (0x1UL)        /*!< Max enumerator value of PIN15 field.                                 */
   #define VPRCSR_NORDIC_INB_PIN15_LOW (0x0UL)        /*!< Pin is Low                                                           */
   #define VPRCSR_NORDIC_INB_PIN15_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN16 @Bit 16 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN16_Pos (16UL)         /*!< Position of PIN16 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN16_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN16_Pos) /*!< Bit mask of PIN16 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN16_Min (0x0UL)        /*!< Min enumerator value of PIN16 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN16_Max (0x1UL)        /*!< Max enumerator value of PIN16 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN16_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN16_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN17 @Bit 17 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN17_Pos (17UL)         /*!< Position of PIN17 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN17_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN17_Pos) /*!< Bit mask of PIN17 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN17_Min (0x0UL)        /*!< Min enumerator value of PIN17 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN17_Max (0x1UL)        /*!< Max enumerator value of PIN17 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN17_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN17_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN18 @Bit 18 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN18_Pos (18UL)         /*!< Position of PIN18 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN18_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN18_Pos) /*!< Bit mask of PIN18 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN18_Min (0x0UL)        /*!< Min enumerator value of PIN18 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN18_Max (0x1UL)        /*!< Max enumerator value of PIN18 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN18_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN18_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN19 @Bit 19 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN19_Pos (19UL)         /*!< Position of PIN19 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN19_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN19_Pos) /*!< Bit mask of PIN19 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN19_Min (0x0UL)        /*!< Min enumerator value of PIN19 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN19_Max (0x1UL)        /*!< Max enumerator value of PIN19 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN19_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN19_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN20 @Bit 20 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN20_Pos (20UL)         /*!< Position of PIN20 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN20_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN20_Pos) /*!< Bit mask of PIN20 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN20_Min (0x0UL)        /*!< Min enumerator value of PIN20 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN20_Max (0x1UL)        /*!< Max enumerator value of PIN20 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN20_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN20_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN21 @Bit 21 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN21_Pos (21UL)         /*!< Position of PIN21 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN21_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN21_Pos) /*!< Bit mask of PIN21 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN21_Min (0x0UL)        /*!< Min enumerator value of PIN21 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN21_Max (0x1UL)        /*!< Max enumerator value of PIN21 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN21_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN21_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN22 @Bit 22 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN22_Pos (22UL)         /*!< Position of PIN22 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN22_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN22_Pos) /*!< Bit mask of PIN22 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN22_Min (0x0UL)        /*!< Min enumerator value of PIN22 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN22_Max (0x1UL)        /*!< Max enumerator value of PIN22 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN22_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN22_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN23 @Bit 23 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN23_Pos (23UL)         /*!< Position of PIN23 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN23_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN23_Pos) /*!< Bit mask of PIN23 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN23_Min (0x0UL)        /*!< Min enumerator value of PIN23 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN23_Max (0x1UL)        /*!< Max enumerator value of PIN23 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN23_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN23_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN24 @Bit 24 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN24_Pos (24UL)         /*!< Position of PIN24 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN24_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN24_Pos) /*!< Bit mask of PIN24 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN24_Min (0x0UL)        /*!< Min enumerator value of PIN24 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN24_Max (0x1UL)        /*!< Max enumerator value of PIN24 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN24_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN24_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN25 @Bit 25 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN25_Pos (25UL)         /*!< Position of PIN25 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN25_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN25_Pos) /*!< Bit mask of PIN25 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN25_Min (0x0UL)        /*!< Min enumerator value of PIN25 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN25_Max (0x1UL)        /*!< Max enumerator value of PIN25 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN25_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN25_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN26 @Bit 26 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN26_Pos (26UL)         /*!< Position of PIN26 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN26_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN26_Pos) /*!< Bit mask of PIN26 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN26_Min (0x0UL)        /*!< Min enumerator value of PIN26 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN26_Max (0x1UL)        /*!< Max enumerator value of PIN26 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN26_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN26_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN27 @Bit 27 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN27_Pos (27UL)         /*!< Position of PIN27 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN27_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN27_Pos) /*!< Bit mask of PIN27 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN27_Min (0x0UL)        /*!< Min enumerator value of PIN27 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN27_Max (0x1UL)        /*!< Max enumerator value of PIN27 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN27_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN27_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN28 @Bit 28 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN28_Pos (28UL)         /*!< Position of PIN28 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN28_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN28_Pos) /*!< Bit mask of PIN28 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN28_Min (0x0UL)        /*!< Min enumerator value of PIN28 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN28_Max (0x1UL)        /*!< Max enumerator value of PIN28 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN28_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN28_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN29 @Bit 29 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN29_Pos (29UL)         /*!< Position of PIN29 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN29_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN29_Pos) /*!< Bit mask of PIN29 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN29_Min (0x0UL)        /*!< Min enumerator value of PIN29 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN29_Max (0x1UL)        /*!< Max enumerator value of PIN29 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN29_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN29_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN30 @Bit 30 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN30_Pos (30UL)         /*!< Position of PIN30 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN30_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN30_Pos) /*!< Bit mask of PIN30 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN30_Min (0x0UL)        /*!< Min enumerator value of PIN30 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN30_Max (0x1UL)        /*!< Max enumerator value of PIN30 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN30_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN30_HIGH (0x1UL)       /*!< Pin is High                                                          */
+
+/* PIN31 @Bit 31 : (unspecified) */
+  #define VPRCSR_NORDIC_INB_PIN31_Pos (31UL)         /*!< Position of PIN31 field.                                             */
+  #define VPRCSR_NORDIC_INB_PIN31_Msk (0x1UL << VPRCSR_NORDIC_INB_PIN31_Pos) /*!< Bit mask of PIN31 field.                     */
+  #define VPRCSR_NORDIC_INB_PIN31_Min (0x0UL)        /*!< Min enumerator value of PIN31 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN31_Max (0x1UL)        /*!< Max enumerator value of PIN31 field.                                 */
+  #define VPRCSR_NORDIC_INB_PIN31_LOW (0x0UL)        /*!< Pin is Low                                                           */
+  #define VPRCSR_NORDIC_INB_PIN31_HIGH (0x1UL)       /*!< Pin is High                                                          */
 
 
 
