@@ -125,14 +125,11 @@ static nrfx_nfct_control_block_t m_nfct_cb;
  */
 static void nfct_hw_init_setup(void)
 {
-    // Use Window Grid frame delay mode.
+    /* Use Window Grid frame delay mode. */
     nrfy_nfct_frame_delay_mode_set(NRF_NFCT, NRF_NFCT_FRAME_DELAY_MODE_WINDOWGRID);
-
-    /* Begin: Workaround for anomaly 25 */
-    /* Workaround for wrong SENSRES values require using SDD00001, but here SDD00100 is used
-       because it is required to operate with Windows Phone */
+    
+    /* Change the bit frame SDD to 00100 to improve interoperability. */
     nrfy_nfct_sensres_bit_frame_sdd_set(NRF_NFCT, NRF_NFCT_SENSRES_BIT_FRAME_SDD_00100);
-    /* End: Workaround for anomaly 25 */
 }
 
 static void nfct_frame_delay_max_set(bool default_delay)
