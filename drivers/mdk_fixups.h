@@ -562,15 +562,6 @@
 /* Start fixups section for NRF54LV10A_ENGA_XXAA                                                  */
 /**************************************************************************************************/
 
-#if defined(NRF54LV10A_ENGA_XXAA)
-    #include "nrf54lv10a_enga_interim.h"
-
-    #ifdef MPC_MASTER_PORTS_MaxCount
-        #undef MPC_MASTER_PORTS_MaxCount
-        #define MPC_MASTER_PORTS_MaxCount (8UL)
-    #endif
-#endif
-
 /**************************************************************************************************/
 /* End fixups section for NRF54LV10A_ENGA_XXAA                                                    */
 /**************************************************************************************************/
