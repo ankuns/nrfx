@@ -17,14 +17,11 @@
                                        "UNKNOWN EVENT")))
 
 #if defined(USE_WORKAROUND_FOR_I2S_STOP_ANOMALY)
-// Enable workaround for nRF52 Series anomaly 194 / nRF53 Series anomaly 36 /
-// nRF91 Series anomaly 1
+// Enable workaround for nRF52 Series anomaly 194 / nRF91 Series anomaly 1
 // (STOP task does not switch off all resources).
 #undef NRF52_ERRATA_194_ENABLE_WORKAROUND
-#undef NRF53_ERRATA_36_ENABLE_WORKAROUND
 #undef NRF91_ERRATA_1_ENABLE_WORKAROUND
 #define NRF52_ERRATA_194_ENABLE_WORKAROUND USE_WORKAROUND_FOR_I2S_STOP_ANOMALY
-#define NRF53_ERRATA_36_ENABLE_WORKAROUND  USE_WORKAROUND_FOR_I2S_STOP_ANOMALY
 #define NRF91_ERRATA_1_ENABLE_WORKAROUND   USE_WORKAROUND_FOR_I2S_STOP_ANOMALY
 #endif
 
@@ -503,7 +500,6 @@ void nrfx_i2s_stop(nrfx_i2s_t const * p_instance)
     nrfy_i2s_abort(p_instance->p_reg, NULL);
 
     if (NRF_ERRATA_DYNAMIC_CHECK(52, 194) ||
-        NRF_ERRATA_DYNAMIC_CHECK(53, 36) ||
         NRF_ERRATA_DYNAMIC_CHECK(91, 1))
     {
         *((volatile uint32_t *)(((uint32_t)p_instance->p_reg) + 0x38)) = 1;

@@ -712,53 +712,7 @@ nrfx_err_t nrfx_clock_divider_set(nrf_clock_domain_t domain,
     {
 #if defined(CLOCK_FEATURE_HFCLK_DIVIDE_PRESENT)
         case NRF_CLOCK_DOMAIN_HFCLK:
-            switch (div)
-            {
-                case NRF_CLOCK_HFCLK_DIV_2:
-#if !defined(NRF_TRUSTZONE_NONSECURE)
-                    if (NRF_ERRATA_DYNAMIC_CHECK(53, 4))
-                    {
-                        NRFX_CRITICAL_SECTION_ENTER();
-                        __DSB();
-
-                        nrf_clock_hfclk_div_set(NRF_CLOCK, div);
-
-                        *(volatile uint32_t *)0x5084450C = 0x0;
-                        *(volatile uint32_t *)0x50026548 = 0x0;
-                        *(volatile uint32_t *)0x50081EE4 = 0x0D;
-
-                        NRFX_CRITICAL_SECTION_EXIT();
-                    }
-                    else
-#endif
-                    {
-                        nrf_clock_hfclk_div_set(NRF_CLOCK, div);
-                    }
-                    break;
-                case NRF_CLOCK_HFCLK_DIV_1:
-#if !defined(NRF_TRUSTZONE_NONSECURE)
-                    if (NRF_ERRATA_DYNAMIC_CHECK(53, 4))
-                    {
-                        NRFX_CRITICAL_SECTION_ENTER();
-                        __DSB();
-
-                        *(volatile uint32_t *)0x5084450C = 0x4040;
-                        *(volatile uint32_t *)0x50026548 = 0x40;
-                        *(volatile uint32_t *)0x50081EE4 = 0x4D;
-
-                        nrf_clock_hfclk_div_set(NRF_CLOCK, div);
-
-                        NRFX_CRITICAL_SECTION_EXIT();
-                    }
-                    else
-#endif
-                    {
-                        nrf_clock_hfclk_div_set(NRF_CLOCK, div);
-                    }
-                    break;
-                default:
-                    return NRFX_ERROR_INVALID_PARAM;
-            }
+            nrf_clock_hfclk_div_set(NRF_CLOCK, div);
             SystemCoreClockUpdate();
             return NRFX_SUCCESS;
 #endif
