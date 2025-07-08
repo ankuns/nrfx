@@ -66,7 +66,7 @@ typedef enum
 } nrf_nvmc_ns_mode_t;
 #endif
 
-#if defined(NVMC_FEATURE_CACHE_PRESENT)
+#if defined(NVMC_FEATURE_CACHE_PRESENT) || defined(__NRFX_DOXYGEN__)
 /** @brief NVMC ICache configuration. */
 typedef enum
 {
@@ -75,7 +75,7 @@ typedef enum
     NRF_NVMC_ICACHE_ENABLE_WITH_PROFILING = NVMC_ICACHECNF_CACHEEN_Enabled | ///< Instruction Cache with cache profiling enabled.
                                             NVMC_ICACHECNF_CACHEPROFEN_Msk
 } nrf_nvmc_icache_config_t;
-#endif // defined(NVMC_FEATURE_CACHE_PRESENT)
+#endif // defined(NVMC_FEATURE_CACHE_PRESENT) || defined(__NRFX_DOXYGEN__)
 
 /**
  * @brief Function for checking if NVMC is ready to perform write or erase operation.
@@ -260,7 +260,7 @@ NRF_STATIC_INLINE void nrf_nvmc_page_partial_erase_start(NRF_NVMC_Type * p_reg,
                                                          uint32_t        page_addr);
 #endif // NRF_NVMC_HAS_PARTIAL_ERASE
 
-#if defined(NVMC_FEATURE_CACHE_PRESENT)
+#if defined(NVMC_FEATURE_CACHE_PRESENT) || defined(__NRFX_DOXYGEN__)
 /**
  * @brief Function for applying the Instruction Cache (ICache) configuration.
  *
@@ -318,7 +318,7 @@ NRF_STATIC_INLINE uint32_t nrf_nvmc_icache_miss_get(NRF_NVMC_Type const * p_reg)
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  */
  NRF_STATIC_INLINE void nrf_nvmc_icache_hit_miss_reset(NRF_NVMC_Type * p_reg);
-#endif // defined(NVMC_FEATURE_CACHE_PRESENT)
+#endif // defined(NVMC_FEATURE_CACHE_PRESENT) || defined(__NRFX_DOXYGEN__)
 
 #ifndef NRF_DECLARE_ONLY
 
