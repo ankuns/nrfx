@@ -30,6 +30,7 @@ NOTICE: This file has been modified by Nordic Semiconductor ASA.
 #include "system_nrf54l.h"
 #include "system_nrf54l_approtect.h"
 #include "system_config_sau.h"
+#include "nrf_peripherals.h"
 
 /*lint ++flb "Enter library region" */
 
