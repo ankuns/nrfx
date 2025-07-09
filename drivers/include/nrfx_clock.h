@@ -22,7 +22,7 @@ extern "C" {
  */
 
 /** @brief Symbol specifying driver event offset for LFRC hardware events. */
-#define NRFX_CLOCK_LFRC_EVT_OFFSET 32 
+#define NRFX_CLOCK_LFRC_EVT_OFFSET 32
 
 /** @brief Clock events. */
 typedef enum
@@ -258,6 +258,14 @@ nrfx_err_t nrfx_clock_xo_tune_abort(void);
  * @retval false No error.
  */
 bool nrfx_clock_xo_tune_error_check(void);
+
+/**
+ * @brief Function for checking if XO has been successfully tuned.
+ *
+ * @retval true  XO is successfully tuned.
+ * @retval false XO is not tuned.
+ */
+bool nrfx_clock_xo_tune_status_check(void);
 
 #endif
 
