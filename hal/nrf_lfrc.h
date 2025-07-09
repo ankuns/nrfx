@@ -16,6 +16,13 @@ extern "C" {
  * @brief   Hardware access layer for managing the Low Frequency 32 KHz RC Oscillator (LFRC).
  */
 
+#if defined (LFRC_CONFIG_CFG_DOUBLETAILCURRENT_Pos) || defined (__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether double tail current is present. */
+#define NRF_LFRC_HAS_DOUBLE_TAIL_CURRENT 1
+#else
+#define NRF_LFRC_HAS_DOUBLE_TAIL_CURRENT 0
+#endif
+
 #if defined (LFRC_CONFIG_CFG_CONTINUOUSTAILBIAS_Pos) || defined (__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether continuous tail bias is present. */
 #define NRF_LFRC_HAS_CONTINUOUS_TAIL_BIAS 1
@@ -28,6 +35,13 @@ extern "C" {
 #define NRF_LFRC_HAS_RETENTION 1
 #else
 #define NRF_LFRC_HAS_RETENTION 0
+#endif
+
+#if defined (LFRC_CONFIG_CFG_SPARE_Pos) || defined (__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether spare general purpose configuration is present. */
+#define NRF_LFRC_HAS_CFG_SPARE 1
+#else
+#define NRF_LFRC_HAS_CFG_SPARE 0
 #endif
 
 #if defined (LFRC_INTPEND_ResetValue) || defined (__NRFX_DOXYGEN__)
@@ -43,6 +57,70 @@ extern "C" {
 #else
 #define NRF_LFRC_HAS_CALIBRATION 0
 #endif
+
+#if defined(LFRC_PWRUPCTRL_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the PWRUPCTRL register is present. */
+#define NRF_LFRC_HAS_PWRUPCTRL 1
+#else
+#define NRF_LFRC_HAS_PWRUPCTRL 0
+#endif
+
+#if defined(LFRC_STATUSTRIM_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the STATUSTRIM register is present. */
+#define NRF_LFRC_HAS_STATUSTRIM 1
+#else
+#define NRF_LFRC_HAS_STATUSTRIM 0
+#endif
+
+#if defined(LFRC_STATUSANA_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the STATUSANA register is present. */
+#define NRF_LFRC_HAS_STATUSANA 1
+#else
+#define NRF_LFRC_HAS_STATUSANA 0
+#endif
+
+#if defined(LFRC_CONFIG_CFG_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the CONFIG.CFG register is present. */
+#define NRF_LFRC_HAS_CONFIG_CFG 1
+#else
+#define NRF_LFRC_HAS_CONFIG_CFG 0
+#endif
+
+#if defined(LFRC_CAL_TRIMLIMITLO_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the CAL.TRIMLIMITLO register is present. */
+#define NRF_LFRC_HAS_CAL_TRIMLIMITLO 1
+#else
+#define NRF_LFRC_HAS_CAL_TRIMLIMITLO 0
+#endif
+
+#if defined(LFRC_CAL_TRIMLIMITHI_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the CAL.TRIMLIMITHI register is present. */
+#define NRF_LFRC_HAS_CAL_TRIMLIMITHI 1
+#else
+#define NRF_LFRC_HAS_CAL_TRIMLIMITHI 0
+#endif
+
+#if defined(LFRC_CAL_RESULT_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the CAL.RESULT register is present. */
+#define NRF_LFRC_HAS_CAL_RESULT 1
+#else
+#define NRF_LFRC_HAS_CAL_RESULT 0
+#endif
+
+#if defined(LFRC_CAL_LENGTH_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the CAL.LENGTH register is present. */
+#define NRF_LFRC_HAS_CAL_LENGTH 1
+#else
+#define NRF_LFRC_HAS_CAL_LENGTH 0
+#endif
+
+#if defined(LFRC_CAL_NHI_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the CAL.NHI register is present. */
+#define NRF_LFRC_HAS_CAL_NHI 1
+#else
+#define NRF_LFRC_HAS_CAL_NHI 0
+#endif
+
 /**
  * @brief LFRC tasks.
  *
@@ -70,18 +148,24 @@ typedef enum
     NRF_LFRC_INT_TRIMERROR_MASK = LFRC_INTENSET_TRIMERROR_Msk, /**< Interrupt on TRIMERROR event. */
 } nrf_lfrc_int_mask_t;
 
+#if NRF_LFRC_HAS_CONFIG_CFG
 /** @brief LFRC override configuration. */
 typedef struct
 {
+#if NRF_LFRC_HAS_DOUBLE_TAIL_CURRENT
     bool doubletailcurrent_en;  /**< Enable double tail current. */
+#endif
 #if NRF_LFRC_HAS_CONTINUOUS_TAIL_BIAS
     bool continuoustailbias_en; /**< Enable continuous tail bias. */
 #endif
 #if NRF_LFRC_HAS_RETENTION
     bool retention_en;          /**< Enable retention for CAL. */
 #endif
+#if NRF_LFRC_HAS_CFG_SPARE
     bool spare_en;              /**< Enable spare general purpose configuration bits. */
+#endif
 } nrf_lfrc_config_t;
+#endif 
 
 /** @brief Number of measurement cycles used during calibration. */
 typedef enum
@@ -92,6 +176,7 @@ typedef enum
     NRF_LFRC_CAL_CYCLE_LENGTH_512 = LFRC_CAL_LENGTH_LENGTH_N512  /**< 512 cycles */
 } nrf_lfrc_cal_cycle_length_t;
 
+#if NRF_LFRC_HAS_PWRUPCTRL
 /** @brief Power up control. */
 typedef enum
 {
@@ -99,6 +184,7 @@ typedef enum
     NRF_LFRC_POWER_CONTROL_POWER_UP   = LFRC_PWRUPCTRL_CTRL_PowerUp,  /**< Power up */
     NRF_LFRC_POWER_CONTROL_POWER_DOWN = LFRC_PWRUPCTRL_CTRL_PowerDown /**< Power down */
 } nrf_lfrc_power_control_t;
+#endif
 
 /**
  * @brief Function for retrieving the address of the specified task.
@@ -191,6 +277,7 @@ NRF_STATIC_INLINE uint32_t nrf_lfrc_int_enable_check(NRF_LFRC_Type const * p_reg
  */
 NRF_STATIC_INLINE uint32_t nrf_lfrc_int_pending_get(NRF_LFRC_Type const * p_reg);
 
+#if NRF_LFRC_HAS_STATUSTRIM
 /**
  * @brief Function for getting current trimming value of the LFRCOSC.
  *
@@ -201,7 +288,9 @@ NRF_STATIC_INLINE uint32_t nrf_lfrc_int_pending_get(NRF_LFRC_Type const * p_reg)
  * @return Trim value register contents.
  */
 NRF_STATIC_INLINE int32_t nrf_lfrc_trim_status_get(NRF_LFRC_Type const * p_reg);
+#endif
 
+#if NRF_LFRC_HAS_STATUSANA
 /**
  * @brief Function for checking status of analog module READY signal.
  *
@@ -221,7 +310,9 @@ NRF_STATIC_INLINE bool nrf_lfrc_statusana_ready_check(NRF_LFRC_Type const * p_re
  * @retval false The signal is logic 0.
  */
 NRF_STATIC_INLINE bool nrf_lfrc_statusana_settled_check(NRF_LFRC_Type const * p_reg);
+#endif 
 
+#if NRF_LFRC_HAS_CONFIG_CFG
 /**
  * @brief Function for override the configuration.
  *
@@ -230,7 +321,9 @@ NRF_STATIC_INLINE bool nrf_lfrc_statusana_settled_check(NRF_LFRC_Type const * p_
  */
 NRF_STATIC_INLINE void nrf_lfrc_config_set(NRF_LFRC_Type *           p_reg,
                                            nrf_lfrc_config_t const * p_config);
+#endif
 
+#if NRF_LFRC_HAS_CAL_LENGTH
 /**
  * @brief Function for setting measurement cycle count length used while calibration.
  *
@@ -239,7 +332,9 @@ NRF_STATIC_INLINE void nrf_lfrc_config_set(NRF_LFRC_Type *           p_reg,
  */
 NRF_STATIC_INLINE void nrf_lfrc_cal_cycle_length_set(NRF_LFRC_Type *             p_reg,
                                                      nrf_lfrc_cal_cycle_length_t length);
+#endif
 
+#if NRF_LFRC_HAS_CAL_TRIMLIMITLO
 /**
  * @brief Function for setting lower trim limit.
  *
@@ -247,7 +342,9 @@ NRF_STATIC_INLINE void nrf_lfrc_cal_cycle_length_set(NRF_LFRC_Type *            
  * @param[in] trimlimit TRIM limit value.
  */
 NRF_STATIC_INLINE void nrf_lfrc_cal_trim_limit_low_set(NRF_LFRC_Type * p_reg, uint32_t trimlimit);
+#endif
 
+#if NRF_LFRC_HAS_CAL_TRIMLIMITHI
 /**
  * @brief Function for setting higher trim limit.
  *
@@ -255,7 +352,9 @@ NRF_STATIC_INLINE void nrf_lfrc_cal_trim_limit_low_set(NRF_LFRC_Type * p_reg, ui
  * @param[in] trimlimit TRIM limit value.
  */
 NRF_STATIC_INLINE void nrf_lfrc_cal_trim_limit_high_set(NRF_LFRC_Type * p_reg, uint32_t trimlimit);
+#endif
 
+#if NRF_LFRC_HAS_CAL_RESULT
 /**
  * @brief Function for reading calibration results.
  *
@@ -265,7 +364,9 @@ NRF_STATIC_INLINE void nrf_lfrc_cal_trim_limit_high_set(NRF_LFRC_Type * p_reg, u
  * @return Result in 16 MHz clock cycles.
  */
 NRF_STATIC_INLINE uint32_t nrf_lfrc_cal_result_get(NRF_LFRC_Type const * p_reg, uint8_t number);
+#endif
 
+#if NRF_LFRC_HAS_CAL_NHI
 /**
  * @brief Function for reading number of cycles when the CAL signal is high.
  *
@@ -274,7 +375,9 @@ NRF_STATIC_INLINE uint32_t nrf_lfrc_cal_result_get(NRF_LFRC_Type const * p_reg, 
  * @return Number of cycles.
  */
 NRF_STATIC_INLINE uint16_t nrf_lfrc_cal_num_of_cycles_get(NRF_LFRC_Type const * p_reg);
+#endif
 
+#if NRF_LFRC_HAS_PWRUPCTRL
 /**
  * @brief Function for power control set.
  *
@@ -283,6 +386,7 @@ NRF_STATIC_INLINE uint16_t nrf_lfrc_cal_num_of_cycles_get(NRF_LFRC_Type const * 
  */
 NRF_STATIC_INLINE void nrf_lfrc_power_control_set(NRF_LFRC_Type *          p_reg,
                                                   nrf_lfrc_power_control_t pwrctrl);
+#endif
 
 #ifndef NRF_DECLARE_ONLY
 
@@ -334,6 +438,7 @@ NRF_STATIC_INLINE uint32_t nrf_lfrc_int_pending_get(NRF_LFRC_Type const * p_reg)
     return p_reg->INTPEND;
 }
 
+#if NRF_LFRC_HAS_STATUSTRIM
 NRF_STATIC_INLINE int32_t nrf_lfrc_trim_status_get(NRF_LFRC_Type const * p_reg)
 {
     uint32_t raw_measurement = (p_reg->STATUSTRIM & LFRC_STATUSTRIM_VAL_Msk) >>
@@ -347,7 +452,9 @@ NRF_STATIC_INLINE int32_t nrf_lfrc_trim_status_get(NRF_LFRC_Type const * p_reg)
 
     return (int32_t)raw_measurement;
 }
+#endif
 
+#if NRF_LFRC_HAS_STATUSANA
 NRF_STATIC_INLINE bool nrf_lfrc_statusana_ready_check(NRF_LFRC_Type const * p_reg)
 {
     return (bool)(p_reg->STATUSANA & LFRC_STATUSANA_READY_Msk);
@@ -357,13 +464,17 @@ NRF_STATIC_INLINE bool nrf_lfrc_statusana_settled_check(NRF_LFRC_Type const * p_
 {
     return (bool)(p_reg->STATUSANA & LFRC_STATUSANA_SETTLED_Msk);
 }
+#endif
 
+#if NRF_LFRC_HAS_CONFIG_CFG
 NRF_STATIC_INLINE void nrf_lfrc_config_set(NRF_LFRC_Type *           p_reg,
                                            nrf_lfrc_config_t const * p_config)
 {
+#if NRF_LFRC_HAS_DOUBLE_TAIL_CURRENT
     p_reg->CONFIG.CFG =
         ((p_config->doubletailcurrent_en  << LFRC_CONFIG_CFG_DOUBLETAILCURRENT_Pos)  &
               LFRC_CONFIG_CFG_DOUBLETAILCURRENT_Msk)
+#endif
 #if NRF_LFRC_HAS_CONTINUOUS_TAIL_BIAS
       | ((p_config->continuoustailbias_en << LFRC_CONFIG_CFG_CONTINUOUSTAILBIAS_Pos) &
               LFRC_CONFIG_CFG_CONTINUOUSTAILBIAS_Msk)
@@ -372,45 +483,59 @@ NRF_STATIC_INLINE void nrf_lfrc_config_set(NRF_LFRC_Type *           p_reg,
       | ((p_config->retention_en          << LFRC_CONFIG_CFG_ENABLERETENTION_Pos)    &
               LFRC_CONFIG_CFG_ENABLERETENTION_Msk)
 #endif
+#if NRF_LFRC_HAS_CFG_SPARE
       | ((p_config->spare_en              << LFRC_CONFIG_CFG_SPARE_Pos)              &
               LFRC_CONFIG_CFG_SPARE_Msk);
+#endif
 }
+#endif //NRF_LFRC_HAS_CONFIG_CFG
 
+#if NRF_LFRC_HAS_CAL_LENGTH
 NRF_STATIC_INLINE void nrf_lfrc_cal_cycle_length_set(NRF_LFRC_Type *             p_reg,
                                                      nrf_lfrc_cal_cycle_length_t length)
 {
     p_reg->CAL.LENGTH = (uint32_t)length << LFRC_CAL_LENGTH_LENGTH_Pos;
 }
+#endif
 
+#if NRF_LFRC_HAS_CAL_TRIMLIMITLO
 NRF_STATIC_INLINE void nrf_lfrc_cal_trim_limit_low_set(NRF_LFRC_Type * p_reg, uint32_t trimlimit)
 {
     p_reg->CAL.TRIMLIMITLO = (trimlimit << LFRC_CAL_TRIMLIMITLO_VALUE_Pos) &
                                    LFRC_CAL_TRIMLIMITLO_VALUE_Msk;
 }
+#endif
 
+#if NRF_LFRC_HAS_CAL_TRIMLIMITHI
 NRF_STATIC_INLINE void nrf_lfrc_cal_trim_limit_high_set(NRF_LFRC_Type * p_reg, uint32_t trimlimit)
 {
     p_reg->CAL.TRIMLIMITHI = (trimlimit << LFRC_CAL_TRIMLIMITHI_VALUE_Pos) &
                                    LFRC_CAL_TRIMLIMITHI_VALUE_Msk;
 }
+#endif
 
+#if NRF_LFRC_HAS_CAL_RESULT
 NRF_STATIC_INLINE uint32_t nrf_lfrc_cal_result_get(NRF_LFRC_Type const * p_reg, uint8_t number)
 {
     NRFX_ASSERT(number < LFRC_CAL_RESULT_MaxCount);
     return p_reg->CAL.RESULT[number];
 }
+#endif
 
+#if NRF_LFRC_HAS_CAL_NHI
 NRF_STATIC_INLINE uint16_t nrf_lfrc_cal_num_of_cycles_get(NRF_LFRC_Type const * p_reg)
 {
     return (uint16_t)p_reg->CAL.NHI;
 }
+#endif 
 
+#if NRF_LFRC_HAS_PWRUPCTRL
 NRF_STATIC_INLINE void nrf_lfrc_power_control_set(NRF_LFRC_Type *          p_reg,
                                                   nrf_lfrc_power_control_t pwrctrl)
 {
     p_reg->PWRUPCTRL = (uint32_t)pwrctrl << LFRC_PWRUPCTRL_CTRL_Pos;
 }
-
+#endif
 #endif // NRF_DECLARE_ONLY
 
 /** @} */
