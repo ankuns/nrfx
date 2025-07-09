@@ -836,14 +836,14 @@ static nrfx_err_t spim_xfer(NRF_SPIM_Type               * p_spim,
 #if NRFX_CHECK(NRF54L_ERRATA_55_ENABLE_WORKAROUND)
     if (p_cb->apply_errata_nrf54l_55)
     {
-        *(volatile uint32_t *)((uintptr_t)p_spim + 0xc80) = 0x82;
+        *(volatile uint32_t *)((uint8_t *)p_spim + 0xc80) = 0x82;
     }
 #endif
 
 #ifdef USE_WORKAROUND_FOR_ANOMALY_NRF54L_8_NRF54H_212
     if (apply_errata_nrf54l_8_nrf54h_212() && p_cb->apply_errata_8_212)
     {
-        *(volatile uint32_t *)((uintptr_t)p_spim + 0xc84) = 0x82;
+        *(volatile uint32_t *)((uint8_t *)p_spim + 0xc84) = 0x82;
         if (p_cb->handler)
         {
             nrfy_spim_event_clear(p_spim, NRF_SPIM_EVENT_STARTED);
@@ -862,14 +862,14 @@ static nrfx_err_t spim_xfer(NRF_SPIM_Type               * p_spim,
 #if NRFX_CHECK(NRF54L_ERRATA_55_ENABLE_WORKAROUND)
         if (p_cb->apply_errata_nrf54l_55)
         {
-            *(volatile uint32_t *)((uintptr_t)p_spim + 0xc80) = 0;
+            *(volatile uint32_t *)((uint8_t *)p_spim + 0xc80) = 0;
         }
 #endif
 
 #ifdef USE_WORKAROUND_FOR_ANOMALY_NRF54L_8_NRF54H_212
         if (apply_errata_nrf54l_8_nrf54h_212() && p_cb->apply_errata_8_212)
         {
-            *(volatile uint32_t *)((uintptr_t)p_spim + 0xc84) = 0;
+            *(volatile uint32_t *)((uint8_t *)p_spim + 0xc84) = 0;
         }
 #endif
 
@@ -967,7 +967,7 @@ static void irq_handler(NRF_SPIM_Type * p_spim, spim_control_block_t * p_cb)
 #if NRFX_CHECK(NRF54L_ERRATA_55_ENABLE_WORKAROUND)
     if (p_cb->apply_errata_nrf54l_55 && nrfy_spim_event_check(p_spim, NRF_SPIM_EVENT_END))
     {
-        *(volatile uint32_t *)((uintptr_t)p_spim + 0xc80) = 0;
+        *(volatile uint32_t *)((uint8_t *)p_spim + 0xc80) = 0;
     }
 #endif
 
@@ -978,7 +978,7 @@ static void irq_handler(NRF_SPIM_Type * p_spim, spim_control_block_t * p_cb)
             nrfy_spim_event_check(p_spim, NRF_SPIM_EVENT_STARTED))
         {
             nrfy_spim_event_clear(p_spim, NRF_SPIM_EVENT_STARTED);
-            *(volatile uint32_t *)((uintptr_t)p_spim + 0xc84) = 0;
+            *(volatile uint32_t *)((uint8_t *)p_spim + 0xc84) = 0;
             nrfy_spim_int_disable(p_spim, NRF_SPIM_INT_STARTED_MASK);
         }
     }

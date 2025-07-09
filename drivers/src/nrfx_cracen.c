@@ -367,9 +367,9 @@ static inline void be_incr(unsigned char * v, size_t size)
  */
 static inline void xor_array(uint32_t * a, const uint32_t * b, size_t size)
 {
-    uintptr_t end = (uintptr_t)a + size;
+    uint8_t * end = (uint8_t *)a + size;
 
-    for (; (uintptr_t)a < end; a++, b++)
+    for (; (uint8_t *)a < end; a++, b++)
     {
         *a = *a ^ *b;
     }
