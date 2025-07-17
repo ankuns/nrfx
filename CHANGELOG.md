@@ -22,6 +22,7 @@ All notable changes to this project are documented in this file.
 - Fixed incorrect interrupt initialization in the RRAMC driver.
 - Fixed waiting for STOPPED event in case of stopping the peripheral without ongoing transfer in the SPIM driver.
 - Fixed incorrect size assertions in the MRAMC HAL.
+- Fixed the nRF54LM20A memory map description in the nrfx_ram_ctrl helper. Now, it corresponds to the actual memory sections layout.
 
 ## [3.12.1] - 2025-06-09
 ### Fixed
