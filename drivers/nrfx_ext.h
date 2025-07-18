@@ -94,10 +94,6 @@ extern "C" {
     #endif
 #endif
 
-#if defined(NRF54LS05B_ENGA_XXAA)
-#define NRF_GPIOTE_SECURE_SUFFIX NONSECURE
-#endif
-
 /*------------------------------------------------------------------------------------------------*/
 /* End of GPIOTE Extended section                                                                 */
 /*------------------------------------------------------------------------------------------------*/
@@ -139,11 +135,6 @@ extern "C" {
     #define GRTC_IRQn       GRTC_1_IRQn
     #define GRTC_IRQHandler GRTC_1_IRQHandler
     #endif
-#endif
-
-#if defined(NRF54LS05B_ENGA_XXAA)
-    #define GRTC_IRQn       GRTC_0_IRQn
-    #define GRTC_IRQHandler GRTC_0_IRQHandler
 #endif
 
 /*------------------------------------------------------------------------------------------------*/
@@ -220,16 +211,6 @@ extern "C" {
    #define NRFX_PRS_BOX_3_ADDR     NRF_UARTE132
    // SPIM133, SPIS133, TWIM133, TWIS133, UARTE133
    #define NRFX_PRS_BOX_4_ADDR     NRF_UARTE133
-#endif
-
-#if defined(NRF54LS05B_ENGA_XXAA)
-    #define NRF_PRS_BOX_EXT
-    // SPIM20, SPIS20, TWIM20, TWIS20, UARTE20
-    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE20
-    // SPIM21, SPIS21, TWIM21, TWIS21, UARTE21
-    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE21
-    // SPIM32, SPIS32, TWIM32, TWIS32, UARTE32
-    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE22
 #endif
 
 /*------------------------------------------------------------------------------------------------*/
@@ -320,13 +301,6 @@ extern "C" {
 /*------------------------------------------------------------------------------------------------*/
 /* Start of RAM Control Extended section                                                          */
 /*------------------------------------------------------------------------------------------------*/
-
-#if defined(NRF54LS05B_ENGA_XXAA)
-#define RAM_SECTION_UNIT_SIZE          (32UL * 1024UL)
-#define RAM_UNIFORM_BLOCKS             1
-#define RAM_UNIFORM_SECTIONS_PER_BLOCK 2
-#define RAM_UNIFORM_SECTIONS_TOTAL     2
-#endif
 
 /*------------------------------------------------------------------------------------------------*/
 /* End of RAM Control Extended section                                                            */

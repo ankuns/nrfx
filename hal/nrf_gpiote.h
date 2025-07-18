@@ -32,7 +32,8 @@ extern "C" {
 #endif
 
 #if defined(LUMOS_XXAA)
-#if (defined(ISA_ARM) && defined(NRF_TRUSTZONE_NONSECURE)) || defined(ISA_RISCV)
+#if (defined(ISA_ARM) && defined(NRF_TRUSTZONE_NONSECURE)) || \
+    defined(ISA_RISCV) || defined(NRF54LS05B_ENGA_XXAA)
 #define GPIOTE20_IRQn       GPIOTE20_0_IRQn
 #define GPIOTE20_IRQHandler GPIOTE20_0_IRQHandler
 #define GPIOTE30_IRQn       GPIOTE30_0_IRQn
@@ -105,14 +106,13 @@ extern "C" {
 #endif
 
 #if defined(GPIOTE_INTENSET0_PORT0SECURE_Msk)
-#if !defined(NRF_GPIOTE_SECURE_SUFFIX)
-#if defined(NRF_TRUSTZONE_NONSECURE) || \
-    (defined(ISA_RISCV) && defined(HALTIUM_XXAA))
+#if defined(NRF_TRUSTZONE_NONSECURE)              || \
+    (defined(ISA_RISCV) && defined(HALTIUM_XXAA)) || \
+    defined(NRF54LS05B_ENGA_XXAA)
 #define NRF_GPIOTE_SECURE_SUFFIX NONSECURE
 #else
 #define NRF_GPIOTE_SECURE_SUFFIX SECURE
 #endif
-#endif // !defined(NRF_GPIOTE_SECURE_SUFFIX)
 #else
 /** @brief Symbol indicating a TrustZone suffix added to the register name. */
 #define NRF_GPIOTE_SECURE_SUFFIX
