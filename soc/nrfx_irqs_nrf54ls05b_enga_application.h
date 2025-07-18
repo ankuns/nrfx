@@ -55,7 +55,7 @@ extern "C" {
 // SPU20_IRQHandler
 
 // SERIAL20_IRQHandler
-#if NRFX_CHECK(NRFX_PRS_ENABLED) && NRFX_CHECK(NRFX_PRS_BOX_1_ENABLED)
+#if NRFX_CHECK(NRFX_PRS_ENABLED) && NRFX_CHECK(NRFX_PRS_BOX_0_ENABLED)
 #define nrfx_prs_box_0_irq_handler      SERIAL20_IRQHandler
 #else
 #define nrfx_spim_20_irq_handler        SERIAL20_IRQHandler
@@ -67,7 +67,7 @@ extern "C" {
 #endif
 
 // SERIAL21_IRQHandler
-#if NRFX_CHECK(NRFX_PRS_ENABLED) && NRFX_CHECK(NRFX_PRS_BOX_2_ENABLED)
+#if NRFX_CHECK(NRFX_PRS_ENABLED) && NRFX_CHECK(NRFX_PRS_BOX_1_ENABLED)
 #define nrfx_prs_box_1_irq_handler      SERIAL21_IRQHandler
 #else
 #define nrfx_spim_21_irq_handler        SERIAL21_IRQHandler
@@ -79,7 +79,7 @@ extern "C" {
 #endif
 
 // SERIAL22_IRQHandler
-#if NRFX_CHECK(NRFX_PRS_ENABLED) && NRFX_CHECK(NRFX_PRS_BOX_3_ENABLED)
+#if NRFX_CHECK(NRFX_PRS_ENABLED) && NRFX_CHECK(NRFX_PRS_BOX_2_ENABLED)
 #define nrfx_prs_box_2_irq_handler      SERIAL22_IRQHandler
 #else
 #define nrfx_spim_22_irq_handler        SERIAL22_IRQHandler
