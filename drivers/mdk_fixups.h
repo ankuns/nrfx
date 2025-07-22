@@ -552,6 +552,11 @@
 
     #define ADDRESS_SLAVE_Pos         (12UL)
     #define ADDRESS_SLAVE_Msk         (0x3FUL << ADDRESS_SLAVE_Pos)
+
+    #if defined(NRF_MEMORY_FLASH_SIZE)
+        #undef NRF_MEMORY_FLASH_SIZE
+        #define NRF_MEMORY_FLASH_SIZE 0x0007F000
+    #endif
 #endif
 
 /**************************************************************************************************/
