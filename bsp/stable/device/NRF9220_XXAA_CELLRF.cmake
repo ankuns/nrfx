@@ -39,3 +39,7 @@ endif()
 
 set(FLASHING_COMMAND echo "No hardware available yet")
 set(RESETTING_COMMAND)
+
+# TEST SUPPORT info
+set(DEVICE_SUPPORTED_TESTS
+  )

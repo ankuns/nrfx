@@ -31,3 +31,7 @@ endif()
 
 set(FLASHING_COMMAND echo "Not supported - HALTIUM targets work only on PALLADIUM emulator")
 set(RESETTING_COMMAND)
+
+# TEST SUPPORT info
+set(DEVICE_SUPPORTED_TESTS
+  )
