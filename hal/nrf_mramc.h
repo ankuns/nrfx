@@ -72,12 +72,20 @@ extern "C" {
 #define NRF_MRAMC_READYNEXTTIMEOUT_MAX      MRAMC_READYNEXTTIMEOUT_VALUE_Max
 /** @brief Default timeout value for waiting for next write in in MRAMC clock cycles. */
 #define NRF_MRAMC_READYNEXTTIMEOUT_DEFAULT  MRAMC_READYNEXTTIMEOUT_ResetValue
+/** @brief Minimum timeout value for low average current read in MRAMC clock cycles. */
+#define NRF_MRAMC_LOWAVGCURR_READ_MIN       MRAMC_LOWAVGCURR_READ_VALUE_Min
+/** @brief Minimum timeout value for low average current write in MRAMC clock cycles. */
+#define NRF_MRAMC_LOWAVGCURR_WRITE_MIN      MRAMC_LOWAVGCURR_WRITE_VALUE_Min
+/** @brief Minimum timeout value for low average current erase in MRAMC clock cycles. */
+#define NRF_MRAMC_LOWAVGCURR_ERASE_MIN      MRAMC_LOWAVGCURR_ERASE_VALUE_Min
 /** @brief Maximum timeout value for low average current read in MRAMC clock cycles. */
 #define NRF_MRAMC_LOWAVGCURR_READ_MAX       MRAMC_LOWAVGCURR_READ_VALUE_Max
 /** @brief Maximum timeout value for low average current write in MRAMC clock cycles. */
 #define NRF_MRAMC_LOWAVGCURR_WRITE_MAX      MRAMC_LOWAVGCURR_WRITE_VALUE_Max
 /** @brief Maximum timeout value for low average current erase in MRAMC clock cycles. */
 #define NRF_MRAMC_LOWAVGCURR_ERASE_MAX      MRAMC_LOWAVGCURR_ERASE_VALUE_Max
+/** @brief Minimum timeout value for automatic power down in MRAMC clock cycles. */
+#define NRF_MRAMC_AUTOPOWERDOWN_TIMEOUT_MIN MRAMC_POWER_AUTOPOWERDOWN_TIMEOUTVALUE_Min
 /** @brief Maximum timeout value for automatic power down in MRAMC clock cycles. */
 #define NRF_MRAMC_AUTOPOWERDOWN_TIMEOUT_MAX MRAMC_POWER_AUTOPOWERDOWN_TIMEOUTVALUE_Max
 /** @brief Minimum size of erase operation in MRAM words. */
@@ -86,6 +94,10 @@ extern "C" {
 #define NRF_MRAMC_ERASE_SIZE_MAX            MRAMC_ERASE_SIZE_SIZE_Max
 /** @brief Maximum number of NVR pages. */
 #define NRF_MRAMC_CONFIGNVR_PAGE_MAX        MRAMC_CONFIGNVR_PAGE_MaxCount
+/** @brief Minimum size of lower 2KB memory in NR page to disable read access. */
+#define NRF_MRAMC_CONFIGNVR_PAGE_LRSIZE_MIN MRAMC_CONFIGNVR_PAGE_LRSIZE_Min
+/** @brief Minimum size of lower 2KB memory in NR page to disable write access. */
+#define NRF_MRAMC_CONFIGNVR_PAGE_LWSIZE_MIN MRAMC_CONFIGNVR_PAGE_LWSIZE_Min
 /** @brief Maximum size of lower 2KB memory in NR page to disable read access. */
 #define NRF_MRAMC_CONFIGNVR_PAGE_LRSIZE_MAX MRAMC_CONFIGNVR_PAGE_LRSIZE_Max
 /** @brief Maximum size of lower 2KB memory in NR page to disable write access. */
@@ -1332,8 +1344,10 @@ NRF_STATIC_INLINE void nrf_mramc_config_nvr_set(NRF_MRAMC_Type *               p
 {
     NRFX_ASSERT(page < NRF_MRAMC_CONFIGNVR_PAGE_MAX);
 #if NRF_MRAMC_HAS_CONFIGNVR_PAGE_LOWER_PROTECT
-    NRFX_ASSERT(p_data->lrsize < NRF_MRAMC_CONFIGNVR_PAGE_LRSIZE_MAX);
-    NRFX_ASSERT(p_data->lwsize < NRF_MRAMC_CONFIGNVR_PAGE_LWSIZE_MAX);
+    NRFX_ASSERT((p_data->lrsize <= NRF_MRAMC_CONFIGNVR_PAGE_LRSIZE_MAX) &&
+                (p_data->lrsize >= NRF_MRAMC_CONFIGNVR_PAGE_LRSIZE_MIN));
+    NRFX_ASSERT((p_data->lwsize <= NRF_MRAMC_CONFIGNVR_PAGE_LWSIZE_MAX) &&
+                (p_data->lwsize >= NRF_MRAMC_CONFIGNVR_PAGE_LWSIZE_MIN));
 #endif
 
     p_reg->CONFIGNVR.PAGE[page] = ((uint32_t)p_data->wen  << MRAMC_CONFIGNVR_PAGE_WEN_Pos) |
