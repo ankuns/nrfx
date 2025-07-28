@@ -193,6 +193,13 @@ extern "C" {
 #define NRF_POWER_HAS_PMIC 0
 #endif
 
+#if defined(POWER_RAM_POWER_S0POWER_Msk) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether the RAM power can be controlled here */
+#define NRF_POWER_HAS_RAM_POWER 1
+#else
+#define NRF_POWER_HAS_RAM_POWER 0
+#endif
+
 #if NRF_POWER_HAS_ABB
 /** @brief Symbol specifying the maximum number of available @p ABB_LOCK events. */
 #define NRF_POWER_EVENTS_ABB_LOCK_COUNT POWER_EVENTS_ABBLOCK_MaxCount
@@ -438,7 +445,7 @@ typedef enum
 } nrf_power_mainregstatus_t;
 #endif
 
-#if defined(POWER_RAM_POWER_S0POWER_Msk) || defined(__NRFX_DOXYGEN__)
+#if NRF_POWER_HAS_RAM_POWER
 /**
  * @brief Bit positions for RAMPOWER register
  *
@@ -596,7 +603,7 @@ typedef enum
 #if defined(__GNUC__)
 #pragma GCC diagnostic pop
 #endif
-#endif // defined(POWER_RAM_POWER_S0POWER_Msk) || defined(__NRFX_DOXYGEN__)
+#endif // NRF_POWER_HAS_RAM_POWER
 
 #if NRF_POWER_HAS_VREG_CONFIG
 /** @brief POWER voltage regulators bit masks. */
@@ -971,7 +978,7 @@ NRF_STATIC_INLINE void nrf_power_dcdcen_set(NRF_POWER_Type * p_reg, bool enable)
 NRF_STATIC_INLINE bool nrf_power_dcdcen_get(NRF_POWER_Type const * p_reg);
 #endif // NRF_POWER_HAS_DCDCEN
 
-#if defined(POWER_RAM_POWER_S0POWER_Msk) || defined(__NRFX_DOXYGEN__)
+#if NRF_POWER_HAS_RAM_POWER
 /**
  * @brief Turn ON sections in the selected RAM block.
  *
@@ -1015,7 +1022,7 @@ NRF_STATIC_INLINE void nrf_power_rampower_mask_off(NRF_POWER_Type * p_reg,
  * @return Mask of sections state composed from @ref nrf_power_rampower_mask_t flags.
  */
 NRF_STATIC_INLINE uint32_t nrf_power_rampower_mask_get(NRF_POWER_Type const * p_reg, uint8_t block);
-#endif /* defined(POWER_RAM_POWER_S0POWER_Msk) || defined(__NRFX_DOXYGEN__) */
+#endif /* NRF_POWER_HAS_RAM_POWER */
 
 #if NRF_POWER_HAS_DCDCEN_VDDH
 /**
@@ -1596,7 +1603,7 @@ NRF_STATIC_INLINE bool nrf_power_dcdcen_get(NRF_POWER_Type const * p_reg)
 }
 #endif // NRF_POWER_HAS_DCDCEN
 
-#if defined(POWER_RAM_POWER_S0POWER_Msk)
+#if NRF_POWER_HAS_RAM_POWER
 NRF_STATIC_INLINE void nrf_power_rampower_mask_on(NRF_POWER_Type * p_reg,
                                                   uint8_t          block,
                                                   uint32_t         section_mask)
@@ -1615,7 +1622,7 @@ NRF_STATIC_INLINE uint32_t nrf_power_rampower_mask_get(NRF_POWER_Type const * p_
 {
     return p_reg->RAM[block].POWER;
 }
-#endif // defined(POWER_RAM_POWER_S0POWER_Msk)
+#endif // NRF_POWER_HAS_RAM_POWER
 
 #if NRF_POWER_HAS_DCDCEN_VDDH
 NRF_STATIC_INLINE void nrf_power_dcdcen_vddh_set(NRF_POWER_Type * p_reg, bool enable)
