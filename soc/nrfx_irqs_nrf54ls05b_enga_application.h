@@ -62,7 +62,6 @@ extern "C" {
 #define nrfx_spis_20_irq_handler        SERIAL20_IRQHandler
 #define nrfx_twim_20_irq_handler        SERIAL20_IRQHandler
 #define nrfx_twis_20_irq_handler        SERIAL20_IRQHandler
-#define nrfx_spi_20_irq_handler         SERIAL20_IRQHandler
 #define nrfx_uarte_20_irq_handler       SERIAL20_IRQHandler
 #endif
 
@@ -74,7 +73,6 @@ extern "C" {
 #define nrfx_spis_21_irq_handler        SERIAL21_IRQHandler
 #define nrfx_twim_21_irq_handler        SERIAL21_IRQHandler
 #define nrfx_twis_21_irq_handler        SERIAL21_IRQHandler
-#define nrfx_spi_21_irq_handler         SERIAL21_IRQHandler
 #define nrfx_uarte_21_irq_handler       SERIAL21_IRQHandler
 #endif
 
@@ -86,7 +84,6 @@ extern "C" {
 #define nrfx_spis_22_irq_handler        SERIAL22_IRQHandler
 #define nrfx_twim_22_irq_handler        SERIAL22_IRQHandler
 #define nrfx_twis_22_irq_handler        SERIAL22_IRQHandler
-#define nrfx_spi_22_irq_handler         SERIAL22_IRQHandler
 #define nrfx_uarte_22_irq_handler       SERIAL22_IRQHandler
 #endif
 
