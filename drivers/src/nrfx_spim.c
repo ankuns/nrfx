@@ -14,6 +14,11 @@
 #define NRFX_LOG_MODULE SPIM
 #include <nrfx_log.h>
 
+#if NRF_ERRATA_STATIC_CHECK(52, 58)
+#include <nrfx_gpiote.h>
+#include <helpers/nrfx_gppi.h>
+#endif
+
 #if NRFX_CHECK(NRFX_SPIM_EXTENDED_ENABLED) && !NRFY_SPIM_HAS_EXTENDED
 #error "Extended options are not available in the SoC currently in use."
 #endif
@@ -146,7 +151,12 @@ typedef struct
     bool                    apply_errata_8_212     : 1;
 #endif
 #if NRF_ERRATA_STATIC_CHECK(54L, 55)
-    bool                    apply_errata_nrf54l_55 : 1;
+    bool                    apply_nrf54l_errata_55 : 1;
+#endif
+#if NRF_ERRATA_STATIC_CHECK(52, 58)
+    bool                    apply_nrf52_errata_58  : 1;
+    uint8_t                 gpiote_ch;
+    uint8_t                 gppi_ch;
 #endif
     uint32_t                ss_pin;
 } spim_control_block_t;
@@ -163,7 +173,7 @@ static void anomaly_198_enable(uint8_t const * p_buffer, size_t buf_len)
         return;
     }
     uint32_t buffer_end_addr = ((uint32_t)p_buffer) + buf_len;
-    uint32_t block_addr      = ((uint32_t)p_buffer) & ~0x1FFF;
+    uint32_t block_addr      = ((uint32_t)p_buffer) & ~0x1FFFul;
     uint32_t block_flag      = (1UL << ((block_addr >> 13) & 0xFFFF));
     uint32_t occupied_blocks = 0;
 
@@ -188,6 +198,98 @@ static void anomaly_198_disable(void)
     *((volatile uint32_t *)0x40000E00) = m_anomaly_198_preserved_value;
 }
 #endif // NRF_ERRATA_STATIC_CHECK(52, 198)
+
+#if NRF_ERRATA_STATIC_CHECK(52, 58)
+static nrfx_gpiote_t const gpiote = NRFX_GPIOTE_INSTANCE(0);
+
+static nrfx_err_t nrf52_errata_58_workaround_enable(spim_control_block_t * p_cb,
+                                                    NRF_SPIM_Type        * p_spim)
+{
+    nrfx_err_t err_code;
+
+    if (!nrfx_gpiote_init_check(&gpiote))
+    {
+        err_code = nrfx_gpiote_init(&gpiote, NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY);
+        if (err_code != NRFX_SUCCESS)
+        {
+            return err_code;
+        }
+    }
+
+    err_code = nrfx_gpiote_channel_alloc(&gpiote, &p_cb->gpiote_ch);
+    if (err_code != NRFX_SUCCESS)
+    {
+        return err_code;
+    }
+
+    err_code = nrfx_gppi_channel_alloc(&p_cb->gppi_ch);
+    if (err_code != NRFX_SUCCESS)
+    {
+        return err_code;
+    }
+
+    nrfx_gpiote_trigger_config_t trigger_config = {
+        .trigger = NRFX_GPIOTE_TRIGGER_TOGGLE,
+        .p_in_channel = &p_cb->gpiote_ch,
+    };
+    nrfx_gpiote_input_pin_config_t gpiote_config = {
+        .p_pull_config = NULL,
+        .p_trigger_config = &trigger_config,
+        .p_handler_config = NULL,
+    };
+
+    const uint32_t sck_pin = nrf_spim_sck_pin_get(p_spim);
+
+    err_code = nrfx_gpiote_input_configure(&gpiote, sck_pin, &gpiote_config);
+    if (err_code != NRFX_SUCCESS)
+    {
+        return err_code;
+    }
+
+    nrfx_gpiote_trigger_enable(&gpiote, sck_pin, false);
+
+    /* Stop the spim instance when SCK toggles */
+    nrfx_gppi_channel_endpoints_setup(p_cb->gppi_ch,
+        nrfx_gpiote_in_event_address_get(&gpiote, sck_pin),
+        nrfy_spim_task_address_get(p_spim, NRF_SPIM_TASK_STOP));
+
+    nrfx_gppi_channels_enable(NRFX_BIT(p_cb->gppi_ch));
+
+    p_cb->apply_nrf52_errata_58 = true;
+
+    /* The spim instance cannot be stopped mid-byte, so it will finish
+	 * transmitting the first byte and then stop. Effectively ensuring
+	 * that only 1 byte is transmitted.
+	 */
+
+    return NRFX_SUCCESS;
+}
+
+static nrfx_err_t nrf52_errata_58_workaround_disable(spim_control_block_t * p_cb,
+                                                     NRF_SPIM_Type        * p_spim)
+{
+    nrfx_gpiote_trigger_disable(&gpiote, nrf_spim_sck_pin_get(p_spim));
+    nrfx_gppi_channels_disable(NRFX_BIT(p_cb->gppi_ch));
+
+    nrfx_err_t err_code;
+
+    err_code = nrfx_gpiote_channel_free(&gpiote, p_cb->gpiote_ch);
+    if (err_code != NRFX_SUCCESS)
+    {
+        return err_code;
+    }
+
+    err_code = nrfx_gppi_channel_free(p_cb->gppi_ch);
+    if (err_code != NRFX_SUCCESS)
+    {
+        return err_code;
+    }
+
+    p_cb->apply_nrf52_errata_58 = false;
+
+    return NRFX_SUCCESS;
+}
+#endif // NRF_ERRATA_STATIC_CHECK(52, 58)
 
 static void spim_abort(NRF_SPIM_Type * p_spim, spim_control_block_t * p_cb)
 {
@@ -463,7 +565,7 @@ static void spim_configure(nrfx_spim_t const *        p_instance,
 #if NRF_ERRATA_STATIC_CHECK(54L, 55)
     if (NRF_ERRATA_DYNAMIC_CHECK(54L, 55))
     {
-        p_cb->apply_errata_nrf54l_55 = 1;
+        p_cb->apply_nrf54l_errata_55 = 1;
     }
 #endif
 
@@ -811,6 +913,22 @@ static nrfx_err_t spim_xfer(NRF_SPIM_Type               * p_spim,
     nrfy_spim_rx_list_set(p_spim, NRFX_SPIM_FLAG_RX_POSTINC & flags);
 #endif
 
+#if NRF_ERRATA_STATIC_CHECK(52, 58)
+    if (NRF_ERRATA_DYNAMIC_CHECK(52, 58) &&
+        p_xfer_desc->rx_length == 1      &&
+        p_xfer_desc->tx_length <= 1)
+    {
+        err_code = nrf52_errata_58_workaround_enable(p_cb, p_spim);
+        if (err_code != NRFX_SUCCESS)
+        {
+            NRFX_LOG_WARNING("Function: %s, error code: %s.",
+                            __func__,
+                            NRFX_LOG_ERROR_STRING_GET(err_code));
+            return err_code;
+        }
+    }
+#endif
+
     nrfy_spim_xfer_desc_t xfer_desc = *p_xfer_desc;
     if (NRF_ERRATA_DYNAMIC_CHECK(52, 109) && (flags & NRFX_SPIM_FLAG_HOLD_XFER))
     {
@@ -831,7 +949,7 @@ static nrfx_err_t spim_xfer(NRF_SPIM_Type               * p_spim,
     nrfy_spim_enable(p_spim);
 
 #if NRF_ERRATA_STATIC_CHECK(54L, 55)
-    if (p_cb->apply_errata_nrf54l_55)
+    if (p_cb->apply_nrf54l_errata_55)
     {
         *(volatile uint32_t *)((uint8_t *)p_spim + 0xc80) = 0x82;
     }
@@ -857,7 +975,7 @@ static nrfx_err_t spim_xfer(NRF_SPIM_Type               * p_spim,
     if (!p_cb->handler)
     {
 #if NRF_ERRATA_STATIC_CHECK(54L, 55)
-        if (p_cb->apply_errata_nrf54l_55)
+        if (p_cb->apply_nrf54l_errata_55)
         {
             *(volatile uint32_t *)((uint8_t *)p_spim + 0xc80) = 0;
         }
@@ -962,7 +1080,7 @@ void nrfx_spim_abort(nrfx_spim_t const * p_instance)
 static void irq_handler(NRF_SPIM_Type * p_spim, spim_control_block_t * p_cb)
 {
 #if NRF_ERRATA_STATIC_CHECK(54L, 55)
-    if (p_cb->apply_errata_nrf54l_55 && nrfy_spim_event_check(p_spim, NRF_SPIM_EVENT_END))
+    if (p_cb->apply_nrf54l_errata_55 && nrfy_spim_event_check(p_spim, NRF_SPIM_EVENT_END))
     {
         *(volatile uint32_t *)((uint8_t *)p_spim + 0xc80) = 0;
     }
@@ -1015,6 +1133,19 @@ static void irq_handler(NRF_SPIM_Type * p_spim, spim_control_block_t * p_cb)
         NRFX_LOG_DEBUG("Event: NRF_SPIM_EVENT_END.");
         finish_transfer(p_spim, p_cb);
     }
+
+#if NRF_ERRATA_STATIC_CHECK(52, 58)
+    if (p_cb->apply_nrf52_errata_58)
+    {
+        nrfx_err_t err_code = nrf52_errata_58_workaround_disable(p_cb, p_spim);
+        if (err_code != NRFX_SUCCESS)
+        {
+            NRFX_LOG_WARNING("Function: %s, error code: %s.",
+                            __func__,
+                            NRFX_LOG_ERROR_STRING_GET(err_code));
+        }
+    }
+#endif
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(SPIM, spim)
