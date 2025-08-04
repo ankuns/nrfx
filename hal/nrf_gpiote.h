@@ -105,7 +105,7 @@ extern "C" {
 #define NRF_GPIOTE_IRQ_GROUP
 #endif
 
-#if defined(GPIOTE_INTENSET0_PORT0SECURE_Msk)
+#if defined(GPIOTE_INTENSET0_PORT0SECURE_Msk) || defined(GPIOTE_INTENSET0_PORT0NONSECURE_Msk)
 #if defined(NRF_TRUSTZONE_NONSECURE)              || \
     (defined(ISA_RISCV) && defined(HALTIUM_XXAA)) || \
     defined(NRF54LS05B_ENGA_XXAA)
@@ -116,7 +116,7 @@ extern "C" {
 #else
 /** @brief Symbol indicating a TrustZone suffix added to the register name. */
 #define NRF_GPIOTE_SECURE_SUFFIX
-#endif // defined(GPIOTE_INTENSET0_PORT0SECURE_Msk)
+#endif // defined(GPIOTE_INTENSET0_PORT0SECURE_Msk) || defined(GPIOTE_INTENSET0_PORT0NONSECURE_Msk)
 
 #if defined(GPIOTE_INTENSET0_IN0_Msk)
 #if defined(LUMOS_XXAA)
