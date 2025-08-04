@@ -7,6 +7,14 @@
 #error "This file should not be included directly. Include nrfx_config.h instead."
 #endif
 
+/**
+ * @brief NRFX_CRACEN_ENABLED
+ *
+ * Boolean. Accepted values: 0 and 1.
+ */
+#ifndef NRFX_CRACEN_ENABLED
+#define NRFX_CRACEN_ENABLED 1
+#endif
 
 /**
  * @brief NRFX_DEFAULT_IRQ_PRIORITY
@@ -32,6 +40,7 @@
  * Integer value.
  * Supported values:
  * - RC    = 0
+ * - XTAL  = 1
  * - Synth = 2
  */
 #ifndef NRFX_CLOCK_CONFIG_LF_SRC
