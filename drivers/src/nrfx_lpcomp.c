@@ -24,19 +24,10 @@ static void lpcomp_configure(nrfx_lpcomp_config_t const * p_config)
 {
     nrfy_lpcomp_config_t nrfy_config =
     {
-#if NRFX_API_VER_AT_LEAST(3, 2, 0)
         .reference = p_config->reference,
         .ext_ref   = p_config->ext_ref,
         .detection = p_config->detection,
         NRFX_COND_CODE_1(LPCOMP_FEATURE_HYST_PRESENT, (.hyst = p_config->config.hyst), ())
-#else
-        .config =
-        {
-            .reference = p_config->config.reference,
-            .detection = p_config->config.detection,
-            NRFX_COND_CODE_1(LPCOMP_FEATURE_HYST_PRESENT, (.hyst = p_config->config.hyst), ())
-        },
-#endif
         .input = p_config->input
     };
 
@@ -44,11 +35,7 @@ static void lpcomp_configure(nrfx_lpcomp_config_t const * p_config)
 
     uint32_t int_mask = 0;
 
-#if NRFX_API_VER_AT_LEAST(3, 2, 0)
     switch (p_config->detection)
-#else
-    switch (p_config->config.detection)
-#endif
     {
         case NRF_LPCOMP_DETECT_UP:
             int_mask = NRF_LPCOMP_INT_UP_MASK;
