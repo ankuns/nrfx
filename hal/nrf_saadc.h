@@ -462,12 +462,8 @@ typedef enum
     NRF_SAADC_LIMIT_HIGH = 1  ///< High limit type.
 } nrf_saadc_limit_t;
 
-#if NRFX_API_VER_AT_LEAST(3, 2, 0) || defined(__NRFX_DOXYGEN__)
 /** @brief Type of a single ADC conversion result. */
 typedef void nrf_saadc_value_t;
-#else
-typedef uint16_t nrf_saadc_value_t;
-#endif
 
 /** @brief Analog-to-digital converter configuration structure. */
 typedef struct
