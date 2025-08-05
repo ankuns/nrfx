@@ -111,8 +111,6 @@ typedef void (* nrfx_timer_event_handler_t)(nrf_timer_event_t event_type, void *
  * @retval NRFX_SUCCESS             Initialization was successful.
  * @retval NRFX_ERROR_INVALID_PARAM Specified frequency is not supported by the TIMER instance.
  * @retval NRFX_ERROR_ALREADY       The driver is already initialized.
- * @retval NRFX_ERROR_INVALID_STATE The driver is already initialized.
- *                                  Deprecated - use @ref NRFX_ERROR_ALREADY instead.
  */
 nrfx_err_t nrfx_timer_init(nrfx_timer_t const *        p_instance,
                            nrfx_timer_config_t const * p_config,
@@ -404,4 +402,3 @@ NRFX_INSTANCE_IRQ_HANDLERS_DECLARE(TIMER, timer)
 #endif
 
 #endif // NRFX_TIMER_H__
-

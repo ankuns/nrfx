@@ -157,8 +157,6 @@ typedef struct
  *
  * @retval NRFX_SUCCESS             Initialization is successful.
  * @retval NRFX_ERROR_ALREADY       The driver is already initialized.
- * @retval NRFX_ERROR_INVALID_STATE The driver is already initialized.
- *                                  Deprecated - use @ref NRFX_ERROR_ALREADY instead.
  * @retval NRFX_ERROR_BUSY          Some other peripheral with the same
  *                                  instance ID is already in use. This is
  *                                  possible only if NRFX_PRS_ENABLED

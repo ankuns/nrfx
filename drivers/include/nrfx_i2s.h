@@ -200,8 +200,6 @@ typedef void (* nrfx_i2s_data_handler_t)(nrfx_i2s_buffers_t const * p_released,
  *
  * @retval NRFX_SUCCESS             Initialization was successful.
  * @retval NRFX_ERROR_ALREADY       The driver is already initialized.
- * @retval NRFX_ERROR_INVALID_STATE The driver is already initialized.
- *                                  Deprecated - use @ref NRFX_ERROR_ALREADY instead.
  * @retval NRFX_ERROR_INVALID_PARAM The requested combination of configuration
  *                                  options is not allowed by the I2S peripheral.
  */
@@ -359,4 +357,3 @@ NRFX_INSTANCE_IRQ_HANDLERS_DECLARE(I2S, i2s)
 #endif
 
 #endif // NRFX_I2S_H__
-
