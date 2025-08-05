@@ -405,8 +405,8 @@ void nrfx_spis_uninit(nrfx_spis_t const * p_instance)
 
     if (NRF_ERRATA_DYNAMIC_CHECK(52, 214))
     {
-        *(volatile uint32_t *)(p_spis + 0xA4ul) = 1UL;
-        *(volatile uint32_t *)(p_spis + 0xACul) = 1UL;
+        *(volatile uint32_t *)((uint8_t *)p_spis + 0xA4ul) = 1UL;
+        *(volatile uint32_t *)((uint8_t *)p_spis + 0xACul) = 1UL;
     }
 
     if (!p_cb->skip_gpio_cfg)
