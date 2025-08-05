@@ -44,8 +44,6 @@ enum {
 extern "C" {
 #endif
 
-#if NRFX_API_VER_AT_LEAST(3, 8, 0) || defined(__NRFX_DOXYGEN__)
-
 /**
  * @brief Function for freeing all allocated channels and groups.
  *
@@ -221,47 +219,6 @@ nrfx_err_t nrfx_dppi_group_disable(nrfx_dppi_t const *      p_instance,
  *                                  for a given peripheral address.
  */
 nrfx_err_t nrfx_dppi_periph_get(uint32_t peripheral_addr, nrfx_dppi_t * p_instance);
-
-#else
-
-#if !defined(NRF_DPPIC_INDEX)
-/* Choose the instance to use in case of using deprecated single-instance driver variant. */
-#if defined(HALTIUM_XXAA)
-#define NRF_DPPIC_INDEX 130
-#elif defined(LUMOS_XXAA)
-#define NRF_DPPIC_INDEX 20
-#else
-#define NRF_DPPIC_INDEX 0
-#endif
-#endif
-
-void nrfx_dppi_free(void);
-
-nrfx_err_t nrfx_dppi_channel_alloc(uint8_t * p_channel);
-
-nrfx_err_t nrfx_dppi_channel_free(uint8_t channel);
-
-nrfx_err_t nrfx_dppi_channel_enable(uint8_t channel);
-
-nrfx_err_t nrfx_dppi_channel_disable(uint8_t channel);
-
-nrfx_err_t nrfx_dppi_group_alloc(nrf_dppi_channel_group_t * p_group);
-
-nrfx_err_t nrfx_dppi_group_free(nrf_dppi_channel_group_t group);
-
-nrfx_err_t nrfx_dppi_channel_include_in_group(uint8_t                  channel,
-                                              nrf_dppi_channel_group_t group);
-
-nrfx_err_t nrfx_dppi_channel_remove_from_group(uint8_t                  channel,
-                                               nrf_dppi_channel_group_t group);
-
-nrfx_err_t nrfx_dppi_group_clear(nrf_dppi_channel_group_t group);
-
-nrfx_err_t nrfx_dppi_group_enable(nrf_dppi_channel_group_t group);
-
-nrfx_err_t nrfx_dppi_group_disable(nrf_dppi_channel_group_t group);
-
-#endif
 
 /** @} */
 

@@ -18,13 +18,7 @@ extern "C" {
     .ppib = NRFX_PPIB_INTERCONNECT_INSTANCE(FIRST_PPIB_INDEX, SECOND_PPIB_INDEX),                  \
 }
 
-#if NRFX_API_VER_AT_LEAST(3, 8, 0)
 #define DPPI_INSTANCE(idx) .dppic = NRFX_DPPI_INSTANCE(idx)
-#else
-#define DPPI_INSTANCE(idx)                                          \
-    .dppic         = NRFX_CONCAT(NRF_DPPIC, idx),                   \
-    .channels_mask = NRFX_BIT_MASK(NRFX_CONCAT(DPPIC, idx, _CH_NUM))
-#endif
 
 #if defined(NRF54L_SERIES) || defined(NRF7120_ENGA_XXAA)
 

@@ -513,8 +513,6 @@ nrfx_err_t nrfx_dppi_periph_get(uint32_t peripheral_addr, nrfx_dppi_t * p_instan
 #endif
 }
 
-#if NRFX_API_VER_AT_LEAST(3, 8, 0)
-
 void nrfx_dppi_free(nrfx_dppi_t const * p_instance)
 {
     dppi_free(p_instance);
@@ -580,73 +578,5 @@ nrfx_err_t nrfx_dppi_group_disable(nrfx_dppi_t const *      p_instance,
 {
     return dppi_group_disable(p_instance, group);
 }
-
-#else
-
-nrfx_dppi_t const dppi_instance = NRFX_DPPI_INSTANCE(NRF_DPPIC_INDEX);
-
-void nrfx_dppi_free(void)
-{
-    dppi_free(&dppi_instance);
-}
-
-nrfx_err_t nrfx_dppi_channel_alloc(uint8_t * p_channel)
-{
-    return dppi_channel_alloc(&dppi_instance, p_channel);
-}
-
-nrfx_err_t nrfx_dppi_channel_free(uint8_t channel)
-{
-    return dppi_channel_free(&dppi_instance, channel);
-}
-
-nrfx_err_t nrfx_dppi_channel_enable(uint8_t channel)
-{
-    return dppi_channel_enable(&dppi_instance, channel);
-}
-
-nrfx_err_t nrfx_dppi_channel_disable(uint8_t channel)
-{
-    return dppi_channel_disable(&dppi_instance, channel);
-}
-
-nrfx_err_t nrfx_dppi_group_alloc(nrf_dppi_channel_group_t * p_group)
-{
-    return dppi_group_alloc(&dppi_instance, p_group);
-}
-
-nrfx_err_t nrfx_dppi_group_free(nrf_dppi_channel_group_t group)
-{
-    return dppi_group_free(&dppi_instance, group);
-}
-
-nrfx_err_t nrfx_dppi_channel_include_in_group(uint8_t                  channel,
-                                              nrf_dppi_channel_group_t group)
-{
-    return dppi_channel_include_in_group(&dppi_instance, channel, group);
-}
-
-nrfx_err_t nrfx_dppi_channel_remove_from_group(uint8_t                  channel,
-                                               nrf_dppi_channel_group_t group)
-{
-    return dppi_channel_remove_from_group(&dppi_instance, channel, group);
-}
-
-nrfx_err_t nrfx_dppi_group_clear(nrf_dppi_channel_group_t group)
-{
-    return dppi_group_clear(&dppi_instance, group);
-}
-
-nrfx_err_t nrfx_dppi_group_enable(nrf_dppi_channel_group_t group)
-{
-    return dppi_group_enable(&dppi_instance, group);
-}
-
-nrfx_err_t nrfx_dppi_group_disable(nrf_dppi_channel_group_t group)
-{
-    return dppi_group_disable(&dppi_instance, group);
-}
-
-#endif
 
 #endif // NRFX_CHECK(NRFX_DPPI_ENABLED)
