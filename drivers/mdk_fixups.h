@@ -3365,4 +3365,8 @@ typedef struct {
 /* End fixups section for NRF9230_XXAA (HALTI FP1)                                                */
 /**************************************************************************************************/
 
+// By default, disable NRF52 errata 109
+#undef NRF52_ERRATA_109_ENABLE_WORKAROUND
+#define NRF52_ERRATA_109_ENABLE_WORKAROUND 0
+
 #endif // MDK_FIXUPS_H__
