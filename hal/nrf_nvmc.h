@@ -38,6 +38,13 @@ extern "C" {
 #define NRF_NVMC_HAS_UICR_ERASE 0
 #endif
 
+#if defined(NVMC_READYNEXT_READYNEXT_Msk) || defined (__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether write ready check is available */
+#define NRF_NVMC_HAS_WRITE_READY_CHECK 1
+#else
+#define NRF_NVMC_HAS_WRITE_READY_CHECK 0
+#endif
+
 /** @brief NVMC modes. */
 typedef enum
 {
@@ -80,7 +87,7 @@ typedef enum
  */
 NRF_STATIC_INLINE bool nrf_nvmc_ready_check(NRF_NVMC_Type const * p_reg);
 
-#if defined(NVMC_READYNEXT_READYNEXT_Msk) || defined(__NRFX_DOXYGEN__)
+#if NRF_NVMC_HAS_WRITE_READY_CHECK
 /**
  * @brief Function for checking if NVMC is ready to accept the next write operation.
  *
@@ -93,7 +100,7 @@ NRF_STATIC_INLINE bool nrf_nvmc_ready_check(NRF_NVMC_Type const * p_reg);
  * @retval false NVMC is busy and cannot accept the next write yet.
  */
 NRF_STATIC_INLINE bool nrf_nvmc_write_ready_check(NRF_NVMC_Type const * p_reg);
-#endif // defined(NVMC_READYNEXT_READYNEXT_Msk) || defined(__NRFX_DOXYGEN__)
+#endif // NRF_NVMC_HAS_WRITE_READY_CHECK
 
 /**
  * @brief Function for setting the NVMC mode.
@@ -320,7 +327,7 @@ NRF_STATIC_INLINE bool nrf_nvmc_ready_check(NRF_NVMC_Type const * p_reg)
     return (bool)(p_reg->READY & NVMC_READY_READY_Msk);
 }
 
-#if defined(NVMC_READYNEXT_READYNEXT_Msk)
+#if NRF_NVMC_HAS_WRITE_READY_CHECK
 NRF_STATIC_INLINE bool nrf_nvmc_write_ready_check(NRF_NVMC_Type const * p_reg)
 {
     return (bool)(p_reg->READYNEXT & NVMC_READYNEXT_READYNEXT_Msk);
