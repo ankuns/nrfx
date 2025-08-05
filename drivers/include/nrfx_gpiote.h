@@ -161,8 +161,6 @@ typedef struct
  */
 bool nrfx_gpiote_in_is_set(nrfx_gpiote_pin_t pin);
 
-#if NRFX_API_VER_AT_LEAST(3, 2, 0) || defined(__NRFX_DOXYGEN__)
-
 /** @brief Input pin pull default configuration. */
 #define NRFX_GPIOTE_DEFAULT_PULL_CONFIG NRF_GPIO_PIN_NOPULL
 
@@ -583,124 +581,6 @@ NRFX_STATIC_INLINE nrf_gpiote_latency_t nrfx_gpiote_latency_get(nrfx_gpiote_t co
 #endif // NRF_GPIOTE_HAS_LATENCY
 
 #endif // NRFX_DECLARE_ONLY
-
-#else
-
-#if !defined(NRF_GPIOTE_INDEX)
-/* Choose the instance to use in case of using deprecated single-instance driver variant. */
-#if defined(HALTIUM_XXAA)
-#define NRF_GPIOTE_INDEX 130
-#elif defined(LUMOS_XXAA)
-#define NRF_GPIOTE_INDEX 20
-#elif (defined(NRF5340_XXAA_APPLICATION) || defined(NRF91_SERIES)) && \
-      defined(NRF_TRUSTZONE_NONSECURE)
-#define NRF_GPIOTE_INDEX 1
-#else
-#define NRF_GPIOTE_INDEX 0
-#endif
-#endif
-
-#if !defined(nrfx_gpiote_irq_handler)
-#define nrfx_gpiote_irq_handler NRFX_CONCAT(nrfx_gpiote_, NRF_GPIOTE_INDEX, _irq_handler)
-#endif
-
-#define NRFX_GPIOTE_DEFAULT_INPUT_CONFIG \
-{                                        \
-    .pull = NRF_GPIO_PIN_NOPULL          \
-}
-
-nrfx_err_t nrfx_gpiote_init(uint8_t interrupt_priority);
-
-bool nrfx_gpiote_is_init(void);
-
-void nrfx_gpiote_uninit(void);
-
-nrfx_err_t nrfx_gpiote_channel_alloc(uint8_t * p_channel);
-
-nrfx_err_t nrfx_gpiote_channel_free(uint8_t channel);
-
-nrfx_err_t nrfx_gpiote_input_configure(nrfx_gpiote_pin_t                    pin,
-                                       nrfx_gpiote_input_config_t const *   p_input_config,
-                                       nrfx_gpiote_trigger_config_t const * p_trigger_config,
-                                       nrfx_gpiote_handler_config_t const * p_handler_config);
-
-nrfx_err_t nrfx_gpiote_output_configure(nrfx_gpiote_pin_t                   pin,
-                                        nrfx_gpiote_output_config_t const * p_config,
-                                        nrfx_gpiote_task_config_t const *   p_task_config);
-
-nrfx_err_t nrfx_gpiote_pin_uninit(nrfx_gpiote_pin_t pin);
-
-void nrfx_gpiote_trigger_enable(nrfx_gpiote_pin_t pin, bool int_enable);
-
-void nrfx_gpiote_trigger_disable(nrfx_gpiote_pin_t pin);
-
-void nrfx_gpiote_global_callback_set(nrfx_gpiote_interrupt_handler_t handler,
-                                     void *                          p_context);
-
-nrfx_err_t nrfx_gpiote_channel_get(nrfx_gpiote_pin_t pin, uint8_t *p_channel);
-
-void nrfx_gpiote_out_set(nrfx_gpiote_pin_t pin);
-
-void nrfx_gpiote_out_clear(nrfx_gpiote_pin_t pin);
-
-void nrfx_gpiote_out_toggle(nrfx_gpiote_pin_t pin);
-
-void nrfx_gpiote_out_task_enable(nrfx_gpiote_pin_t pin);
-
-void nrfx_gpiote_out_task_disable(nrfx_gpiote_pin_t pin);
-
-nrf_gpiote_task_t nrfx_gpiote_out_task_get(nrfx_gpiote_pin_t pin);
-
-uint32_t nrfx_gpiote_out_task_address_get(nrfx_gpiote_pin_t pin);
-
-#if defined(GPIOTE_FEATURE_SET_PRESENT)
-nrf_gpiote_task_t nrfx_gpiote_set_task_get(nrfx_gpiote_pin_t pin);
-
-uint32_t nrfx_gpiote_set_task_address_get(nrfx_gpiote_pin_t pin);
-#endif
-
-#if defined(GPIOTE_FEATURE_CLR_PRESENT)
-nrf_gpiote_task_t nrfx_gpiote_clr_task_get(nrfx_gpiote_pin_t pin);
-
-uint32_t nrfx_gpiote_clr_task_address_get(nrfx_gpiote_pin_t pin);
-#endif
-
-nrf_gpiote_event_t nrfx_gpiote_in_event_get(nrfx_gpiote_pin_t pin);
-
-uint32_t nrfx_gpiote_in_event_address_get(nrfx_gpiote_pin_t pin);
-
-void nrfx_gpiote_out_task_force(nrfx_gpiote_pin_t pin, uint8_t state);
-
-void nrfx_gpiote_out_task_trigger(nrfx_gpiote_pin_t pin);
-
-#if defined(GPIOTE_FEATURE_SET_PRESENT)
-void nrfx_gpiote_set_task_trigger(nrfx_gpiote_pin_t pin);
-#endif
-
-#if defined(GPIOTE_FEATURE_CLR_PRESENT)
-void nrfx_gpiote_clr_task_trigger(nrfx_gpiote_pin_t pin);
-#endif
-
-#if NRF_GPIOTE_HAS_LATENCY
-NRFX_STATIC_INLINE void nrfx_gpiote_latency_set(nrf_gpiote_latency_t latency);
-
-NRFX_STATIC_INLINE nrf_gpiote_latency_t nrfx_gpiote_latency_get(void);
-#endif
-
-#ifndef NRFX_DECLARE_ONLY
-#if NRF_GPIOTE_HAS_LATENCY
-NRFX_STATIC_INLINE void nrfx_gpiote_latency_set(nrf_gpiote_latency_t latency)
-{
-    nrfy_gpiote_latency_set(NRFX_CONCAT(NRF_, GPIOTE, NRF_GPIOTE_INDEX), latency);
-}
-
-NRFX_STATIC_INLINE nrf_gpiote_latency_t nrfx_gpiote_latency_get(void)
-{
-    return nrfy_gpiote_latency_get(NRFX_CONCAT(NRF_, GPIOTE, NRF_GPIOTE_INDEX));
-}
-#endif // NRF_GPIOTE_HAS_LATENCY
-#endif // NRFX_DECLARE_ONLY
-#endif // NRFX_API_VER_AT_LEAST(3, 2, 0) || defined(__NRFX_DOXYGEN__)
 
 /** @} */
 
