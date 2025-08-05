@@ -124,7 +124,6 @@ extern "C" {
     .channel_index  = _index,                                           \
 }
 
-#if NRFX_API_VER_AT_LEAST(3, 12, 0) || defined(__NRFX_DOXYGEN__)
 /**
  * @brief Macro for getting number of bytes needed to store specified number of SAADC samples.
  *
@@ -143,11 +142,6 @@ extern "C" {
  * @return Specified sample.
  */
 #define NRFX_SAADC_SAMPLE_GET(_samples, _index) (((int16_t *)(_samples))[(_index)])
-
-#else
-#define NRFX_SAADC_SAMPLES_TO_BYTES(_resolution, _samples) (_samples * 2)
-#define NRFX_SAADC_SAMPLE_GET(_resolution, _samples, _index) (((int16_t *)(_samples))[(_index)])
-#endif
 
 /**
  * @brief SAADC driver advanced mode default configuration.
