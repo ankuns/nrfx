@@ -445,11 +445,8 @@ NRF_STATIC_INLINE void nrf_nvmc_page_partial_erase_start(NRF_NVMC_Type * p_reg,
 NRF_STATIC_INLINE void nrf_nvmc_icache_config_set(NRF_NVMC_Type *          p_reg,
                                                   nrf_nvmc_icache_config_t config)
 {
-#if defined(NRF5340_XXAA_NETWORK) || defined(NRF91_SERIES)
-    // Apply workaround for the anomalies:
-    // - 6 for the nRF53.
-    // - 21 for the nRF91.
-    if (config == NRF_NVMC_ICACHE_DISABLE)
+    if ((NRF_ERRATA_DYNAMIC_CHECK(53, 6) || NRF_ERRATA_DYNAMIC_CHECK(91, 21)) &&
+        (config == NRF_NVMC_ICACHE_DISABLE))
     {
         NRFX_CRITICAL_SECTION_ENTER();
         __ISB();
@@ -458,7 +455,6 @@ NRF_STATIC_INLINE void nrf_nvmc_icache_config_set(NRF_NVMC_Type *          p_reg
         NRFX_CRITICAL_SECTION_EXIT();
     }
     else
-#endif
     {
         p_reg->ICACHECNF = (uint32_t)config;
     }
