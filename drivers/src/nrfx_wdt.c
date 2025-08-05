@@ -112,7 +112,6 @@ static nrfx_err_t wdt_init(nrfx_wdt_t const *        p_instance,
     return err_code;
 }
 
-#if NRFX_API_VER_AT_LEAST(3, 2, 0)
 nrfx_err_t nrfx_wdt_init(nrfx_wdt_t const *        p_instance,
                          nrfx_wdt_config_t const * p_config,
                          nrfx_wdt_event_handler_t  wdt_event_handler,
@@ -120,14 +119,6 @@ nrfx_err_t nrfx_wdt_init(nrfx_wdt_t const *        p_instance,
 {
     return wdt_init(p_instance, p_config, wdt_event_handler, p_context);
 }
-#else
-nrfx_err_t nrfx_wdt_init(nrfx_wdt_t const *        p_instance,
-                         nrfx_wdt_config_t const * p_config,
-                         nrfx_wdt_event_handler_t  wdt_event_handler)
-{
-    return wdt_init(p_instance, p_config, wdt_event_handler, NULL);
-}
-#endif
 
 nrfx_err_t nrfx_wdt_reconfigure(nrfx_wdt_t const *        p_instance,
                                 nrfx_wdt_config_t const * p_config)
@@ -289,20 +280,14 @@ static void irq_handler(NRF_WDT_Type * p_reg, wdt_control_block_t * p_cb)
 
     if (evt_mask & NRFY_EVENT_TO_INT_BITMASK(NRF_WDT_EVENT_TIMEOUT))
     {
-#if NRFX_API_VER_AT_LEAST(3, 2, 0)
         p_cb->wdt_event_handler(NRF_WDT_EVENT_TIMEOUT, requests, p_cb->p_context);
-#else
-        p_cb->wdt_event_handler(requests);
-#endif
     }
 
 #if NRFX_WDT_HAS_STOP
     if (evt_mask & NRFY_EVENT_TO_INT_BITMASK(NRF_WDT_EVENT_STOPPED))
     {
-#if NRFX_API_VER_AT_LEAST(3, 2, 0)
         p_cb->state = NRFX_DRV_STATE_INITIALIZED;
         p_cb->wdt_event_handler(NRF_WDT_EVENT_STOPPED, 0, p_cb->p_context);
-#endif
     }
 #endif
 }

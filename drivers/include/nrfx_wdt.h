@@ -36,7 +36,6 @@ extern "C" {
     #define NRFX_WDT_IRQ_CONFIG
 #endif
 
-#if NRFX_API_VER_AT_LEAST(3, 2, 0) || defined(__NRFX_DOXYGEN__)
 /**
  * @brief WDT event handler function type.
  *
@@ -50,18 +49,6 @@ extern "C" {
 typedef void (*nrfx_wdt_event_handler_t)(nrf_wdt_event_t event_type,
                                          uint32_t        requests,
                                          void *          p_context);
-#else
-/**
- * @brief WDT event handler function type.
- *
- * @deprecated Use new variant instead.
- *
- * @param[in] requests Value of the request status register. Bits that have been set can be
- *                     used to determine which RR (Reload Request) register was the reason
- *                     for timeout event.
- */
-typedef void (*nrfx_wdt_event_handler_t)(uint32_t requests);
-#endif
 
 /** @brief WDT channel ID type. */
 typedef nrf_wdt_rr_register_t nrfx_wdt_channel_id;
@@ -112,7 +99,6 @@ typedef struct
     NRFX_WDT_IRQ_CONFIG                                     \
 }
 
-#if NRFX_API_VER_AT_LEAST(3, 2, 0) || defined(__NRFX_DOXYGEN__)
 /**
  * @brief Function for initializing the WDT driver instance.
  *
@@ -134,26 +120,6 @@ nrfx_err_t nrfx_wdt_init(nrfx_wdt_t const *        p_instance,
                          nrfx_wdt_config_t const * p_config,
                          nrfx_wdt_event_handler_t  wdt_event_handler,
                          void *                    p_context);
-#else
-/**
- * @brief Function for initializing the WDT driver instance.
- *
- * @deprecated Use new variant instead.
- *
- * @param[in] p_instance        Pointer to the driver instance structure.
- * @param[in] p_config          Pointer to the structure with the initial configuration.
- *                              NULL if configuration is to be skipped and will be done later
- *                              using @ref nrfx_wdt_reconfigure.
- * @param[in] wdt_event_handler Event handler provided by the user. Ignored when
- *                              @ref NRFX_WDT_CONFIG_NO_IRQ option is enabled.
- *
- * @retval NRFX_SUCCESS             Initialization was successful.
- * @retval NRFX_ERROR_INVALID_STATE The driver was already initialized.
- */
-nrfx_err_t nrfx_wdt_init(nrfx_wdt_t const *        p_instance,
-                         nrfx_wdt_config_t const * p_config,
-                         nrfx_wdt_event_handler_t  wdt_event_handler);
-#endif
 
 /**
  * @brief Function for uninitializing the WDT driver instance.
