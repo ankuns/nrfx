@@ -53,15 +53,6 @@ typedef struct
                                      *   as they are ignored anyway. */
 } nrfy_i2s_config_t;
 
-#if !NRFX_API_VER_AT_LEAST(3, 3, 0)
-/** @brief I2S driver buffers structure. */
-typedef struct
-{
-    uint32_t       * p_rx_buffer; ///< Pointer to the buffer for received data.
-    uint32_t const * p_tx_buffer; ///< Pointer to the buffer with data to be sent.
-} nrfy_i2s_buffers_t;
-#endif
-
 /** @brief Structure describing single I2S transfer. */
 struct nrfy_i2s_xfer_desc_t
 {
