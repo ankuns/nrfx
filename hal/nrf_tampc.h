@@ -60,6 +60,13 @@ extern "C" {
 #define NRF_TAMPC_HAS_EXTERNAL_TAMPERSWITCH_PROTECTOR 0
 #endif
 
+#if defined(TAMPC_PROTECT_DOMAIN_SPIDEN_CTRL_VALUE_Msk) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether domain secure priviliged invasive debug detector is present. */
+#define NRF_TAMPC_HAS_DOMAIN_SPIDEN_PROTECTOR 1
+#else
+#define NRF_TAMPC_HAS_DOMAIN_SPIDEN_PROTECTOR 0
+#endif
+
 #if defined(TAMPC_PROTECT_AP_SPIDEN_CTRL_VALUE_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether AP secure priviliged invasive debug detector is present. */
 #define NRF_TAMPC_HAS_AP_SPIDEN_PROTECTOR 1
@@ -86,6 +93,13 @@ extern "C" {
 #define NRF_TAMPC_HAS_WARMBOOT 1
 #else
 #define NRF_TAMPC_HAS_WARMBOOT 0
+#endif
+
+#if defined(TAMPC_STATUS_ACTIVESHIELD_Msk) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether TAMPC active shield detector is present. */
+#define NRF_TAMPC_HAS_ACTIVE_SHIELD_DETECTOR 1
+#else
+#define NRF_TAMPC_HAS_ACTIVE_SHIELD_DETECTOR 0
 #endif
 
 #if defined(TAMPC_STATUS_TAMPERSWITCH_Msk) || defined(__NRFX_DOXYGEN__)
@@ -152,7 +166,9 @@ typedef enum
 /** @brief TAMPC error detectors. */
 typedef enum
 {
+#if NRF_TAMPC_HAS_ACTIVE_SHIELD_DETECTOR
     NRF_TAMPC_DETECTOR_ACTIVE_SHIELD      = TAMPC_STATUS_ACTIVESHIELD_Msk,       ///< Active shield error detector.
+#endif
 #if NRF_TAMPC_HAS_EXTERNAL_TAMPERSWITCH_DETECTOR
     NRF_TAMPC_DETECTOR_TAMPER_SWITCH      = TAMPC_STATUS_TAMPERSWITCH_Msk,       ///< External tamper switch error detector.
 #endif
@@ -189,8 +205,10 @@ typedef enum
 {
     NRF_TAMPC_DEBUG_TYPE_DBGEN,    ///< Invasive (halting) debug.
     NRF_TAMPC_DEBUG_TYPE_NIDEN,    ///< Non-invasive debug.
+#if NRF_TAMPC_HAS_DOMAIN_SPIDEN_PROTECTOR
     NRF_TAMPC_DEBUG_TYPE_SPIDEN,   ///< Secure privileged invasive (halting) debug.
     NRF_TAMPC_DEBUG_TYPE_SPNIDEN,  ///< Secure privileged non-invasive debug.
+#endif
     NRF_TAMPC_DEBUG_TYPE_DEVICEEN, ///< Domain circuitry.
 } nrf_tampc_debug_type_t;
 
@@ -843,6 +861,7 @@ NRF_STATIC_INLINE void nrf_tampc_domain_ctrl_value_set(NRF_TAMPC_Type *       p_
                 << TAMPC_PROTECT_DOMAIN_NIDEN_CTRL_VALUE_Pos))
                 | NRF_TAMPC_KEY_MASK;
             break;
+#if NRF_TAMPC_HAS_DOMAIN_SPIDEN_PROTECTOR
         case NRF_TAMPC_DEBUG_TYPE_SPIDEN:
 #if NRF_TAMPC_KEY_MASK
             p_reg->PROTECT.DOMAIN[domain].SPIDEN.CTRL =
@@ -871,6 +890,7 @@ NRF_STATIC_INLINE void nrf_tampc_domain_ctrl_value_set(NRF_TAMPC_Type *       p_
                 << TAMPC_PROTECT_DOMAIN_SPNIDEN_CTRL_VALUE_Pos))
                 | NRF_TAMPC_KEY_MASK;
             break;
+#endif
         default:
             NRFX_ASSERT(0);
     }
@@ -893,6 +913,7 @@ NRF_STATIC_INLINE bool nrf_tampc_domain_ctrl_value_get(NRF_TAMPC_Type const * p_
             return ((p_reg->PROTECT.DOMAIN[domain].NIDEN.CTRL
                      & TAMPC_PROTECT_DOMAIN_NIDEN_CTRL_VALUE_Msk)
                     >> TAMPC_PROTECT_DOMAIN_NIDEN_CTRL_VALUE_Pos);
+#if NRF_TAMPC_HAS_DOMAIN_SPIDEN_PROTECTOR
         case NRF_TAMPC_DEBUG_TYPE_SPIDEN:
             return ((p_reg->PROTECT.DOMAIN[domain].SPIDEN.CTRL
                      & TAMPC_PROTECT_DOMAIN_SPIDEN_CTRL_VALUE_Msk)
@@ -901,6 +922,7 @@ NRF_STATIC_INLINE bool nrf_tampc_domain_ctrl_value_get(NRF_TAMPC_Type const * p_
             return ((p_reg->PROTECT.DOMAIN[domain].SPNIDEN.CTRL
                      & TAMPC_PROTECT_DOMAIN_SPNIDEN_CTRL_VALUE_Msk)
                     >> TAMPC_PROTECT_DOMAIN_SPNIDEN_CTRL_VALUE_Pos);
+#endif
         default:
             NRFX_ASSERT(0);
             return false;
@@ -945,6 +967,7 @@ NRF_STATIC_INLINE void nrf_tampc_domain_ctrl_lock_set(NRF_TAMPC_Type *       p_r
                 << TAMPC_PROTECT_DOMAIN_NIDEN_CTRL_LOCK_Pos))
                 | NRF_TAMPC_KEY_MASK;
             break;
+#if NRF_TAMPC_HAS_DOMAIN_SPIDEN_PROTECTOR
         case NRF_TAMPC_DEBUG_TYPE_SPIDEN:
 #if NRF_TAMPC_KEY_MASK
             p_reg->PROTECT.DOMAIN[domain].SPIDEN.CTRL =
@@ -973,6 +996,7 @@ NRF_STATIC_INLINE void nrf_tampc_domain_ctrl_lock_set(NRF_TAMPC_Type *       p_r
                 << TAMPC_PROTECT_DOMAIN_SPNIDEN_CTRL_LOCK_Pos))
                 | NRF_TAMPC_KEY_MASK;
             break;
+#endif
         default:
             NRFX_ASSERT(0);
     }
@@ -995,6 +1019,7 @@ NRF_STATIC_INLINE bool nrf_tampc_domain_ctrl_lock_get(NRF_TAMPC_Type const * p_r
             return ((p_reg->PROTECT.DOMAIN[domain].NIDEN.CTRL
                      & TAMPC_PROTECT_DOMAIN_NIDEN_CTRL_LOCK_Msk)
                     >> TAMPC_PROTECT_DOMAIN_NIDEN_CTRL_LOCK_Pos);
+#if NRF_TAMPC_HAS_DOMAIN_SPIDEN_PROTECTOR
         case NRF_TAMPC_DEBUG_TYPE_SPIDEN:
             return ((p_reg->PROTECT.DOMAIN[domain].SPIDEN.CTRL
                      & TAMPC_PROTECT_DOMAIN_SPIDEN_CTRL_LOCK_Msk)
@@ -1003,6 +1028,7 @@ NRF_STATIC_INLINE bool nrf_tampc_domain_ctrl_lock_get(NRF_TAMPC_Type const * p_r
             return ((p_reg->PROTECT.DOMAIN[domain].SPNIDEN.CTRL
                      & TAMPC_PROTECT_DOMAIN_SPNIDEN_CTRL_LOCK_Msk)
                     >> TAMPC_PROTECT_DOMAIN_SPNIDEN_CTRL_LOCK_Pos);
+#endif
         default:
             NRFX_ASSERT(0);
             return false;
