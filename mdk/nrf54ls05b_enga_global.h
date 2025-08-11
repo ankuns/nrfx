@@ -93,6 +93,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NRF_TAD_BASE                      0x40053000UL
 #define NRF_TIMER00_BASE                  0x40055000UL
 #define NRF_EGU00_BASE                    0x40058000UL
+#define NRF_CRACENCORE_BASE               0x40059000UL
 #define NRF_TRNG_BASE                     0x40059000UL
 #define NRF_PULSEDET00_BASE               0x4007A000UL
 #define NRF_ECCRAMC_BASE                  0x4007D000UL
@@ -181,7 +182,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NRF_TAD                           ((NRF_TAD_Type*)                      NRF_TAD_BASE)
 #define NRF_TIMER00                       ((NRF_TIMER_Type*)                    NRF_TIMER00_BASE)
 #define NRF_EGU00                         ((NRF_EGU_Type*)                      NRF_EGU00_BASE)
-#define NRF_TRNG                          ((NRF_TRNG_Type*)                     NRF_TRNG_BASE)
+#define NRF_CRACENCORE                    ((NRF_CRACENCORE_Type*)               NRF_CRACENCORE_BASE)
+#define NRF_TRNG                          ((NRF_CRACEN_Type*)                   NRF_TRNG_BASE)
 #define NRF_PULSEDET00                    ((NRF_PULSEDET_Type*)                 NRF_PULSEDET00_BASE)
 #define NRF_ECCRAMC                       ((NRF_ECCRAMC_Type*)                  NRF_ECCRAMC_BASE)
 #define NRF_SREGS00                       ((NRF_SREGS_Type*)                    NRF_SREGS00_BASE)

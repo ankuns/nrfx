@@ -294,7 +294,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define RRAMC_TESTMODE2TSMC 1                        /*!< (unspecified)                                                        */
 #define RRAMC_WRITEBUFMSBCONFIG 1                    /*!< (unspecified)                                                        */
 #define RRAMC_REGIONCONFIGLOCK 1                     /*!< (unspecified)                                                        */
-#define RRAMC_NRRAMWORDSIZE 128                      /*!< RRAM word size : 128 bits per wordline                               */
+#define RRAMC_NRRAMWORDSIZE 64                       /*!< RRAM word size : 64 bits per wordline                                */
 #define RRAMC_NCONSUMERS_MIN 0                       /*!< Number of supported consumers for low power mode: 0..0               */
 #define RRAMC_NCONSUMERS_MAX 0                       /*!< Number of supported consumers for low power mode: 0..0               */
 #define RRAMC_NCONSUMERS_SIZE 1                      /*!< Number of supported consumers for low power mode: 0..0               */
@@ -306,9 +306,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define RRAMC_ECCERROR 1                             /*!< (unspecified)                                                        */
 #define RRAMC_EVENTS_ECCERROR 0                      /*!< (unspecified)                                                        */
 #define RRAMC_NWRITEBUFSIZE 32                       /*!< Maximum write buffer size : 32                                       */
-#define RRAMC_WRITEBUFSIZE8EN 0                      /*!< (unspecified)                                                        */
+#define RRAMC_WRITEBUFSIZE8EN 1                      /*!< (unspecified)                                                        */
 #define RRAMC_WRITEBUFSIZE16EN 0                     /*!< (unspecified)                                                        */
-#define RRAMC_WRITEBUFSIZE32EN 1                     /*!< (unspecified)                                                        */
+#define RRAMC_WRITEBUFSIZE32EN 0                     /*!< (unspecified)                                                        */
 #define RRAMC_LOWPOWERCONFIGOPTION2 0                /*!< (unspecified)                                                        */
 #define RRAMC_REGION0ADDR 16760832                   /*!< REGION[0].ADDRESS : 16760832, WRITABLE : 0 REGION[0].CONFIG.SIZE: 4
                                                           Kbytes, WRITABLE: 0 REGION[0].CONFIG.READ: 1, WRITABLE: 1
@@ -356,24 +356,24 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define RRAMC_REGION1WRITEONCE_WRITABLE 0            /*!< (unspecified)                                                        */
 #define RRAMC_REGION1LOCK 0                          /*!< (unspecified)                                                        */
 #define RRAMC_REGION1LOCK_WRITABLE 1                 /*!< (unspecified)                                                        */
-#define RRAMC_REGION2ADDR 16769024                   /*!< REGION[2].ADDRESS : 16769024, WRITABLE : 0 REGION[2].CONFIG.SIZE: 8
-                                                          Kbytes, WRITABLE: 0 REGION[2].CONFIG.READ: 1, WRITABLE: 1
-                                                          REGION[2].CONFIG.WRITE: 1, WRITABLE: 1 REGION[2].CONFIG.EXECUTE: 0,
-                                                          WRITABLE: 0 REGION[2].CONFIG.SECURE: 1, WRITABLE: 0
-                                                          REGION[2].CONFIG.OWNER: 2, WRITABLE: 0 REGION[2].CONFIG.WRITEONCE: 0,
+#define RRAMC_REGION2ADDR 0                          /*!< REGION[2].ADDRESS : 0, WRITABLE : 1 REGION[2].CONFIG.SIZE: 0 Kbytes,
+                                                          WRITABLE: 1 REGION[2].CONFIG.READ: 1, WRITABLE: 1
+                                                          REGION[2].CONFIG.WRITE: 1, WRITABLE: 1 REGION[2].CONFIG.EXECUTE: 1,
+                                                          WRITABLE: 1 REGION[2].CONFIG.SECURE: 0, WRITABLE: 0
+                                                          REGION[2].CONFIG.OWNER: 0, WRITABLE: 0 REGION[2].CONFIG.WRITEONCE: 0,
                                                           WRITABLE: 1 REGION[2].CONFIG.LOCK: 0, WRITABLE: 1*/
-#define RRAMC_REGION2ADDR_WRITABLE 0                 /*!< (unspecified)                                                        */
-#define RRAMC_REGION2SIZE 8                          /*!< (unspecified)                                                        */
-#define RRAMC_REGION2SIZE_WRITABLE 0                 /*!< (unspecified)                                                        */
+#define RRAMC_REGION2ADDR_WRITABLE 1                 /*!< (unspecified)                                                        */
+#define RRAMC_REGION2SIZE 0                          /*!< (unspecified)                                                        */
+#define RRAMC_REGION2SIZE_WRITABLE 1                 /*!< (unspecified)                                                        */
 #define RRAMC_REGION2READ 1                          /*!< (unspecified)                                                        */
 #define RRAMC_REGION2READ_WRITABLE 1                 /*!< (unspecified)                                                        */
 #define RRAMC_REGION2WRITE 1                         /*!< (unspecified)                                                        */
 #define RRAMC_REGION2WRITE_WRITABLE 1                /*!< (unspecified)                                                        */
-#define RRAMC_REGION2EXECUTE 0                       /*!< (unspecified)                                                        */
-#define RRAMC_REGION2EXECUTE_WRITABLE 0              /*!< (unspecified)                                                        */
-#define RRAMC_REGION2SECURE 1                        /*!< (unspecified)                                                        */
+#define RRAMC_REGION2EXECUTE 1                       /*!< (unspecified)                                                        */
+#define RRAMC_REGION2EXECUTE_WRITABLE 1              /*!< (unspecified)                                                        */
+#define RRAMC_REGION2SECURE 0                        /*!< (unspecified)                                                        */
 #define RRAMC_REGION2SECURE_WRITABLE 0               /*!< (unspecified)                                                        */
-#define RRAMC_REGION2OWNER 2                         /*!< (unspecified)                                                        */
+#define RRAMC_REGION2OWNER 0                         /*!< (unspecified)                                                        */
 #define RRAMC_REGION2OWNER_WRITABLE 0                /*!< (unspecified)                                                        */
 #define RRAMC_REGION2WRITEONCE 0                     /*!< (unspecified)                                                        */
 #define RRAMC_REGION2WRITEONCE_WRITABLE 1            /*!< (unspecified)                                                        */
@@ -439,6 +439,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TAD_TAD_HAS_TASKS 0                          /*!< (unspecified)                                                        */
 #define TAD_PDREQCLR 1                               /*!< (unspecified)                                                        */
 #define TAD_TAD_HAS_DBGWAKEUPREQ 1                   /*!< (unspecified)                                                        */
+#define TAD_SWDCLOCKDETECT_DISABLE 1                 /*!< (unspecified)                                                        */
 
 /*Timer/Counter*/
 #define TIMER_PRESENT 1
@@ -493,9 +494,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define EGU20_CH_NUM_MAX 5                           /*!< (unspecified)                                                        */
 #define EGU20_CH_NUM_SIZE 6                          /*!< (unspecified)                                                        */
 
-/*TRNG*/
-#define TRNG_PRESENT 1
-#define TRNG_COUNT 1
+/*CRACENCORE TRNG registers*/
+#define CRACENCORE_PRESENT 1
+#define CRACENCORE_COUNT 1
+
+/*CRACEN TRNG*/
+#define CRACEN_PRESENT 1
+#define CRACEN_COUNT 1
 
 #define TRNG_NUM_CLOCK_POWER_PAIR_MIN 0              /*!< Number of clock/power pairs used by PCGC Slave - [0..1]              */
 #define TRNG_NUM_CLOCK_POWER_PAIR_MAX 1              /*!< Number of clock/power pairs used by PCGC Slave - [0..1]              */
@@ -537,6 +542,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SREGS00_NUM_BITS_PER_AO_REG_MAX 3            /*!< (unspecified)                                                        */
 #define SREGS00_NUM_BITS_PER_AO_REG_SIZE 4           /*!< (unspecified)                                                        */
 #define SREGS00_AOREGS 0                             /*!< (unspecified)                                                        */
+#define SREGS00_AODTB 0                              /*!< (unspecified)                                                        */
 #define SREGS00_NUM_REGS_MIN 0                       /*!< (unspecified)                                                        */
 #define SREGS00_NUM_REGS_MAX 1                       /*!< (unspecified)                                                        */
 #define SREGS00_NUM_REGS_SIZE 2                      /*!< (unspecified)                                                        */
@@ -571,6 +577,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SREGS10_NUM_BITS_PER_AO_REG_MAX 3            /*!< (unspecified)                                                        */
 #define SREGS10_NUM_BITS_PER_AO_REG_SIZE 4           /*!< (unspecified)                                                        */
 #define SREGS10_AOREGS 0                             /*!< (unspecified)                                                        */
+#define SREGS10_AODTB 0                              /*!< (unspecified)                                                        */
 #define SREGS10_NUM_REGS_MIN 0                       /*!< (unspecified)                                                        */
 #define SREGS10_NUM_REGS_MAX 1                       /*!< (unspecified)                                                        */
 #define SREGS10_NUM_REGS_SIZE 2                      /*!< (unspecified)                                                        */
@@ -605,6 +612,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SREGS20_NUM_BITS_PER_AO_REG_MAX 3            /*!< (unspecified)                                                        */
 #define SREGS20_NUM_BITS_PER_AO_REG_SIZE 4           /*!< (unspecified)                                                        */
 #define SREGS20_AOREGS 0                             /*!< (unspecified)                                                        */
+#define SREGS20_AODTB 0                              /*!< (unspecified)                                                        */
 #define SREGS20_NUM_REGS_MIN 0                       /*!< (unspecified)                                                        */
 #define SREGS20_NUM_REGS_MAX 1                       /*!< (unspecified)                                                        */
 #define SREGS20_NUM_REGS_SIZE 2                      /*!< (unspecified)                                                        */
@@ -639,6 +647,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SREGS30_NUM_BITS_PER_AO_REG_MAX 3            /*!< (unspecified)                                                        */
 #define SREGS30_NUM_BITS_PER_AO_REG_SIZE 4           /*!< (unspecified)                                                        */
 #define SREGS30_AOREGS 1                             /*!< (unspecified)                                                        */
+#define SREGS30_AODTB 0                              /*!< (unspecified)                                                        */
 #define SREGS30_NUM_REGS_MIN 0                       /*!< (unspecified)                                                        */
 #define SREGS30_NUM_REGS_MAX 0                       /*!< (unspecified)                                                        */
 #define SREGS30_NUM_REGS_SIZE 1                      /*!< (unspecified)                                                        */
@@ -771,7 +780,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIM22_EASYDMA_MAXCNT_MAX 15                 /*!< (unspecified)                                                        */
 #define SPIM22_EASYDMA_MAXCNT_SIZE 16                /*!< (unspecified)                                                        */
 #define SPIM22_FEATURE_HARDWARE_CSN_PRESENT 1        /*!< (unspecified)                                                        */
-#define SPIM22_FEATURE_HARDWARE_DCX_PRESENT 0        /*!< (unspecified)                                                        */
+#define SPIM22_FEATURE_HARDWARE_DCX_PRESENT 1        /*!< (unspecified)                                                        */
 #define SPIM22_FEATURE_RXDELAY_PRESENT 1             /*!< (unspecified)                                                        */
 #define SPIM22_STALL_STATUS_PRESENT 0                /*!< (unspecified)                                                        */
 #define SPIM22_STALL_STATUS_TX_PRESENT 0             /*!< (unspecified)                                                        */
@@ -1048,7 +1057,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SAADC_PSEL_V2 1                              /*!< (unspecified)                                                        */
 #define SAADC_TASKS_CALIBRATEGAIN 0                  /*!< (unspecified)                                                        */
 #define SAADC_PADC_TSMC22 1                          /*!< (unspecified)                                                        */
-#define SAADC_SAMPLERATE_CC_VALUERANGE_MIN 8         /*!< (unspecified)                                                        */
+#define SAADC_SAMPLERATE_CC_VALUERANGE_MIN 16        /*!< (unspecified)                                                        */
 #define SAADC_SAMPLERATE_CC_VALUERANGE_MAX 2047      /*!< (unspecified)                                                        */
 #define SAADC_SAMPLERATE_CC_VALUERANGE_SIZE 2048     /*!< (unspecified)                                                        */
 #define SAADC_TACQ_VALUE_RANGE_MIN 1                 /*!< (unspecified)                                                        */
@@ -1057,6 +1066,12 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SAADC_TCONV_VALUE_RANGE_MIN 1                /*!< (unspecified)                                                        */
 #define SAADC_TCONV_VALUE_RANGE_MAX 7                /*!< (unspecified)                                                        */
 #define SAADC_TCONV_VALUE_RANGE_SIZE 8               /*!< (unspecified)                                                        */
+#define SAADC_EASYDMALISTINCLUDED 0                  /*!< (unspecified)                                                        */
+#define SAADC_EASYDMAMODEINCLUDED 0                  /*!< (unspecified)                                                        */
+#define SAADC_EASYDMAFULLLPMODEINCLUDED 0            /*!< (unspecified)                                                        */
+#define SAADC_EASYDMAPATTERNMATCHERINCLUDED 0        /*!< (unspecified)                                                        */
+#define SAADC_EASYDMA_CURRENT_AMOUNT_REGISTER_INCLUDED 0 /*!< (unspecified)                                                    */
+#define SAADC_EASYDMASTOPTASKINCLUDED 1              /*!< (unspecified)                                                        */
 
 /*Temperature Sensor*/
 #define TEMP_PRESENT 1
@@ -1073,6 +1088,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define P1_CTRLSEL_MAP2 1                            /*!< (unspecified)                                                        */
 #define P1_CTRLSEL_MAP3 0                            /*!< (unspecified)                                                        */
 #define P1_CTRLSEL_MAP4 0                            /*!< (unspecified)                                                        */
+#define P1_CTRLSEL_MAP5 0                            /*!< (unspecified)                                                        */
 #define P1_PIN_NUM_MIN 0                             /*!< (unspecified)                                                        */
 #define P1_PIN_NUM_MAX 31                            /*!< (unspecified)                                                        */
 #define P1_PIN_NUM_SIZE 32                           /*!< (unspecified)                                                        */
@@ -1097,6 +1113,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define P0_CTRLSEL_MAP2 1                            /*!< (unspecified)                                                        */
 #define P0_CTRLSEL_MAP3 0                            /*!< (unspecified)                                                        */
 #define P0_CTRLSEL_MAP4 0                            /*!< (unspecified)                                                        */
+#define P0_CTRLSEL_MAP5 0                            /*!< (unspecified)                                                        */
 #define P0_PIN_NUM_MIN 0                             /*!< (unspecified)                                                        */
 #define P0_PIN_NUM_MAX 4                             /*!< (unspecified)                                                        */
 #define P0_PIN_NUM_SIZE 5                            /*!< (unspecified)                                                        */
@@ -1198,7 +1215,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define GRTC_CLKOUTREG 1                             /*!< (unspecified)                                                        */
 #define GRTC_CLKSELREG 1                             /*!< (unspecified)                                                        */
 #define GRTC_CLKSELLFLPRC 1                          /*!< (unspecified)                                                        */
-#define GRTC_CCADD_WRITE_ONLY 0                      /*!< (unspecified)                                                        */
+#define GRTC_CCADD_WRITE_ONLY 1                      /*!< (unspecified)                                                        */
 #define GRTC_READY_STATUS_AND_EVENTS 1               /*!< (unspecified)                                                        */
 #define GRTC_SYSCOUNTER_LOADED_STATUS 1              /*!< (unspecified)                                                        */
 #define GRTC_CC_PAST_STATUS 1                        /*!< (unspecified)                                                        */
@@ -1230,6 +1247,10 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TAMPC_TAMPERSWITCH 0                         /*!< (unspecified)                                                        */
 #define TAMPC_SM4DISABLECM 0                         /*!< (unspecified)                                                        */
 #define TAMPC_PROTECTRESETBEHAVIOR 0                 /*!< (unspecified)                                                        */
+#define TAMPC_SPIDEN 0                               /*!< (unspecified)                                                        */
+#define TAMPC_SPNIDEN 0                              /*!< (unspecified)                                                        */
+#define TAMPC_CRACEN 0                               /*!< (unspecified)                                                        */
+#define TAMPC_ACTIVESHIELD 0                         /*!< (unspecified)                                                        */
 
 /*Watchdog Timer*/
 #define WDT_PRESENT 1
@@ -1262,6 +1283,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define OSCILLATORS_COUNT 1
 
 #define OSCILLATORS_FSMCONFIG 1                      /*!< (unspecified)                                                        */
+#define OSCILLATORS_VAR1_NXT 0                       /*!< (unspecified)                                                        */
 
 /*Voltage regulators*/
 #define REGULATORS_PRESENT 1
@@ -1269,6 +1291,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define REGULATORS_DTB_RESETGEN 1                    /*!< (unspecified)                                                        */
 #define REGULATORS_DTB_BIASGEN 1                     /*!< (unspecified)                                                        */
+#define REGULATORS_POF 1                             /*!< (unspecified)                                                        */
 
 /* ==================================================== Baudrate settings ==================================================== */
 /**
