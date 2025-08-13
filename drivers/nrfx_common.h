@@ -60,7 +60,7 @@ extern "C" {
 #define NRFX_RELEASE_VER_MAJOR 3
 
 /** @brief Symbol specifying minor number of the current nrfx version. */
-#define NRFX_RELEASE_VER_MINOR 13
+#define NRFX_RELEASE_VER_MINOR 14
 
 /** @brief Symbol specifying micro number of the current nrfx version. */
 #define NRFX_RELEASE_VER_MICRO 0
