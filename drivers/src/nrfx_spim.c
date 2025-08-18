@@ -114,28 +114,6 @@ static const uint8_t easydma_support_bits[] __UNUSED =
 #define SPIM_DEDICATED_PIN_VALIDATE(requested_pin, supported_pin) \
     (((requested_pin) == NRF_SPIM_PIN_NOT_CONNECTED) || ((requested_pin) == (supported_pin)))
 
-
-#if defined(NRFX_SPIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED)
-// Enable workaround for nRF52 Series anomaly 109
-// DMA transfers might be corrupted.
-#undef NRF52_ERRATA_109_ENABLE_WORKAROUND
-#define NRF52_ERRATA_109_ENABLE_WORKAROUND NRFX_SPIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED
-#endif
-
-#if defined(USE_WORKAROUND_FOR_ANOMALY_195)
-// Enable workaround for nRF52 Series anomaly 195
-// SPIM3 continues to draw current after disable.
-#undef NRF52_ERRATA_195_ENABLE_WORKAROUND
-#define NRF52_ERRATA_195_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_195
-#endif
-
-#if defined(NRFX_SPIM3_NRF52840_ANOMALY_198_WORKAROUND_ENABLED)
-// Enable workaround for nRF52 Series anomaly 198
-// SPIM3 transmit data might be corrupted.
-#undef NRF52_ERRATA_198_ENABLE_WORKAROUND
-#define NRF52_ERRATA_198_ENABLE_WORKAROUND NRFX_SPIM3_NRF52840_ANOMALY_198_WORKAROUND_ENABLED
-#endif
-
 // Control block - driver instance local data.
 typedef struct
 {

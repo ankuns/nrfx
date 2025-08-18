@@ -43,13 +43,6 @@
                                          NRF_GPIO_PIN_H0H1,             \
                                          NRF_GPIO_PIN_NOSENSE)
 
-#if defined(USE_WORKAROUND_FOR_ANOMALY_121)
-// Enable workaround for nRF52 Series anomaly 121
-// Configuration of QSPI peripheral requires additional steps.
-#undef NRF53_ERRATA_121_ENABLE_WORKAROUND
-#define NRF53_ERRATA_121_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_121
-#endif
-
 /** @brief QSPI driver states.*/
 typedef enum
 {

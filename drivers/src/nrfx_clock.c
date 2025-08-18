@@ -55,28 +55,6 @@ extern bool nrfx_power_irq_enabled;
     #error "Two-stage LFXO start procedure enabled but LFCLK source is not set to LFXO!"
 #endif
 
-#if defined(USE_WORKAROUND_FOR_ANOMALY_132)
-// Enable workaround for nRF52 Series anomaly 132
-// LFCLK needs to avoid frame from 66us to 138us after LFCLK stop. This solution
-// applies delay of 138us before starting LFCLK.
-#undef NRF52_ERRATA_132_ENABLE_WORKAROUND
-#define NRF52_ERRATA_132_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_132
-#endif
-
-#if defined(USE_WORKAROUND_FOR_ANOMALY_192)
-// Enable workaround for nRF52 Series anomaly 192
-// LFRC oscillator frequency is wrong after calibration, exceeding 500 ppm.
-#undef NRF52_ERRATA_192_ENABLE_WORKAROUND
-#define NRF52_ERRATA_192_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_192
-#endif
-
-#if defined(USE_WORKAROUND_FOR_ANOMALY_201)
-// Enable workaround for nRF52 Series anomaly 201
-// EVENTS_HFCLKSTARTED might be generated twice.
-#undef NRF52_ERRATA_201_ENABLE_WORKAROUND
-#define NRF52_ERRATA_201_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_201
-#endif
-
 #if !defined(NRFX_CLOCK_CONFIG_CT_ENABLED) && NRF_CLOCK_HAS_CALIBRATION_TIMER
 #define NRFX_CLOCK_CONFIG_CT_ENABLED 1
 #endif
@@ -539,12 +517,12 @@ nrfx_err_t nrfx_clock_calibration_start(void)
 #endif
 
         m_clock_cb.cal_state = CAL_STATE_CAL;
-        
+
         if (NRF_ERRATA_DYNAMIC_CHECK(52, 192))
         {
             *(volatile uint32_t *)0x40000C34 = 0x00000002;
         }
-        
+
 #if NRFX_CHECK(NRF_LFRC_HAS_CALIBRATION)
         nrf_lfrc_task_trigger(NRF_LFRC, NRF_LFRC_TASK_CAL);
         if (m_clock_cb.event_handler)

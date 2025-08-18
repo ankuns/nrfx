@@ -12,20 +12,6 @@
 
 #define FIELD_TIMER_FREQUENCY_HZ NRFX_MHZ_TO_HZ(1)
 
-#if defined(USE_WORKAROUND_FOR_ANOMALY_79)
-// Enable workaround for nRF52 Series anomaly 79
-// A false EVENTS_FIELDDETECTED event occurs after the field is lost.
-#undef NRF52_ERRATA_79_ENABLE_WORKAROUND
-#define NRF52_ERRATA_79_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_79
-#endif
-
-#if defined(USE_WORKAROUND_FOR_ANOMALY_190)
-// Enable workaround for nRF52 Series anomaly 190
-// Event FIELDDETECTED may be generated too early.
-#undef NRF52_ERRATA_190_ENABLE_WORKAROUND
-#define NRF52_ERRATA_190_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_190
-#endif
-
 #if NRF_ERRATA_STATIC_CHECK(52, 79) || NRF_ERRATA_STATIC_CHECK(52, 190) || \
     NRF_ERRATA_STATIC_CHECK(53, 70)
 #include <nrfx_timer.h>
@@ -128,7 +114,7 @@ static void nfct_hw_init_setup(void)
 {
     /* Use Window Grid frame delay mode. */
     nrfy_nfct_frame_delay_mode_set(NRF_NFCT, NRF_NFCT_FRAME_DELAY_MODE_WINDOWGRID);
-    
+
     /* Change the bit frame SDD to 00100 to improve interoperability. */
     nrfy_nfct_sensres_bit_frame_sdd_set(NRF_NFCT, NRF_NFCT_SENSRES_BIT_FRAME_SDD_00100);
 }

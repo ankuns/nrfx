@@ -11,30 +11,6 @@
 #include <hal/nrf_ficr.h>
 #endif
 
-#if defined(USE_WORKAROUND_FOR_ANOMALY_212)
-// Enable workaround for nRF52 Series anomaly 212
-// SAADC events are missing when switching from single channel
-// to multi channel configuration with burst enabled.
-#undef NRF52_ERRATA_212_ENABLE_WORKAROUND
-#define NRF52_ERRATA_212_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_212
-#endif
-
-#if defined(STOP_SAADC_ON_CHANNEL_CONFIG)
-// Enable workaround for nRF91 Series anomaly 28
-// Missing events when switching from scan mode
-// to no-scan mode with burst enabled or TACQ < 10us.
-#undef NRF91_ERRATA_28_ENABLE_WORKAROUND
-#define NRF91_ERRATA_28_ENABLE_WORKAROUND STOP_SAADC_ON_CHANNEL_CONFIG
-#endif
-
-#if defined(STOP_SAADC_ON_CHANNEL_CONFIG)
-// Enable workaround for nRF53 Series anomaly 65
-// SAADC events are missing when switching from single channel
-// to multi channel configuration with burst disabled and TACQ < 10us.
-#undef NRF53_ERRATA_65_ENABLE_WORKAROUND
-#define NRF53_ERRATA_65_ENABLE_WORKAROUND STOP_SAADC_ON_CHANNEL_CONFIG
-#endif
-
 /** @brief Bitmask of all available SAADC channels. */
 #define SAADC_ALL_CHANNELS_MASK ((1UL << SAADC_CH_NUM) - 1UL)
 

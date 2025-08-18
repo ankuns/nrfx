@@ -16,30 +16,6 @@
     (event == NRF_I2S_EVENT_STOPPED  ? "NRF_I2S_EVENT_STOPPED"  : \
                                        "UNKNOWN EVENT")))
 
-#if defined(USE_WORKAROUND_FOR_I2S_STOP_ANOMALY)
-// Enable workaround for nRF52 Series anomaly 194 / nRF91 Series anomaly 1
-// (STOP task does not switch off all resources).
-#undef NRF52_ERRATA_194_ENABLE_WORKAROUND
-#undef NRF91_ERRATA_1_ENABLE_WORKAROUND
-#define NRF52_ERRATA_194_ENABLE_WORKAROUND USE_WORKAROUND_FOR_I2S_STOP_ANOMALY
-#define NRF91_ERRATA_1_ENABLE_WORKAROUND   USE_WORKAROUND_FOR_I2S_STOP_ANOMALY
-#endif
-
-#if defined(USE_WORKAROUND_FOR_ANOMALY_170)
-// Enable workaround for nRF52 Series anomaly 170
-// (when reading the value of PSEL registers, the CONNECT field might not
-//  return the same value that has been written to it).
-#undef NRF52_ERRATA_170_ENABLE_WORKAROUND
-#define NRF52_ERRATA_170_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_170
-#endif
-
-#if defined(USE_WORKAROUND_FOR_ANOMALY_196)
-// Enable workaround for nRF52 Series anomaly 196
-// (PSEL acquires GPIO regardless of ENABLE).
-#undef NRF52_ERRATA_196_ENABLE_WORKAROUND
-#define NRF52_ERRATA_196_ENABLE_WORKAROUND USE_WORKAROUND_FOR_ANOMALY_196
-#endif
-
 // Control block - driver instance local data.
 typedef struct
 {

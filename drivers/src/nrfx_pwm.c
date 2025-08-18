@@ -14,13 +14,6 @@
 #define NRFX_LOG_MODULE PWM
 #include <nrfx_log.h>
 
-#if defined(NRFX_PWM_NRF52_ANOMALY_109_WORKAROUND_ENABLED)
-// Enable workaround for nRF52 Series anomaly 109
-// DMA transfers might be corrupted.
-#undef NRF52_ERRATA_109_ENABLE_WORKAROUND
-#define NRF52_ERRATA_109_ENABLE_WORKAROUND NRFX_PWM_NRF52_ANOMALY_109_WORKAROUND_ENABLED
-#endif
-
 #if NRF_ERRATA_STATIC_CHECK(52, 109)
 // The workaround uses interrupts to wake up the CPU and ensure it is active
 // when PWM is about to start a DMA transfer. For initial transfer, done when

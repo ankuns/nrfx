@@ -54,13 +54,6 @@
 #define NRFX_USBD_DMAREQ_PROCESS_DEBUG 1
 #endif
 
-#if defined(NRFX_USBD_USE_WORKAROUND_FOR_ANOMALY_211)
-/* Anomaly 211 - Device remains in SUSPEND too long when host resumes
-   a bus activity (sending SOF packets) without a RESUME condition. */
-#undef NRF52_ERRATA_211_ENABLE_WORKAROUND
-#define NRF52_ERRATA_211_ENABLE_WORKAROUND NRFX_USBD_USE_WORKAROUND_FOR_ANOMALY_211
-#endif
-
 /**
  * @defgroup nrfx_usbd_int USB Device driver internal part
  * @internal

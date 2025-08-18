@@ -26,13 +26,6 @@
 #define SPIS_LENGTH_VALIDATE(drv_inst_idx, rx_len, tx_len)    \
         (NRFX_FOREACH_ENABLED(SPIS, SPISX_LENGTH_VALIDATE, (||), (0), drv_inst_idx, rx_len, tx_len))
 
-#if defined(NRFX_SPIS_NRF52_ANOMALY_109_WORKAROUND_ENABLED)
-// Enable workaround for nRF52 Series anomaly 109
-// DMA transfers might be corrupted.
-#undef NRF52_ERRATA_109_ENABLE_WORKAROUND
-#define NRF52_ERRATA_109_ENABLE_WORKAROUND NRFX_SPIS_NRF52_ANOMALY_109_WORKAROUND_ENABLED
-#endif
-
 #if NRF_ERRATA_STATIC_CHECK(52, 109)
 #include <nrfx_gpiote.h>
 // This handler is called by the GPIOTE driver when a falling edge is detected
