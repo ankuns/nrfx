@@ -296,9 +296,9 @@ NRFX_STATIC_INLINE bool nrfx_nvmc_write_done_check(void)
 
 NRFX_STATIC_INLINE uint32_t nrfx_nvmc_uicr_word_read(uint32_t const volatile *address)
 {
-#if NRFX_CHECK(NRF91_ERRATA_7_ENABLE_WORKAROUND)
+#if NRF_ERRATA_STATIC_CHECK(91, 7)
     bool irq_disabled = __get_PRIMASK() == 1;
-    if (!irq_disabled)
+    if (NRF_ERRATA_DYNAMIC_CHECK(91, 7) && !irq_disabled)
     {
         __disable_irq();
     }
@@ -306,11 +306,14 @@ NRFX_STATIC_INLINE uint32_t nrfx_nvmc_uicr_word_read(uint32_t const volatile *ad
 
     uint32_t value = nrf_nvmc_word_read((uint32_t)address);
 
-#if NRFX_CHECK(NRF91_ERRATA_7_ENABLE_WORKAROUND)
-    __DSB();
-    if (!irq_disabled)
+#if NRF_ERRATA_STATIC_CHECK(91, 7)
+    if (NRF_ERRATA_DYNAMIC_CHECK(91, 7))
     {
-        __enable_irq();
+        __DSB();
+        if (!irq_disabled)
+        {
+            __enable_irq();
+        }
     }
 #endif
 
