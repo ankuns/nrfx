@@ -499,7 +499,7 @@ typedef enum
 } nrf_saadc_limit_t;
 
 /** @brief Type of a single ADC conversion result. */
-typedef void nrf_saadc_value_t;
+typedef int16_t nrf_saadc_value_t;
 
 /** @brief Analog-to-digital converter configuration structure. */
 typedef struct
@@ -994,7 +994,7 @@ NRF_STATIC_INLINE void nrf_saadc_burst_set(NRF_SAADC_Type *  p_reg,
  *
  * @return Minimum value of the conversion result.
  */
-NRF_STATIC_INLINE int16_t nrf_saadc_value_min_get(nrf_saadc_resolution_t resolution);
+NRF_STATIC_INLINE nrf_saadc_value_t nrf_saadc_value_min_get(nrf_saadc_resolution_t resolution);
 
 /**
  * @brief Function for getting the maximum value of the conversion result.
@@ -1005,7 +1005,7 @@ NRF_STATIC_INLINE int16_t nrf_saadc_value_min_get(nrf_saadc_resolution_t resolut
  *
  * @return Maximum value of the conversion result.
  */
-NRF_STATIC_INLINE int16_t nrf_saadc_value_max_get(nrf_saadc_resolution_t resolution);
+NRF_STATIC_INLINE nrf_saadc_value_t nrf_saadc_value_max_get(nrf_saadc_resolution_t resolution);
 
 #if NRF_SAADC_HAS_CAL
 /**
@@ -1403,7 +1403,7 @@ NRF_STATIC_INLINE void nrf_saadc_burst_set(NRF_SAADC_Type *  p_reg,
 }
 #endif
 
-NRF_STATIC_INLINE int16_t nrf_saadc_value_min_get(nrf_saadc_resolution_t resolution)
+NRF_STATIC_INLINE nrf_saadc_value_t nrf_saadc_value_min_get(nrf_saadc_resolution_t resolution)
 {
     uint8_t res_bits = 0;
     switch (resolution)
@@ -1423,10 +1423,10 @@ NRF_STATIC_INLINE int16_t nrf_saadc_value_min_get(nrf_saadc_resolution_t resolut
         default:
             NRFX_ASSERT(false);
     }
-    return (int16_t)(-(1 << res_bits));
+    return (nrf_saadc_value_t)(-(1 << res_bits));
 }
 
-NRF_STATIC_INLINE int16_t nrf_saadc_value_max_get(nrf_saadc_resolution_t resolution)
+NRF_STATIC_INLINE nrf_saadc_value_t nrf_saadc_value_max_get(nrf_saadc_resolution_t resolution)
 {
     uint8_t res_bits = 0;
     switch (resolution)
@@ -1446,7 +1446,7 @@ NRF_STATIC_INLINE int16_t nrf_saadc_value_max_get(nrf_saadc_resolution_t resolut
         default:
             NRFX_ASSERT(false);
     }
-    return (int16_t)((1 << res_bits) - 1);
+    return (nrf_saadc_value_t)((1 << res_bits) - 1);
 }
 
 #if NRF_SAADC_HAS_CAL
