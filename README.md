@@ -12,7 +12,6 @@ SoCs, as well as startup and initialization files for them.
 
 ## Supported SoCs and SiPs
 
-* nRF51 Series
 * nRF52805
 * nRF52810
 * nRF52811
