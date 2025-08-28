@@ -121,18 +121,6 @@ bool nrfx_lpcomp_init_check(void);
 void nrfx_lpcomp_start(uint32_t lpcomp_evt_en_mask, uint32_t lpcomp_shorts_mask);
 
 /**
- * @brief Function for enabling the LPCOMP peripheral and interrupts.
- *
- * @deprecated Use @ref nrfx_lpcomp_start instead.
- *
- * Before calling this function, the driver must be initialized. This function
- * enables the LPCOMP peripheral and its interrupts.
- *
- * @sa nrfx_lpcomp_disable
- */
-NRFX_STATIC_INLINE void nrfx_lpcomp_enable(void);
-
-/**
  * @brief Function for stopping the LPCOMP peripheral.
  *
  * Before calling this function, the driver must be enabled. This function disables the LPCOMP
@@ -143,38 +131,12 @@ NRFX_STATIC_INLINE void nrfx_lpcomp_enable(void);
 void nrfx_lpcomp_stop(void);
 
 /**
- * @brief Function for disabling the LPCOMP peripheral.
- *
- * @deprecated Use @ref nrfx_lpcomp_stop instead.
- *
- * Before calling this function, the driver must be initialized. This function disables the LPCOMP
- * peripheral and its interrupts.
- *
- * @sa nrfx_lpcomp_enable
- */
-NRFX_STATIC_INLINE void nrfx_lpcomp_disable(void);
-
-/**
  * @brief Function for copying the current state of the low power comparator result to the RESULT register.
  *
  * @retval 0 The input voltage is below the threshold (VIN+ < VIN-).
  * @retval 1 The input voltage is above the threshold (VIN+ > VIN-).
  */
 uint32_t nrfx_lpcomp_sample(void);
-
-#ifndef NRFX_DECLARE_ONLY
-
-NRFX_STATIC_INLINE void nrfx_lpcomp_enable(void)
-{
-    nrfx_lpcomp_start(0, 0);
-}
-
-NRFX_STATIC_INLINE void nrfx_lpcomp_disable(void)
-{
-    nrfx_lpcomp_stop();
-}
-
-#endif // NRFX_DECLARE_ONLY
 
 /** @} */
 

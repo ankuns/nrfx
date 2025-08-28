@@ -111,12 +111,6 @@ typedef struct
     void *                          p_context; ///< Context passed to the event handler.
 } nrfx_gpiote_handler_config_t;
 
-/** @brief @deprecated Structure for configuring an input pin. */
-typedef struct
-{
-    nrf_gpio_pin_pull_t pull; ///< Pull configuration.
-} nrfx_gpiote_input_config_t;
-
 /** @brief Structure for configuring an input pin. */
 typedef struct
 {

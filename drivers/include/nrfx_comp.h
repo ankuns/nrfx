@@ -35,31 +35,6 @@ extern "C" {
  */
 typedef void (* nrfx_comp_event_handler_t)(nrf_comp_event_t event);
 
-/**
- * @brief COMP shortcut masks.
- *
- * @deprecated Use @ref nrf_comp_short_mask_t instead.
-*/
-typedef enum
-{
-    NRFX_COMP_SHORT_STOP_AFTER_CROSS_EVT = NRF_COMP_SHORT_STOP_CROSS_MASK, ///< Shortcut between the CROSS event and the STOP task.
-    NRFX_COMP_SHORT_STOP_AFTER_UP_EVT    = NRF_COMP_SHORT_STOP_UP_MASK,    ///< Shortcut between the UP event and the STOP task.
-    NRFX_COMP_SHORT_STOP_AFTER_DOWN_EVT  = NRF_COMP_SHORT_STOP_DOWN_MASK   ///< Shortcut between the DOWN event and the STOP task.
-} nrfx_comp_short_mask_t;
-
-/**
- * @brief COMP events masks.
- *
- * @deprecated Use @ref nrf_comp_int_mask_t instead.
-*/
-typedef enum
-{
-    NRFX_COMP_EVT_EN_CROSS_MASK = NRF_COMP_INT_CROSS_MASK, ///< CROSS event (generated after VIN+ == VIN-).
-    NRFX_COMP_EVT_EN_UP_MASK    = NRF_COMP_INT_UP_MASK,    ///< UP event (generated when VIN+ crosses VIN- while increasing).
-    NRFX_COMP_EVT_EN_DOWN_MASK  = NRF_COMP_INT_DOWN_MASK,  ///< DOWN event (generated when VIN+ crosses VIN- while decreasing).
-    NRFX_COMP_EVT_EN_READY_MASK = NRF_COMP_INT_READY_MASK  ///< READY event (generated when the module is ready).
-} nrfx_comp_evt_en_mask_t;
-
 /** @brief COMP configuration. */
 typedef struct
 {

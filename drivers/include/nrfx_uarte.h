@@ -512,54 +512,6 @@ nrfx_err_t nrfx_uarte_rx_buffer_set(nrfx_uarte_t const * p_instance,
                                     size_t               length);
 
 /**
- * @brief Function for receiving data over UARTE.
- *
- * If an event handler is provided in the nrfx_uarte_init() call, this function
- * returns immediately and the handler is called when the transfer is done.
- * Otherwise, the transfer is performed in blocking mode, that is this function
- * returns when the transfer is finished. Blocking mode is not using interrupt so
- * there is no context switching inside the function.
- * The receive buffer pointer is double-buffered in non-blocking mode. The secondary
- * buffer can be set immediately after starting the transfer and will be filled
- * when the primary buffer is full. The double-buffering feature allows
- * receiving data continuously.
- *
- * @note Peripherals using EasyDMA (including UARTE) require the transfer buffers
- *       to be placed in the Data RAM region. If this condition is not met,
- *       this function fails with the error code NRFX_ERROR_INVALID_ADDR.
- *
- * @warning When the double-buffering feature is used and the UARTE interrupt
- *          is processed with a delay (for example, due to a higher priority interrupt)
- *          long enough for both buffers to get filled completely,
- *          the event handler will be invoked only once, to notify that
- *          the first buffer has been filled. This is because from hardware perspective it
- *          is impossible to deduce in such case if the second buffer was also filled completely or not.
- *          To prevent this from happening, keep the UARTE interrupt latency low
- *          or use large enough reception buffers.
- *
- * @deprecated Use @ref nrfx_uarte_rx_enable and @ref nrfx_uarte_rx_buffer_set.
- *
- * @param[in] p_instance Pointer to the driver instance structure.
- * @param[in] p_data     Pointer to data.
- * @param[in] length     Number of bytes to receive. Maximum possible length is
- *                       dependent on the used SoC (see the MAXCNT register
- *                       description in the Product Specification). The driver
- *                       checks it with assertion.
- *
- * @retval NRFX_SUCCESS            Initialization is successful.
- * @retval NRFX_ERROR_BUSY         The driver is already receiving
- *                                 (and the secondary buffer has already been set
- *                                 in non-blocking mode).
- * @retval NRFX_ERROR_FORBIDDEN    The transfer is aborted from a different context
- *                                 (blocking mode only).
- * @retval NRFX_ERROR_INTERNAL     The UARTE peripheral reports an error.
- * @retval NRFX_ERROR_INVALID_ADDR p_data does not point to RAM buffer.
- */
-nrfx_err_t nrfx_uarte_rx(nrfx_uarte_t const * p_instance,
-                         uint8_t *            p_data,
-                         size_t               length);
-
-/**
  * @brief Function for testing the receiver state in blocking mode.
  *
  * @param[in]  p_instance  Pointer to the driver instance structure.

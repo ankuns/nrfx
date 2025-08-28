@@ -171,7 +171,7 @@ void nrfx_lpcomp_uninit(void)
 {
     NRFX_ASSERT(m_state != NRFX_DRV_STATE_UNINITIALIZED);
     nrfy_lpcomp_int_uninit(NRF_LPCOMP);
-    nrfx_lpcomp_disable();
+    nrfx_lpcomp_stop();
 #if NRFX_CHECK(NRFX_PRS_ENABLED)
     nrfx_prs_release(NRF_LPCOMP);
 #endif

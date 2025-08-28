@@ -400,19 +400,6 @@ typedef enum
 } nrf_clock_hfclk_div_t;
 #endif // defined(CLOCK_FEATURE_HFCLK_DIVIDE_PRESENT) || NRF_CLOCK_HAS_HFCLK192M
 
-/**
- * @brief Trigger status of task LFCLKSTART/HFCLKSTART.
- *
- * @note This enum is deprecated.
- *
- * @details Used by LFCLKRUN and HFCLKRUN registers.
- */
-typedef enum
-{
-    NRF_CLOCK_START_TASK_NOT_TRIGGERED = NRF_CLOCK_LFCLKRUN_STATUS_NotTriggered, /**< Task LFCLKSTART/HFCLKSTART has not been triggered. */
-    NRF_CLOCK_START_TASK_TRIGGERED     = NRF_CLOCK_LFCLKRUN_STATUS_Triggered     /**< Task LFCLKSTART/HFCLKSTART has been triggered. */
-} nrf_clock_start_task_status_t;
-
 /** @brief Interrupts. */
 typedef enum
 {
@@ -691,22 +678,6 @@ NRF_STATIC_INLINE void nrf_clock_lf_src_set(NRF_CLOCK_Type * p_reg, nrf_clock_lf
  */
 NRF_STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_src_get(NRF_CLOCK_Type const * p_reg);
 
-/**
- * @brief Function for retrieving the active source of the low-frequency clock.
- *
- * @note This function is deprecated. Use @ref nrf_clock_is_running instead.
- *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- *
- * @retval NRF_CLOCK_LFCLK_RC    The internal 32 kHz RC oscillator
- *                               is the active source of the low-frequency clock.
- * @retval NRF_CLOCK_LFCLK_Xtal  An external 32 kHz crystal oscillator
- *                               is the active source of the low-frequency clock.
- * @retval NRF_CLOCK_LFCLK_Synth The internal 32 kHz synthesized from
- *                               the HFCLK is the active source of the low-frequency clock.
- */
-NRF_STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_actv_src_get(NRF_CLOCK_Type const * p_reg);
-
 #if NRF_CLOCK_HAS_SRC_COPY
 /**
  * @brief Function for retrieving the clock source for the LFCLK clock when
@@ -723,31 +694,6 @@ NRF_STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_actv_src_get(NRF_CLOCK_Type con
  */
 NRF_STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_srccopy_get(NRF_CLOCK_Type const * p_reg);
 #endif
-
-/**
- * @brief Function for retrieving the state of the LFCLK clock.
- *
- * @note This function is deprecated. Use @ref nrf_clock_is_running instead.
- *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- *
- * @retval false The LFCLK clock is not running.
- * @retval true  The LFCLK clock is running.
- */
-NRF_STATIC_INLINE bool nrf_clock_lf_is_running(NRF_CLOCK_Type const * p_reg);
-
-/**
- * @brief Function for retrieving the trigger status of the task LFCLKSTART.
- *
- * @note This function is deprecated. Use @ref nrf_clock_start_task_check instead.
- *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- *
- * @retval NRF_CLOCK_START_TASK_NOT_TRIGGERED The task LFCLKSTART has not been triggered.
- * @retval NRF_CLOCK_START_TASK_TRIGGERED     The task LFCLKSTART has been triggered.
- */
-NRF_STATIC_INLINE
-nrf_clock_start_task_status_t nrf_clock_lf_start_task_status_get(NRF_CLOCK_Type const * p_reg);
 
 #if NRF_CLOCK_HAS_HFDOMAIN
 #if NRF_CLOCK_HAS_HFCLKSRC
@@ -774,33 +720,6 @@ NRF_STATIC_INLINE void nrf_clock_hf_src_set(NRF_CLOCK_Type * p_reg, nrf_clock_hf
  *                                       source of the high-frequency clock.
  */
 NRF_STATIC_INLINE nrf_clock_hfclk_t nrf_clock_hf_src_get(NRF_CLOCK_Type const * p_reg);
-
-/**
- * @brief Function for retrieving the state of the HFCLK clock.
- *
- * @note This function is deprecated. Use @ref nrf_clock_is_running instead.
- *
- * @param[in] p_reg   Pointer to the structure of registers of the peripheral.
- * @param[in] clk_src Clock source to be checked.
- *
- * @retval false The HFCLK clock is not running.
- * @retval true  The HFCLK clock is running.
- */
-NRF_STATIC_INLINE bool nrf_clock_hf_is_running(NRF_CLOCK_Type const * p_reg,
-                                               nrf_clock_hfclk_t      clk_src);
-
-/**
- * @brief Function for retrieving the trigger status of the task HFCLKSTART.
- *
- * @note This function is deprecated. Use @ref nrf_clock_start_task_check instead.
- *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- *
- * @retval NRF_CLOCK_START_TASK_NOT_TRIGGERED The task HFCLKSTART has not been triggered.
- * @retval NRF_CLOCK_START_TASK_TRIGGERED     The task HFCLKSTART has been triggered.
- */
-NRF_STATIC_INLINE
-nrf_clock_start_task_status_t nrf_clock_hf_start_task_status_get(NRF_CLOCK_Type const * p_reg);
 
 #if NRF_CLOCK_HAS_HFCLKAUDIO
 /**
@@ -1256,13 +1175,6 @@ NRF_STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_src_get(NRF_CLOCK_Type const * 
 #endif
 }
 
-NRF_STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_actv_src_get(NRF_CLOCK_Type const * p_reg)
-{
-    nrf_clock_lfclk_t clk_src;
-    (void)nrf_clock_is_running(p_reg, NRF_CLOCK_DOMAIN_LFCLK, &clk_src);
-    return clk_src;
-}
-
 #if NRF_CLOCK_HAS_SRC_COPY
 NRF_STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_srccopy_get(NRF_CLOCK_Type const * p_reg)
 {
@@ -1270,18 +1182,6 @@ NRF_STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_srccopy_get(NRF_CLOCK_Type cons
                                 >> NRF_CLOCK_LFCLKSRCCOPY_SRC_Pos);
 }
 #endif
-
-NRF_STATIC_INLINE bool nrf_clock_lf_is_running(NRF_CLOCK_Type const * p_reg)
-{
-    return nrf_clock_is_running(p_reg, NRF_CLOCK_DOMAIN_LFCLK, NULL);
-}
-
-NRF_STATIC_INLINE
-nrf_clock_start_task_status_t nrf_clock_lf_start_task_status_get(NRF_CLOCK_Type const * p_reg)
-{
-    return (nrf_clock_start_task_status_t)nrf_clock_start_task_check(p_reg,
-                                                                     NRF_CLOCK_DOMAIN_LFCLK);
-}
 
 #if NRF_CLOCK_HAS_HFDOMAIN
 #if NRF_CLOCK_HAS_HFCLKSRC
@@ -1304,21 +1204,6 @@ NRF_STATIC_INLINE nrf_clock_hfclk_t nrf_clock_hf_src_get(NRF_CLOCK_Type const * 
     return (nrf_clock_hfclk_t)((p_reg->HFCLKSTAT & CLOCK_HFCLKSTAT_SRC_Msk)
                                 >> CLOCK_HFCLKSTAT_SRC_Pos);
 #endif
-}
-
-NRF_STATIC_INLINE bool nrf_clock_hf_is_running(NRF_CLOCK_Type const * p_reg,
-                                               nrf_clock_hfclk_t      clk_src)
-{
-    nrf_clock_hfclk_t active_clk_src;
-    bool ret = nrf_clock_is_running(p_reg, NRF_CLOCK_DOMAIN_HFCLK, &active_clk_src);
-    return (ret && (active_clk_src == clk_src));
-}
-
-NRF_STATIC_INLINE
-nrf_clock_start_task_status_t nrf_clock_hf_start_task_status_get(NRF_CLOCK_Type const * p_reg)
-{
-    return (nrf_clock_start_task_status_t)nrf_clock_start_task_check(p_reg,
-                                                                     NRF_CLOCK_DOMAIN_HFCLK);
 }
 #endif // NRF_CLOCK_HAS_HFDOMAIN
 

@@ -445,53 +445,6 @@ typedef enum
 #endif
 
 #if NRF_POWER_HAS_RAM_POWER
-/**
- * @brief Bit positions for RAMPOWER register
- *
- * @deprecated Use @ref NRF_POWER_RAMPOWER_S0POWER_POS or
- *             NRF_POWER_RAMPOWER_S0RETENTION_POS instead.
- *
- * All possible bits described, even if they are not used in selected MCU.
- */
-typedef enum
-{
-    /** Keep RAM section S0 ON in System ON mode */
-    NRF_POWER_RAMPOWER_S0POWER = POWER_RAM_POWER_S0POWER_Pos,
-    NRF_POWER_RAMPOWER_S1POWER,  /**< Keep RAM section S1 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S2POWER,  /**< Keep RAM section S2 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S3POWER,  /**< Keep RAM section S3 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S4POWER,  /**< Keep RAM section S4 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S5POWER,  /**< Keep RAM section S5 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S6POWER,  /**< Keep RAM section S6 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S7POWER,  /**< Keep RAM section S7 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S8POWER,  /**< Keep RAM section S8 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S9POWER,  /**< Keep RAM section S9 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S10POWER, /**< Keep RAM section S10 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S11POWER, /**< Keep RAM section S11 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S12POWER, /**< Keep RAM section S12 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S13POWER, /**< Keep RAM section S13 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S14POWER, /**< Keep RAM section S14 ON in System ON mode. */
-    NRF_POWER_RAMPOWER_S15POWER, /**< Keep RAM section S15 ON in System ON mode. */
-
-    /** Keep section retention in OFF mode when section is OFF */
-    NRF_POWER_RAMPOWER_S0RETENTION = POWER_RAM_POWER_S0RETENTION_Pos,
-    NRF_POWER_RAMPOWER_S1RETENTION,  /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S2RETENTION,  /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S3RETENTION,  /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S4RETENTION,  /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S5RETENTION,  /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S6RETENTION,  /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S7RETENTION,  /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S8RETENTION,  /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S9RETENTION,  /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S10RETENTION, /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S11RETENTION, /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S12RETENTION, /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S13RETENTION, /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S14RETENTION, /**< Keep section retention in OFF mode when section is OFF. */
-    NRF_POWER_RAMPOWER_S15RETENTION, /**< Keep section retention in OFF mode when section is OFF. */
-} nrf_power_rampower_t;
-
 /** @brief Position of power configuration bits for RAM section 0. */
 #define NRF_POWER_RAMPOWER_S0POWER_POS POWER_RAM_POWER_S0POWER_Pos
 
@@ -1157,41 +1110,6 @@ NRF_STATIC_INLINE bool nrf_power_abb_force_lock_check(NRF_POWER_Type const * p_r
 
 #if NRF_POWER_HAS_VREG_CONFIG
 /**
- * @brief Function for enabling specified voltage regulator.
- *
- * @deprecated Use @ref nrf_power_vreg_set instead.
- *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- * @param[in] mask  Mask of voltage regulators to be enabled.
- *                  Use @ref nrf_power_vreg_mask_t values for bit masking.
- */
-NRF_STATIC_INLINE void nrf_power_vreg_enable(NRF_POWER_Type * p_reg, uint32_t mask);
-
-/**
- * @brief Function for disabling specified voltage regulator.
- *
- * @deprecated Use @ref nrf_power_vreg_set instead.
- *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- * @param[in] mask  Mask of voltage regulators to be disabled.
- *                  Use @ref nrf_power_vreg_mask_t values for bit masking.
- */
-NRF_STATIC_INLINE void nrf_power_vreg_disable(NRF_POWER_Type * p_reg, uint32_t mask);
-
-/**
- * @brief Function for checking if the specified voltage regulator is enabled.
- *
- * @deprecated Use @ref nrf_power_vreg_get instead.
- *
- * @param[in] p_reg Pointer to the structure of registers of the peripheral.
- * @param[in] mask  Mask of voltage regulator to be checked.
- *                  Use @ref nrf_power_vreg_mask_t values for bit masking.
- *
- * @return Mask of enabled voltage regulators.
- */
-NRF_STATIC_INLINE uint32_t nrf_power_vreg_enable_check(NRF_POWER_Type const * p_reg, uint32_t mask);
-
-/**
  * @brief Function for setting the enabled voltage regulators.
  *
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
@@ -1730,21 +1648,6 @@ NRF_STATIC_INLINE bool nrf_power_abb_force_lock_check(NRF_POWER_Type const * p_r
 #endif // NRF_POWER_HAS_ABB
 
 #if NRF_POWER_HAS_VREG_CONFIG
-NRF_STATIC_INLINE void nrf_power_vreg_enable(NRF_POWER_Type * p_reg, uint32_t mask)
-{
-    p_reg->REGCONFIG = mask;
-}
-
-NRF_STATIC_INLINE void nrf_power_vreg_disable(NRF_POWER_Type * p_reg, uint32_t mask)
-{
-    p_reg->REGCONFIG = ~mask;
-}
-
-NRF_STATIC_INLINE uint32_t nrf_power_vreg_enable_check(NRF_POWER_Type const * p_reg, uint32_t mask)
-{
-    return p_reg->REGCONFIG & mask;
-}
-
 NRF_STATIC_INLINE void nrf_power_vreg_set(NRF_POWER_Type * p_reg, uint32_t mask)
 {
     p_reg->REGCONFIG = mask;

@@ -106,9 +106,9 @@ nrfx_err_t nrfx_comp_init(nrfx_comp_config_t const * p_config,
     }
 #endif
     nrfy_comp_shorts_disable(NRF_COMP,
-                             NRFX_COMP_SHORT_STOP_AFTER_CROSS_EVT |
-                             NRFX_COMP_SHORT_STOP_AFTER_UP_EVT |
-                             NRFX_COMP_SHORT_STOP_AFTER_DOWN_EVT);
+                             NRF_COMP_SHORT_STOP_CROSS_MASK |
+                             NRF_COMP_SHORT_STOP_UP_MASK |
+                             NRF_COMP_SHORT_STOP_DOWN_MASK);
     nrfy_comp_int_disable(NRF_COMP,
                           NRF_COMP_INT_READY_MASK |
                           NRF_COMP_INT_DOWN_MASK |

@@ -1608,55 +1608,6 @@ nrfx_err_t nrfx_uarte_rx_abort(nrfx_uarte_t const * p_instance, bool disable_all
     return rx_abort(p_uarte, p_cb, disable_all, sync);
 }
 
-nrfx_err_t nrfx_uarte_rx(nrfx_uarte_t const * p_instance,
-                         uint8_t *            p_data,
-                         size_t               length)
-{
-    nrfx_err_t err_code = nrfx_uarte_rx_buffer_set(p_instance, p_data, length);
-    uarte_control_block_t * p_cb = &m_cb[p_instance->drv_inst_idx];
-
-    NRFX_ASSERT(p_cb->state == NRFX_DRV_STATE_INITIALIZED);
-    NRFX_ASSERT(UARTE_LENGTH_VALIDATE(p_instance->drv_inst_idx, length));
-    NRFX_ASSERT(p_data);
-    NRFX_ASSERT(length > 0);
-
-    if (err_code != NRFX_SUCCESS)
-    {
-        return err_code;
-    }
-
-    uint32_t flags = NRFX_UARTE_RX_ENABLE_CONT | NRFX_UARTE_RX_ENABLE_STOP_ON_END;
-
-    err_code = nrfx_uarte_rx_enable(p_instance, flags);
-    if (err_code != NRFX_ERROR_BUSY && err_code != NRFX_SUCCESS)
-    {
-        return err_code;
-    }
-    err_code = NRFX_SUCCESS;
-
-    if (p_cb->handler == NULL)
-    {
-        size_t rx_amount = 0;
-
-        do
-        {
-           err_code = nrfx_uarte_rx_ready(p_instance, &rx_amount);
-        } while (err_code == NRFX_ERROR_BUSY);
-
-        if ((err_code == NRFX_ERROR_ALREADY) || (length > rx_amount))
-        {
-            err_code = NRFX_ERROR_FORBIDDEN;
-        }
-        else
-        {
-            err_code = nrfx_uarte_rx_abort(p_instance, true, true);
-            NRFX_ASSERT(err_code == NRFX_SUCCESS);
-        }
-    }
-
-    return err_code;
-}
-
 nrfx_err_t nrfx_uarte_rx_ready(nrfx_uarte_t const * p_instance, size_t * p_rx_amount)
 {
     uarte_control_block_t * p_cb = &m_cb[p_instance->drv_inst_idx];
