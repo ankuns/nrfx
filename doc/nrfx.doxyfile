@@ -919,6 +919,7 @@ WARN_LOGFILE           = warnings_nrfx.txt
 ### EDIT THIS ###
 
 INPUT                  = config_dox \
+                         ../bsp/stable/soc \
                          ../helpers \
                          ../drivers \
                          ../hal \

@@ -32,8 +32,9 @@ In addition, the following locations should be specified as include paths
 ([nrfx] stands for the nrfx root folder location):
 @code
 [nrfx]/
+[nrfx]/bsp
+[nrfx]/bsp/stable/mdk
 [nrfx]/drivers/include
-[nrfx]/mdk
 @endcode
 
 @note Unless otherwise stated, nrfx API functions do not provide thread safety
@@ -50,7 +51,7 @@ To install the handlers in the standard MDK way, you must only add the following
 line to the @ref nrfx_glue file:
 
 @code
-#include <soc/nrfx_irqs.h>
+#include NRFX_BSP_SOC_IRQS_PATH
 @endcode
 
 This will cause the preprocessor to properly rename all the IRQ handler
@@ -75,7 +76,7 @@ in a file named:
 
 This file, similarly to the integration files mentioned above, can be placed
 in any suitable location within the host environment.
-The <a href="https://github.com/NordicSemiconductor/nrfx/tree/master/templates">nrfx/templates</a> subfolder contains templates of
+The <a href="https://github.com/NordicSemiconductor/nrfx/tree/master/templates">nrfx/bsp/stable/templates</a> subfolder contains templates of
 configuration files for all currently supported Nordic SoCs. These files are
 included through a common nrfx_config.h file, according to the selected SoC.
 Refer to the "driver configuration" section in the API reference for a given
