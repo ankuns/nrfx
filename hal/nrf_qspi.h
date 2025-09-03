@@ -44,13 +44,6 @@ extern "C" {
 #define NRF_QSPI_HAS_MODE_1 0
 #endif
 
-#if defined(NRF53_SERIES) || defined(__NRFX_DOXYGEN__)
-/** @brief Value representing QSPI base clock frequency. */
-#define NRF_QSPI_BASE_CLOCK_FREQ 96000000uL
-#else
-#define NRF_QSPI_BASE_CLOCK_FREQ 32000000uL
-#endif
-
 /**
  * @brief This value can be used as a parameter for the @ref nrf_qspi_pins_set
  *        function to specify that a given QSPI signal (SCK, CSN, IO0, IO1, IO2, or IO3)
@@ -104,26 +97,6 @@ typedef enum
     NRF_QSPI_FREQ_DIV15, /**< Divide by 15. */
     NRF_QSPI_FREQ_DIV16, /**< Divide by 16. */
 } nrf_qspi_frequency_t;
-
-#if defined(NRF52_SERIES)
-/** Symbols translation for backward compatibility. */
-#define NRF_QSPI_FREQ_32MDIV1  NRF_QSPI_FREQ_DIV1
-#define NRF_QSPI_FREQ_32MDIV2  NRF_QSPI_FREQ_DIV2
-#define NRF_QSPI_FREQ_32MDIV3  NRF_QSPI_FREQ_DIV3
-#define NRF_QSPI_FREQ_32MDIV4  NRF_QSPI_FREQ_DIV4
-#define NRF_QSPI_FREQ_32MDIV5  NRF_QSPI_FREQ_DIV5
-#define NRF_QSPI_FREQ_32MDIV6  NRF_QSPI_FREQ_DIV6
-#define NRF_QSPI_FREQ_32MDIV7  NRF_QSPI_FREQ_DIV7
-#define NRF_QSPI_FREQ_32MDIV8  NRF_QSPI_FREQ_DIV8
-#define NRF_QSPI_FREQ_32MDIV9  NRF_QSPI_FREQ_DIV9
-#define NRF_QSPI_FREQ_32MDIV10 NRF_QSPI_FREQ_DIV10
-#define NRF_QSPI_FREQ_32MDIV11 NRF_QSPI_FREQ_DIV11
-#define NRF_QSPI_FREQ_32MDIV12 NRF_QSPI_FREQ_DIV12
-#define NRF_QSPI_FREQ_32MDIV13 NRF_QSPI_FREQ_DIV13
-#define NRF_QSPI_FREQ_32MDIV14 NRF_QSPI_FREQ_DIV14
-#define NRF_QSPI_FREQ_32MDIV15 NRF_QSPI_FREQ_DIV15
-#define NRF_QSPI_FREQ_32MDIV16 NRF_QSPI_FREQ_DIV16
-#endif
 
 /** @brief Interface configuration for a read operation. */
 typedef enum

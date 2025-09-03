@@ -38,6 +38,7 @@
 /**************************************************************************************************/
 #if defined(NRF52_SERIES)
     #define QDEC_LEDPRE_ResetValue 0x10
+    #define QSPI_BASE_CLOCK_FREQ   32000000uL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF52_SERIES                                                            */
@@ -69,6 +70,7 @@
 #if defined(NRF53_SERIES)
     #define POWER_GPREGRET_MaxCount 2
     #define QDEC_LEDPRE_ResetValue 0x10
+    #define QSPI_BASE_CLOCK_FREQ    96000000uL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
