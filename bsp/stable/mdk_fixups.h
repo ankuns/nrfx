@@ -13,6 +13,13 @@
     #define ECB_ECBDATAPTR_ECBDATAPTR_Msk
 
     #define EVENT_READBACK_NOT_NEEDED 1
+
+    #define FICR_CODEPAGESIZE_CODEPAGESIZE_Msk
+    #define FICR_CODESIZE_CODESIZE_Msk
+    #define FICR_DEVICEID_DEVICEID_Msk
+    #define FICR_DEVICEADDR_DEVICEADDR_Msk
+    #define FICR_ER_ER_Msk
+    #define FICR_IR_IR_Msk
 #endif
 
 /**************************************************************************************************/
