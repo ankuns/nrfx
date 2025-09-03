@@ -430,7 +430,7 @@ NRF_STATIC_INLINE nrf_ppi_channel_enable_t nrf_ppi_channel_enable_get(NRF_PPI_Ty
 
 NRF_STATIC_INLINE void nrf_ppi_channels_disable_all(NRF_PPI_Type * p_reg)
 {
-    p_reg->CHENCLR = ((uint32_t)0xFFFFFFFFuL);
+    p_reg->CHENCLR = UINT32_MAX;
 }
 
 NRF_STATIC_INLINE void nrf_ppi_channels_enable(NRF_PPI_Type * p_reg, uint32_t mask)
