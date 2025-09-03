@@ -9,11 +9,10 @@
 extern "C" {
 #endif
 
-#if defined(NRF54H20_XXAA) || defined(NRF92_SERIES)
+#if defined(SPIS_CLOCKPIN_MISO_NEEDED)
 #define NRF_SPIS_CLOCKPIN_MISO_NEEDED 1
 #endif
-
-#if defined(HALTIUM_XXAA)
+#if defined(SPIS_CLOCKPIN_SCK_NEEDED)
 #define NRF_SPIS_CLOCKPIN_SCK_NEEDED 1
 #endif
 
@@ -29,6 +28,20 @@ extern "C" {
 #define NRF_SPIS_HAS_DMA_REG 1
 #else
 #define NRF_SPIS_HAS_DMA_REG 0
+#endif
+
+#if defined(SPIS_TXD_LIST_LIST_Msk) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether TX list is present. */
+#define NRF_SPIS_HAS_TX_LIST 1
+#else
+#define NRF_SPIS_HAS_TX_LIST 0
+#endif
+
+#if defined(SPIS_RXD_LIST_LIST_Msk) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether RX list is present. */
+#define NRF_SPIS_HAS_RX_LIST 1
+#else
+#define NRF_SPIS_HAS_RX_LIST 0
 #endif
 
 #if (defined(SPIS_TASKS_DMA_RX_ENABLEMATCH_ENABLEMATCH_Msk) && \
@@ -59,7 +72,7 @@ extern "C" {
  *        function to specify that a given SPI signal (SCK, MOSI, or MISO)
  *        shall not be connected to a physical pin.
  */
-#define NRF_SPIS_PIN_NOT_CONNECTED  0xFFFFFFFF
+#define NRF_SPIS_PIN_NOT_CONNECTED UINT32_MAX 
 
 /** @brief SPIS tasks. */
 typedef enum
@@ -598,7 +611,7 @@ NRF_STATIC_INLINE void nrf_spis_def_set(NRF_SPIS_Type * p_reg,
 NRF_STATIC_INLINE void nrf_spis_orc_set(NRF_SPIS_Type * p_reg,
                                         uint8_t         orc);
 
-#if defined(SPIS_TXD_LIST_LIST_Msk) || defined(__NRFX_DOXYGEN__)
+#if NRF_SPIS_HAS_TX_LIST
 /**
  * @brief Function for enabling the TX list feature.
  *
@@ -612,9 +625,9 @@ NRF_STATIC_INLINE void nrf_spis_tx_list_enable(NRF_SPIS_Type * p_reg);
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  */
 NRF_STATIC_INLINE void nrf_spis_tx_list_disable(NRF_SPIS_Type * p_reg);
-#endif // defined(SPIS_TXD_LIST_LIST_Msk) || defined(__NRFX_DOXYGEN__)
+#endif // NRF_SPIS_HAS_TX_LIST
 
-#if defined(SPIS_RXD_LIST_LIST_Msk) || defined(__NRFX_DOXYGEN__)
+#if NRF_SPIS_HAS_RX_LIST
 /**
  * @brief Function for enabling the RX list feature.
  *
@@ -628,7 +641,7 @@ NRF_STATIC_INLINE void nrf_spis_rx_list_enable(NRF_SPIS_Type * p_reg);
  * @param[in] p_reg Pointer to the structure of registers of the peripheral.
  */
 NRF_STATIC_INLINE void nrf_spis_rx_list_disable(NRF_SPIS_Type * p_reg);
-#endif // defined(SPIS_RXD_LIST_LIST_Msk) || defined(__NRFX_DOXYGEN__)
+#endif // NRF_SPIS_HAS_RX_LIST
 
 #if NRF_SPIS_HAS_DMA_TASKS_EVENTS
 /**
@@ -894,7 +907,7 @@ NRF_STATIC_INLINE void nrf_spis_pins_set(NRF_SPIS_Type * p_reg,
                                          uint32_t        miso_pin,
                                          uint32_t        csn_pin)
 {
-#if defined(NRF51)
+#if !defined(SPIS_PSEL_SCK_CONNECT_Msk)
     p_reg->PSELSCK  = sck_pin;
     p_reg->PSELMOSI = mosi_pin;
     p_reg->PSELMISO = miso_pin;
@@ -909,7 +922,7 @@ NRF_STATIC_INLINE void nrf_spis_pins_set(NRF_SPIS_Type * p_reg,
 
 NRF_STATIC_INLINE void nrf_spis_sck_pin_set(NRF_SPIS_Type * p_reg, uint32_t pin)
 {
-#if defined(NRF51)
+#if !defined(SPIS_PSEL_SCK_CONNECT_Msk)
     p_reg->PSELSCK = pin;
 #else
     p_reg->PSEL.SCK = pin;
@@ -918,7 +931,7 @@ NRF_STATIC_INLINE void nrf_spis_sck_pin_set(NRF_SPIS_Type * p_reg, uint32_t pin)
 
 NRF_STATIC_INLINE void nrf_spis_mosi_pin_set(NRF_SPIS_Type * p_reg, uint32_t pin)
 {
-#if defined(NRF51)
+#if !defined(SPIS_PSEL_SCK_CONNECT_Msk)
     p_reg->PSELMOSI = pin;
 #else
     p_reg->PSEL.MOSI = pin;
@@ -927,7 +940,7 @@ NRF_STATIC_INLINE void nrf_spis_mosi_pin_set(NRF_SPIS_Type * p_reg, uint32_t pin
 
 NRF_STATIC_INLINE void nrf_spis_miso_pin_set(NRF_SPIS_Type * p_reg, uint32_t pin)
 {
-#if defined(NRF51)
+#if !defined(SPIS_PSEL_SCK_CONNECT_Msk)
     p_reg->PSELMISO = pin;
 #else
     p_reg->PSEL.MISO = pin;
@@ -936,7 +949,7 @@ NRF_STATIC_INLINE void nrf_spis_miso_pin_set(NRF_SPIS_Type * p_reg, uint32_t pin
 
 NRF_STATIC_INLINE void nrf_spis_csn_pin_set(NRF_SPIS_Type * p_reg, uint32_t pin)
 {
-#if defined(NRF51)
+#if !defined(SPIS_PSEL_SCK_CONNECT_Msk)
     p_reg->PSELCSN = pin;
 #else
     p_reg->PSEL.CSN = pin;
@@ -945,7 +958,7 @@ NRF_STATIC_INLINE void nrf_spis_csn_pin_set(NRF_SPIS_Type * p_reg, uint32_t pin)
 
 NRF_STATIC_INLINE uint32_t nrf_spis_sck_pin_get(NRF_SPIS_Type const * p_reg)
 {
-#if defined(NRF51)
+#if !defined(SPIS_PSEL_SCK_CONNECT_Msk)
     return p_reg->PSELSCK;
 #else
     return p_reg->PSEL.SCK;
@@ -954,7 +967,7 @@ NRF_STATIC_INLINE uint32_t nrf_spis_sck_pin_get(NRF_SPIS_Type const * p_reg)
 
 NRF_STATIC_INLINE uint32_t nrf_spis_mosi_pin_get(NRF_SPIS_Type const * p_reg)
 {
-#if defined(NRF51)
+#if !defined(SPIS_PSEL_SCK_CONNECT_Msk)
     return p_reg->PSELMOSI;
 #else
     return p_reg->PSEL.MOSI;
@@ -963,7 +976,7 @@ NRF_STATIC_INLINE uint32_t nrf_spis_mosi_pin_get(NRF_SPIS_Type const * p_reg)
 
 NRF_STATIC_INLINE uint32_t nrf_spis_miso_pin_get(NRF_SPIS_Type const * p_reg)
 {
-#if defined(NRF51)
+#if !defined(SPIS_PSEL_SCK_CONNECT_Msk)
     return p_reg->PSELMISO;
 #else
     return p_reg->PSEL.MISO;
@@ -972,7 +985,7 @@ NRF_STATIC_INLINE uint32_t nrf_spis_miso_pin_get(NRF_SPIS_Type const * p_reg)
 
 NRF_STATIC_INLINE uint32_t nrf_spis_csn_pin_get(NRF_SPIS_Type const * p_reg)
 {
-#if defined(NRF51)
+#if !defined(SPIS_PSEL_SCK_CONNECT_Msk)
     return p_reg->PSELCSN;
 #else
     return p_reg->PSEL.CSN;
@@ -983,12 +996,12 @@ NRF_STATIC_INLINE void nrf_spis_tx_buffer_set(NRF_SPIS_Type * p_reg,
                                               uint8_t const * p_buffer,
                                               size_t          length)
 {
-#if defined(NRF51)
-    p_reg->TXDPTR = (uint32_t)p_buffer;
-    p_reg->MAXTX  = length;
-#elif NRF_SPIS_HAS_DMA_REG
+#if NRF_SPIS_HAS_DMA_REG
     p_reg->DMA.TX.PTR    = (uint32_t)p_buffer;
     p_reg->DMA.TX.MAXCNT = length;
+#elif !defined(SPIS_TXD_PTR_PTR_Msk)
+    p_reg->TXDPTR = (uint32_t)p_buffer;
+    p_reg->MAXTX  = length;
 #else
     p_reg->TXD.PTR    = (uint32_t)p_buffer;
     p_reg->TXD.MAXCNT = length;
@@ -999,12 +1012,12 @@ NRF_STATIC_INLINE void nrf_spis_rx_buffer_set(NRF_SPIS_Type * p_reg,
                                               uint8_t *       p_buffer,
                                               size_t          length)
 {
-#if defined(NRF51)
-    p_reg->RXDPTR = (uint32_t)p_buffer;
-    p_reg->MAXRX  = length;
-#elif NRF_SPIS_HAS_DMA_REG
+#if NRF_SPIS_HAS_DMA_REG
     p_reg->DMA.RX.PTR    = (uint32_t)p_buffer;
     p_reg->DMA.RX.MAXCNT = length;
+#elif !defined(SPIS_RXD_PTR_PTR_Msk)
+    p_reg->RXDPTR = (uint32_t)p_buffer;
+    p_reg->MAXRX  = length;
 #else
     p_reg->RXD.PTR    = (uint32_t)p_buffer;
     p_reg->RXD.MAXCNT = length;
@@ -1013,10 +1026,10 @@ NRF_STATIC_INLINE void nrf_spis_rx_buffer_set(NRF_SPIS_Type * p_reg,
 
 NRF_STATIC_INLINE uint8_t * nrf_spis_tx_buffer_get(NRF_SPIS_Type * p_reg)
 {
-#if defined(NRF51)
-    return (uint8_t *)p_reg->TXDPTR;
-#elif NRF_SPIS_HAS_DMA_REG
+#if NRF_SPIS_HAS_DMA_REG
     return (uint8_t *)p_reg->DMA.TX.PTR;
+#elif !defined(SPIS_TXD_PTR_PTR_Msk)
+    return (uint8_t *)p_reg->TXDPTR;
 #else
     return (uint8_t *)p_reg->TXD.PTR;
 #endif
@@ -1024,10 +1037,10 @@ NRF_STATIC_INLINE uint8_t * nrf_spis_tx_buffer_get(NRF_SPIS_Type * p_reg)
 
 NRF_STATIC_INLINE uint8_t * nrf_spis_rx_buffer_get(NRF_SPIS_Type * p_reg)
 {
-#if defined(NRF51)
-    return (uint8_t *)p_reg->RXDPTR;
-#elif NRF_SPIS_HAS_DMA_REG
+#if NRF_SPIS_HAS_DMA_REG
     return (uint8_t *)p_reg->DMA.RX.PTR;
+#elif !defined(SPIS_RXD_PTR_PTR_Msk)
+    return (uint8_t *)p_reg->RXDPTR;
 #else
     return (uint8_t *)p_reg->RXD.PTR;
 #endif
@@ -1035,10 +1048,10 @@ NRF_STATIC_INLINE uint8_t * nrf_spis_rx_buffer_get(NRF_SPIS_Type * p_reg)
 
 NRF_STATIC_INLINE size_t nrf_spis_tx_maxcnt_get(NRF_SPIS_Type * p_reg)
 {
-#if defined(NRF51)
-    return (size_t)p_reg->MAXTX;
-#elif NRF_SPIS_HAS_DMA_REG
+#if NRF_SPIS_HAS_DMA_REG
     return (size_t)p_reg->DMA.TX.MAXCNT;
+#elif !defined(SPIS_TXD_MAXCNT_MAXCNT_Msk)
+    return (size_t)p_reg->MAXTX;
 #else
     return (size_t)p_reg->TXD.MAXCNT;
 #endif
@@ -1046,10 +1059,10 @@ NRF_STATIC_INLINE size_t nrf_spis_tx_maxcnt_get(NRF_SPIS_Type * p_reg)
 
 NRF_STATIC_INLINE size_t nrf_spis_rx_maxcnt_get(NRF_SPIS_Type * p_reg)
 {
-#if defined(NRF51)
-    return (size_t)p_reg->MAXRX;
-#elif NRF_SPIS_HAS_DMA_REG
+#if NRF_SPIS_HAS_DMA_REG
     return (size_t)p_reg->DMA.RX.MAXCNT;
+#elif !defined(SPIS_RXD_MAXCNT_MAXCNT_Msk)
+    return (size_t)p_reg->MAXRX;
 #else
     return (size_t)p_reg->RXD.MAXCNT;
 #endif
@@ -1057,10 +1070,10 @@ NRF_STATIC_INLINE size_t nrf_spis_rx_maxcnt_get(NRF_SPIS_Type * p_reg)
 
 NRF_STATIC_INLINE size_t nrf_spis_tx_amount_get(NRF_SPIS_Type const * p_reg)
 {
-#if defined(NRF51)
-    return p_reg->AMOUNTTX;
-#elif NRF_SPIS_HAS_DMA_REG
+#if NRF_SPIS_HAS_DMA_REG
     return p_reg->DMA.TX.AMOUNT;
+#elif !defined(SPIS_TXD_AMOUNT_AMOUNT_Msk)
+    return p_reg->AMOUNTTX;
 #else
     return p_reg->TXD.AMOUNT;
 #endif
@@ -1068,10 +1081,10 @@ NRF_STATIC_INLINE size_t nrf_spis_tx_amount_get(NRF_SPIS_Type const * p_reg)
 
 NRF_STATIC_INLINE size_t nrf_spis_rx_amount_get(NRF_SPIS_Type const * p_reg)
 {
-#if defined(NRF51)
-    return p_reg->AMOUNTRX;
-#elif NRF_SPIS_HAS_DMA_REG
+#if NRF_SPIS_HAS_DMA_REG
     return p_reg->DMA.RX.AMOUNT;
+#elif !defined(SPIS_RXD_AMOUNT_AMOUNT_Msk)
+    return p_reg->AMOUNTRX;
 #else
     return p_reg->RXD.AMOUNT;
 #endif
@@ -1122,7 +1135,7 @@ NRF_STATIC_INLINE void nrf_spis_def_set(NRF_SPIS_Type * p_reg,
     p_reg->DEF = def;
 }
 
-#if defined(SPIS_TXD_LIST_LIST_Msk)
+#if NRF_SPIS_HAS_TX_LIST
 NRF_STATIC_INLINE void nrf_spis_tx_list_enable(NRF_SPIS_Type * p_reg)
 {
     p_reg->TXD.LIST = SPIS_TXD_LIST_LIST_ArrayList << SPIS_TXD_LIST_LIST_Pos;
@@ -1132,9 +1145,9 @@ NRF_STATIC_INLINE void nrf_spis_tx_list_disable(NRF_SPIS_Type * p_reg)
 {
     p_reg->TXD.LIST = SPIS_TXD_LIST_LIST_Disabled << SPIS_TXD_LIST_LIST_Pos;
 }
-#endif // defined(SPIS_TXD_LIST_LIST_Msk)
+#endif // NRF_SPIS_HAS_TX_LIST
 
-#if defined(SPIS_RXD_LIST_LIST_Msk)
+#if NRF_SPIS_HAS_RX_LIST
 NRF_STATIC_INLINE void nrf_spis_rx_list_enable(NRF_SPIS_Type * p_reg)
 {
     p_reg->RXD.LIST = SPIS_RXD_LIST_LIST_ArrayList << SPIS_RXD_LIST_LIST_Pos;
@@ -1144,7 +1157,7 @@ NRF_STATIC_INLINE void nrf_spis_rx_list_disable(NRF_SPIS_Type * p_reg)
 {
     p_reg->RXD.LIST = SPIS_RXD_LIST_LIST_Disabled << SPIS_RXD_LIST_LIST_Pos;
 }
-#endif // defined(SPIS_RXD_LIST_LIST_Msk)
+#endif // NRF_SPIS_HAS_RX_LIST
 
 #if NRF_SPIS_HAS_DMA_TASKS_EVENTS
 NRF_STATIC_INLINE void nrf_spis_rx_pattern_match_enable_set(NRF_SPIS_Type * p_reg,
