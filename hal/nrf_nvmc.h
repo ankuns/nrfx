@@ -379,8 +379,8 @@ NRF_STATIC_INLINE void nrf_nvmc_buffer_read(void *   dst,
 NRF_STATIC_INLINE void nrf_nvmc_page_erase_start(NRF_NVMC_Type * p_reg,
                                                  uint32_t        page_addr)
 {
-#if defined(NRF51)
-    /* On nRF51, the code area can be divided into two regions: CR0 and CR1.
+#if defined(UICR_CLENR0_CLENR0_Msk)
+    /* On certain targets, the code area can be divided into two regions: CR0 and CR1.
      * The length of CR0 is specified in the CLENR0 register of UICR.
      * If CLENR0 contains the 0xFFFFFFFF value,  CR0 is not set.
      * Moreover, the page from CR0 can be written or erased only from code
@@ -394,13 +394,11 @@ NRF_STATIC_INLINE void nrf_nvmc_page_erase_start(NRF_NVMC_Type * p_reg,
     {
         p_reg->ERASEPCR1 = page_addr;
     }
-#elif defined(NRF52_SERIES)
+#elif defined(NVMC_ERASEPAGE_ERASEPAGE_Msk)
     p_reg->ERASEPAGE = page_addr;
-#elif defined(NRF53_SERIES) || defined(NRF91_SERIES)
+#else
     *(volatile uint32_t *)page_addr = 0xFFFFFFFF;
     (void)p_reg;
-#else
-    #error "Unknown device."
 #endif
 }
 
@@ -433,10 +431,8 @@ NRF_STATIC_INLINE void nrf_nvmc_page_partial_erase_start(NRF_NVMC_Type * p_reg,
 {
 #if defined(NVMC_ERASEPAGEPARTIAL_ERASEPAGEPARTIAL_Msk)
     p_reg->ERASEPAGEPARTIAL = page_addr;
-#elif defined(NRF53_SERIES) || defined(NRF91_SERIES)
-    nrf_nvmc_page_erase_start(p_reg, page_addr);
 #else
-    #error "Unknown device."
+    nrf_nvmc_page_erase_start(p_reg, page_addr);
 #endif
 }
 #endif // NRF_NVMC_HAS_PARTIAL_ERASE

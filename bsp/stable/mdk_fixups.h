@@ -20,6 +20,8 @@
     #define FICR_DEVICEADDR_DEVICEADDR_Msk
     #define FICR_ER_ER_Msk
     #define FICR_IR_IR_Msk
+
+    #define UICR_CLENR0_CLENR0_Msk
 #endif
 
 /**************************************************************************************************/
