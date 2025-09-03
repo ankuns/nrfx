@@ -16,14 +16,14 @@ extern "C" {
  * @brief   Hardware access layer for managing the POWER peripheral.
  */
 
-#if defined(POWER_TASKS_CONSTLAT_TASKS_CONSTLAT_Msk) || defined(NRF51) || defined(__NRFX_DOXYGEN__)
+#if defined(POWER_TASKS_CONSTLAT_TASKS_CONSTLAT_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether Constant Latency mode is present. */
 #define NRF_POWER_HAS_CONST_LATENCY 1
 #else
 #define NRF_POWER_HAS_CONST_LATENCY 0
 #endif
 
-#if defined(POWER_TASKS_LOWPWR_TASKS_LOWPWR_Msk) || defined(NRF51) || defined(__NRFX_DOXYGEN__)
+#if defined(POWER_TASKS_LOWPWR_TASKS_LOWPWR_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether Low-Power mode is present. */
 #define NRF_POWER_HAS_LOW_POWER 1
 #else
@@ -128,18 +128,16 @@ extern "C" {
 #define NRF_POWER_HAS_GPREGRET 0
 #endif
 
-#if (!defined(POWER_GPREGRET2_GPREGRET_Msk) && !defined(NRF51)) || defined(__NRFX_DOXYGEN__)
+#if defined(POWER_GPREGRET_MaxCount) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether GPREGRET register is treated as an array. */
 #define NRF_POWER_HAS_GPREGRET_ARRAY 1
 #else
 #define NRF_POWER_HAS_GPREGRET_ARRAY 0
 #endif
 
-#if NRF_POWER_HAS_GPREGRET_ARRAY && defined(POWER_GPREGRET_MaxCount) || defined(__NRFX_DOXYGEN__)
+#if NRF_POWER_HAS_GPREGRET_ARRAY || defined(__NRFX_DOXYGEN__)
 /** @brief Size of GPREGRET register when defined as array. */
 #define NRFX_POWER_GPREGRET_COUNT POWER_GPREGRET_MaxCount
-#elif NRF_POWER_HAS_GPREGRET_ARRAY
-#define NRFX_POWER_GPREGRET_COUNT 2
 #endif
 
 #if defined(POWER_TASKS_SEMAPHORE_ACQUIRE_ACQUIRE_Msk) || defined(__NRFX_DOXYGEN__)
