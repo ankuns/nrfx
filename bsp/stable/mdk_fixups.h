@@ -37,8 +37,13 @@
 /* Start fixups section for NRF52_SERIES                                                          */
 /**************************************************************************************************/
 #if defined(NRF52_SERIES)
-    #define QDEC_LEDPRE_ResetValue 0x10
-    #define QSPI_BASE_CLOCK_FREQ   32000000uL
+    #define QDEC_LEDPRE_ResetValue           0x10
+    #define QSPI_BASE_CLOCK_FREQ             32000000uL
+    #define SPIM_PSEL_DCX_ResetValue         0xFFFFFFFFUL
+    #define SPIM_PSEL_CSN_ResetValue         0xFFFFFFFFUL
+    #define SPIM_IFTIMING_CSNDUR_ResetValue  0x2UL
+    #define SPIM_CSNPOL_ResetValue           0x0UL
+    #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF52_SERIES                                                            */
@@ -71,6 +76,11 @@
     #define POWER_GPREGRET_MaxCount 2
     #define QDEC_LEDPRE_ResetValue 0x10
     #define QSPI_BASE_CLOCK_FREQ    96000000uL
+    #define SPIM_PSEL_DCX_ResetValue         0xFFFFFFFFUL
+    #define SPIM_PSEL_CSN_ResetValue         0xFFFFFFFFUL
+    #define SPIM_IFTIMING_CSNDUR_ResetValue  0x2UL
+    #define SPIM_CSNPOL_ResetValue           0x0UL
+    #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
@@ -80,7 +90,12 @@
 /* Start fixups section for NRF91_SERIES                                                          */
 /**************************************************************************************************/
 #if defined(NRF91_SERIES)
-    #define POWER_GPREGRET_MaxCount 2
+    #define POWER_GPREGRET_MaxCount          2L
+    #define SPIM_PSEL_DCX_ResetValue         0xFFFFFFFFUL
+    #define SPIM_PSEL_CSN_ResetValue         0xFFFFFFFFUL
+    #define SPIM_IFTIMING_CSNDUR_ResetValue  0x2UL
+    #define SPIM_CSNPOL_ResetValue           0x0UL
+    #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF91_SERIES                                                            */
@@ -510,6 +525,9 @@
     #define I2S_CLOCKPIN_SCK_NEEDED
     #define I2S_CLOCKPIN_LRCK_NEEDED
     #define I2S_CLOCKPIN_MCK_NEEDED
+
+    #define SPIM_CLOCKPIN_MOSI_NEEDED
+    #define SPIM_CLOCKPIN_SCK_NEEDED
 
     #define EXMIF_MAX_MEMORY_DEVICE_SIZE 0x10000000UL 
     #define EXMIF_MAX_NUMBER_OF_DEVICES  2
