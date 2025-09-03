@@ -129,9 +129,15 @@ extern "C" {
 #if defined(HALTIUM_XXAA)
     #if (defined(NRF_SECURE) && defined(NRF_TRUSTZONE_NONSECURE)) || \
         (defined(NRF_SYSCTRL)) || (defined(NRF_FLPR))
+    #undef  GRTC_IRQn
+    #undef  GRTC_IRQHandler
+
     #define GRTC_IRQn       GRTC_0_IRQn
     #define GRTC_IRQHandler GRTC_0_IRQHandler
     #elif (defined(NRF_SECURE) && !defined(NRF_TRUSTZONE_NONSECURE))
+    #undef  GRTC_IRQn
+    #undef  GRTC_IRQHandler
+
     #define GRTC_IRQn       GRTC_1_IRQn
     #define GRTC_IRQHandler GRTC_1_IRQHandler
     #endif

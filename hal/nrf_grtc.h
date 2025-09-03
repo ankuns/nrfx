@@ -9,29 +9,6 @@
 extern "C" {
 #endif
 
-#if defined(NRF54LS05B_ENGA_XXAA) || (defined(LUMOS_XXAA) && defined(NRF_FLPR))
-#define GRTC_IRQn       GRTC_0_IRQn
-#define GRTC_IRQHandler GRTC_0_IRQHandler
-#elif defined(LUMOS_XXAA)
-#if defined(NRF_APPLICATION) && defined(NRF_TRUSTZONE_NONSECURE)
-#define GRTC_IRQn       GRTC_1_IRQn
-#define GRTC_IRQHandler GRTC_1_IRQHandler
-#elif defined(NRF_APPLICATION) && !defined(NRF_TRUSTZONE_NONSECURE)
-#define GRTC_IRQn       GRTC_2_IRQn
-#define GRTC_IRQHandler GRTC_2_IRQHandler
-#endif // defined(LUMOS_XXAA)
-#endif // defined(NRF54LS05B_ENGA_XXAA) || defined(LUMOS_XXAA) && defined(NRF_FLPR)
-
-#if defined(HALTIUM_XXAA)
-#if (defined(ISA_ARM) && defined(NRF_TRUSTZONE_NONSECURE)) || defined(ISA_RISCV)
-#define GRTC_IRQn       GRTC_0_IRQn
-#define GRTC_IRQHandler GRTC_0_IRQHandler
-#else
-#define GRTC_IRQn       GRTC_1_IRQn
-#define GRTC_IRQHandler GRTC_1_IRQHandler
-#endif
-#endif
-
 /**
  * @defgroup nrf_grtc_hal GRTC HAL
  * @{
@@ -104,7 +81,7 @@ extern "C" {
 #endif
 
 #if !defined(NRF_GRTC_HAS_EXTENDED)
-#if defined(LUMOS_XXAA) || defined(__NRFX_DOXYGEN__)
+#if defined(GRTC_FORCE_EXTENDED) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether GRTC has extended functionality. */
 #define NRF_GRTC_HAS_EXTENDED 1
 #else
@@ -197,15 +174,7 @@ extern "C" {
 #define NRF_GRTC_CHANNEL_INT_MASK(ch) ((uint32_t)(NRF_GRTC_INT_COMPARE0_MASK) << (ch))
 
 /** @brief Main channel that can be used only by the owner of GRTC. */
-#if defined(LUMOS_XXAA)
-#if defined(ISA_RISCV)
-#define NRF_GRTC_MAIN_CC_CHANNEL 4
-#else
-#define NRF_GRTC_MAIN_CC_CHANNEL 0
-#endif
-#else
-#define NRF_GRTC_MAIN_CC_CHANNEL 1
-#endif
+#define NRF_GRTC_MAIN_CC_CHANNEL GRTC_MAIN_CC_CHANNEL
 
 /** @brief Bitmask of interrupt enable. */
 #define NRF_GRTC_INTEN_MASK NRFX_BIT_MASK(GRTC_CC_MaxCount)

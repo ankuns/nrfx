@@ -430,6 +430,16 @@
         #define GPIOTE_SECURE_SUFFIX_OVERRIDE NONSECURE
     #endif
 
+    #if (!defined(__VPR_REV) && defined(NRF_TRUSTZONE_NONSECURE)) || defined(__VPR_REV)
+        #define GRTC_IRQn       GRTC_0_IRQn
+        #define GRTC_IRQHandler GRTC_0_IRQHandler
+    #else
+        #define GRTC_IRQn       GRTC_1_IRQn
+        #define GRTC_IRQHandler GRTC_1_IRQHandler
+    #endif
+
+    #define GRTC_MAIN_CC_CHANNEL 1
+
     #define EXMIF_MAX_MEMORY_DEVICE_SIZE 0x10000000UL 
     #define EXMIF_MAX_NUMBER_OF_DEVICES  2
 #endif
@@ -493,6 +503,24 @@
 
     #define TYPES_DOMAIN
     #define TYPES_OWNER
+
+    #define GRTC_FORCE_EXTENDED
+    #if defined(NRF_FLPR) || defined(NRF54LS05B_ENGA_XXAA)
+        #define GRTC_IRQn       GRTC_0_IRQn
+        #define GRTC_IRQHandler GRTC_0_IRQHandler
+    #elif defined(NRF_APPLICATION) && defined(NRF_TRUSTZONE_NONSECURE)
+        #define GRTC_IRQn       GRTC_1_IRQn
+        #define GRTC_IRQHandler GRTC_1_IRQHandler
+    #elif defined(NRF_APPLICATION) && !defined(NRF_TRUSTZONE_NONSECURE)
+        #define GRTC_IRQn       GRTC_2_IRQn
+        #define GRTC_IRQHandler GRTC_2_IRQHandler
+    #endif
+
+    #if defined(NRF_FLPR)
+        #define GRTC_MAIN_CC_CHANNEL 4
+    #else
+        #define GRTC_MAIN_CC_CHANNEL 0
+    #endif
 
 #endif
 
