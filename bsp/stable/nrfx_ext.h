@@ -86,11 +86,11 @@ extern "C" {
 
 #if defined(GPIOTE_INTEN0_IN0_Msk)
     #if defined(NRF_SECURE)
-        #define NRF_GPIOTE_PORT_ID 0
+        #define GPIOTE_PORT_ID 0
     #elif defined(NRF_CELLCORE)
-        #define NRF_GPIOTE_PORT_ID 2
+        #define GPIOTE_PORT_ID 2
     #elif defined(NRF_SYSCTRL)
-        #define NRF_GPIOTE_PORT_ID 3
+        #define GPIOTE_PORT_ID 3
     #endif
 #endif
 

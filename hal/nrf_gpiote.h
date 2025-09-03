@@ -31,31 +31,6 @@ extern "C" {
 #define GPIOTE1_AVAILABLE_GPIO_PORTS NRFX_BIT_MASK(GPIO_COUNT)
 #endif
 
-#if defined(LUMOS_XXAA)
-#if (defined(ISA_ARM) && defined(NRF_TRUSTZONE_NONSECURE)) || \
-    defined(ISA_RISCV) || defined(NRF54LS05B_ENGA_XXAA)
-#define GPIOTE20_IRQn       GPIOTE20_0_IRQn
-#define GPIOTE20_IRQHandler GPIOTE20_0_IRQHandler
-#define GPIOTE30_IRQn       GPIOTE30_0_IRQn
-#define GPIOTE30_IRQHandler GPIOTE30_0_IRQHandler
-#else
-#define GPIOTE20_IRQn       GPIOTE20_1_IRQn
-#define GPIOTE20_IRQHandler GPIOTE20_1_IRQHandler
-#define GPIOTE30_IRQn       GPIOTE30_1_IRQn
-#define GPIOTE30_IRQHandler GPIOTE30_1_IRQHandler
-#endif
-#endif
-
-#if defined(HALTIUM_XXAA)
-#if (defined(ISA_ARM) && defined(NRF_TRUSTZONE_NONSECURE)) || defined(ISA_RISCV)
-#define GPIOTE130_IRQn       GPIOTE130_0_IRQn
-#define GPIOTE130_IRQHandler GPIOTE130_0_IRQHandler
-#else
-#define GPIOTE130_IRQn       GPIOTE130_1_IRQn
-#define GPIOTE130_IRQHandler GPIOTE130_1_IRQHandler
-#endif
-#endif
-
 /* Internal macro used for NRF_GPIOTE_INT_IN_MASK. */
 #define NRF_GPIOTE_INT_IN(idx, _) NRFX_CONCAT(NRF_GPIOTE_INT_IN, idx, _MASK)
 
@@ -106,26 +81,22 @@ extern "C" {
 #endif
 
 #if defined(GPIOTE_INTENSET0_PORT0SECURE_Msk) || defined(GPIOTE_INTENSET0_PORT0NONSECURE_Msk)
-#if defined(NRF_TRUSTZONE_NONSECURE)              || \
-    (defined(ISA_RISCV) && defined(HALTIUM_XXAA)) || \
-    defined(NRF54LS05B_ENGA_XXAA)
+#if defined(GPIOTE_SECURE_SUFFIX_OVERRIDE)
+#define NRF_GPIOTE_SECURE_SUFFIX GPIOTE_SECURE_SUFFIX_OVERRIDE
+#else
+#if defined(NRF_TRUSTZONE_NONSECURE)
 #define NRF_GPIOTE_SECURE_SUFFIX NONSECURE
 #else
 #define NRF_GPIOTE_SECURE_SUFFIX SECURE
-#endif
+#endif // defined(NRF_TRUSTZONE_NONSECURE)
+#endif // !defined(GPIOTE_SECURE_SUFFIX_OVERRIDE)
 #else
 /** @brief Symbol indicating a TrustZone suffix added to the register name. */
 #define NRF_GPIOTE_SECURE_SUFFIX
 #endif // defined(GPIOTE_INTENSET0_PORT0SECURE_Msk) || defined(GPIOTE_INTENSET0_PORT0NONSECURE_Msk)
 
 #if defined(GPIOTE_INTENSET0_IN0_Msk)
-#if defined(LUMOS_XXAA)
-#define NRF_GPIOTE_PORT_ID 0
-#elif defined(NRF_APPLICATION) || defined(NRF_PPR)
-#define NRF_GPIOTE_PORT_ID 1
-#elif defined(NRF_RADIOCORE)
-#define NRF_GPIOTE_PORT_ID 2
-#endif
+#define NRF_GPIOTE_PORT_ID GPIOTE_PORT_ID
 #endif
 
 #if defined(NRF_GPIOTE_PORT_ID)

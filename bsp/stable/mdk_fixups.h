@@ -412,6 +412,24 @@
 
     #define DMA_ACCESSIBLE_CUSTOM_CHECK 1
 
+    #if defined(NRF_APPLICATION) || defined(NRF_PPR)
+        #define GPIOTE_PORT_ID 1
+    #elif defined(NRF_RADIOCORE)
+        #define GPIOTE_PORT_ID 2
+    #endif
+
+    #if (!defined(__VPR_REV) && defined(NRF_TRUSTZONE_NONSECURE)) || defined(__VPR_REV)
+        #define GPIOTE130_IRQn       GPIOTE130_0_IRQn
+        #define GPIOTE130_IRQHandler GPIOTE130_0_IRQHandler
+    #else
+        #define GPIOTE130_IRQn       GPIOTE130_1_IRQn
+        #define GPIOTE130_IRQHandler GPIOTE130_1_IRQHandler
+    #endif
+
+    #if defined(__VPR_REV)
+        #define GPIOTE_SECURE_SUFFIX_OVERRIDE NONSECURE
+    #endif
+
     #define EXMIF_MAX_MEMORY_DEVICE_SIZE 0x10000000UL 
     #define EXMIF_MAX_NUMBER_OF_DEVICES  2
 #endif
@@ -426,6 +444,21 @@
 
 #if defined(LUMOS_XXAA)
     #define DMA_BUFFER_UNIFIED_BYTE_ACCESS 1
+
+    #if (defined(NRF_APPLICATION) && defined(NRF_TRUSTZONE_NONSECURE)) || \
+        defined(NRF_FLPR) || defined(NRF54LS05B_ENGA_XXAA)
+        #define GPIOTE20_IRQn       GPIOTE20_0_IRQn
+        #define GPIOTE20_IRQHandler GPIOTE20_0_IRQHandler
+        #define GPIOTE30_IRQn       GPIOTE30_0_IRQn
+        #define GPIOTE30_IRQHandler GPIOTE30_0_IRQHandler
+    #else
+        #define GPIOTE20_IRQn       GPIOTE20_1_IRQn
+        #define GPIOTE20_IRQHandler GPIOTE20_1_IRQHandler
+        #define GPIOTE30_IRQn       GPIOTE30_1_IRQn
+        #define GPIOTE30_IRQHandler GPIOTE30_1_IRQHandler
+    #endif
+
+    #define GPIOTE_PORT_ID 0
 
     #if defined(NRF_TRUSTZONE_NONSECURE)
     /* Non-secure images must have CPU frequency specified and cannot rely on default values,
@@ -556,6 +589,7 @@
 
 #if defined(NRF54LS05B_ENGA_XXAA)
     #include "nrf54ls05b_enga_interim.h"
+    #define GPIOTE_SECURE_SUFFIX_OVERRIDE NONSECURE
 #endif
 
 /**************************************************************************************************/
@@ -3183,6 +3217,10 @@ typedef struct {
 #endif /* NRF_SECURE_SICR_S */
 
 #endif /* defined(NRF_SECURE) */
+
+    #if defined(NRF_RADIOCORE)
+        #define NRF_GPIOTE NRF_GPIOTE130
+    #endif
 #endif /* defined(NRF9230_ENGB_XXAA) */
 
 /**************************************************************************************************/
