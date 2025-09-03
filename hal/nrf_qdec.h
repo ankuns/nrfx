@@ -24,7 +24,7 @@ extern "C" {
  *        function call to specify that a LED signal shall not be use by the QDEC and
  *        connected to a physical pin.
  */
-#define NRF_QDEC_PIN_NOT_CONNECTED 0xFFFFFFFF
+#define NRF_QDEC_PIN_NOT_CONNECTED UINT32_MAX
 
 #if defined(QDEC_TASKS_RDCLRACC_TASKS_RDCLRACC_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Presence of the RDCLRACC task. */
@@ -55,7 +55,7 @@ extern "C" {
 #endif
 
 /** @brief Reset value of LEDPRE register. */
-#define NRF_QDEC_LEDPRE_DEFAULT 0x10
+#define NRF_QDEC_LEDPRE_DEFAULT QDEC_LEDPRE_ResetValue
 
 /** @brief QDEC tasks. */
 typedef enum
