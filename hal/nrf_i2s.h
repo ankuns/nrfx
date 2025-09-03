@@ -9,9 +9,13 @@
 extern "C" {
 #endif
 
-#if defined(HALTIUM_XXAA)
+#if defined(I2S_CLOCKPIN_SCK_NEEDED)
 #define NRF_I2S_CLOCKPIN_SCK_NEEDED  1
+#endif
+#if defined(I2S_CLOCKPIN_LRCK_NEEDED)
 #define NRF_I2S_CLOCKPIN_LRCK_NEEDED 1
+#endif
+#if defined(I2S_CLOCKPIN_MCK_NEEDED)
 #define NRF_I2S_CLOCKPIN_MCK_NEEDED  1
 #endif
 
