@@ -23,31 +23,28 @@ extern "C" {
 #define NRF_RESETHUB_HAS_CROSSDOMAIN 0
 #endif
 
-#if defined(NRF9230_ENGA_XXAA) || defined(NRF9230_ENGB_XXAA) || defined(NRF9220_XXAA) || \
-    defined(__NRFX_DOXYGEN__)
+#if defined(RESETHUB_HAS_CELLULAR) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether cellular domain is present. */
 #define NRF_RESETHUB_HAS_CELLULAR 1
 #else
 #define NRF_RESETHUB_HAS_CELLULAR 0
 #endif
 
-#if defined(NRF9230_ENGA_XXAA) || defined(NRF9230_ENGB_XXAA) || defined(__NRFX_DOXYGEN__)
+#if defined(RESETHUB_HAS_ISIM) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether iSim domain is present. */
 #define NRF_RESETHUB_HAS_ISIM 1
 #else
 #define NRF_RESETHUB_HAS_ISIM 0
 #endif
 
-#if defined(NRF9230_ENGA_XXAA) || defined(NRF9230_ENGB_XXAA) || defined(NRF9230_XXAA) || \
-    defined(NRF54H20_ENGA_XXAA) || defined(NRF54H20_ENGB_XXAA) || defined(NRF54H20_XXAA) || \
-    defined(NRF7140_XXAA) || defined(__NRFX_DOXYGEN__)
+#if defined(RESETHUB_HAS_NETWORK) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether network domain is present. */
 #define NRF_RESETHUB_HAS_NETWORK 1
 #else
 #define NRF_RESETHUB_HAS_NETWORK 0
 #endif
 
-#if defined(NRF7140_XXAA) || defined(__NRFX_DOXYGEN__)
+#if defined(RESETHUB_HAS_WIFI) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether WiFi domain is present. */
 #define NRF_RESETHUB_HAS_WIFI 1
 #else

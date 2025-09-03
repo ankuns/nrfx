@@ -628,6 +628,8 @@
         #error Unknown core.
     #endif
 
+    #define RESETHUB_HAS_NETWORK
+
 #endif
 
 /**************************************************************************************************/
@@ -708,9 +710,7 @@
 /**************************************************************************************************/
 
 #if defined(NRF7120_ENGA_XXAA)
-
-  #include "nrf7120_enga_interim.h"
-
+    #include "nrf7120_enga_interim.h"
 #endif
 
 /**************************************************************************************************/
@@ -875,6 +875,8 @@
     #define TIMER136_CC_NUM (TIMER136_CC_NUM_MAX + 1UL)
     #define TIMER137_CC_NUM (TIMER137_CC_NUM_MAX + 1UL)
 
+    #define RESETHUB_HAS_NETWORK
+    #define RESETHUB_HAS_WIFI
 #endif
 
 /**************************************************************************************************/
@@ -1000,6 +1002,8 @@
     #define P10_PIN_NUM P10_PIN_NUM_SIZE
     #define P12_PIN_NUM P12_PIN_NUM_SIZE
     #define RTC130_CC_NUM RTC130_CC_NUM_SIZE
+
+    #define RESETHUB_HAS_CELLULAR
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF9220_XXAA                                                            */
@@ -1310,6 +1314,9 @@
 
     #define BELLBOARD_IRQ_COUNT 4
 
+    #define RESETHUB_HAS_NETWORK
+    #define RESETHUB_HAS_CELLULAR
+    #define RESETHUB_HAS_ISIM
 #endif
 
 /**************************************************************************************************/
@@ -3314,12 +3321,15 @@ typedef struct {
     #undef NRF_SECURE_SICR_S
     #define NRF_SECURE_SICR_S                 ((NRF_SICR_Type_fixed*)               NRF_SECURE_SICR_S_BASE)
 #endif /* NRF_SECURE_SICR_S */
-
 #endif /* defined(NRF_SECURE) */
 
     #if defined(NRF_RADIOCORE)
         #define NRF_GPIOTE NRF_GPIOTE130
     #endif
+
+    #define RESETHUB_HAS_NETWORK
+    #define RESETHUB_HAS_CELLULAR
+    #define RESETHUB_HAS_ISIM
 #endif /* defined(NRF9230_ENGB_XXAA) */
 
 /**************************************************************************************************/
@@ -3495,6 +3505,7 @@ typedef struct {
     #define TIMER136_CC_NUM (TIMER136_CC_NUM_MAX + 1UL)
     #define TIMER137_CC_NUM (TIMER137_CC_NUM_MAX + 1UL)
 
+    #define RESETHUB_HAS_NETWORK
 #endif
 
 /**************************************************************************************************/
