@@ -19,8 +19,7 @@ extern "C" {
  * @brief   Hardware access layer (HAL) for managing the Advanced Encryption Standard (AES) Electronic Codebook (ECB) peripheral.
  */
 
-#if defined(NRF51) || defined(NRF52832_XXAA) || \
-    defined(ECB_TASKS_STARTECB_TASKS_STARTECB_Msk) || defined(__NRFX_DOXYGEN__)
+#if defined(ECB_TASKS_STARTECB_TASKS_STARTECB_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Presence of the STARTECB task. */
 #define NRF_ECB_HAS_TASK_STARTECB 1
 #else
@@ -34,8 +33,7 @@ extern "C" {
 #define NRF_ECB_HAS_TASK_START 0
 #endif
 
-#if defined(NRF51) || defined(NRF52832_XXAA) || \
-    defined(ECB_TASKS_STOPECB_TASKS_STOPECB_Msk) || defined(__NRFX_DOXYGEN__)
+#if defined(ECB_TASKS_STOPECB_TASKS_STOPECB_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Presence of the STOPECB task. */
 #define NRF_ECB_HAS_TASK_STOPECB 1
 #else
@@ -49,8 +47,7 @@ extern "C" {
 #define NRF_ECB_HAS_TASK_STOP 0
 #endif
 
-#if defined(NRF51) || defined(NRF52832_XXAA) || \
-    defined(ECB_EVENTS_ENDECB_EVENTS_ENDECB_Msk) || defined(__NRFX_DOXYGEN__)
+#if defined(ECB_EVENTS_ENDECB_EVENTS_ENDECB_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Presence of the ENDECB event. */
 #define NRF_ECB_HAS_EVENT_ENDECB 1
 #else
@@ -64,8 +61,7 @@ extern "C" {
 #define NRF_ECB_HAS_EVENT_END 0
 #endif
 
-#if defined(NRF51) || defined(NRF52832_XXAA) || \
-    defined(ECB_EVENTS_ERRORECB_EVENTS_ERRORECB_Msk) || defined(__NRFX_DOXYGEN__)
+#if defined(ECB_EVENTS_ERRORECB_EVENTS_ERRORECB_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Presence of the ERRORECB event. */
 #define NRF_ECB_HAS_EVENT_ERRORECB 1
 #else
@@ -114,8 +110,7 @@ extern "C" {
 #define NRF_ECB_HAS_OUT_AMOUNT 0
 #endif
 
-#if defined(NRF51) || defined(NRF52832_XXAA) || \
-    defined(ECB_ECBDATAPTR_ECBDATAPTR_Msk) || defined(__NRFX_DOXYGEN__)
+#if defined(ECB_ECBDATAPTR_ECBDATAPTR_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Presence of the  ECBDATAPTR register. */
 #define NRF_ECB_HAS_ECBDATAPTR 1
 #else
