@@ -102,6 +102,13 @@ extern "C" {
 #define NRF_REGULATORS_HAS_INDUCTOR_DET 0
 #endif
 
+#if defined(REGULATORS_HIBERNATOR_SYSTEMHIBERNATE_ResetValue) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether HIBERNATOR register is present. */
+#define NRF_REGULATORS_HAS_HIBERNATOR 1
+#else
+#define NRF_REGULATORS_HAS_HIBERNATOR 0
+#endif
+
 #if NRF_REGULATORS_HAS_VREG_ANY
 /** @brief Voltage regulators. */
 typedef enum
@@ -383,6 +390,34 @@ NRF_STATIC_INLINE uint32_t nrf_regulators_elv_mode_allow_get(NRF_REGULATORS_Type
 NRF_STATIC_INLINE bool nrf_regulators_inductor_check(NRF_REGULATORS_Type const * p_reg);
 #endif
 
+#if NRF_REGULATORS_HAS_HIBERNATOR
+/**
+ * @brief Function for putting the CPU in hibernation mode.
+ *
+ * @param[in] p_reg Pointer to the structure of registers of the peripheral.
+ */
+NRF_STATIC_INLINE void nrf_regulators_system_hibernate(NRF_REGULATORS_Type * p_reg);
+
+/**
+ * @brief Function for enabling or disabling the GPIO retention release on wake up
+ *        from hibernation mode.
+ *
+ * @param[in] p_reg  Pointer to the structure of registers of the peripheral.
+ * @param[in] enable True if GPIO retention release is to be enabled, false otherwise.
+ */
+NRF_STATIC_INLINE void nrf_regulators_gpio_retention_release_set(NRF_REGULATORS_Type * p_reg,
+                                                                 bool                  enable);
+/**
+ * @brief Function for checking the GPIO retention status.
+ *
+ * @param[in] p_reg Pointer to the structure of registers of the peripheral.
+ *
+ * @retval true  GPIO retention is active.
+ * @retval false GPIO retention is not active.
+ */
+NRF_STATIC_INLINE bool nrf_regulators_gpio_retention_check(NRF_REGULATORS_Type const * p_reg);
+#endif
+
 #ifndef NRF_DECLARE_ONLY
 
 #if NRF_REGULATORS_HAS_VREG_ANY
@@ -573,6 +608,31 @@ NRF_STATIC_INLINE bool nrf_regulators_inductor_check(NRF_REGULATORS_Type const *
     return (p_reg->VREGMAIN.INDUCTORDET & REGULATORS_VREGMAIN_INDUCTORDET_DETECTED_Msk)
            >> REGULATORS_VREGMAIN_INDUCTORDET_DETECTED_Pos
            == REGULATORS_VREGMAIN_INDUCTORDET_DETECTED_InductorDetected;
+}
+#endif
+
+#if NRF_REGULATORS_HAS_HIBERNATOR
+NRF_STATIC_INLINE void nrf_regulators_system_hibernate(NRF_REGULATORS_Type * p_reg)
+{
+    p_reg->HIBERNATOR.SYSTEMHIBERNATE =
+        REGULATORS_HIBERNATOR_SYSTEMHIBERNATE_SYSTEMHIBERNATE_Enter;
+}
+
+NRF_STATIC_INLINE void nrf_regulators_gpio_retention_release_set(NRF_REGULATORS_Type * p_reg,
+                                                                 bool                  enable)
+{
+    p_reg->HIBERNATOR.GPIORETENTIONRELEASE = (enable
+            ? REGULATORS_HIBERNATOR_GPIORETENTIONRELEASE_GPIORETENTIONRELEASE_Release
+            : REGULATORS_HIBERNATOR_GPIORETENTIONRELEASE_GPIORETENTIONRELEASE_NoRelease)
+            << REGULATORS_HIBERNATOR_GPIORETENTIONRELEASE_GPIORETENTIONRELEASE_Pos;
+}
+
+NRF_STATIC_INLINE bool nrf_regulators_gpio_retention_check(NRF_REGULATORS_Type const * p_reg)
+{
+    return (p_reg->HIBERNATOR.GPIORETENTIONSTATUS
+            & REGULATORS_HIBERNATOR_GPIORETENTIONSTATUS_GPIORETENTIONSTATUS_Msk)
+            >> REGULATORS_HIBERNATOR_GPIORETENTIONSTATUS_GPIORETENTIONSTATUS_Pos
+            == REGULATORS_HIBERNATOR_GPIORETENTIONSTATUS_GPIORETENTIONSTATUS_Active;
 }
 #endif
 
