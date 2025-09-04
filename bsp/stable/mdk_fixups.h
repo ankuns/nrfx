@@ -538,6 +538,8 @@
 
     #define EXMIF_MAX_MEMORY_DEVICE_SIZE 0x10000000UL 
     #define EXMIF_MAX_NUMBER_OF_DEVICES  2
+
+    #define TWIM_CLOCKPIN_SCL_NEEDED
 #endif
 
 /**************************************************************************************************/
@@ -655,6 +657,7 @@
 
     #define RESETHUB_HAS_NETWORK
 
+    #define TWIM_CLOCKPIN_SDA_NEEDED
 #endif
 
 /**************************************************************************************************/
