@@ -72,11 +72,45 @@ extern "C" {
      MEMCONF_BLOCKTYPE_TRIM_MEMRETTRIM14_Msk | MEMCONF_BLOCKTYPE_TRIM_MEMRETTRIM15_Msk)
 
 /**
+ * @brief Macro for getting index of specified RAM block.
+ *
+ * @param[in] _ret RAM bank index. Can be empty if specified bank has no index.
+ * @param[in] _mem RAM block number.
+ *
+ * @return RAM block index.
+ */
+#define NRF_MEMCONF_RAMBLOCK_INDEX(_ret, _mem) \
+    NRFX_CONCAT(MEMCONF_POWER_RET, _ret, _MEM, _mem, _Pos)
+
+/**
+ * @brief Macro for getting mask of specified RAM block.
+ *
+ * @param[in] _ret RAM bank index. Can be empty if specified bank has no index.
+ * @param[in] _mem RAM block number.
+ *
+ * @return RAM block mask.
+ */
+#define NRF_MEMCONF_RAMBLOCK_MASK(_ret, _mem) \
+    NRFX_CONCAT(MEMCONF_POWER_RET, _ret, _MEM, _mem, _Msk)
+
+/**
+ * @brief Macro for getting mask of retention enabled for specified RAM block.
+ *
+ * @param[in] _ret RAM bank index. Can be empty if specified bank has no index.
+ * @param[in] _mem RAM block number.
+ *
+ * @return Retention of specified RAM block mask.
+ */
+#define NRF_MEMCONF_RAMBLOCK_RETENTION_ON_MASK(_ret, _mem) \
+    (NRFX_CONCAT(MEMCONF_POWER_RET, _ret, _MEM, _mem, _On) << \
+     NRFX_CONCAT(MEMCONF_POWER_RET, _ret, _MEM, _mem, _Pos))
+
+/**
  * @brief Function for enabling or disabling given RAM block.
  *
  * @param[in] p_reg    Pointer to the structure of registers of the peripheral.
  * @param[in] power_id Power block index.
- * @param[in] ramblock RAM block index.
+ * @param[in] ramblock RAM block index. Use @ref NRF_MEMCONF_RAMBLOCK_INDEX for indexing RAM blocks.
  * @param[in] enable   True if RAM block is to be enabled, false otherwise.
  */
 NRF_STATIC_INLINE void nrf_memconf_ramblock_control_enable_set(NRF_MEMCONF_Type * p_reg,
@@ -89,7 +123,7 @@ NRF_STATIC_INLINE void nrf_memconf_ramblock_control_enable_set(NRF_MEMCONF_Type 
  *
  * @param[in] p_reg         Pointer to the structure of registers of the peripheral.
  * @param[in] power_id      Power block index.
- * @param[in] ramblock_mask Mask of RAM blocks.
+ * @param[in] ramblock_mask Mask of RAM blocks. Use @ref NRF_MEMCONF_RAMBLOCK_MASK for creating RAM block masks.
  * @param[in] enable        True if RAM blocks are to be enabled, false otherwise.
  */
 NRF_STATIC_INLINE
@@ -102,7 +136,7 @@ void nrf_memconf_ramblock_control_mask_enable_set(NRF_MEMCONF_Type * p_reg,
  * @brief Function for setting mask of RAM blocks powered-on in System ON mode.
  *
  * @param[in] p_reg         Pointer to the structure of registers of the peripheral.
- * @param[in] power_id      Power block index.
+ * @param[in] power_id      Power block index. Use @ref NRF_MEMCONF_RAMBLOCK_INDEX for indexing RAM blocks.
  * @param[in] ramblock_mask Mask of RAM blocks.
  */
 NRF_STATIC_INLINE void nrf_memconf_ramblock_control_mask_set(NRF_MEMCONF_Type * p_reg,
@@ -114,7 +148,7 @@ NRF_STATIC_INLINE void nrf_memconf_ramblock_control_mask_set(NRF_MEMCONF_Type * 
  *
  * @param[in] p_reg    Pointer to the structure of registers of the peripheral.
  * @param[in] power_id Power block index.
- * @param[in] ramblock RAM block index.
+ * @param[in] ramblock RAM block index. Use @ref NRF_MEMCONF_RAMBLOCK_INDEX for indexing RAM blocks.
  *
  * @retval true  RAM block is enabled.
  * @retval false RAM block is disabled.
@@ -128,7 +162,7 @@ NRF_STATIC_INLINE bool nrf_memconf_ramblock_control_enable_check(NRF_MEMCONF_Typ
  *
  * @param[in] p_reg    Pointer to the structure of registers of the peripheral.
  * @param[in] power_id Power block index.
- * @param[in] ramblock RAM block index.
+ * @param[in] ramblock RAM block index. Use @ref NRF_MEMCONF_RAMBLOCK_INDEX for indexing RAM blocks.
  * @param[in] enable   True if RAM block retention is to be enabled, false otherwise.
  */
 NRF_STATIC_INLINE void nrf_memconf_ramblock_ret_enable_set(NRF_MEMCONF_Type * p_reg,
@@ -141,7 +175,7 @@ NRF_STATIC_INLINE void nrf_memconf_ramblock_ret_enable_set(NRF_MEMCONF_Type * p_
  *
  * @param[in] p_reg         Pointer to the structure of registers of the peripheral.
  * @param[in] power_id      Power block index.
- * @param[in] ramblock_mask Mask of RAM blocks.
+ * @param[in] ramblock_mask Mask of RAM blocks. Use @ref NRF_MEMCONF_RAMBLOCK_MASK for creating RAM block masks.
  * @param[in] enable        True if retention for RAM blocks is to be enabled, false otherwise.
  */
 NRF_STATIC_INLINE void nrf_memconf_ramblock_ret_mask_enable_set(NRF_MEMCONF_Type * p_reg,
@@ -154,7 +188,7 @@ NRF_STATIC_INLINE void nrf_memconf_ramblock_ret_mask_enable_set(NRF_MEMCONF_Type
  *
  * @param[in] p_reg         Pointer to the structure of registers of the peripheral.
  * @param[in] power_id      Power block index.
- * @param[in] ramblock_mask Mask of RAM blocks.
+ * @param[in] ramblock_mask Mask of RAM blocks. Use @ref NRF_MEMCONF_RAMBLOCK_MASK for creating RAM block masks.
  */
 NRF_STATIC_INLINE void nrf_memconf_ramblock_ret_mask_set(NRF_MEMCONF_Type * p_reg,
                                                          uint8_t            power_id,
@@ -165,7 +199,7 @@ NRF_STATIC_INLINE void nrf_memconf_ramblock_ret_mask_set(NRF_MEMCONF_Type * p_re
  *
  * @param[in] p_reg    Pointer to the structure of registers of the peripheral.
  * @param[in] power_id Power block index.
- * @param[in] ramblock RAM block index.
+ * @param[in] ramblock RAM block index. Use @ref NRF_MEMCONF_RAMBLOCK_INDEX for indexing RAM blocks.
  *
  * @retval true  RAM block is enabled.
  * @retval false RAM block is disabled.
@@ -180,7 +214,7 @@ NRF_STATIC_INLINE bool nrf_memconf_ramblock_ret_enable_check(NRF_MEMCONF_Type co
  *
  * @param[in] p_reg    Pointer to the structure of registers of the peripheral.
  * @param[in] power_id Power block index.
- * @param[in] ramblock RAM block index.
+ * @param[in] ramblock RAM block index. Use @ref NRF_MEMCONF_RAMBLOCK_INDEX for indexing RAM blocks.
  * @param[in] enable   True if RAM block retention is to be enabled, false otherwise.
  */
 NRF_STATIC_INLINE void nrf_memconf_ramblock_ret2_enable_set(NRF_MEMCONF_Type * p_reg,
@@ -193,7 +227,7 @@ NRF_STATIC_INLINE void nrf_memconf_ramblock_ret2_enable_set(NRF_MEMCONF_Type * p
  *
  * @param[in] p_reg    Pointer to the structure of registers of the peripheral.
  * @param[in] power_id Power block index.
- * @param[in] ramblock RAM block index.
+ * @param[in] ramblock RAM block index. Use @ref NRF_MEMCONF_RAMBLOCK_INDEX for indexing RAM blocks.
  *
  * @retval true  RAM block is enabled.
  * @retval false RAM block is disabled.
@@ -207,7 +241,7 @@ NRF_STATIC_INLINE bool nrf_memconf_ramblock_ret2_enable_check(NRF_MEMCONF_Type c
  *
  * @param[in] p_reg         Pointer to the structure of registers of the peripheral.
  * @param[in] power_id      Power block index.
- * @param[in] ramblock_mask Mask of RAM blocks.
+ * @param[in] ramblock_mask Mask of RAM blocks. Use @ref NRF_MEMCONF_RAMBLOCK_MASK for creating RAM block masks.
  * @param[in] enable        True if retention for RAM blocks is to be enabled, false otherwise.
  */
 NRF_STATIC_INLINE void nrf_memconf_ramblock_ret2_mask_enable_set(NRF_MEMCONF_Type * p_reg,
@@ -220,7 +254,7 @@ NRF_STATIC_INLINE void nrf_memconf_ramblock_ret2_mask_enable_set(NRF_MEMCONF_Typ
  *
  * @param[in] p_reg         Pointer to the structure of registers of the peripheral.
  * @param[in] power_id      Power block index.
- * @param[in] ramblock_mask Mask of RAM blocks.
+ * @param[in] ramblock_mask Mask of RAM blocks. Use @ref NRF_MEMCONF_RAMBLOCK_MASK for creating RAM block masks.
  */
 NRF_STATIC_INLINE void nrf_memconf_ramblock_ret2_mask_set(NRF_MEMCONF_Type * p_reg,
                                                           uint8_t            power_id,
