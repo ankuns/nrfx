@@ -151,9 +151,6 @@ extern "C" {
 // TIMER10_IRQHandler
 #define nrfx_timer_10_irq_handler       TIMER10_IRQHandler
 
-// RTC10_IRQHandler
-#define nrfx_rtc_10_irq_handler         RTC10_IRQHandler
-
 // EGU10_IRQHandler
 #define nrfx_egu_10_irq_handler         EGU10_IRQHandler
 
@@ -271,9 +268,6 @@ extern "C" {
 #define nrfx_twis_30_irq_handler        SERIAL30_IRQHandler
 #define nrfx_uarte_30_irq_handler       SERIAL30_IRQHandler
 #endif
-
-// RTC30_IRQHandler
-#define nrfx_rtc_30_irq_handler         RTC30_IRQHandler
 
 // COMP_LPCOMP_IRQHandler
 #if NRFX_CHECK(NRFX_PRS_ENABLED) && NRFX_CHECK(NRFX_PRS_BOX_5_ENABLED)
