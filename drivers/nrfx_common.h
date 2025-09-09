@@ -11,6 +11,7 @@
 
 #include <nrfx_bsp.h>
 #include "nrfx_utils.h"
+#include "nrfx_errata.h"
 #include <nrf_peripherals.h>
 #include <nrf_mem.h>
 

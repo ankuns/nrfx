@@ -1,0 +1,9 @@
+// By default, disable NRF52 errata 58
+#ifndef NRF52_ERRATA_58_ENABLE_WORKAROUND
+#define NRF52_ERRATA_58_ENABLE_WORKAROUND   0
+#endif
+
+// By default, disable NRF52 errata 109
+#ifndef NRF52_ERRATA_109_ENABLE_WORKAROUND
+#define NRF52_ERRATA_109_ENABLE_WORKAROUND  0
+#endif
