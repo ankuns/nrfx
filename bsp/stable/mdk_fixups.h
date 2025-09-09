@@ -541,6 +541,7 @@
 
     #define TWIM_CLOCKPIN_SCL_NEEDED
     #define TWIS_CLOCKPIN_SCL_NEEDED
+    #define UARTE_CLOCKPIN_TXD_NEEDED
 #endif
 
 /**************************************************************************************************/

@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-#if defined(NRF54H20_XXAA) || defined(NRF92_SERIES)
+#if defined(UARTE_CLOCKPIN_TXD_NEEDED)
 #define NRF_UARTE_CLOCKPIN_TXD_NEEDED 1
 #endif
 
