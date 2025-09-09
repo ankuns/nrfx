@@ -3410,6 +3410,7 @@ typedef struct {
 
     #if defined(NRF_RADIOCORE)
         #define NRF_GPIOTE NRF_GPIOTE130
+        #define GPIOTE_0_IRQn ((IRQn_Type)39)
     #endif
 
     #define RESETHUB_HAS_NETWORK
