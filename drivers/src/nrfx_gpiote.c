@@ -826,12 +826,8 @@ static nrfx_err_t gpiote_channel_get(nrfx_gpiote_t const * p_instance,
 
 static nrfx_err_t gpiote_init(nrfx_gpiote_t const * p_instance, uint8_t interrupt_priority)
 {
-#if defined(NRF5340_XXAA_APPLICATION) || defined(NRF91_SERIES)
-#if defined(NRF_TRUSTZONE_NONSECURE)
-    NRFX_ASSERT(p_instance->p_reg == NRF_GPIOTE1);
-#else
-    NRFX_ASSERT(p_instance->p_reg == NRF_GPIOTE0);
-#endif
+#if defined(GPIOTE_ASSERT_INSTANCE)
+    NRFX_ASSERT(p_instance->p_reg == GPIOTE_ASSERT_INSTANCE);
 #endif
 
     gpiote_control_block_t * p_cb = get_cb(p_instance->drv_inst_idx);

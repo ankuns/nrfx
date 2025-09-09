@@ -107,6 +107,11 @@
         #define NVMC_FLASH_BASE_ADDRESS 0
         #define NVMC_FLASH_PAGE_COUNT   256
         #define NVMC_FLASH_PAGE_SIZE    0x1000 ///< 4 kB
+        #if defined(NRF_TRUSTZONE_NONSECURE)
+            #define GPIOTE_ASSERT_INSTANCE  NRF_GPIOTE1
+        #else
+            #define GPIOTE_ASSERT_INSTANCE  NRF_GPIOTE0
+        #endif
     #else
         #define VMC_RAM_SECTION_COUNT   4
         #define NVMC_FLASH_BASE_ADDRESS 0x01000000UL
@@ -154,6 +159,11 @@
     #define NVMC_FLASH_PAGE_COUNT            256
     #define NVMC_FLASH_PAGE_SIZE             0x1000 ///< 4 kB
     #define NVMC_PAGE_ERASE_DURATION_MS      87
+    #if defined(NRF_TRUSTZONE_NONSECURE)
+        #define GPIOTE_ASSERT_INSTANCE  NRF_GPIOTE1
+    #else
+        #define GPIOTE_ASSERT_INSTANCE  NRF_GPIOTE0
+    #endif
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF91_SERIES                                                            */
