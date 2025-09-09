@@ -31,6 +31,10 @@
     #define WDT_RR_MaxCount 8
     #define CCM_TASKS_KSGEN_TASKS_KSGEN_Msk
     #define CCM_TASKS_CRYPT_TASKS_CRYPT_Msk
+
+    #define AAR_IRKPTR_IRKPTR_Msk
+    #define AAR_ADDRPTR_ADDRPTR_Msk
+    #define AAR_SCRATCHPTR_SCRATCHPTR_Msk
 #endif
 
 /**************************************************************************************************/
