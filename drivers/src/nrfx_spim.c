@@ -283,7 +283,7 @@ static void spim_abort(NRF_SPIM_Type * p_spim, spim_control_block_t * p_cb)
         }
         p_cb->transfer_in_progress = false;
     }
-#if defined(HALTIUM_XXAA)
+#if defined(NRF_SPIM_CHECK_DISABLE_ON_XFER_END)
     if (p_cb->disable_on_xfer_end)
 #endif
     {
@@ -338,7 +338,7 @@ static void configure_pins(nrfx_spim_t const *        p_instance,
 
     nrf_gpio_pin_drive_t pin_drive;
     // Configure pin drive - high drive for 32 MHz clock frequency.
-#if defined(LUMOS_XXAA)
+#if defined(NRF_SPIM_FORCE_H0H1)
     pin_drive = NRF_GPIO_PIN_H0H1;
 #elif (NRF_SPIM_HAS_FREQUENCY && NRF_SPIM_HAS_32_MHZ_FREQ) || NRF_SPIM_HAS_PRESCALER
     pin_drive = (p_config->frequency == NRFX_MHZ_TO_HZ(32)) ? NRF_GPIO_PIN_H0H1 : NRF_GPIO_PIN_S0S1;
@@ -484,21 +484,13 @@ static nrfx_err_t spim_configuration_verify(nrfx_spim_t const *        p_instanc
         return err_code;
     }
 
-#if NRF_SPIM_HAS_32_MHZ_FREQ && defined(NRF5340_XXAA_APPLICATION)
+#if NRF_SPIM_HAS_32_MHZ_FREQ && defined(SPIM_SCK_DEDICATED)
     // Check if dedicated SPIM pins are used, unless both GPIO configuration
     // and pin selection are to be skipped (pin numbers may be not specified
     // in such case).
     if (!(p_config->skip_gpio_cfg && p_config->skip_psel_cfg) &&
         (p_instance->p_reg == NRF_SPIM4) && (p_config->frequency == NRFX_MHZ_TO_HZ(32)))
     {
-        enum {
-            SPIM_SCK_DEDICATED  = NRF_GPIO_PIN_MAP(0, 8),
-            SPIM_MOSI_DEDICATED = NRF_GPIO_PIN_MAP(0, 9),
-            SPIM_MISO_DEDICATED = NRF_GPIO_PIN_MAP(0, 10),
-            SPIM_CSN_DEDICATED  = NRF_GPIO_PIN_MAP(0, 11),
-            SPIM_DCX_DEDICATED  = NRF_GPIO_PIN_MAP(0, 12),
-        };
-
         if (!SPIM_DEDICATED_PIN_VALIDATE(p_config->sck_pin, SPIM_SCK_DEDICATED) ||
             !SPIM_DEDICATED_PIN_VALIDATE(p_config->mosi_pin, SPIM_MOSI_DEDICATED) ||
             !SPIM_DEDICATED_PIN_VALIDATE(p_config->miso_pin, SPIM_MISO_DEDICATED) ||
@@ -513,7 +505,7 @@ static nrfx_err_t spim_configuration_verify(nrfx_spim_t const *        p_instanc
             return err_code;
         }
     }
-#endif // NRF_SPIM_HAS_32_MHZ_FREQ && defined(NRF5340_XXAA_APPLICATION)
+#endif // NRF_SPIM_HAS_32_MHZ_FREQ && defined(SPIM_SCK_DEDICATED)
 
 #else
     (void)p_instance;
@@ -918,7 +910,7 @@ static nrfx_err_t spim_xfer(NRF_SPIM_Type               * p_spim,
     nrfy_spim_buffers_set(p_spim, &xfer_desc);
 
     nrfy_spim_event_clear(p_spim, NRF_SPIM_EVENT_END);
-#if defined(HALTIUM_XXAA)
+#if defined(NRF_SPIM_CHECK_DISABLE_ON_XFER_END)
     p_cb->disable_on_xfer_end = (flags & (NRFX_SPIM_FLAG_NO_XFER_EVT_HANDLER |
                                           NRFX_SPIM_FLAG_HOLD_XFER |
                                           NRFX_SPIM_FLAG_REPEATED_XFER)) ?

@@ -135,6 +135,12 @@
     #define QSPI_IO3_DEDICATED NRF_GPIO_PIN_MAP(0, 16)
     #define QSPI_SCK_DEDICATED NRF_GPIO_PIN_MAP(0, 17)
     #define QSPI_CSN_DEDICATED NRF_GPIO_PIN_MAP(0, 18)
+
+    #define SPIM_SCK_DEDICATED  NRF_GPIO_PIN_MAP(0, 8)
+    #define SPIM_MOSI_DEDICATED NRF_GPIO_PIN_MAP(0, 9)
+    #define SPIM_MISO_DEDICATED NRF_GPIO_PIN_MAP(0, 10)
+    #define SPIM_CSN_DEDICATED  NRF_GPIO_PIN_MAP(0, 11)
+    #define SPIM_DCX_DEDICATED  NRF_GPIO_PIN_MAP(0, 12)
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
@@ -610,6 +616,8 @@
     #define TWIM_CLOCKPIN_SCL_NEEDED
     #define TWIS_CLOCKPIN_SCL_NEEDED
     #define UARTE_CLOCKPIN_TXD_NEEDED
+
+    #define SPIM_CHECK_DISABLE_ON_XFER_END
 #endif
 
 /**************************************************************************************************/
@@ -690,6 +698,7 @@
         #define GRTC_MAIN_CC_CHANNEL 0
     #endif
 
+    #define SPIM_FORCE_H0H1
 #endif
 
 /**************************************************************************************************/

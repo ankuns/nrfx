@@ -191,6 +191,12 @@ extern "C" {
 #endif
 #endif // NRF_SPIM_HAS_RXDELAY
 
+/** @brief SPIM should force H0H1 drive on pins. */
+#define NRF_SPIM_FORCE_H0H1 SPIM_FORCE_H0H1
+
+/** @brief SPIM should check disable on end of transfer. */
+#define NRF_SPIM_CHECK_DISABLE_ON_XFER_END SPIM_CHECK_DISABLE_ON_XFER_END
+
 /** @brief Minimal SPIM frequency in Hz. */
 #define NRF_SPIM_MIN_FREQUENCY (NRFX_KHZ_TO_HZ(125UL))
 
