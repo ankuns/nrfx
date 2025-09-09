@@ -12,12 +12,6 @@
 #endif
 #include <soc/nrfx_coredep.h>
 
-/* TRNG HW chosen configuration options */
-#if defined(NRF54L15_XXAA) || defined(NRF54L10_XXAA) || defined(NRF54L05_XXAA)
-#define TRNG_CLK_DIV                0
-#else
-#define TRNG_CLK_DIV                1
-#endif
 #define TRNG_OFF_TIMER_VAL          0
 #define TRNG_INIT_WAIT_VAL        512
 #define TRNG_NUMBER_128BIT_BLOCKS   4
@@ -217,9 +211,6 @@ static cracen_ret_t trng_entropy_get(uint8_t * p_buf, size_t size)
         {
             break;
         }
-#if defined(CONFIG_SOC_SERIES_BSIM_NRFXX)
-        nrfx_coredep_delay_us(1);
-#endif
     }
 
     nrf_cracen_module_disable(NRF_CRACEN, NRF_CRACEN_MODULE_RNG_MASK);
@@ -339,9 +330,6 @@ static cracen_ret_t cm_aes_ecb(uint8_t * p_key, size_t key_size, uint8_t * p_inp
         /* The HW is so fast that it is better to "busy wait" here than program an
          * interrupt. This will normally already succeed in the first try
          */
-#if defined(CONFIG_SOC_SERIES_BSIM_NRFXX)
-        nrfx_coredep_delay_us(1);
-#endif
         ret = cm_done_check();
     } while (ret == HW_PROCESSING);
 

@@ -692,6 +692,7 @@
 #if defined(NRF54L05_XXAA)
     #include "nrf54l05_interim.h"
     #define CLOCK_STATIC_IRQ
+    #define TRNG_CLK_DIV 0
 #endif
 
 /**************************************************************************************************/
@@ -705,6 +706,7 @@
 #if defined(NRF54L10_XXAA)
     #include "nrf54l10_interim.h"
     #define CLOCK_STATIC_IRQ
+    #define TRNG_CLK_DIV 0
 #endif
 
 /**************************************************************************************************/
@@ -718,6 +720,7 @@
 #if defined(NRF54L15_XXAA)
     #include "nrf54l15_interim.h"
     #define CLOCK_STATIC_IRQ
+    #define TRNG_CLK_DIV 0
 #endif
 
 /**************************************************************************************************/
@@ -730,6 +733,7 @@
 
 #if defined(NRF54LM20A_ENGA_XXAA)
     #include "nrf54lm20a_enga_interim.h"
+    #define TRNG_CLK_DIV 1
 #endif
 
 /**************************************************************************************************/
@@ -743,6 +747,7 @@
 #if defined(NRF54LS05B_ENGA_XXAA)
     #include "nrf54ls05b_enga_interim.h"
     #define GPIOTE_SECURE_SUFFIX_OVERRIDE NONSECURE
+    #define TRNG_CLK_DIV 1
 #endif
 
 /**************************************************************************************************/
@@ -752,6 +757,10 @@
 /**************************************************************************************************/
 /* Start fixups section for NRF54LV10A_ENGA_XXAA                                                  */
 /**************************************************************************************************/
+
+#if defined(NRF54LV10A_ENGA_XXAA)
+    #define TRNG_CLK_DIV 1
+#endif
 
 /**************************************************************************************************/
 /* End fixups section for NRF54LV10A_ENGA_XXAA                                                    */
