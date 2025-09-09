@@ -116,7 +116,7 @@ void nrfx_power_uninit(void)
     if (!nrfx_clock_irq_enabled)
 #endif
     {
-#if defined(NRF54L05_XXAA) || defined(NRF54L10_XXAA) || defined(NRF54L15_XXAA)
+#if defined(CLOCK_STATIC_IRQ)
         IRQn_Type irqn = CLOCK_POWER_IRQn;
 #else
         IRQn_Type irqn = nrfx_get_irq_number(NRF_POWER);
