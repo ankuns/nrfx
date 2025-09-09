@@ -29,6 +29,8 @@
     #define QDEC_LEDPRE_ResetValue 0x10
 
     #define WDT_RR_MaxCount 8
+    #define CCM_TASKS_KSGEN_TASKS_KSGEN_Msk
+    #define CCM_TASKS_CRYPT_TASKS_CRYPT_Msk
 #endif
 
 /**************************************************************************************************/
