@@ -27,6 +27,8 @@
     #define POWER_TASKS_LOWPWR_TASKS_LOWPWR_Msk
 
     #define QDEC_LEDPRE_ResetValue 0x10
+
+    #define WDT_RR_MaxCount 8
 #endif
 
 /**************************************************************************************************/
@@ -44,6 +46,7 @@
     #define SPIM_IFTIMING_CSNDUR_ResetValue  0x2UL
     #define SPIM_CSNPOL_ResetValue           0x0UL
     #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
+    #define WDT_RR_MaxCount 8
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF52_SERIES                                                            */
@@ -86,6 +89,7 @@
     #else
         #define VMC_RAM_SECTION_COUNT 4
     #endif
+    #define WDT_RR_MaxCount 8
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
@@ -103,6 +107,7 @@
     #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
     #define VMC_RAM_SECTION_COUNT            4
     #define VMC_FEATURE_RAM_REGISTERS_COUNT  4
+    #define WDT_RR_MaxCount 8
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF91_SERIES                                                            */

@@ -44,10 +44,10 @@ extern "C" {
 #endif
 
 /** @brief Number of WDT channels. */
-#define NRF_WDT_CHANNEL_NUMBER 0x8UL
+#define NRF_WDT_CHANNEL_NUMBER WDT_RR_MaxCount
 
 /** @brief WDT register reload value. */
-#define NRF_WDT_RR_VALUE       0x6E524635UL /* Fixed value; should not be modified. */
+#define NRF_WDT_RR_VALUE       WDT_RR_RR_Reload
 
 /** @brief WDT tasks. */
 typedef enum
