@@ -39,16 +39,14 @@ extern "C" {
 #define NRF_CLOCK_HAS_CALIBRATION_TIMER 0
 #endif
 
-#if (defined(CLOCK_INTENSET_HFCLK192MSTARTED_Msk) && !defined(NRF5340_XXAA_NETWORK)) \
-    || defined(__NRFX_DOXYGEN__)
+#if defined(CLOCK_INTENSET_HFCLK192MSTARTED_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether the 192 MHz clock is present. */
 #define NRF_CLOCK_HAS_HFCLK192M 1
 #else
 #define NRF_CLOCK_HAS_HFCLK192M 0
 #endif
 
-#if (defined(CLOCK_INTENSET_HFCLKAUDIOSTARTED_Msk) && !defined(NRF5340_XXAA_NETWORK)) \
-    || defined(__NRFX_DOXYGEN__)
+#if defined(CLOCK_INTENSET_HFCLKAUDIOSTARTED_Msk) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether the Audio clock is present. */
 #define NRF_CLOCK_HAS_HFCLKAUDIO 1
 #else
@@ -62,8 +60,7 @@ extern "C" {
 #define NRF_CLOCK_HAS_HFCLK24M 0
 #endif
 
-#if (defined(CLOCK_HFCLKCTRL_HCLK_Div1) && !defined(NRF5340_XXAA_NETWORK)) \
-    || defined(__NRFX_DOXYGEN__)
+#if defined(CLOCK_HFCLKCTRL_HCLK_Div1) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether the HFCLK frequency configuration is present. */
 #define NRF_CLOCK_HAS_HFCLK_DIV 1
 #else

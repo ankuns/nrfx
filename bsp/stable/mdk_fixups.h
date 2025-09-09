@@ -112,6 +112,9 @@
         #define NVMC_FLASH_BASE_ADDRESS 0x01000000UL
         #define NVMC_FLASH_PAGE_COUNT   128
         #define NVMC_FLASH_PAGE_SIZE    0x800  ///< 2 kB
+        #undef CLOCK_INTENSET_HFCLK192MSTARTED_Msk
+        #undef CLOCK_INTENSET_HFCLKAUDIOSTARTED_Msk
+        #undef CLOCK_HFCLKCTRL_HCLK_Div1
     #endif
     #define WDT_RR_MaxCount 8
     #define SAADC_SAMPLERATE_CC_Min          80UL
