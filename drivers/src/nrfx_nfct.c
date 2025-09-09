@@ -44,9 +44,6 @@ static nrfx_nfct_timer_workaround_t m_timer_workaround =
 #endif // NRF_ERRATA_STATIC_CHECK(52, 79) || NRF_ERRATA_STATIC_CHECK(52, 190) ||
        // NRF_ERRATA_STATIC_CHECK(53, 70)
 
-#define NFCT_FRAMEDELAYMAX_DEFAULT     (0x00001000UL) /**< Default value of the FRAMEDELAYMAX. */
-#define NFCT_FRAMEDELAYMIN_DEFAULT     (0x00000480UL) /**< Default value of the FRAMEDELAYMIN. */
-
 /* Mask of all possible interrupts that are relevant for data reception. */
 #define NRFX_NFCT_RX_INT_MASK (NRF_NFCT_INT_RXFRAMESTART_MASK | \
                                NRF_NFCT_INT_RXFRAMEEND_MASK   | \
@@ -61,15 +58,6 @@ static nrfx_nfct_timer_workaround_t m_timer_workaround =
 #define NRFX_NFCT_FRAME_STATUS_RX_ALL_MASK (NRF_NFCT_RX_FRAME_STATUS_CRC_MASK    | \
                                             NRF_NFCT_RX_FRAME_STATUS_PARITY_MASK | \
                                             NRF_NFCT_RX_FRAME_STATUS_OVERRUN_MASK)
-
-/* Mask of all possible errors from the @ref NRF_NFCT_EVENT_ERROR event. */
-#if defined (NRF52832_XXAA) || defined(NRF52832_XXAB)
-#define NRFX_NFCT_ERROR_STATUS_ALL_MASK (NRF_NFCT_ERROR_FRAMEDELAYTIMEOUT_MASK | \
-                                         NRF_NFCT_ERROR_NFCFIELDTOOSTRONG_MASK | \
-                                         NRF_NFCT_ERROR_NFCFIELDTOOWEAK_MASK)
-#else
-#define NRFX_NFCT_ERROR_STATUS_ALL_MASK (NRF_NFCT_ERROR_FRAMEDELAYTIMEOUT_MASK)
-#endif
 
 /* Macros for conversion of bits to bytes. */
 #define NRFX_NFCT_BYTES_TO_BITS(_bytes) ((_bytes) << 3UL)
@@ -107,6 +95,15 @@ typedef struct
 
 static nrfx_nfct_control_block_t m_nfct_cb;
 
+static const uint32_t m_status_all_msk = NRF_NFCT_ERROR_FRAMEDELAYTIMEOUT_MASK |
+#if NRF_NFCT_HAS_ERROR_FIELD_TOO_STRONG
+                                         NRF_NFCT_ERROR_NFCFIELDTOOSTRONG_MASK |
+#endif
+#if NRF_NFCT_HAS_ERROR_FIELD_TOO_WEAK
+                                         NRF_NFCT_ERROR_NFCFIELDTOOWEAK_MASK |
+#endif
+                                         0;
+
 /**
  * @brief Common part of the setup used for the NFCT initialization and reinitialization.
  */
@@ -123,7 +120,7 @@ static void nfct_frame_delay_max_set(bool default_delay)
 {
     if (default_delay)
     {
-        nrfy_nfct_frame_delay_max_set(NRF_NFCT, NFCT_FRAMEDELAYMAX_DEFAULT);
+        nrfy_nfct_frame_delay_max_set(NRF_NFCT, NRF_NFCT_FAME_DELAY_MAX_DEFAULT);
     }
     else
     {
@@ -458,8 +455,8 @@ nrfx_err_t nrfx_nfct_init(nrfx_nfct_config_t const * p_config)
 
     m_nfct_cb.state           = NRFX_DRV_STATE_INITIALIZED;
     m_nfct_cb.field_on        = false;
-    m_nfct_cb.frame_delay_max = NFCT_FRAMEDELAYMAX_DEFAULT;
-    m_nfct_cb.frame_delay_min = NFCT_FRAMEDELAYMIN_DEFAULT;
+    m_nfct_cb.frame_delay_max = NRF_NFCT_FAME_DELAY_MAX_DEFAULT;
+    m_nfct_cb.frame_delay_min = NRF_NFCT_FAME_DELAY_MIN_DEFAULT;
 
     NRFX_LOG_INFO("Initialized.");
     return err_code;
@@ -493,7 +490,7 @@ void nrfx_nfct_enable(void)
 {
     NRFX_ASSERT(m_nfct_cb.state == NRFX_DRV_STATE_INITIALIZED);
 
-    nrfy_nfct_error_status_clear(NRF_NFCT, NRFX_NFCT_ERROR_STATUS_ALL_MASK);
+    nrfy_nfct_error_status_clear(NRF_NFCT, m_status_all_msk);
     nrfy_nfct_task_trigger(NRF_NFCT, NRF_NFCT_TASK_SENSE);
 
     nrfy_nfct_int_enable(NRF_NFCT, NRF_NFCT_INT_FIELDDETECTED_MASK |
@@ -994,7 +991,7 @@ void nrfx_nfct_irq_handler(void)
 
         /* At this point any previous error status can be ignored. */
         nrfy_nfct_rx_frame_status_clear(NRF_NFCT, NRFX_NFCT_FRAME_STATUS_RX_ALL_MASK);
-        nrfy_nfct_error_status_clear(NRF_NFCT, NRFX_NFCT_ERROR_STATUS_ALL_MASK);
+        nrfy_nfct_error_status_clear(NRF_NFCT, m_status_all_msk);
 
         nrfx_nfct_evt_t nfct_evt =
         {
@@ -1031,7 +1028,7 @@ void nrfx_nfct_irq_handler(void)
         }
 
         /* Clear error status. */
-        nrfy_nfct_error_status_clear(NRF_NFCT, NRFX_NFCT_ERROR_STATUS_ALL_MASK);
+        nrfy_nfct_error_status_clear(NRF_NFCT, m_status_all_msk);
     }
 
     if (NRFX_NFCT_EVT_ACTIVE(TXFRAMESTART, evt_mask))

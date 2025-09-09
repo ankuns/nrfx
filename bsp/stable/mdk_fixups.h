@@ -49,6 +49,8 @@
     #define WDT_RR_MaxCount 8
     #define SAADC_SAMPLERATE_CC_Min          80UL
     #define SAADC_SAMPLERATE_CC_Max          2047UL
+    #define NFCT_FRAMEDELAYMIN_ResetValue    0x480UL
+    #define NFCT_FRAMEDELAYMAX_ResetValue    0x1000UL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF52_SERIES                                                            */
@@ -95,6 +97,8 @@
     #define WDT_RR_MaxCount 8
     #define SAADC_SAMPLERATE_CC_Min          80UL
     #define SAADC_SAMPLERATE_CC_Max          2047UL
+    #define NFCT_FRAMEDELAYMIN_ResetValue    0x480UL
+    #define NFCT_FRAMEDELAYMAX_ResetValue    0x1000UL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
