@@ -85,6 +85,11 @@ extern "C" {
 #define NRF_TWIM_HAS_BUS_ERROR_EVENTS 0
 #endif
 
+#if defined(TWIM_1MBPS_NEEDS_E0E1)
+/** @brief 1 Mbps mode requires high-speed pins to be configured with extra high drive. */
+#define NRF_TWIM_1MBPS_NEEDS_E0E1
+#endif
+
 #if NRF_TWIM_HAS_DMA_REG
 /** @brief Max number of RX patterns. */
 #define NRF_TWIM_DMA_RX_PATTERN_MAX_COUNT TWIM_DMA_RX_MATCH_CANDIDATE_MaxCount

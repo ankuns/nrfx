@@ -113,6 +113,7 @@
     #define NFCT_FRAMEDELAYMIN_ResetValue    0x480UL
     #define NFCT_FRAMEDELAYMAX_ResetValue    0x1000UL
     #define NVMC_PAGE_ERASE_DURATION_MS      87
+    #define TWIM_1MBPS_NEEDS_E0E1
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */

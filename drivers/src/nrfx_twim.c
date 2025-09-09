@@ -192,7 +192,7 @@ static bool pins_configure(nrfx_twim_config_t const * p_config)
         return true;
     }
 
-#if NRF_TWIM_HAS_1000_KHZ_FREQ && defined(NRF5340_XXAA)
+#if NRF_TWIM_HAS_1000_KHZ_FREQ && defined(NRF_TWIM_1MBPS_NEEDS_E0E1)
     if (p_config->frequency >= NRF_TWIM_FREQ_1000K)
     {
         /* When using 1 Mbps mode, two high-speed pins have to be used with extra high drive. */
