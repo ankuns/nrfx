@@ -69,6 +69,7 @@
     */
         #define GPIO_PINS_OVERRIDE 0x03003800
     #endif
+    #define GPIOTE_SPARSE_PINS
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF52820_XXAA                                                           */

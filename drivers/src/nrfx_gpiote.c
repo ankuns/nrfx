@@ -21,8 +21,8 @@
 /* Macro returning mask of pins in the port */
 #define GPIO_PIN_MASK(periph, prefix, i, _) NRFX_CONCAT(periph, prefix, i, _FEATURE_PINS_PRESENT)
 
-#if defined(NRF52820_XXAA)
-/* nRF52820 has gaps between available pins. The symbol can't be based on P0_PIN_NUM. */
+#if defined(GPIOTE_SPARSE_PINS)
+/* Certain targets have gaps between available pins. The symbol can't be based on P0_PIN_NUM. */
 #define MAX_PIN_NUMBER 32
 #else
 /* Macro for calculating total number of pins. */
