@@ -691,6 +691,7 @@
 
 #if defined(NRF54L05_XXAA)
     #include "nrf54l05_interim.h"
+    #define CLOCK_STATIC_IRQ
 #endif
 
 /**************************************************************************************************/
@@ -703,6 +704,7 @@
 
 #if defined(NRF54L10_XXAA)
     #include "nrf54l10_interim.h"
+    #define CLOCK_STATIC_IRQ
 #endif
 
 /**************************************************************************************************/
@@ -715,6 +717,7 @@
 
 #if defined(NRF54L15_XXAA)
     #include "nrf54l15_interim.h"
+    #define CLOCK_STATIC_IRQ
 #endif
 
 /**************************************************************************************************/
