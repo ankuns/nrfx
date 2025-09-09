@@ -2,10 +2,6 @@
 
 #include <nrfx.h>
 
-#if !NRFX_FEATURE_PRESENT(NRFX_SPIM, _ENABLED)
-#error "No enabled SPIM instances. Check <nrfx_config.h>."
-#endif
-
 #include <nrfx_spim.h>
 #include "prs/nrfx_prs.h"
 

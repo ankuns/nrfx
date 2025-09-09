@@ -779,33 +779,6 @@
 #endif
 
 /**
- * @brief NRFX_SPIM20_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIM20_ENABLED
-#define NRFX_SPIM20_ENABLED 0
-#endif
-
-/**
- * @brief NRFX_SPIM21_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIM21_ENABLED
-#define NRFX_SPIM21_ENABLED 0
-#endif
-
-/**
- * @brief NRFX_SPIM30_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIM30_ENABLED
-#define NRFX_SPIM30_ENABLED 0
-#endif
-
-/**
  * @brief NRFX_SPIS_ENABLED
  *
  * Boolean. Accepted values: 0 and 1.
