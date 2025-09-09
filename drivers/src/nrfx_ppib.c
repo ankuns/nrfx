@@ -12,9 +12,8 @@
 
 #if !defined(__NRFX_DOXYGEN__)
 
-#if defined(NRF54L_SERIES) || defined(NRF7120_ENGA_XXAA)
-
-#if !defined(NRFX_PPIB_INTERCONNECT_00_10_CHANNELS_USED)
+#if defined(NRF_PPIB00) && defined(NRF_PPIB10) && \
+    !defined(NRFX_PPIB_INTERCONNECT_00_10_CHANNELS_USED)
 /**
  * Bitmask that defines PPIB00 and PPIB10 channels that are
  * reserved for use outside of the nrfx library.
@@ -22,7 +21,8 @@
 #define NRFX_PPIB_INTERCONNECT_00_10_CHANNELS_USED 0UL
 #endif
 
-#if !defined(NRFX_PPIB_INTERCONNECT_01_20_CHANNELS_USED)
+#if defined(NRF_PPIB01) && defined(NRF_PPIB20) && \
+    !defined(NRFX_PPIB_INTERCONNECT_01_20_CHANNELS_USED)
 /**
  * Bitmask that defines PPIB01 and PPIB20 channels that are
  * reserved for use outside of the nrfx library.
@@ -30,7 +30,8 @@
 #define NRFX_PPIB_INTERCONNECT_01_20_CHANNELS_USED 0UL
 #endif
 
-#if !defined(NRFX_PPIB_INTERCONNECT_11_21_CHANNELS_USED)
+#if defined(NRF_PPIB11) && defined(NRF_PPIB21) && \
+    !defined(NRFX_PPIB_INTERCONNECT_11_21_CHANNELS_USED)
 /**
  * Bitmask that defines PPIB11 and PPIB21 channels that are
  * reserved for use outside of the nrfx library.
@@ -38,46 +39,22 @@
 #define NRFX_PPIB_INTERCONNECT_11_21_CHANNELS_USED 0UL
 #endif
 
-#if !defined(NRFX_PPIB_INTERCONNECT_22_30_CHANNELS_USED)
+#if defined(NRF_PPIB22) && defined(NRF_PPIB30) && \
+    !defined(NRFX_PPIB_INTERCONNECT_22_30_CHANNELS_USED)
 /**
- * Bitmask that defines PPIB022 and PPIB30 channels that are
+ * Bitmask that defines PPIB22 and PPIB30 channels that are
  * reserved for use outside of the nrfx library.
  */
 #define NRFX_PPIB_INTERCONNECT_22_30_CHANNELS_USED 0UL
 #endif
 
-#endif
-
-#if defined(NRF54LM20A_ENGA_XXAA)
-
-#if !defined(NRFX_PPIB_INTERCONNECT_02_03_CHANNELS_USED)
-/**
- * Bitmask that defines PPIB022 and PPIB30 channels that are
- * reserved for use outside of the nrfx library.
- */
-#define NRFX_PPIB_INTERCONNECT_02_03_CHANNELS_USED 0UL
-#endif
-
-#if !defined(NRFX_PPIB_INTERCONNECT_04_12_CHANNELS_USED)
-/**
- * Bitmask that defines PPIB022 and PPIB30 channels that are
- * reserved for use outside of the nrfx library.
- */
-#define NRFX_PPIB_INTERCONNECT_04_12_CHANNELS_USED 0UL
-#endif
-
-#endif
-
-#if defined(HALTIUM_XXAA)
-
-#if !defined(NRFX_PPIB_INTERCONNECT_020_030_CHANNELS_USED)
+#if defined(NRF_PPIB020) && defined(NRF_PPIB030) && \
+    !defined(NRFX_PPIB_INTERCONNECT_020_030_CHANNELS_USED)
 /**
  * Bitmask that defines PPIB020 and PPIB030 channels that are
  * reserved for use outside of the nrfx library.
  */
 #define NRFX_PPIB_INTERCONNECT_020_030_CHANNELS_USED 0UL
-#endif
-
 #endif
 
 #endif // !defined(__NRFX_DOXYGEN__)
@@ -106,7 +83,6 @@ typedef struct
     },
 
 static ppib_control_block_t m_cb[NRFX_PPIB_INTERCONNECT_COUNT] = {
-#if defined(NRF54L_SERIES) || defined(NRF7120_ENGA_XXAA)
 #if NRFX_CHECK(NRFX_PPIB00_ENABLED) && NRFX_CHECK(NRFX_PPIB10_ENABLED)
     _NRFX_PPIBC_CB_INITIALIZER(00, 10)
 #endif
@@ -119,19 +95,8 @@ static ppib_control_block_t m_cb[NRFX_PPIB_INTERCONNECT_COUNT] = {
 #if NRFX_CHECK(NRFX_PPIB22_ENABLED) && NRFX_CHECK(NRFX_PPIB30_ENABLED)
     _NRFX_PPIBC_CB_INITIALIZER(22, 30)
 #endif
-#endif
-#if defined(NRF54LM20A_ENGA_XXAA)
-#if NRFX_CHECK(NRFX_PPIB02_ENABLED) && NRFX_CHECK(NRFX_PPIB03_ENABLED)
-    _NRFX_PPIBC_CB_INITIALIZER(02, 03)
-#endif
-#if NRFX_CHECK(NRFX_PPIB04_ENABLED) && NRFX_CHECK(NRFX_PPIB12_ENABLED)
-    _NRFX_PPIBC_CB_INITIALIZER(04, 12)
-#endif
-#endif
-#if defined(HALTIUM_XXAA)
 #if NRFX_CHECK(NRFX_PPIB020_ENABLED) && NRFX_CHECK(NRFX_PPIB030_ENABLED)
     _NRFX_PPIBC_CB_INITIALIZER(020, 030)
-#endif
 #endif
 };
 
