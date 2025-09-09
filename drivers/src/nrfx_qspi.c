@@ -180,16 +180,8 @@ static bool qspi_pins_configure(nrfx_qspi_config_t const * p_config)
         return false;
     }
 
-#if defined(NRF5340_XXAA)
+#if defined(QSPI_IO0_DEDICATED)
     // Check if dedicated QSPI pins are used.
-    enum {
-        QSPI_IO0_DEDICATED = NRF_GPIO_PIN_MAP(0, 13),
-        QSPI_IO1_DEDICATED = NRF_GPIO_PIN_MAP(0, 14),
-        QSPI_IO2_DEDICATED = NRF_GPIO_PIN_MAP(0, 15),
-        QSPI_IO3_DEDICATED = NRF_GPIO_PIN_MAP(0, 16),
-        QSPI_SCK_DEDICATED = NRF_GPIO_PIN_MAP(0, 17),
-        QSPI_CSN_DEDICATED = NRF_GPIO_PIN_MAP(0, 18)
-    };
 
     if ((p_config->pins.sck_pin != QSPI_SCK_DEDICATED) ||
         (p_config->pins.csn_pin != QSPI_CSN_DEDICATED) ||

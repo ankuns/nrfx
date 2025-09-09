@@ -123,6 +123,13 @@
     #define NFCT_FRAMEDELAYMAX_ResetValue    0x1000UL
     #define NVMC_PAGE_ERASE_DURATION_MS      87
     #define TWIM_1MBPS_NEEDS_E0E1
+
+    #define QSPI_IO0_DEDICATED NRF_GPIO_PIN_MAP(0, 13)
+    #define QSPI_IO1_DEDICATED NRF_GPIO_PIN_MAP(0, 14)
+    #define QSPI_IO2_DEDICATED NRF_GPIO_PIN_MAP(0, 15)
+    #define QSPI_IO3_DEDICATED NRF_GPIO_PIN_MAP(0, 16)
+    #define QSPI_SCK_DEDICATED NRF_GPIO_PIN_MAP(0, 17)
+    #define QSPI_CSN_DEDICATED NRF_GPIO_PIN_MAP(0, 18)
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
