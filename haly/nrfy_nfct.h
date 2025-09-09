@@ -506,7 +506,7 @@ NRFY_STATIC_INLINE uint8_t nrfy_nfct_tx_frame_config_get(NRF_NFCT_Type const * p
 /** @refhal{nrf_nfct_tx_frame_config_set} */
 NRFY_STATIC_INLINE void nrfy_nfct_tx_frame_config_set(NRF_NFCT_Type * p_reg, uint8_t flags)
 {
-    nrf_nfct_rx_frame_config_set(p_reg, flags);
+    nrf_nfct_tx_frame_config_set(p_reg, flags);
     nrf_barrier_w();
 }
 
