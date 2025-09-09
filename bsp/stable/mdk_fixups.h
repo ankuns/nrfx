@@ -51,6 +51,13 @@
     #define SAADC_SAMPLERATE_CC_Max          2047UL
     #define NFCT_FRAMEDELAYMIN_ResetValue    0x480UL
     #define NFCT_FRAMEDELAYMAX_ResetValue    0x1000UL
+    #define NVMC_FLASH_BASE_ADDRESS          0
+    #if defined(NRF52805_XXAA) || defined(NRF52810_XXAA) || \
+        defined(NRF52811_XXAA) || defined(NRF52840_XXAA)
+        #define NVMC_PAGE_ERASE_DURATION_MS  85
+    #elif defined(NRF52820_XXAA) || defined(NRF52833_XXAA)
+        #define NVMC_PAGE_ERASE_DURATION_MS  87
+    #endif
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF52_SERIES                                                            */
@@ -90,15 +97,22 @@
     #define SPIM_CSNPOL_ResetValue           0x0UL
     #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
     #if defined(NRF_APPLICATION)
-        #define VMC_RAM_SECTION_COUNT 16
+        #define VMC_RAM_SECTION_COUNT   16
+        #define NVMC_FLASH_BASE_ADDRESS 0
+        #define NVMC_FLASH_PAGE_COUNT   256
+        #define NVMC_FLASH_PAGE_SIZE    0x1000 ///< 4 kB
     #else
-        #define VMC_RAM_SECTION_COUNT 4
+        #define VMC_RAM_SECTION_COUNT   4
+        #define NVMC_FLASH_BASE_ADDRESS 0x01000000UL
+        #define NVMC_FLASH_PAGE_COUNT   128
+        #define NVMC_FLASH_PAGE_SIZE    0x800  ///< 2 kB
     #endif
     #define WDT_RR_MaxCount 8
     #define SAADC_SAMPLERATE_CC_Min          80UL
     #define SAADC_SAMPLERATE_CC_Max          2047UL
     #define NFCT_FRAMEDELAYMIN_ResetValue    0x480UL
     #define NFCT_FRAMEDELAYMAX_ResetValue    0x1000UL
+    #define NVMC_PAGE_ERASE_DURATION_MS      87
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
@@ -119,6 +133,10 @@
     #define WDT_RR_MaxCount 8
     #define SAADC_SAMPLERATE_CC_Min          80UL
     #define SAADC_SAMPLERATE_CC_Max          2047UL
+    #define NVMC_FLASH_BASE_ADDRESS          0
+    #define NVMC_FLASH_PAGE_COUNT            256
+    #define NVMC_FLASH_PAGE_SIZE             0x1000 ///< 4 kB
+    #define NVMC_PAGE_ERASE_DURATION_MS      87
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF91_SERIES                                                            */

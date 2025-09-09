@@ -24,6 +24,13 @@ extern "C" {
 #define NRF_NVMC_HAS_PARTIAL_ERASE 0
 #endif
 
+#if defined(NVMC_CONFIG_WEN_PEen) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether page partial erase mode is present. */
+#define NRF_NVMC_HAS_PARTIAL_ERASE_MODE 1
+#else
+#define NRF_NVMC_HAS_PARTIAL_ERASE_MODE 0
+#endif
+
 #if defined(NVMC_CONFIGNS_WEN_Msk) || defined (__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether NVMC has non-secure operations available. */
 #define NRF_NVMC_HAS_NON_SECURE_OPERATIONS 1
@@ -51,7 +58,7 @@ typedef enum
     NRF_NVMC_MODE_READONLY      = NVMC_CONFIG_WEN_Ren, ///< NVMC in read-only mode.
     NRF_NVMC_MODE_WRITE         = NVMC_CONFIG_WEN_Wen, ///< NVMC in read and write mode.
     NRF_NVMC_MODE_ERASE         = NVMC_CONFIG_WEN_Een, ///< NVMC in read and erase mode.
-#if defined(NVMC_CONFIG_WEN_PEen)
+#if NRF_NVMC_HAS_PARTIAL_ERASE_MODE
     NRF_NVMC_MODE_PARTIAL_ERASE = NVMC_CONFIG_WEN_PEen ///< NVMC in read and partial erase mode.
 #endif
 } nrf_nvmc_mode_t;
