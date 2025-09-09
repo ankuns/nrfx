@@ -47,6 +47,8 @@
     #define SPIM_CSNPOL_ResetValue           0x0UL
     #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
     #define WDT_RR_MaxCount 8
+    #define SAADC_SAMPLERATE_CC_Min          80UL
+    #define SAADC_SAMPLERATE_CC_Max          2047UL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF52_SERIES                                                            */
@@ -90,6 +92,8 @@
         #define VMC_RAM_SECTION_COUNT 4
     #endif
     #define WDT_RR_MaxCount 8
+    #define SAADC_SAMPLERATE_CC_Min          80UL
+    #define SAADC_SAMPLERATE_CC_Max          2047UL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
@@ -108,6 +112,8 @@
     #define VMC_RAM_SECTION_COUNT            4
     #define VMC_FEATURE_RAM_REGISTERS_COUNT  4
     #define WDT_RR_MaxCount 8
+    #define SAADC_SAMPLERATE_CC_Min          80UL
+    #define SAADC_SAMPLERATE_CC_Max          2047UL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF91_SERIES                                                            */

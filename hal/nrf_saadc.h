@@ -147,15 +147,11 @@ extern "C" {
 #if defined(SAADC_SAMPLERATE_CC_Min) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol specifying minimum capture and compare value for sample rate. */
 #define NRF_SAADC_SAMPLERATE_CC_MIN SAADC_SAMPLERATE_CC_Min
-#else
-#define NRF_SAADC_SAMPLERATE_CC_MIN (80UL)
 #endif
 
 #if defined(SAADC_SAMPLERATE_CC_Max) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol specifying maximum capture and compare value for sample rate. */
 #define NRF_SAADC_SAMPLERATE_CC_MAX SAADC_SAMPLERATE_CC_Max
-#else
-#define NRF_SAADC_SAMPLERATE_CC_MAX (2047UL)
 #endif
 
 /** @brief Resolution of the analog-to-digital converter. */
