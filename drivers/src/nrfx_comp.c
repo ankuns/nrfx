@@ -10,7 +10,7 @@
 #define NRFX_LOG_MODULE COMP
 #include <nrfx_log.h>
 
-#if defined(NRF54H20_XXAA)
+#if NRFY_COMP_HAS_REFTRIM
 #include <hal/nrf_ficr.h>
 #endif
 
@@ -47,7 +47,7 @@ static void comp_configure(nrfx_comp_config_t const * p_config)
                        NRF_COMP_INT_CROSS_MASK,
                        p_config->interrupt_priority,
                        false);
-#if defined(NRF54H20_XXAA)
+#if NRFY_COMP_HAS_REFTRIM && NRF_FICR_HAS_GLOBAL_COMP_REFTRIM
     uint32_t trim = nrf_ficr_global_comp_reftrim_get(NRF_FICR);
     nrfy_comp_reftrim_set(NRF_COMP, trim);
 #endif
