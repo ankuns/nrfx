@@ -81,6 +81,11 @@
     #define SPIM_IFTIMING_CSNDUR_ResetValue  0x2UL
     #define SPIM_CSNPOL_ResetValue           0x0UL
     #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
+    #if defined(NRF_APPLICATION)
+        #define VMC_RAM_SECTION_COUNT 16
+    #else
+        #define VMC_RAM_SECTION_COUNT 4
+    #endif
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
@@ -96,6 +101,8 @@
     #define SPIM_IFTIMING_CSNDUR_ResetValue  0x2UL
     #define SPIM_CSNPOL_ResetValue           0x0UL
     #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
+    #define VMC_RAM_SECTION_COUNT            4
+    #define VMC_FEATURE_RAM_REGISTERS_COUNT  4
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF91_SERIES                                                            */
