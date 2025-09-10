@@ -143,6 +143,8 @@
     #define SPIM_DCX_DEDICATED  NRF_GPIO_PIN_MAP(0, 12)
 
     #define DPPI_TYPE_NORMAL
+
+    #define DOMAIN_NET
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
@@ -174,6 +176,8 @@
     #endif
 
     #define DPPI_TYPE_NORMAL
+
+    #define DOMAIN_MODEM
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF91_SERIES                                                            */
@@ -624,6 +628,8 @@
     #define SPIM_CHECK_DISABLE_ON_XFER_END
 
     #define DPPI_TYPE_IPCT
+
+    #define DOMAIN_FLPR
 #endif
 
 /**************************************************************************************************/
