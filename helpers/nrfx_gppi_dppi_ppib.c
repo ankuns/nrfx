@@ -2,7 +2,7 @@
 
 #include <helpers/nrfx_gppi.h>
 
-#if NRFX_CHECK(NRFX_DPPI_ENABLED) && defined(HALTIUM_XXAA)
+#if NRFX_CHECK(NRFX_DPPI_ENABLED) && defined(DPPI_TYPE_IPCT)
 
 #include <string.h>
 #include <soc/interconnect/apb/nrfx_interconnect_apb.h>

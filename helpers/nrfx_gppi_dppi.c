@@ -8,7 +8,7 @@
 static nrfx_dppi_t dppi = NRFX_DPPI_INSTANCE(0);
 #endif
 
-#if defined(DPPI_PRESENT) && (defined(NRF53_SERIES) || defined(NRF91_SERIES))
+#if defined(DPPI_PRESENT) && defined(DPPI_TYPE_NORMAL) 
 bool nrfx_gppi_channel_check(uint8_t channel)
 {
     return nrfy_dppi_channel_check(NRF_DPPIC, channel);
@@ -191,4 +191,4 @@ nrfx_err_t nrfx_gppi_edge_connection_setup(uint8_t             channel,
     return NRFX_SUCCESS; /* No operation as there is only one DPPIC instance. */
 }
 
-#endif // defined(DPPI_PRESENT) && (defined(NRF53_SERIES) || defined(NRF91_SERIES))
+#endif // defined(DPPI_PRESENT) && defined(DPPI_TYPE_NORMAL)

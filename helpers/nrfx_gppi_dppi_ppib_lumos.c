@@ -2,7 +2,7 @@
 
 #include <helpers/nrfx_gppi.h>
 
-#if defined(LUMOS_XXAA)
+#if defined(DPPI_TYPE_PPIB)
 
 #include <helpers/nrfx_flag32_allocator.h>
 #include <hal/nrf_ppib.h>
@@ -708,4 +708,4 @@ nrfx_err_t nrfx_gppi_edge_connection_setup(uint8_t             channel,
     return gppi_dppi_connection_setup(channel, src_domain, &src_dppi_channel, dst_domain, &dst_dppi_channel);
 }
 
-#endif // defined(LUMOS_XXAA)
+#endif // defined(DPPI_TYPE_PPIB)

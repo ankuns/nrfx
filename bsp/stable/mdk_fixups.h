@@ -141,6 +141,8 @@
     #define SPIM_MISO_DEDICATED NRF_GPIO_PIN_MAP(0, 10)
     #define SPIM_CSN_DEDICATED  NRF_GPIO_PIN_MAP(0, 11)
     #define SPIM_DCX_DEDICATED  NRF_GPIO_PIN_MAP(0, 12)
+
+    #define DPPI_TYPE_NORMAL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
@@ -170,6 +172,8 @@
     #else
         #define GPIOTE_ASSERT_INSTANCE  NRF_GPIOTE0
     #endif
+
+    #define DPPI_TYPE_NORMAL
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF91_SERIES                                                            */
@@ -618,6 +622,8 @@
     #define UARTE_CLOCKPIN_TXD_NEEDED
 
     #define SPIM_CHECK_DISABLE_ON_XFER_END
+
+    #define DPPI_TYPE_IPCT
 #endif
 
 /**************************************************************************************************/
@@ -699,6 +705,8 @@
     #endif
 
     #define SPIM_FORCE_H0H1
+
+    #define DPPI_TYPE_PPIB
 #endif
 
 /**************************************************************************************************/
