@@ -62,41 +62,48 @@ typedef struct
     nrfx_pdm_error_t error;            ///< Error type.
 } nrfx_pdm_evt_t;
 
-/** @brief PDM interface driver configuration structure. */
+/** @brief PDM prescalers structure. */
 typedef struct
 {
-    nrf_pdm_mode_t    mode;               ///< Interface operation mode.
-    nrf_pdm_edge_t    edge;               ///< Sampling mode.
-    uint32_t          clk_pin;            ///< CLK pin number.
-    uint32_t          din_pin;            ///< DIN pin number.
 #if NRF_PDM_HAS_PDMCLKCTRL
-    nrf_pdm_freq_t    clock_freq;         ///< Clock frequency.
+    nrf_pdm_freq_t    clock_freq;         ///< Selectable clock frequency.
 #elif NRF_PDM_HAS_PRESCALER
     uint32_t          prescaler;          ///< Prescaler divisor.
 #endif
-    nrf_pdm_gain_t    gain_l;             ///< Left channel gain.
-    nrf_pdm_gain_t    gain_r;             ///< Right channel gain.
-    uint8_t           interrupt_priority; ///< Interrupt priority.
 #if NRF_PDM_HAS_RATIO_CONFIG
     nrf_pdm_ratio_t   ratio;              ///< Ratio between PDM_CLK and output sample rate.
 #endif
+} nrfx_pdm_prescalers_t;
+
+
+/** @brief PDM interface driver configuration structure. */
+typedef struct
+{
+    nrf_pdm_mode_t        mode;               ///< Interface operation mode.
+    nrf_pdm_edge_t        edge;               ///< Sampling mode.
+    uint32_t              clk_pin;            ///< CLK pin number.
+    uint32_t              din_pin;            ///< DIN pin number.
+    nrf_pdm_gain_t        gain_l;             ///< Left channel gain.
+    nrf_pdm_gain_t        gain_r;             ///< Right channel gain.
+    uint8_t               interrupt_priority; ///< Interrupt priority.
+    nrfx_pdm_prescalers_t prescalers;         ///< Clock prescalers.
 #if NRF_PDM_HAS_SELECTABLE_CLOCK
-    nrf_pdm_mclksrc_t mclksrc;            ///< Clock source selection.
+    nrf_pdm_mclksrc_t     mclksrc;            ///< Clock source selection.
 #endif
-    bool              skip_gpio_cfg;      ///< Skip GPIO configuration of pins.
-                                          /**< When set to true, the driver does not modify
-                                           *   any GPIO parameters of the used pins. Those
-                                           *   parameters are supposed to be configured
-                                           *   externally before the driver is initialized. */
-    bool              skip_psel_cfg;      ///< Skip pin selection configuration.
-                                          /**< When set to true, the driver does not modify
-                                           *   pin select registers in the peripheral.
-                                           *   Those registers are supposed to be set up
-                                           *   externally before the driver is initialized.
-                                           *   @note When both GPIO configuration and pin
-                                           *   selection are to be skipped, the structure
-                                           *   fields that specify pins can be omitted,
-                                           *   as they are ignored anyway. */
+    bool                  skip_gpio_cfg;      ///< Skip GPIO configuration of pins.
+                                              /**< When set to true, the driver does not modify
+                                               *   any GPIO parameters of the used pins. Those
+                                               *   parameters are supposed to be configured
+                                               *   externally before the driver is initialized. */
+    bool                  skip_psel_cfg;      ///< Skip pin selection configuration.
+                                              /**< When set to true, the driver does not modify
+                                               *   pin select registers in the peripheral.
+                                               *   Those registers are supposed to be set up
+                                               *   externally before the driver is initialized.
+                                               *   @note When both GPIO configuration and pin
+                                               *   selection are to be skipped, the structure
+                                               *   fields that specify pins can be omitted,
+                                               *   as they are ignored anyway. */
 } nrfx_pdm_config_t;
 
 /**
@@ -117,18 +124,30 @@ typedef struct
     .edge               = NRF_PDM_EDGE_LEFTFALLING,             \
     .clk_pin            = _pin_clk,                             \
     .din_pin            = _pin_din,                             \
-    NRFX_COND_CODE_1(NRF_PDM_HAS_PDMCLKCTRL,                    \
-                     (.clock_freq = NRF_PDM_FREQ_1032K,), ())   \
-    NRFX_COND_CODE_1(NRF_PDM_HAS_PRESCALER,                     \
-                     (.prescaler = 4,), ())                     \
     .gain_l             = NRF_PDM_GAIN_DEFAULT,                 \
     .gain_r             = NRF_PDM_GAIN_DEFAULT,                 \
     .interrupt_priority = NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY, \
-    NRFX_COND_CODE_1(NRF_PDM_HAS_RATIO_CONFIG,                  \
+    .prescalers         =                                       \
+    {                                                           \
+        NRFX_COND_CODE_1(NRF_PDM_HAS_PDMCLKCTRL,                \
+                     (.clock_freq = NRF_PDM_FREQ_1032K,), ())   \
+        NRFX_COND_CODE_1(NRF_PDM_HAS_PRESCALER,                 \
+                     (.prescaler = 4,), ())                     \
+        NRFX_COND_CODE_1(NRF_PDM_HAS_RATIO_CONFIG,              \
                      (.ratio = NRF_PDM_RATIO_64X,), ())         \
+    },                                                          \
     NRFX_COND_CODE_1(NRF_PDM_HAS_SELECTABLE_CLOCK,              \
                      (.mclksrc = NRF_PDM_MCLKSRC_PCLK32M,), ()) \
 }
+
+/** @brief PDM output frequency and sampling rate values. */
+typedef struct
+{
+    uint32_t base_clock_freq; ///< Freqency of the PDM base clock source.
+    uint32_t sampling_rate;   ///< Desired PDM sampling rate.
+    uint32_t output_freq_min; ///< Minimal value of PDM output frequency.
+    uint32_t output_freq_max; ///< Maximum value of PDM output frequency.
+} nrfx_pdm_output_t;
 
 /**
  * @brief Macro returning PDM interrupt handler.
@@ -259,6 +278,21 @@ nrfx_err_t nrfx_pdm_stop(nrfx_pdm_t const * p_instance);
 nrfx_err_t nrfx_pdm_buffer_set(nrfx_pdm_t const * p_instance,
                                int16_t *          buffer,
                                uint16_t           buffer_length);
+
+/**
+ * @brief Function for calculating PDM clock prescaler values.
+ *
+ * Call this function to find suitable value for prescalers in
+ * @ref nrfx_pdm_config_t structure.
+ *
+ * @param[in]  output_config Expected output frequencies.
+ * @param[out] prescalers    Prescaler structure pointer to be filled with prescaler values.
+ *
+ * @retval NRFX_SUCCESS             Suitable prescaler values were found.
+ * @retval NRFX_ERROR_INVALID_PARAM No suitable prescaler values were found.
+ */
+nrfx_err_t nrfx_pdm_prescalers_calc(nrfx_pdm_output_t const * output_config,
+                                    nrfx_pdm_prescalers_t *   prescalers);
 
 #ifndef NRFX_DECLARE_ONLY
 NRFX_STATIC_INLINE uint32_t nrfx_pdm_task_address_get(nrfx_pdm_t const * p_instance,
