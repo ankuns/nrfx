@@ -246,6 +246,21 @@ uint16_t nrfx_nvmc_otp_halfword_read(uint32_t address);
 NRFX_STATIC_INLINE uint32_t nrfx_nvmc_uicr_word_read(uint32_t const volatile *address);
 
 /**
+ * @brief Function for writing a 32-bit aligned word to the UICR
+ *
+ * This function should be used to write to the UICR since writing
+ * the flash main memory area straight after writing the UICR results
+ * in undefined behaviour for nRF9160 / nRF9151
+ *
+ * @note See anomaly 7 in the errata document.
+ *
+ * @param address Address to write to. Must be word-aligned.
+ * @param value   Value to write.
+ *
+ */
+NRFX_STATIC_INLINE void nrfx_nvmc_uicr_word_write(uint32_t volatile *address, uint32_t value);
+
+/**
  * @brief Function for getting the total flash size in bytes.
  *
  * @return Flash total size in bytes.
@@ -318,6 +333,30 @@ NRFX_STATIC_INLINE uint32_t nrfx_nvmc_uicr_word_read(uint32_t const volatile *ad
 #endif
 
     return value;
+}
+
+NRFX_STATIC_INLINE void nrfx_nvmc_uicr_word_write(uint32_t volatile *address, uint32_t value)
+{
+#if NRF_ERRATA_STATIC_CHECK(91, 7)
+    bool irq_disabled = __get_PRIMASK() == 1;
+    if (NRF_ERRATA_DYNAMIC_CHECK(91, 7) && !irq_disabled)
+    {
+        __disable_irq();
+    }
+#endif
+
+    nrfx_nvmc_word_write((uint32_t)address, value);
+
+#if NRF_ERRATA_STATIC_CHECK(91, 7)
+    if (NRF_ERRATA_DYNAMIC_CHECK(91, 7))
+    {
+        __DSB();
+        if (!irq_disabled)
+        {
+            __enable_irq();
+        }
+    }
+#endif
 }
 
 #if defined(NVMC_FEATURE_CACHE_PRESENT)
