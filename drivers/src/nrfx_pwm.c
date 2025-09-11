@@ -313,11 +313,10 @@ static uint32_t start_playback(nrfx_pwm_t const *    p_instance,
                                             nrf_egu_trigger_task_get(p_instance->instance_id));
         }
         else
-#else
+#endif
         {
             return starting_task_address;
         }
-#endif
     }
 
     nrfy_pwm_start(p_instance->p_reg, seq_id, false);
