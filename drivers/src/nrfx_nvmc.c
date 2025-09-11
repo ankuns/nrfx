@@ -461,7 +461,7 @@ uint16_t nrfx_nvmc_otp_halfword_read(uint32_t addr)
     NRFX_ASSERT(is_halfword_aligned(addr));
 
     uint32_t aligned_addr = addr & ~(0x03UL);
-    uint32_t val32 = nrf_nvmc_word_read(aligned_addr);
+    uint32_t val32 = nrfx_nvmc_uicr_word_read((uint32_t *)aligned_addr);
 
     return (nrfx_is_word_aligned((void const *)addr) ? (uint16_t)(val32)
                                                      : (uint16_t)(val32 >> 16));
