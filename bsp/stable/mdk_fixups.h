@@ -64,6 +64,10 @@
     #elif defined(NRF52820_XXAA) || defined(NRF52833_XXAA)
         #define NVMC_PAGE_ERASE_DURATION_MS  87
     #endif
+    #if defined(NRF52810_XXAA) || defined(NRF52811_XXAA) || \
+        defined(NRF52832_XXAA) || defined(NRF52834_XXAA)
+        #define PDM_RATIO_VALUE 64
+    #endif
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF52_SERIES                                                            */
@@ -143,6 +147,9 @@
     #define SPIM_DCX_DEDICATED  NRF_GPIO_PIN_MAP(0, 12)
 
     #define DPPI_TYPE_NORMAL
+
+    #define PDM_PDMCLKCTRL_FACTOR 4096
+    #define PDM_FREQ_FACTOR       1048576ULL
 
     #define DOMAIN_NET
 
@@ -752,6 +759,9 @@
 
     #define TWIM_CLOCKPIN_SDA_NEEDED
     #define TWIS_CLOCKPIN_SDA_NEEDED
+
+    #define PDM_PDMCLKCTRL_FACTOR 8192
+    #define PDM_FREQ_FACTOR       1048576ULL
 #endif
 
 /**************************************************************************************************/
