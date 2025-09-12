@@ -196,12 +196,13 @@ NRF_STATIC_INLINE uint16_t nrf_address_periphid_get(uint32_t addr);
  *        In addition to checking compilation-time defines, it reads the chip's hardware revision
  *        at runtime to determine if this specific version is affected or not.
  *
- * @note  This macro does a static check first, so the compiler can optimize unused code out.
- *        Only when static check returns true, a dynamic check call is made.
+ * @note  This macro does a static check first, if false, it statically evaluates to false.
+ *        Only when static check evaluates to true, a dynamic check call is made.
  */
-#define NRF_ERRATA_DYNAMIC_CHECK(series, erratum)  \
-    (NRF_ERRATA_STATIC_CHECK(series, erratum) &&   \
-     NRFX_CONCAT_3(nrf, NRF_SERIES_LOWERCASE(series), _errata_##erratum()))
+#define NRF_ERRATA_DYNAMIC_CHECK(series, erratum)                                           \
+    NRFX_COND_CODE_1(NRF##series##_ERRATA_##erratum##_ENABLE_WORKAROUND,                    \
+                     (NRFX_CONCAT(nrf, NRF_SERIES_LOWERCASE(series), _errata_, erratum())), \
+                     (false))
 
 #ifndef NRF_DECLARE_ONLY
 
