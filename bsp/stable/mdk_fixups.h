@@ -145,6 +145,8 @@
     #define DPPI_TYPE_NORMAL
 
     #define DOMAIN_NET
+
+    #define I2S_MCKFREQ_FACTOR 1048576
 #endif
 /**************************************************************************************************/
 /* End fixups section for NRF53_SERIES                                                            */
@@ -764,6 +766,7 @@
     #include "nrf54l05_interim.h"
     #define CLOCK_STATIC_IRQ
     #define TRNG_CLK_DIV 0
+    #define I2S_MCKFREQ_FACTOR 1048576
 #endif
 
 /**************************************************************************************************/
@@ -778,6 +781,7 @@
     #include "nrf54l10_interim.h"
     #define CLOCK_STATIC_IRQ
     #define TRNG_CLK_DIV 0
+    #define I2S_MCKFREQ_FACTOR 1048576
 #endif
 
 /**************************************************************************************************/
@@ -792,6 +796,7 @@
     #include "nrf54l15_interim.h"
     #define CLOCK_STATIC_IRQ
     #define TRNG_CLK_DIV 0
+    #define I2S_MCKFREQ_FACTOR 1048576
 #endif
 
 /**************************************************************************************************/
@@ -805,6 +810,7 @@
 #if defined(NRF54LM20A_ENGA_XXAA)
     #include "nrf54lm20a_enga_interim.h"
     #define TRNG_CLK_DIV 1
+    #define I2S_MCKFREQ_FACTOR 1048576
 #endif
 
 /**************************************************************************************************/
