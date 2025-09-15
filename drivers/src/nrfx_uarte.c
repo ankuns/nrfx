@@ -686,9 +686,6 @@ static nrfx_err_t wait_for_endtx(NRF_UARTE_Type * p_uarte,
             {
                 break;
             }
-#if defined(CONFIG_SOC_SERIES_BSIM_NRFXX)
-            nrfx_coredep_delay_us(3);
-#endif
     } while (true);
 
     // Check if transfer got aborted. Note that aborted transfer can only be
@@ -822,9 +819,6 @@ static nrfx_err_t blocking_tx(nrfx_uarte_t const * p_instance,
                 // TX aborted or other error
                 return err;
             }
-#if defined(CONFIG_SOC_SERIES_BSIM_NRFXX)
-            nrfx_coredep_delay_us(3);
-#endif
         } while (true);
 
         if (!p_cb->handler && (p_cb->flags & UARTE_FLAG_TX_ABORTED))
