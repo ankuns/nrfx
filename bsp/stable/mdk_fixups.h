@@ -11,6 +11,8 @@
     #define ECB_EVENTS_ENDECB_EVENTS_ENDECB_Msk
     #define ECB_EVENTS_ERRORECB_EVENTS_ERRORECB_Msk
     #define ECB_ECBDATAPTR_ECBDATAPTR_Msk
+
+    #define EVENT_READBACK_NOT_NEEDED 1
 #endif
 
 /**************************************************************************************************/
@@ -401,10 +403,65 @@
     #define VDETVS0V8_DFT_DTB0CONFIG_SELMUX_Spare2 (0x7UL)
 
     #define VDETVS0V8_DFT_DTB1CONFIG_SELMUX_Spare0 (0x0UL)
+
+    #define DMA_BUFFER_UNIFIED_BYTE_ACCESS 1
+
+    #define TYPES_DOMAIN
+    #define TYPES_PROCESSOR
+    #define TYPES_OWNER
+
+    #define DMA_ACCESSIBLE_CUSTOM_CHECK 1
 #endif
 
 /**************************************************************************************************/
 /* End fixups section for HALTIUM_XXAA                                                            */
+/**************************************************************************************************/
+
+/**************************************************************************************************/
+/* Start fixups section for LUMOS_XXAA                                                            */
+/**************************************************************************************************/
+
+#if defined(LUMOS_XXAA)
+    #define DMA_BUFFER_UNIFIED_BYTE_ACCESS 1
+
+    #if defined(NRF_TRUSTZONE_NONSECURE)
+    /* Non-secure images must have CPU frequency specified and cannot rely on default values,
+     * as NRF_OSCILLATORS might be assigned and configured by Secure image. */
+        #if defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 64)
+            #define NRF_CPU_FREQ_IS_64MHZ 1
+        #elif defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 128)
+            #define NRF_CPU_FREQ_IS_128MHZ 1
+        #elif defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 256)
+            #define NRF_CPU_FREQ_IS_256MHZ 1
+        #elif !defined(NRF_CONFIG_CPU_FREQ_MHZ)
+            #error "MCU frequency not specified"
+        #else
+            #error "Invalid MCU frequency"
+        #endif
+    #else
+        #if defined(NRF_SKIP_CLOCK_CONFIGURATION) || \
+            (defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 64))
+            #define NRF_CPU_FREQ_IS_64MHZ 1
+        #elif defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 128)
+            #define NRF_CPU_FREQ_IS_128MHZ 1
+        #elif !defined(NRF_CONFIG_CPU_FREQ_MHZ)
+            /* If clock configuration is not skipped and frequency not specified,
+            * SystemInit() applies 128 MHz setting. */
+            #define NRF_CPU_FREQ_IS_128MHZ 1
+        #elif defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 256)
+            #define NRF_CPU_FREQ_IS_256MHZ 1
+        #else
+            #error "Invalid MCU frequency"
+        #endif
+    #endif
+
+    #define TYPES_DOMAIN
+    #define TYPES_OWNER
+
+#endif
+
+/**************************************************************************************************/
+/* End fixups section for LUMOS_XXAA                                                              */
 /**************************************************************************************************/
 
 /**************************************************************************************************/

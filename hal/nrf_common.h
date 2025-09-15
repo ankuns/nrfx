@@ -78,45 +78,6 @@ extern "C" {
 #define NRF_CTZ(value) __builtin_ctz(value)
 #endif
 
-#if defined(HALTIUM_XXAA) || defined(LUMOS_XXAA)
-#define DMA_BUFFER_UNIFIED_BYTE_ACCESS 1
-#endif
-
-#if defined(LUMOS_XXAA)
-#if defined(NRF_TRUSTZONE_NONSECURE)
-/* Non-secure images must have CPU frequency specified and cannot rely on default values,
- * as NRF_OSCILLATORS might be assigned and configured by Secure image. */
-#if defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 64)
-#define NRF_CPU_FREQ_IS_64MHZ 1
-#elif defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 128)
-#define NRF_CPU_FREQ_IS_128MHZ 1
-#elif defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 256)
-#define NRF_CPU_FREQ_IS_256MHZ 1
-#elif !defined(NRF_CONFIG_CPU_FREQ_MHZ)
-#error "MCU frequency not specified"
-#else
-#error "Invalid MCU frequency"
-#endif
-
-#else
-
-#if defined(NRF_SKIP_CLOCK_CONFIGURATION) || \
-    (defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 64))
-#define NRF_CPU_FREQ_IS_64MHZ 1
-#elif defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 128)
-#define NRF_CPU_FREQ_IS_128MHZ 1
-#elif !defined(NRF_CONFIG_CPU_FREQ_MHZ)
-/* If clock configuration is not skipped and frequency not specified,
- * SystemInit() applies 128 MHz setting. */
-#define NRF_CPU_FREQ_IS_128MHZ 1
-#elif defined(NRF_CONFIG_CPU_FREQ_MHZ) && (NRF_CONFIG_CPU_FREQ_MHZ == 256)
-#define NRF_CPU_FREQ_IS_256MHZ 1
-#else
-#error "Invalid MCU frequency"
-#endif
-#endif
-#endif
-
 /** @brief Macro for extracting relative pin number from the absolute pin number. */
 #define NRF_PIN_NUMBER_TO_PIN(pin) ((pin) & 0x1F)
 
@@ -126,15 +87,16 @@ extern "C" {
 /** @brief Macro for extracting absolute pin number from the relative pin and port numbers. */
 #define NRF_PIN_PORT_TO_PIN_NUMBER(pin, port) (((pin) & 0x1F) | ((port) << 5))
 
-#if defined(LUMOS_XXAA)
+#if defined(TYPES_DOMAIN)
 typedef NRF_DOMAINID_Type nrf_domain_t;
-typedef NRF_OWNERID_Type  nrf_owner_t;
 #endif
 
-#if defined(HALTIUM_XXAA)
-typedef NRF_DOMAINID_Type    nrf_domain_t;
+#if defined(TYPES_PROCESSOR)
 typedef NRF_PROCESSORID_Type nrf_processor_t;
-typedef NRF_OWNERID_Type     nrf_owner_t;
+#endif
+
+#if defined(TYPES_OWNER)
+typedef NRF_OWNERID_Type nrf_owner_t;
 #endif
 
 /**
@@ -208,7 +170,7 @@ NRF_STATIC_INLINE uint16_t nrf_address_periphid_get(uint32_t addr);
 
 NRF_STATIC_INLINE void nrf_event_readback(void * p_event_reg)
 {
-#if NRFX_CHECK(NRFX_EVENT_READBACK_ENABLED) && !defined(NRF51)
+#if NRFX_CHECK(NRFX_EVENT_READBACK_ENABLED) && !NRFX_CHECK(EVENT_READBACK_NOT_NEEDED)
     (void)*((volatile uint32_t *)(p_event_reg));
 #else
     (void)p_event_reg;
@@ -280,7 +242,7 @@ NRF_STATIC_INLINE uint16_t nrf_address_periphid_get(uint32_t addr)
 
 NRF_STATIC_INLINE bool nrf_dma_accessible_check(void const * p_reg, void const * p_object)
 {
-#if defined(HALTIUM_XXAA)
+#if NRFX_CHECK(DMA_ACCESSIBLE_CUSTOM_CHECK)
     if (nrf_address_bus_get((uint32_t)p_reg, 0x10000) == 0x8E)
     {
         /* When peripheral instance is high-speed check whether */
