@@ -411,6 +411,9 @@
     #define TYPES_OWNER
 
     #define DMA_ACCESSIBLE_CUSTOM_CHECK 1
+
+    #define EXMIF_MAX_MEMORY_DEVICE_SIZE 0x10000000UL 
+    #define EXMIF_MAX_NUMBER_OF_DEVICES  2
 #endif
 
 /**************************************************************************************************/
