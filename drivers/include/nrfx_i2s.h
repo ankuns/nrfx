@@ -22,46 +22,64 @@ extern "C" {
  * @brief   Inter-IC Sound (I2S) peripheral driver.
  */
 
+/** @brief I2S prescalers structure. */
+typedef struct
+{
+    nrf_i2s_mck_t   mck_setup;     ///< Master clock generator setup.
+    nrf_i2s_ratio_t ratio;         ///< MCK/LRCK ratio.
+#if NRF_I2S_HAS_CLKCONFIG
+    bool            enable_bypass; /**< Bypass clock generator.
+                                    *   MCK will be equal to source input. */
+#endif
+} nrfx_i2s_prescalers_t;
+
+/** @brief Parameters use to describe I2S clock prescaling. */
+typedef struct
+{
+    uint32_t         base_clock_freq; ///< Freqency of the I2S base clock source.
+    uint32_t         transfer_rate;   ///< Desired I2S data transfer rate.
+    nrf_i2s_swidth_t swidth;          ///< I2S sample width.
+    bool             allow_bypass;    ///< Bypass clock generator if possible.
+} nrfx_i2s_clk_params_t;
+
 /** @brief I2S driver configuration structure. */
 typedef struct
 {
-    uint32_t           sck_pin;       ///< SCK pin number.
-    uint32_t           lrck_pin;      ///< LRCK pin number.
-    uint32_t           mck_pin;       ///< MCK pin number.
-                                      /**< Optional. Use @ref NRF_I2S_PIN_NOT_CONNECTED
-                                       *   if this signal is not needed. */
-    uint32_t           sdout_pin;     ///< SDOUT pin number.
-                                      /**< Optional. Use @ref NRF_I2S_PIN_NOT_CONNECTED
-                                       *   if this signal is not needed. */
-    uint32_t           sdin_pin;      ///< SDIN pin number.
-                                      /**< Optional. Use @ref NRF_I2S_PIN_NOT_CONNECTED
-                                       *   if this signal is not needed. */
-    uint8_t            irq_priority;  ///< Interrupt priority.
-    nrf_i2s_mode_t     mode;          ///< Mode of operation (master or slave).
-    nrf_i2s_format_t   format;        ///< I2S frame format.
-    nrf_i2s_align_t    alignment;     ///< Alignment of sample within a frame.
-    nrf_i2s_swidth_t   sample_width;  ///< Sample width.
-    nrf_i2s_channels_t channels;      ///< Enabled channels.
-    nrf_i2s_mck_t      mck_setup;     ///< Master clock generator setup.
-    nrf_i2s_ratio_t    ratio;         ///< MCK/LRCK ratio.
+    uint32_t              sck_pin;       ///< SCK pin number.
+    uint32_t              lrck_pin;      ///< LRCK pin number.
+    uint32_t              mck_pin;       ///< MCK pin number.
+                                         /**< Optional. Use @ref NRF_I2S_PIN_NOT_CONNECTED
+                                          *   if this signal is not needed. */
+    uint32_t              sdout_pin;     ///< SDOUT pin number.
+                                         /**< Optional. Use @ref NRF_I2S_PIN_NOT_CONNECTED
+                                          *   if this signal is not needed. */
+    uint32_t              sdin_pin;      ///< SDIN pin number.
+                                         /**< Optional. Use @ref NRF_I2S_PIN_NOT_CONNECTED
+                                          *   if this signal is not needed. */
+    uint8_t               irq_priority;  ///< Interrupt priority.
+    nrf_i2s_mode_t        mode;          ///< Mode of operation (master or slave).
+    nrf_i2s_format_t      format;        ///< I2S frame format.
+    nrf_i2s_align_t       alignment;     ///< Alignment of sample within a frame.
+    nrf_i2s_swidth_t      sample_width;  ///< Sample width.
+    nrf_i2s_channels_t    channels;      ///< Enabled channels.
+    nrfx_i2s_prescalers_t prescalers;    ///< Clock prescalers.
 #if NRF_I2S_HAS_CLKCONFIG
-    nrf_i2s_clksrc_t   clksrc;        ///< Clock source selection.
-    bool               enable_bypass; ///< Bypass clock generator. MCK will be equal to source input.
+    nrf_i2s_clksrc_t      clksrc;        ///< Clock source selection.
 #endif
-    bool               skip_gpio_cfg; ///< Skip GPIO configuration of pins.
-                                      /**< When set to true, the driver does not modify
-                                       *   any GPIO parameters of the used pins. Those
-                                       *   parameters are supposed to be configured
-                                       *   externally before the driver is initialized. */
-    bool               skip_psel_cfg; ///< Skip pin selection configuration.
-                                      /**< When set to true, the driver does not modify
-                                       *   pin select registers in the peripheral.
-                                       *   Those registers are supposed to be set up
-                                       *   externally before the driver is initialized.
-                                       *   @note When both GPIO configuration and pin
-                                       *   selection are to be skipped, the structure
-                                       *   fields that specify pins can be omitted,
-                                       *   as they are ignored anyway. */
+    bool                  skip_gpio_cfg; ///< Skip GPIO configuration of pins.
+                                         /**< When set to true, the driver does not modify
+                                          *   any GPIO parameters of the used pins. Those
+                                          *   parameters are supposed to be configured
+                                          *   externally before the driver is initialized. */
+    bool                  skip_psel_cfg; ///< Skip pin selection configuration.
+                                         /**< When set to true, the driver does not modify
+                                          *   pin select registers in the peripheral.
+                                          *   Those registers are supposed to be set up
+                                          *   externally before the driver is initialized.
+                                          *   @note When both GPIO configuration and pin
+                                          *   selection are to be skipped, the structure
+                                          *   fields that specify pins can be omitted,
+                                          *   as they are ignored anyway. */
 } nrfx_i2s_config_t;
 
 /** @brief I2S driver buffers structure. */
@@ -120,11 +138,16 @@ enum {
     .alignment    = NRF_I2S_ALIGN_LEFT,                                               \
     .sample_width = NRF_I2S_SWIDTH_16BIT,                                             \
     .channels     = NRF_I2S_CHANNELS_LEFT,                                            \
-    .mck_setup    = NRF_I2S_MCK_32MDIV8,                                              \
-    .ratio        = NRF_I2S_RATIO_32X,                                                \
+    .prescalers   =                                                                   \
+    {                                                                                 \
+        .mck_setup    = NRF_I2S_MCK_32MDIV8,                                          \
+        .ratio        = NRF_I2S_RATIO_32X,                                            \
+        NRFX_COND_CODE_1(NRF_I2S_HAS_CLKCONFIG,                                       \
+                        (.enable_bypass = false),                                     \
+                        ())                                                           \
+    },                                                                                \
     NRFX_COND_CODE_1(NRF_I2S_HAS_CLKCONFIG,                                           \
-                     (.clksrc = NRF_I2S_CLKSRC_PCLK32M,                               \
-                      .enable_bypass = false,),                                       \
+                     (.clksrc = NRF_I2S_CLKSRC_PCLK32M),                              \
                      ())                                                              \
 }
 
@@ -287,6 +310,22 @@ nrfx_err_t nrfx_i2s_next_buffers_set(nrfx_i2s_t const *         p_instance,
  * @param[in] p_instance Pointer to the driver instance structure.
  */
 void nrfx_i2s_stop(nrfx_i2s_t const * p_instance);
+
+/**
+ * @brief Function for calculating I2S clock prescaler values.
+ *
+ * Call this function to find suitable value for prescalers in
+ * @ref nrfx_i2s_config_t structure.
+ *
+ * @param[in]  clk_params      Parameters used to describe clock prescaling.
+ * @param[out] prescalers      Prescaler structure pointer to be filled with prescaler values.
+ *
+ * @retval NRFX_SUCCESS             Suitable prescaler values were found.
+ * @retval NRFX_ERROR_INVALID_PARAM No suitable prescaler values were found.
+ * @retval NRFX_ERROR_NOT_SUPPORTED Requested configuration is not supported.
+ */
+nrfx_err_t nrfx_i2s_prescalers_calc(nrfx_i2s_clk_params_t const * clk_params,
+                                    nrfx_i2s_prescalers_t *       prescalers);
 
 /** @} */
 

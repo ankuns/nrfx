@@ -185,7 +185,7 @@ nrfx_err_t nrfx_i2s_init(nrfx_i2s_t const *        p_instance,
 
 
     if (!validate_config(p_config->mode,
-                         p_config->ratio,
+                         p_config->prescalers.ratio,
                          p_config->sample_width))
     {
         err_code = NRFX_ERROR_INVALID_PARAM;
@@ -205,8 +205,8 @@ nrfx_err_t nrfx_i2s_init(nrfx_i2s_t const *        p_instance,
             .alignment    = p_config->alignment,
             .sample_width = p_config->sample_width,
             .channels     = p_config->channels,
-            .mck_setup    = p_config->mck_setup,
-            .ratio        = p_config->ratio,
+            .mck_setup    = p_config->prescalers.mck_setup,
+            .ratio        = p_config->prescalers.ratio,
         },
         .pins = {
             .sck_pin      = p_config->sck_pin,
@@ -217,7 +217,7 @@ nrfx_err_t nrfx_i2s_init(nrfx_i2s_t const *        p_instance,
         },
 #if NRF_I2S_HAS_CLKCONFIG
         .clksrc        = p_config->clksrc,
-        .enable_bypass = p_config->enable_bypass,
+        .enable_bypass = p_config->prescalers.enable_bypass,
 #endif
         .skip_psel_cfg = p_config->skip_psel_cfg
     };
@@ -439,6 +439,137 @@ void nrfx_i2s_stop(nrfx_i2s_t const * p_instance)
         *((volatile uint32_t *)(((uint32_t)p_instance->p_reg) + 0x38)) = 1;
         *((volatile uint32_t *)(((uint32_t)p_instance->p_reg) + 0x3C)) = 1;
     }
+}
+
+nrfx_err_t nrfx_i2s_prescalers_calc(nrfx_i2s_clk_params_t const * clk_params,
+                                    nrfx_i2s_prescalers_t *       prescalers)
+{
+    NRFX_ASSERT(clk_params);
+    NRFX_ASSERT(prescalers);
+
+    static const struct
+    {
+        uint16_t        ratio_val;
+        nrf_i2s_ratio_t ratio_enum;
+    } ratios[] =
+    {
+        {  32, NRF_I2S_RATIO_32X },
+        {  48, NRF_I2S_RATIO_48X },
+        {  64, NRF_I2S_RATIO_64X },
+        {  96, NRF_I2S_RATIO_96X },
+        { 128, NRF_I2S_RATIO_128X },
+        { 192, NRF_I2S_RATIO_192X },
+        { 256, NRF_I2S_RATIO_256X },
+        { 384, NRF_I2S_RATIO_384X },
+        { 512, NRF_I2S_RATIO_512X }
+	};
+
+    uint32_t best_diff = UINT32_MAX;
+    uint8_t best_r = 0;
+    nrf_i2s_mck_t best_mck_cfg = NRF_I2S_MCK_DISABLED;
+
+    if (clk_params->allow_bypass)
+    {
+#if NRF_I2S_HAS_CLKCONFIG
+        for (uint8_t r = 0; r < NRFX_ARRAY_SIZE(ratios); r++)
+        {
+            if (clk_params->transfer_rate * ratios[r].ratio_val == clk_params->base_clock_freq)
+            {
+                best_r = r;
+                best_diff = 0;
+                best_mck_cfg = NRF_I2S_MCK_32MDIV8;
+
+                prescalers->enable_bypass = true;
+
+                break;
+            }
+        }
+#else
+        NRFX_LOG_ERROR("Bypass mode not supported.");
+        return NRFX_ERROR_NOT_SUPPORTED;
+#endif
+    }
+
+    for (uint8_t r = 0; (best_diff != 0) && (r < NRFX_ARRAY_SIZE(ratios)); r++)
+    {
+        if (!validate_config(NRF_I2S_MODE_MASTER, ratios[r].ratio_enum, clk_params->swidth))
+        {
+			continue;
+		}
+#if defined(I2S_MCKFREQ_FACTOR)
+        uint32_t requested_mck = clk_params->transfer_rate * ratios[r].ratio_val;
+
+        uint32_t mck_factor = (uint32_t)(((uint64_t)requested_mck * I2S_MCKFREQ_FACTOR) /
+                                        (clk_params->base_clock_freq + requested_mck / 2));
+
+        if (mck_factor > I2S_MCKFREQ_FACTOR)
+        {
+            continue;
+        }
+
+        uint32_t actual_mck = clk_params->base_clock_freq / (I2S_MCKFREQ_FACTOR / mck_factor);
+
+        uint32_t lrck_freq = actual_mck / ratios[r].ratio_val;
+        uint32_t diff = NRFX_DIFF(lrck_freq, clk_params->transfer_rate);
+
+        if (diff < best_diff)
+        {
+            best_mck_cfg = (nrf_i2s_mck_t)(mck_factor * 4096);
+            best_r = r;
+            best_diff = diff;
+        }
+#else
+        static const struct
+        {
+            uint8_t       divider_val;
+            nrf_i2s_mck_t divider_enum;
+        } dividers[] =
+        {
+            {   8, NRF_I2S_MCK_32MDIV8 },
+            {  10, NRF_I2S_MCK_32MDIV10 },
+            {  11, NRF_I2S_MCK_32MDIV11 },
+            {  15, NRF_I2S_MCK_32MDIV15 },
+            {  16, NRF_I2S_MCK_32MDIV16 },
+            {  21, NRF_I2S_MCK_32MDIV21 },
+            {  23, NRF_I2S_MCK_32MDIV23 },
+            {  30, NRF_I2S_MCK_32MDIV30 },
+            {  31, NRF_I2S_MCK_32MDIV31 },
+            {  32, NRF_I2S_MCK_32MDIV32 },
+            {  42, NRF_I2S_MCK_32MDIV42 },
+            {  63, NRF_I2S_MCK_32MDIV63 },
+            { 125, NRF_I2S_MCK_32MDIV125 }
+        };
+
+        for (uint8_t d = 0; (best_diff != 0) && (d < NRFX_ARRAY_SIZE(dividers)); d++)
+        {
+            uint32_t mck_freq = clk_params->base_clock_freq / dividers[d].divider_val;
+            uint32_t lrck_freq = mck_freq / ratios[r].ratio_val;
+            uint32_t diff = NRFX_DIFF(lrck_freq, clk_params->transfer_rate);
+
+            if (diff < best_diff)
+            {
+                best_mck_cfg = dividers[d].divider_enum;
+                best_r = r;
+                best_diff = diff;
+            }
+
+            if (lrck_freq < clk_params->transfer_rate)
+            {
+                break;
+            }
+        }
+#endif
+	}
+
+    if (best_diff == UINT32_MAX)
+    {
+        return NRFX_ERROR_INVALID_PARAM;
+    }
+
+	prescalers->mck_setup = best_mck_cfg;
+	prescalers->ratio = ratios[best_r].ratio_enum;
+
+    return NRFX_SUCCESS;
 }
 
 static void irq_handler(NRF_I2S_Type * p_reg, nrfx_i2s_cb_t * p_cb)
