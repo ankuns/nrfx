@@ -927,7 +927,17 @@ void nrfx_saadc_irq_handler(void)
 
     if (evt_mask & NRFY_EVENT_TO_INT_BITMASK(NRF_SAADC_EVENT_STARTED))
     {
-        saadc_event_started_handle();
+        if (NRF_ERRATA_DYNAMIC_CHECK(52, 74) &&
+            nrfy_saadc_int_enable_check(NRF_SAADC, NRF_SAADC_INT_CALIBRATEDONE))
+        {
+            // ignore spurious started event
+            // this causes the calibration to abort and timeout
+            // another started event will be triggered by setting
+            // the temporary buffer in CALIBRATEDONE event handle
+        }
+        else {
+            saadc_event_started_handle();
+        }
     }
 
     if (m_cb.saadc_state != NRF_SAADC_STATE_CALIBRATION)
