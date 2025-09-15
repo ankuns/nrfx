@@ -3,8 +3,6 @@
 #ifndef NRFX_COREDEP_DEFS_H__
 #define NRFX_COREDEP_DEFS_H__
 
-#include <nrfx.h>
-
 #if !defined(__NRFX_DOXYGEN__)
 
 #if defined(NRFX_DELAY_CPU_FREQ_MHZ) && defined(NRFX_DELAY_DWT_PRESENT)

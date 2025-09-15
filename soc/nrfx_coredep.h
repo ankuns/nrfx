@@ -3,6 +3,8 @@
 #ifndef NRFX_COREDEP_H__
 #define NRFX_COREDEP_H__
 
+#include <nrfx.h>
+
 #include NRFX_BSP_NRFX_COREDEP_PATH
 
 #if NRFX_CHECK(ISA_RISCV)
