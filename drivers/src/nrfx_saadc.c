@@ -50,6 +50,41 @@ typedef struct
 
 static nrfx_saadc_cb_t m_cb;
 
+static void saadc_limits_set(uint8_t channel, int16_t limit_low, int16_t limit_high)
+{
+    nrf_saadc_event_t limit_low_evt = nrfy_saadc_limit_event_get(channel, NRF_SAADC_LIMIT_LOW);
+    nrfy_saadc_event_clear(NRF_SAADC, limit_low_evt);
+
+    nrf_saadc_event_t limit_high_evt = nrfy_saadc_limit_event_get(channel, NRF_SAADC_LIMIT_HIGH);
+    nrfy_saadc_event_clear(NRF_SAADC, limit_high_evt);
+
+    nrfy_saadc_channel_limits_set(NRF_SAADC, channel, limit_low, limit_high);
+
+    uint32_t int_mask = nrfy_saadc_limit_int_get(channel, NRF_SAADC_LIMIT_LOW);
+    if (limit_low == INT16_MIN)
+    {
+        m_cb.limits_low_activated &= (uint8_t)~(1UL << channel);
+        nrfy_saadc_int_disable(NRF_SAADC, int_mask);
+    }
+    else
+    {
+        m_cb.limits_low_activated |= (uint8_t)(1UL << channel);
+        nrfy_saadc_int_enable(NRF_SAADC, int_mask);
+    }
+
+    int_mask = nrfy_saadc_limit_int_get(channel, NRF_SAADC_LIMIT_HIGH);
+    if (limit_high == INT16_MAX)
+    {
+        m_cb.limits_high_activated &= (uint8_t)~(1UL << channel);
+        nrfy_saadc_int_disable(NRF_SAADC, int_mask);
+    }
+    else
+    {
+        m_cb.limits_high_activated |= (uint8_t)(1UL << channel);
+        nrfy_saadc_int_enable(NRF_SAADC, int_mask);
+    }
+}
+
 static void saadc_anomaly_212_workaround_apply(void)
 {
     uint32_t c[SAADC_CH_NUM];
@@ -136,6 +171,7 @@ static void saadc_channels_disable(uint32_t channel_mask)
         channel_mask &= ~(1UL << channel);
         nrfy_saadc_channel_input_set(NRF_SAADC, channel,
                                      NRF_SAADC_INPUT_DISABLED, NRF_SAADC_INPUT_DISABLED);
+        saadc_limits_set(channel, INT16_MIN, INT16_MAX);
     }
 }
 
@@ -648,37 +684,7 @@ nrfx_err_t nrfx_saadc_limits_set(uint8_t channel, int16_t limit_low, int16_t lim
         return NRFX_ERROR_INVALID_PARAM;
     }
 
-    nrf_saadc_event_t limit_low_evt = nrfy_saadc_limit_event_get(channel, NRF_SAADC_LIMIT_LOW);
-    nrfy_saadc_event_clear(NRF_SAADC, limit_low_evt);
-
-    nrf_saadc_event_t limit_high_evt = nrfy_saadc_limit_event_get(channel, NRF_SAADC_LIMIT_HIGH);
-    nrfy_saadc_event_clear(NRF_SAADC, limit_high_evt);
-
-    nrfy_saadc_channel_limits_set(NRF_SAADC, channel, limit_low, limit_high);
-
-    uint32_t int_mask = nrfy_saadc_limit_int_get(channel, NRF_SAADC_LIMIT_LOW);
-    if (limit_low == INT16_MIN)
-    {
-        m_cb.limits_low_activated &= (uint8_t)~(1UL << channel);
-        nrfy_saadc_int_disable(NRF_SAADC, int_mask);
-    }
-    else
-    {
-        m_cb.limits_low_activated |= (uint8_t)(1UL << channel);
-        nrfy_saadc_int_enable(NRF_SAADC, int_mask);
-    }
-
-    int_mask = nrfy_saadc_limit_int_get(channel, NRF_SAADC_LIMIT_HIGH);
-    if (limit_high == INT16_MAX)
-    {
-        m_cb.limits_high_activated &= (uint8_t)~(1UL << channel);
-        nrfy_saadc_int_disable(NRF_SAADC, int_mask);
-    }
-    else
-    {
-        m_cb.limits_high_activated |= (uint8_t)(1UL << channel);
-        nrfy_saadc_int_enable(NRF_SAADC, int_mask);
-    }
+    saadc_limits_set(channel, limit_low, limit_high);
 
     return NRFX_SUCCESS;
 }
