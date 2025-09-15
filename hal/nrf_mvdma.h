@@ -57,6 +57,10 @@ typedef enum
     NRF_MVDMA_EVENT_SOURCESELECTJOBDONE = offsetof(NRF_MVDMA_Type, EVENTS_SOURCE.SELECTJOBDONE), ///< Job on the source channel with event enable attribute bit active has been processed.
     NRF_MVDMA_EVENT_SINKBUSERROR        = offsetof(NRF_MVDMA_Type, EVENTS_SINK.BUSERROR),        ///< Bus error has been received on the sink channel.
     NRF_MVDMA_EVENT_SINKSELECTJOBDONE   = offsetof(NRF_MVDMA_Type, EVENTS_SINK.SELECTJOBDONE),   ///< Job on the sink channel with event enable attribute bit active has been processed.
+    NRF_MVDMA_EVENT_COMPLETED0          = offsetof(NRF_MVDMA_Type, EVENTS_COMPLETED[0]),         ///< Job 0 is completed.
+    NRF_MVDMA_EVENT_COMPLETED1          = offsetof(NRF_MVDMA_Type, EVENTS_COMPLETED[1]),         ///< Job 1 is completed.
+    NRF_MVDMA_EVENT_COMPLETED2          = offsetof(NRF_MVDMA_Type, EVENTS_COMPLETED[2]),         ///< Job 2 is completed.
+    NRF_MVDMA_EVENT_COMPLETED3          = offsetof(NRF_MVDMA_Type, EVENTS_COMPLETED[3]),         ///< Job 3 is completed.
 } nrf_mvdma_event_t;
 
 /** @brief MVDMA interrupts. */
@@ -70,6 +74,10 @@ typedef enum
     NRF_MVDMA_INT_SINKBUSERROR_MASK        = MVDMA_INTENSET_SINKBUSERROR_Msk,        ///< Interrupt on SINKBUSERROR event.
     NRF_MVDMA_INT_SOURCESELECTJOBDONE_MASK = MVDMA_INTENSET_SOURCESELECTJOBDONE_Msk, ///< Interrupt on SOURCESELECTJOBDONE event.
     NRF_MVDMA_INT_SINKSELECTJOBDONE_MASK   = MVDMA_INTENSET_SINKSELECTJOBDONE_Msk,   ///< Interrupt on SINKSELECTJOBDONE event.
+    NRF_MVDMA_INT_COMPLETED0_MASK          = MVDMA_INTENSET_COMPLETED0_Msk,          ///< Interrupt on COMPLETED0 event.
+    NRF_MVDMA_INT_COMPLETED1_MASK          = MVDMA_INTENSET_COMPLETED1_Msk,          ///< Interrupt on COMPLETED1 event.
+    NRF_MVDMA_INT_COMPLETED2_MASK          = MVDMA_INTENSET_COMPLETED2_Msk,          ///< Interrupt on COMPLETED2 event.
+    NRF_MVDMA_INT_COMPLETED3_MASK          = MVDMA_INTENSET_COMPLETED3_Msk,          ///< Interrupt on COMPLETED3 event.
 } nrf_mvdma_int_mask_t;
 
 /** @brief MVDMA modes of operation. */
