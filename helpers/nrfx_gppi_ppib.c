@@ -5,12 +5,156 @@
 #if defined(DPPI_TYPE_PPIB)
 
 #include <helpers/nrfx_flag32_allocator.h>
-#include <hal/nrf_ppib.h>
-#include <hal/nrf_dppi.h>
+#include <nrfx_ppib.h>
+#include <nrfx_dppi.h>
 
-#include <soc/interconnect/dppic_ppib/nrfx_interconnect_dppic_ppib.h>
+typedef struct
+{
+    nrfx_ppib_interconnect_t ppib;                                  ///< Interconnect instance.
+    uint8_t                  allocate_flag[PPIB_CHANNEL_MAX_COUNT]; ///< Virtual channels assigned to each of PPIB channels.
+} interconnect_ppib_t;
+
+typedef struct
+{
+    NRF_DPPIC_Type * dppic;
+    NRF_PPIB_Type *  ppib;
+} interconnect_dppic_ppib_t;
+
+typedef struct
+{
+    uint8_t          apb_index;                          ///< APB index to which DPPIC belongs.
+    nrfx_dppi_t      dppic;                              ///< DPPIC peripheral that belongs to a given domain.
+    uint8_t          allocate_flag[NRF_DPPI_CH_NUM_MAX]; ///< Virtual channels assigned to each of DPPIC channels.
+    uint32_t         apb_size;                           ///< Size of APB.
+} interconnect_dppic_t;
+
+typedef struct
+{
+    interconnect_dppic_t * src_dppic;
+    interconnect_dppic_t * dst_dppic;
+    interconnect_ppib_t *  ppib;
+    bool                   ppib_inverted; ///< True if PPIB connection goes from second to first PPIB peripherial instance, false otherwise.
+} interconnect_dppic_to_dppic_path_t;
 
 #include <soc/interconnect/dppic_ppib/nrfx_interconnect_dppic_ppib_lumos.h>
+
+static interconnect_dppic_t interconnect_dppic[] = NRFX_INTERCONNECT_DPPIC_MAP;
+
+/* Each PPIB must be connected with one DPPI. */
+NRFX_STATIC_ASSERT(NRFX_INTERCONNECT_DPPIC_COUNT == NRFX_ARRAY_SIZE(interconnect_dppic));
+
+static interconnect_ppib_t interconnect_ppib[] = NRFX_INTERCONNECT_PPIB_MAP;
+
+/* One PPIB is connected to only one another PPIB directly. */
+NRFX_STATIC_ASSERT(NRFX_INTERCONNECT_PPIB_COUNT == NRFX_ARRAY_SIZE(interconnect_ppib));
+
+static interconnect_dppic_ppib_t interconnect_dppic_ppib[] = NRFX_INTERCONNECT_DPPIC_PPIB_MAP;
+
+/* Each DPPIC needs to have its own properties structure. */
+NRFX_STATIC_ASSERT(NRFX_INTERCONNECT_DPPIC_PPIB_COUNT == NRFX_ARRAY_SIZE(interconnect_dppic_ppib));
+
+static interconnect_dppic_t * interconnect_dppic_at_index_get(uint8_t index)
+{
+    NRFX_ASSERT(index < NRFX_INTERCONNECT_DPPIC_COUNT);
+
+    return &interconnect_dppic[index];
+}
+
+static interconnect_dppic_t * interconnect_dppic_get(uint8_t apb_index)
+{
+    for (uint8_t i = 0; i < NRFX_INTERCONNECT_DPPIC_COUNT; i++)
+    {
+        if (interconnect_dppic[i].apb_index == apb_index)
+        {
+            return &interconnect_dppic[i];
+        }
+    }
+
+    return NULL;
+}
+
+static interconnect_dppic_t * interconnect_dppic_main_get(void)
+{
+    return interconnect_dppic_get(NRF_APB_INDEX_PERI);
+}
+
+static interconnect_ppib_t * interconnect_ppib_at_index_get(uint8_t index)
+{
+    NRFX_ASSERT(index < NRFX_INTERCONNECT_PPIB_COUNT);
+
+    return &interconnect_ppib[index];
+}
+
+static bool interconnect_direct_connection_check(interconnect_dppic_to_dppic_path_t * p_path)
+{
+    NRFX_ASSERT(p_path);
+    NRFX_ASSERT(p_path->src_dppic);
+    NRFX_ASSERT(p_path->dst_dppic);
+
+    for (uint8_t i = 0; i < NRFX_INTERCONNECT_DPPIC_PPIB_COUNT; i++)
+    {
+        NRF_DPPIC_Type *p_reg;
+        p_reg = p_path->src_dppic->dppic.p_reg;
+        if (interconnect_dppic_ppib[i].dppic != p_reg)
+        {
+            continue;
+        }
+
+        for (uint8_t j = 0; j < NRFX_INTERCONNECT_PPIB_COUNT; j++)
+        {
+            NRF_PPIB_Type * p_dst_ppib = NULL;
+
+            if (interconnect_ppib[j].ppib.left.p_reg == interconnect_dppic_ppib[i].ppib)
+            {
+                p_path->ppib          = &interconnect_ppib[j];
+                p_path->ppib_inverted = false;
+                p_dst_ppib            = interconnect_ppib[j].ppib.right.p_reg;
+            }
+
+            if (interconnect_ppib[j].ppib.right.p_reg == interconnect_dppic_ppib[i].ppib)
+            {
+                p_path->ppib          = &interconnect_ppib[j];
+                p_path->ppib_inverted = true;
+                p_dst_ppib            = interconnect_ppib[j].ppib.left.p_reg;
+            }
+
+            if (p_dst_ppib == NULL)
+            {
+                continue;
+            }
+
+            for (uint8_t k = 0; k < NRFX_ARRAY_SIZE(interconnect_dppic_ppib); k++)
+            {
+                NRF_DPPIC_Type *p_dst_reg;
+                p_dst_reg = p_path->dst_dppic->dppic.p_reg;
+                if ((interconnect_dppic_ppib[k].ppib == p_dst_ppib) &&
+                    (interconnect_dppic_ppib[k].dppic == p_dst_reg))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+static nrf_apb_index_t interconnect_apb_index_get(uint32_t addr)
+{
+    for (uint8_t i = 0; i < NRFX_INTERCONNECT_DPPIC_COUNT; i++)
+    {
+        interconnect_dppic_t const * p_dppic = &interconnect_dppic[i];
+        uint8_t bus_address_area = nrf_address_bus_get(addr, p_dppic->apb_size);
+
+        NRF_DPPIC_Type *p_reg;
+        p_reg = p_dppic->dppic.p_reg;
+        if (bus_address_area == nrf_address_bus_get((uint32_t)p_reg, p_dppic->apb_size))
+        {
+            return (nrf_apb_index_t)bus_address_area;
+        }
+    }
+    return (nrf_apb_index_t)0;
+}
 
 /** @brief Invalid channel number. */
 #define NRFX_GPPI_CHANNEL_INVALID UINT8_MAX
@@ -21,7 +165,7 @@
 
 static nrfx_atomic_t m_virtual_channels = NRFX_GPPI_PROG_APP_CHANNELS_MASK;
 
-static nrfx_err_t dppic_channel_get(nrfx_interconnect_dppic_t * p_dppic,
+static nrfx_err_t dppic_channel_get(interconnect_dppic_t * p_dppic,
                                     uint8_t                     virtual_channel,
                                     uint8_t *                   p_dppic_channel)
 {
@@ -37,7 +181,7 @@ static nrfx_err_t dppic_channel_get(nrfx_interconnect_dppic_t * p_dppic,
     return NRFX_ERROR_INVALID_PARAM;
 }
 
-static nrfx_err_t dppic_virtual_channel_set(nrfx_interconnect_dppic_t * p_dppic,
+static nrfx_err_t dppic_virtual_channel_set(interconnect_dppic_t * p_dppic,
                                             uint32_t                    dppi_channel,
                                             uint8_t                     virtual_channel)
 {
@@ -46,17 +190,17 @@ static nrfx_err_t dppic_virtual_channel_set(nrfx_interconnect_dppic_t * p_dppic,
     return NRFX_SUCCESS;
 }
 
-static nrfx_err_t dppic_channel_alloc(nrfx_interconnect_dppic_t * p_dppic, uint8_t * p_channel)
+static nrfx_err_t dppic_channel_alloc(interconnect_dppic_t * p_dppic, uint8_t * p_channel)
 {
     return nrfx_dppi_channel_alloc(&p_dppic->dppic, p_channel);
 }
 
-static nrfx_err_t dppic_channel_free(nrfx_interconnect_dppic_t * p_dppic, uint8_t channel)
+static nrfx_err_t dppic_channel_free(interconnect_dppic_t * p_dppic, uint8_t channel)
 {
     return nrfx_dppi_channel_free(&p_dppic->dppic, channel);
 }
 
-static nrfx_err_t ppib_channel_get(nrfx_interconnect_ppib_t * p_ppib,
+static nrfx_err_t ppib_channel_get(interconnect_ppib_t * p_ppib,
                                    uint8_t                    virtual_channel,
                                    uint8_t *                  p_ppib_channel)
 {
@@ -73,18 +217,18 @@ static nrfx_err_t ppib_channel_get(nrfx_interconnect_ppib_t * p_ppib,
 }
 
 #if NRFX_GPPI_PPIB_HAS_DYNAMIC_CONFIG
-static nrfx_err_t ppib_channel_alloc(nrfx_interconnect_ppib_t * p_ppib, uint8_t * p_channel)
+static nrfx_err_t ppib_channel_alloc(interconnect_ppib_t * p_ppib, uint8_t * p_channel)
 {
     return nrfx_ppib_channel_alloc(&p_ppib->ppib, p_channel);
 }
 #endif
 
-static nrfx_err_t ppib_channel_free(nrfx_interconnect_ppib_t * p_ppib, uint8_t channel)
+static nrfx_err_t ppib_channel_free(interconnect_ppib_t * p_ppib, uint8_t channel)
 {
     return nrfx_ppib_channel_free(&p_ppib->ppib, channel);
 }
 
-static nrfx_err_t ppib_virtual_channel_set(nrfx_interconnect_ppib_t * p_ppib,
+static nrfx_err_t ppib_virtual_channel_set(interconnect_ppib_t * p_ppib,
                                            uint32_t                   ppib_channel,
                                            uint8_t                    virtual_channel)
 {
@@ -98,7 +242,7 @@ static void virtual_channel_enable_set(uint8_t virtual_channel, bool enable)
 {
     for (uint8_t i = 0; i < NRFX_INTERCONNECT_DPPIC_COUNT; i++)
     {
-        nrfx_interconnect_dppic_t * dppic = nrfx_interconnect_dppic_at_index_get(i);
+        interconnect_dppic_t * dppic = interconnect_dppic_at_index_get(i);
         uint8_t dppi_channel;
         nrfx_err_t err = dppic_channel_get(dppic, virtual_channel, &dppi_channel);
         if (err == NRFX_SUCCESS)
@@ -126,7 +270,7 @@ static void init(void)
 
     for (uint8_t i = 0; i < NRFX_INTERCONNECT_DPPIC_COUNT; i++)
     {
-        nrfx_interconnect_dppic_t * dppic = nrfx_interconnect_dppic_at_index_get(i);
+        interconnect_dppic_t * dppic = interconnect_dppic_at_index_get(i);
         for (uint8_t j = 0; j < NRF_DPPI_CH_NUM_MAX; j++)
         {
             dppic_virtual_channel_set(dppic, j, NRFX_GPPI_CHANNEL_INVALID);
@@ -135,7 +279,7 @@ static void init(void)
 
     for (uint8_t i = 0; i < NRFX_INTERCONNECT_PPIB_COUNT; i++)
     {
-        nrfx_interconnect_ppib_t * ppib = nrfx_interconnect_ppib_at_index_get(i);
+        interconnect_ppib_t * ppib = interconnect_ppib_at_index_get(i);
         for (uint8_t j = 0; j < PPIB_CHANNEL_MAX_COUNT; j++)
         {
             ppib_virtual_channel_set(ppib, j, NRFX_GPPI_CHANNEL_INVALID);
@@ -146,11 +290,11 @@ static void init(void)
 }
 
 static nrfx_err_t create_ppib_connection(uint8_t                                   virtual_channel,
-                                         nrfx_interconnect_dppic_to_dppic_path_t * p_path,
+                                         interconnect_dppic_to_dppic_path_t * p_path,
                                          uint8_t                                   src_dppi_channel,
                                          uint8_t                                   dst_dppi_channel)
 {
-    nrfx_interconnect_ppib_t * p_ppib = p_path->ppib;
+    interconnect_ppib_t * p_ppib = p_path->ppib;
     uint8_t    ppib_channel;
 #if NRFX_GPPI_PPIB_HAS_DYNAMIC_CONFIG
     nrfx_err_t err = ppib_channel_alloc(p_ppib, &ppib_channel);
@@ -185,7 +329,7 @@ static nrfx_err_t clear_virtual_channel_path(uint8_t virtual_channel)
     // Clear all DPPI channel masks.
     for (uint8_t i = 0; i < NRFX_INTERCONNECT_DPPIC_COUNT; i++)
     {
-        nrfx_interconnect_dppic_t * dppic = nrfx_interconnect_dppic_at_index_get(i);
+        interconnect_dppic_t * dppic = interconnect_dppic_at_index_get(i);
         uint8_t dppi_channel;
         nrfx_err_t err = dppic_channel_get(dppic, virtual_channel, &dppi_channel);
         if (err == NRFX_SUCCESS)
@@ -211,7 +355,7 @@ static nrfx_err_t clear_virtual_channel_path(uint8_t virtual_channel)
     // Clear all PPIB channel masks.
     for (uint8_t i = 0; i < NRFX_INTERCONNECT_PPIB_COUNT; i++)
     {
-        nrfx_interconnect_ppib_t * p_ppib = nrfx_interconnect_ppib_at_index_get(i);
+        interconnect_ppib_t * p_ppib = interconnect_ppib_at_index_get(i);
         uint8_t ppib_channel;
         nrfx_err_t err = ppib_channel_get(p_ppib, virtual_channel, &ppib_channel);
         if (err == NRFX_SUCCESS)
@@ -258,10 +402,10 @@ static nrfx_err_t gppi_dppi_connection_setup(uint8_t         virtual_channel,
     uint8_t src_dppi_channel = *p_src_dppi_channel;
     uint8_t dst_dppi_channel = *p_dst_dppi_channel;
 
-    nrfx_interconnect_dppic_t * p_src_dppic = nrfx_interconnect_dppic_get(src_domain);
-    nrfx_interconnect_dppic_t * p_dst_dppic = nrfx_interconnect_dppic_get(dst_domain);
+    interconnect_dppic_t * p_src_dppic = interconnect_dppic_get(src_domain);
+    interconnect_dppic_t * p_dst_dppic = interconnect_dppic_get(dst_domain);
 
-    nrfx_interconnect_dppic_to_dppic_path_t path =
+    interconnect_dppic_to_dppic_path_t path =
     {
         .src_dppic = p_src_dppic,
         .dst_dppic = p_dst_dppic,
@@ -286,7 +430,7 @@ static nrfx_err_t gppi_dppi_connection_setup(uint8_t         virtual_channel,
     }
 #endif
 
-    if (nrfx_interconnect_direct_connection_check(&path))
+    if (interconnect_direct_connection_check(&path))
     {
         if (src_dppi_channel == INVALID_DPPI_CHANNEL)
         {
@@ -344,24 +488,24 @@ static nrfx_err_t gppi_dppi_connection_setup(uint8_t         virtual_channel,
     }
     else
     {
-        nrfx_interconnect_dppic_t * p_main_dppic = nrfx_interconnect_dppic_main_get();
-        p_src_dppic = nrfx_interconnect_dppic_get(src_domain);
-        p_dst_dppic = nrfx_interconnect_dppic_get(dst_domain);
+        interconnect_dppic_t * p_main_dppic = interconnect_dppic_main_get();
+        p_src_dppic = interconnect_dppic_get(src_domain);
+        p_dst_dppic = interconnect_dppic_get(dst_domain);
 
-        nrfx_interconnect_dppic_to_dppic_path_t path_src_to_main =
+        interconnect_dppic_to_dppic_path_t path_src_to_main =
         {
             .src_dppic = p_src_dppic,
             .dst_dppic = p_main_dppic,
         };
 
-        nrfx_interconnect_dppic_to_dppic_path_t path_main_to_dst =
+        interconnect_dppic_to_dppic_path_t path_main_to_dst =
         {
             .src_dppic = p_main_dppic,
             .dst_dppic = p_dst_dppic,
         };
 
-        if (nrfx_interconnect_direct_connection_check(&path_src_to_main) &&
-            nrfx_interconnect_direct_connection_check(&path_main_to_dst))
+        if (interconnect_direct_connection_check(&path_src_to_main) &&
+            interconnect_direct_connection_check(&path_main_to_dst))
         {
             uint8_t main_dppi_channel;
 
@@ -536,7 +680,7 @@ void nrfx_gppi_fork_endpoint_setup(uint8_t channel, uint32_t fork_tep)
 {
     for (uint8_t i = 0; i < NRFX_INTERCONNECT_DPPIC_COUNT; i++)
     {
-        nrfx_interconnect_dppic_t * dppic = nrfx_interconnect_dppic_at_index_get(i);
+        interconnect_dppic_t * dppic = interconnect_dppic_at_index_get(i);
         uint8_t dppi_channel;
         nrfx_err_t err = dppic_channel_get(dppic, channel, &dppi_channel);
         if (err == NRFX_SUCCESS)
@@ -552,7 +696,7 @@ void nrfx_gppi_fork_endpoint_clear(uint8_t channel, uint32_t fork_tep)
 {
     for (uint8_t i = 0; i < NRFX_INTERCONNECT_DPPIC_COUNT; i++)
     {
-        nrfx_interconnect_dppic_t * dppic = nrfx_interconnect_dppic_at_index_get(i);
+        interconnect_dppic_t * dppic = interconnect_dppic_at_index_get(i);
         uint8_t dppi_channel;
         nrfx_err_t err = dppic_channel_get(dppic, channel, &dppi_channel);
         if (err == NRFX_SUCCESS)
@@ -567,8 +711,8 @@ void nrfx_gppi_fork_endpoint_clear(uint8_t channel, uint32_t fork_tep)
 void nrfx_gppi_channel_endpoints_setup(uint8_t channel, uint32_t eep, uint32_t tep)
 {
     nrfx_err_t err = NRFX_SUCCESS;
-    nrf_apb_index_t src_domain = nrfx_interconnect_apb_index_get(eep);
-    nrf_apb_index_t dst_domain = nrfx_interconnect_apb_index_get(tep);
+    nrf_apb_index_t src_domain = interconnect_apb_index_get(eep);
+    nrf_apb_index_t dst_domain = interconnect_apb_index_get(tep);
 
     NRFX_ASSERT(src_domain);
     NRFX_ASSERT(dst_domain);
@@ -578,7 +722,7 @@ void nrfx_gppi_channel_endpoints_setup(uint8_t channel, uint32_t eep, uint32_t t
 
     if (src_domain == dst_domain)
     {
-        nrfx_interconnect_dppic_t * dppic = nrfx_interconnect_dppic_get(src_domain);
+        interconnect_dppic_t * dppic = interconnect_dppic_get(src_domain);
         if (dppic_channel_alloc(dppic, &src_dppi_channel) == NRFX_SUCCESS)
         {
             dst_dppi_channel = src_dppi_channel;
@@ -636,7 +780,7 @@ bool nrfx_gppi_channel_check(uint8_t channel)
 
     for (uint8_t i = 0; i < NRFX_INTERCONNECT_DPPIC_COUNT; i++)
     {
-        nrfx_interconnect_dppic_t * dppic = nrfx_interconnect_dppic_at_index_get(i);
+        interconnect_dppic_t * dppic = interconnect_dppic_at_index_get(i);
         uint8_t dppi_channel;
         nrfx_err_t err = dppic_channel_get(dppic, channel, &dppi_channel);
         if (err == NRFX_SUCCESS)
@@ -694,8 +838,8 @@ nrfx_err_t nrfx_gppi_edge_connection_setup(uint8_t             channel,
                                            nrfx_dppi_t const * p_dst_dppi,
                                            uint8_t             dst_channel)
 {
-    nrf_apb_index_t src_domain = nrfx_interconnect_apb_index_get((uint32_t)p_src_dppi->p_reg);
-    nrf_apb_index_t dst_domain = nrfx_interconnect_apb_index_get((uint32_t)p_dst_dppi->p_reg);
+    nrf_apb_index_t src_domain = interconnect_apb_index_get((uint32_t)p_src_dppi->p_reg);
+    nrf_apb_index_t dst_domain = interconnect_apb_index_get((uint32_t)p_dst_dppi->p_reg);
 
     uint8_t src_dppi_channel = src_channel;
     uint8_t dst_dppi_channel = dst_channel;
