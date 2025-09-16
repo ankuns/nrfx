@@ -75,13 +75,9 @@ nrfx_err_t nrfx_mvdma_init(nrfx_mvdma_t const *       p_instance,
 
     nrfy_mvdma_int_init(p_instance->p_reg,
                         NRF_MVDMA_INT_END_MASK |
-#if NRF_MVDMA_HAS_NEW_VER
                         NRF_MVDMA_INT_PAUSED_MASK |
                         NRF_MVDMA_INT_SINKSELECTJOBDONE_MASK |
                         NRF_MVDMA_INT_SOURCESELECTJOBDONE_MASK |
-#else
-                        NRF_MVDMA_INT_STOPPED_MASK |
-#endif
                         NRF_MVDMA_INT_SINKBUSERROR_MASK |
                         NRF_MVDMA_INT_SOURCEBUSERROR_MASK,
                         interrupt_priority,
@@ -351,13 +347,9 @@ void nrfx_mvdma_uninit(nrfx_mvdma_t const * p_instance)
     {
         nrfy_mvdma_int_disable(p_instance->p_reg,
                                NRF_MVDMA_INT_END_MASK |
-#if NRF_MVDMA_HAS_NEW_VER
                                NRF_MVDMA_INT_PAUSED_MASK |
                                NRF_MVDMA_INT_SINKSELECTJOBDONE_MASK |
                                NRF_MVDMA_INT_SOURCESELECTJOBDONE_MASK |
-#else
-                               NRF_MVDMA_INT_STOPPED_MASK |
-#endif
                                NRF_MVDMA_INT_SINKBUSERROR_MASK |
                                NRF_MVDMA_INT_SOURCEBUSERROR_MASK);
     }
@@ -391,23 +383,15 @@ static void mvdma_irq_handler(NRF_MVDMA_Type * p_reg, mvdma_control_block_t * p_
     };
 
     uint32_t mask = NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_END) |
-#if NRF_MVDMA_HAS_NEW_VER
                     NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_PAUSED) |
                     NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_SINKSELECTJOBDONE) |
                     NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_SOURCESELECTJOBDONE) |
-#else
-                    NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_STOPPED) |
-#endif
                     NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_SINKBUSERROR) |
                     NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_SOURCEBUSERROR);
 
     uint32_t reset_req_mask = NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_SINKBUSERROR)   |
                               NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_SOURCEBUSERROR) |
-#if NRF_MVDMA_HAS_NEW_VER
                               NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_PAUSED);
-#else
-                              NRFY_EVENT_TO_INT_BITMASK(NRF_MVDMA_EVENT_STOPPED);
-#endif
 
     uint32_t event_mask = nrfy_mvdma_events_process(p_reg, mask, &list_request);
 
