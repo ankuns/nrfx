@@ -95,6 +95,33 @@ bool nrfx_nvmc_page_partial_erase_continue(void);
 #endif // NRF_NVMC_HAS_PARTIAL_ERASE || defined(__NRFX_DOXYGEN__)
 
 /**
+ * @brief Function for checking whether the specified range of addresses fits in non-volatile memory.
+ *
+ * @note This function checks if the range fits in regular memory, or in either UICR or
+ *       regular memory, depending on arguments. To check if a range fits specifically in UICR use
+ *       @ref nrfx_nvmc_fits_uicr_check.
+ *
+ * @param[in] addr         Starting address of the range to be checked.
+ * @param[in] uicr_allowed If true, addresses in the UICR area are considered valid.
+ * @param[in] num_bytes    Length of the range to be checked in bytes.
+ *
+ * @retval true  Range fits in NVM.
+ * @retval false Range doesn't fit in NVM.
+ */
+bool nrfx_nvmc_fits_memory_check(uint32_t addr, bool uicr_allowed, uint32_t num_bytes);
+
+/**
+ * @brief Function for checking whether the specified range of addresses fits in UICR.
+ *
+ * @param[in] addr      Starting address of the range to be checked.
+ * @param[in] num_bytes Length of the range to be checked in bytes.
+ *
+ * @retval true  Range fits in UICR.
+ * @retval false Range doesn't fit in UICR.
+ */
+bool nrfx_nvmc_fits_uicr_check(uint32_t addr, uint32_t num_bytes);
+
+/**
  * @brief Function for checking whether a byte is writable at the specified address.
  *
  * The NVMC is only able to write '0' to bits in the flash that are erased (set to '1').

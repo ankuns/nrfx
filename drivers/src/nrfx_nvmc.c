@@ -261,6 +261,38 @@ bool nrfx_nvmc_page_partial_erase_continue(void)
 }
 #endif // NRF_NVMC_HAS_PARTIAL_ERASE
 
+bool nrfx_nvmc_fits_memory_check(uint32_t addr, bool uicr_allowed, uint32_t len_bytes)
+{
+    uint32_t flash_size = flash_total_size_get();
+    if (((addr - (uint32_t)NVMC_FLASH_BASE_ADDRESS) < flash_size) &&
+        (len_bytes <= ((uint32_t)NVMC_FLASH_BASE_ADDRESS + flash_size - addr)))
+    {
+        return true;
+    }
+#if !defined(NRF_TRUSTZONE_NONSECURE)
+    if (uicr_allowed && nrfx_nvmc_fits_uicr_check(addr, len_bytes))
+    {
+        return true;
+    }
+#else
+    (void)uicr_allowed;
+#endif
+
+    return false;
+}
+
+bool nrfx_nvmc_fits_uicr_check(uint32_t addr, uint32_t len_bytes)
+{
+#if !defined(NRF_TRUSTZONE_NONSECURE)
+    return ((addr - (uint32_t)NRF_UICR) < sizeof(NRF_UICR_Type))
+        && (len_bytes <= ((uint32_t)NRF_UICR + sizeof(NRF_UICR_Type) - addr));
+#else
+    (void)addr;
+    (void)len_bytes;
+    return false;
+#endif
+}
+
 bool nrfx_nvmc_byte_writable_check(uint32_t addr, uint8_t val_to_check)
 {
     NRFX_ASSERT(is_valid_address(addr, true));
