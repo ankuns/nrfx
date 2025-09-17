@@ -102,6 +102,7 @@ __WEAK void SysTick_Handler(void)
  __HANDLER("Default_Handler") void SWI03_IRQHandler                                            (void);
  __HANDLER("Default_Handler") void SPU00_IRQHandler                                            (void);
  __HANDLER("Default_Handler") void MPC00_IRQHandler                                            (void);
+ __HANDLER("Default_Handler") void MPC03_IRQHandler                                            (void);
  __HANDLER("Default_Handler") void AAR00_CCM00_IRQHandler                                      (void);
  __HANDLER("Default_Handler") void ECB00_IRQHandler                                            (void);
  __HANDLER("Default_Handler") void VPR00_IRQHandler                                            (void);
@@ -179,7 +180,7 @@ __WEAK void SysTick_Handler(void)
  __HANDLER("Default_Handler") void VDETAO1V8_IRQHandler                                        (void);
  __HANDLER("Default_Handler") void VDETAO0V8_IRQHandler                                        (void);
  __HANDLER("Default_Handler") void HVBUCK_IRQHandler                                           (void);
- __HANDLER("Default_Handler") void AUDIOPLL_AUDIOPLLM_IRQHandler                               (void);
+ __HANDLER("Default_Handler") void AUXPLL_AUXPM_IRQHandler                                     (void);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector table
@@ -276,7 +277,7 @@ __VECTOR_TABLE_ATTRIBUTE const VECTOR_TABLE_Type __VECTOR_TABLE[] = {
     SPU00_IRQHandler,
     MPC00_IRQHandler,
     0,
-    0,
+    MPC03_IRQHandler,
     0,
     0,
     0,
@@ -513,7 +514,7 @@ __VECTOR_TABLE_ATTRIBUTE const VECTOR_TABLE_Type __VECTOR_TABLE[] = {
     HVBUCK_IRQHandler,
     0,
     0,
-    AUDIOPLL_AUDIOPLLM_IRQHandler,
+    AUXPLL_AUXPM_IRQHandler,
 };
 
 #if defined(__GNUC__)

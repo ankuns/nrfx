@@ -64,9 +64,10 @@ typedef enum {
   VPRCLIC_20_IRQn                        = 20,       /*!< 20 VPRCLIC_20                                                        */
   VPRCLIC_21_IRQn                        = 21,       /*!< 21 VPRCLIC_21                                                        */
   VPRCLIC_22_IRQn                        = 22,       /*!< 22 VPRCLIC_22                                                        */
-  VPRTIM_IRQn                            = 32,       /*!< 32 VPRTIM                                                            */
+  VPRTIM_IRQn                            = 31,       /*!< 31 VPRTIM                                                            */
   SPU00_IRQn                             = 64,       /*!< 64 SPU00                                                             */
   MPC00_IRQn                             = 65,       /*!< 65 MPC00                                                             */
+  MPC03_IRQn                             = 67,       /*!< 67 MPC03                                                             */
   AAR00_CCM00_IRQn                       = 74,       /*!< 74 AAR00_CCM00                                                       */
   ECB00_IRQn                             = 75,       /*!< 75 ECB00                                                             */
   VPR00_IRQn                             = 76,       /*!< 76 VPR00                                                             */
@@ -142,7 +143,7 @@ typedef enum {
   VDETAO1V8_IRQn                         = 299,      /*!< 299 VDETAO1V8                                                        */
   VDETAO0V8_IRQn                         = 300,      /*!< 300 VDETAO0V8                                                        */
   HVBUCK_IRQn                            = 301,      /*!< 301 HVBUCK                                                           */
-  AUDIOPLL_AUDIOPLLM_IRQn                = 304,      /*!< 304 AUDIOPLL_AUDIOPLLM                                               */
+  AUXPLL_AUXPM_IRQn                      = 304,      /*!< 304 AUXPLL_AUXPM                                                     */
 } IRQn_Type;
 
 /* ==================================================== Interrupt Aliases ==================================================== */
@@ -230,10 +231,10 @@ typedef enum {
 #define CLOCK_IRQHandler              CLOCK_POWER_IRQHandler
 #define POWER_IRQn                    CLOCK_POWER_IRQn
 #define POWER_IRQHandler              CLOCK_POWER_IRQHandler
-#define AUDIOPLL_IRQn                 AUDIOPLL_AUDIOPLLM_IRQn
-#define AUDIOPLL_IRQHandler           AUDIOPLL_AUDIOPLLM_IRQHandler
-#define AUDIOPLLM_IRQn                AUDIOPLL_AUDIOPLLM_IRQn
-#define AUDIOPLLM_IRQHandler          AUDIOPLL_AUDIOPLLM_IRQHandler
+#define AUXPLL_IRQn                   AUXPLL_AUXPM_IRQn
+#define AUXPLL_IRQHandler             AUXPLL_AUXPM_IRQHandler
+#define AUXPM_IRQn                    AUXPLL_AUXPM_IRQn
+#define AUXPM_IRQHandler              AUXPLL_AUXPM_IRQHandler
 
 /* =========================================================================================================================== */
 /* ================                           Processor and Core Peripheral Section                           ================ */
@@ -247,7 +248,7 @@ typedef enum {
 #define __DSP_PRESENT                  0             /*!< DSP present or not                                                   */
 #define __CLIC_PRIO_BITS               2             /*!< Number of Bits used for Priority Levels                              */
 #define __MTVT_PRESENT                 1             /*!< CPU supports alternate Vector Table address                          */
-#define __MPU_PRESENT                  1             /*!< MPU present                                                          */
+#define __MPU_PRESENT                  0             /*!< MPU present                                                          */
 #define __FPU_PRESENT                  0             /*!< FPU present                                                          */
 #define __FPU_DP                       0             /*!< Double Precision FPU                                                 */
 #define __INTERRUPTS_MAX             270             /*!< Size of interrupt vector table                                       */

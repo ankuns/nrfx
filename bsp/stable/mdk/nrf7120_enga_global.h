@@ -89,6 +89,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NRF_MPC00_S_BASE                  0x50041000UL
 #define NRF_DPPIC00_NS_BASE               0x40042000UL
 #define NRF_DPPIC00_S_BASE                0x50042000UL
+#define NRF_MPC03_S_BASE                  0x50043000UL
 #define NRF_PPIB00_NS_BASE                0x40044000UL
 #define NRF_PPIB00_S_BASE                 0x50044000UL
 #define NRF_PPIB01_NS_BASE                0x40045000UL
@@ -352,10 +353,10 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NRF_VDETIO_S_BASE                 0x5012E000UL
 #define NRF_MBIAS_NS_BASE                 0x4012F000UL
 #define NRF_MBIAS_S_BASE                  0x5012F000UL
-#define NRF_AUDIOPLLM_NS_BASE             0x40130000UL
-#define NRF_AUDIOPLL_NS_BASE              0x40130000UL
-#define NRF_AUDIOPLLM_S_BASE              0x50130000UL
-#define NRF_AUDIOPLL_S_BASE               0x50130000UL
+#define NRF_AUXPLL_NS_BASE                0x40130000UL
+#define NRF_AUXPM_NS_BASE                 0x40130000UL
+#define NRF_AUXPLL_S_BASE                 0x50130000UL
+#define NRF_AUXPM_S_BASE                  0x50130000UL
 #define NRF_PCGCM30_S_BASE                0x5013F000UL
 
 /* =========================================================================================================================== */
@@ -373,6 +374,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NRF_MPC00_S                       ((NRF_MPC_Type*)                      NRF_MPC00_S_BASE)
 #define NRF_DPPIC00_NS                    ((NRF_DPPIC_Type*)                    NRF_DPPIC00_NS_BASE)
 #define NRF_DPPIC00_S                     ((NRF_DPPIC_Type*)                    NRF_DPPIC00_S_BASE)
+#define NRF_MPC03_S                       ((NRF_MPC_Type*)                      NRF_MPC03_S_BASE)
 #define NRF_PPIB00_NS                     ((NRF_PPIB_Type*)                     NRF_PPIB00_NS_BASE)
 #define NRF_PPIB00_S                      ((NRF_PPIB_Type*)                     NRF_PPIB00_S_BASE)
 #define NRF_PPIB01_NS                     ((NRF_PPIB_Type*)                     NRF_PPIB01_NS_BASE)
@@ -636,10 +638,10 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NRF_VDETIO_S                      ((NRF_VDETIO_Type*)                   NRF_VDETIO_S_BASE)
 #define NRF_MBIAS_NS                      ((NRF_MBIAS_Type*)                    NRF_MBIAS_NS_BASE)
 #define NRF_MBIAS_S                       ((NRF_MBIAS_Type*)                    NRF_MBIAS_S_BASE)
-#define NRF_AUDIOPLLM_NS                  ((NRF_AUXPM_Type*)                    NRF_AUDIOPLLM_NS_BASE)
-#define NRF_AUDIOPLL_NS                   ((NRF_AUXPLL_Type*)                   NRF_AUDIOPLL_NS_BASE)
-#define NRF_AUDIOPLLM_S                   ((NRF_AUXPM_Type*)                    NRF_AUDIOPLLM_S_BASE)
-#define NRF_AUDIOPLL_S                    ((NRF_AUXPLL_Type*)                   NRF_AUDIOPLL_S_BASE)
+#define NRF_AUXPLL_NS                     ((NRF_AUXPLL_Type*)                   NRF_AUXPLL_NS_BASE)
+#define NRF_AUXPM_NS                      ((NRF_AUXPM_Type*)                    NRF_AUXPM_NS_BASE)
+#define NRF_AUXPLL_S                      ((NRF_AUXPLL_Type*)                   NRF_AUXPLL_S_BASE)
+#define NRF_AUXPM_S                       ((NRF_AUXPM_Type*)                    NRF_AUXPM_S_BASE)
 #define NRF_PCGCM30_S                     ((NRF_PCGCMASTER_Type*)               NRF_PCGCM30_S_BASE)
 
 /* =========================================================================================================================== */
@@ -771,8 +773,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   #define NRF_HVBUCK                              NRF_HVBUCK_NS
   #define NRF_VDETIO                              NRF_VDETIO_NS
   #define NRF_MBIAS                               NRF_MBIAS_NS
-  #define NRF_AUDIOPLL                            NRF_AUDIOPLL_NS
-  #define NRF_AUDIOPLLM                           NRF_AUDIOPLLM_NS
+  #define NRF_AUXPLL                              NRF_AUXPLL_NS
+  #define NRF_AUXPM                               NRF_AUXPM_NS
 #else                                                /*!< Remap NRF_X_S instances to NRF_X symbol for ease of use.             */
   #define NRF_WICR                                NRF_WICR_NS
   #define NRF_FICR                                NRF_FICR_NS
@@ -783,6 +785,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   #define NRF_SPU00                               NRF_SPU00_S
   #define NRF_MPC00                               NRF_MPC00_S
   #define NRF_DPPIC00                             NRF_DPPIC00_S
+  #define NRF_MPC03                               NRF_MPC03_S
   #define NRF_PPIB00                              NRF_PPIB00_S
   #define NRF_PPIB01                              NRF_PPIB01_S
   #define NRF_KMU                                 NRF_KMU_S
@@ -926,8 +929,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   #define NRF_HVBUCK                              NRF_HVBUCK_S
   #define NRF_VDETIO                              NRF_VDETIO_S
   #define NRF_MBIAS                               NRF_MBIAS_S
-  #define NRF_AUDIOPLL                            NRF_AUDIOPLL_S
-  #define NRF_AUDIOPLLM                           NRF_AUDIOPLLM_S
+  #define NRF_AUXPLL                              NRF_AUXPLL_S
+  #define NRF_AUXPM                               NRF_AUXPM_S
   #define NRF_PCGCM30                             NRF_PCGCM30_S
 #endif                                               /*!< NRF_TRUSTZONE_NONSECURE                                              */
 
