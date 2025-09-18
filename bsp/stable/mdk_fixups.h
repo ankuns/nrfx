@@ -216,10 +216,8 @@
         #define NRF_OWNER NRF_OWNER_WIFICORE
     #endif
 
-    #if defined(IPCT_PRESENT)
-        #if defined(NRF_SECURE)
-            #define LOCAL_IPCT_NUM 4
-        #endif
+    #if defined(NRF_SECURE)
+        #define LOCAL_IPCT_NUM 4
     #endif
 
     #define NRF_SYSCTRL_PPIB130_TO_PPIB132_CHANNELS_OFFSET 0
