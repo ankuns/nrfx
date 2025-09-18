@@ -1496,6 +1496,10 @@
         #define NRF_OWNER NRF_OWNER_APPLICATION
     #endif
 
+    #if defined(NRF_CELLCORE)
+        #define LOCAL_IPCT_NUM 8
+    #endif
+
     #define PWM_SHORTS_LOOPSDONE_DMA_SEQ0_START_Pos (2UL)
     #define PWM_SHORTS_LOOPSDONE_DMA_SEQ0_START_Msk (0x1UL << PWM_SHORTS_LOOPSDONE_DMA_SEQ0_START_Pos)
     #define PWM_SHORTS_LOOPSDONE_DMA_SEQ0_START_Min (0x0UL)
@@ -3507,6 +3511,10 @@ typedef struct {
             #define GRTC_IRQ_GROUP 5
             #define GPIOTE_IRQ_GROUP 5
         #endif
+    #endif
+
+    #if defined(NRF_CELLCORE)
+        #define LOCAL_IPCT_NUM 8
     #endif
 
     #define GPIOTE131_CH_NUM (GPIOTE131_GPIOTE_NCHANNELS_MAX + 1UL)
