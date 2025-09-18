@@ -587,6 +587,9 @@ do {                                                         \
 /** @brief IRQ handler type. */
 typedef void (* nrfx_irq_handler_t)(void);
 
+/** @brief New IRQ handler type. */
+typedef void (* nrfx_new_irq_handler_t)(void *);
+
 /** @brief Driver state. */
 typedef enum
 {

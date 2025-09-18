@@ -43,6 +43,34 @@ nrfx_err_t nrfx_prs_acquire(void       const * p_base_addr,
                             nrfx_irq_handler_t irq_handler);
 
 /**
+ * @brief Function for acquiring shared peripheral resources associated with
+ *        the specified peripheral using instance pointer.
+ *
+ * Certain resources and registers are shared among peripherals that have
+ * the same ID (for example: SPI0, SPIM0, SPIS0, TWI0, TWIM0, and TWIS0 in
+ * nRF52832). Only one of them can be utilized at a given time. This function
+ * reserves proper resources to be used by the specified peripheral.
+ * If NRFX_PRS_ENABLED is set to a non-zero value, IRQ handlers for peripherals
+ * that are sharing resources with others are invoked by the @ref nrfx_prs
+ * module instead of the user code. The drivers must then specify their
+ * interrupt handling routines with instance pointer and register them by using this function.
+ *
+ * @param[in] p_base_addr Requested peripheral base pointer.
+ * @param[in] irq_handler Interrupt handler to register.
+ * @param[in] p_instance  Pointer to shared peripheral instance structure used in
+ *                        interrupt handling.
+ *
+ * @retval NRFX_SUCCESS    If resources were acquired successfully or the
+ *                         specified peripheral is not handled by the PRS
+ *                         subsystem and there is no need to acquire resources
+ *                         for it.
+ * @retval NRFX_ERROR_BUSY If resources were already acquired.
+ */
+nrfx_err_t nrfx_new_prs_acquire(void const *           p_base_addr,
+                                nrfx_new_irq_handler_t irq_handler,
+                                void *                 p_instance);
+
+/**
  * @brief Function for releasing shared resources reserved previously by
  *        @ref nrfx_prs_acquire() for the specified peripheral.
  *

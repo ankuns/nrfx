@@ -17,16 +17,30 @@
         return &NRFX_CONCAT(m_prs_box_, i);                         \
     }
 typedef struct {
-    nrfx_irq_handler_t handler;
-    bool               acquired;
+    nrfx_irq_handler_t     handler;
+    bool                   acquired;
+    nrfx_new_irq_handler_t new_handler;
+    void *                 p_instance;
 } prs_box_t;
 
-#define PRS_BOX_DEFINE(periph_name, prefix, n, _)                                                    \
-    static prs_box_t m_prs_box_##n = { .handler = NULL, .acquired = false }; \
-    void nrfx_prs_box_##n##_irq_handler(void)                                \
-    {                                                                        \
-        NRFX_ASSERT(m_prs_box_##n.handler);                                  \
-        m_prs_box_##n.handler();                                             \
+#define PRS_BOX_DEFINE(periph_name, prefix, n, _)                \
+    static prs_box_t m_prs_box_##n = { .handler = NULL,          \
+                                       .acquired = false,        \
+                                       .new_handler = NULL,      \
+                                       .p_instance = NULL };     \
+    void nrfx_prs_box_##n##_irq_handler(void)                    \
+    {                                                            \
+        if (m_prs_box_##n.handler)                               \
+        {                                                        \
+            m_prs_box_##n.handler();                             \
+            return;                                              \
+        }                                                        \
+        else if (m_prs_box_##n.new_handler)                      \
+        {                                                        \
+            m_prs_box_##n.new_handler(m_prs_box_##n.p_instance); \
+            return;                                              \
+        }                                                        \
+        NRFX_ASSERT(false);                                      \
     }
 
 NRFX_FOREACH_ENABLED(PRS_BOX_, PRS_BOX_DEFINE, (), (), _)
@@ -78,6 +92,45 @@ nrfx_err_t nrfx_prs_acquire(void       const * p_base_addr,
     return ret_code;
 }
 
+nrfx_err_t nrfx_new_prs_acquire(void const *           p_base_addr,
+                                nrfx_new_irq_handler_t irq_handler,
+                                void *                 p_instance)
+{
+    NRFX_ASSERT(p_base_addr);
+
+    nrfx_err_t ret_code;
+
+    prs_box_t * p_box = prs_box_get(p_base_addr);
+    if (p_box != NULL)
+    {
+        bool busy = false;
+
+        NRFX_CRITICAL_SECTION_ENTER();
+        if (p_box->acquired)
+        {
+            busy = true;
+        }
+        else
+        {
+            p_box->acquired = true;
+            p_box->new_handler  = irq_handler;
+            p_box->p_instance = p_instance;
+        }
+        NRFX_CRITICAL_SECTION_EXIT();
+
+        if (busy)
+        {
+            ret_code = NRFX_ERROR_BUSY;
+            LOG_FUNCTION_EXIT(WARNING, ret_code);
+            return ret_code;
+        }
+    }
+
+    ret_code = NRFX_SUCCESS;
+    LOG_FUNCTION_EXIT(INFO, ret_code);
+    return ret_code;
+}
+
 void nrfx_prs_release(void const * p_base_addr)
 {
     NRFX_ASSERT(p_base_addr);
@@ -87,5 +140,7 @@ void nrfx_prs_release(void const * p_base_addr)
     {
         p_box->handler  = NULL;
         p_box->acquired = false;
+        p_box->new_handler = NULL;
+        p_box->p_instance = NULL;
     }
 }
