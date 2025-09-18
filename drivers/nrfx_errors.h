@@ -2,6 +2,7 @@
 
 #ifndef NRFX_ERRORS_H__
 #define NRFX_ERRORS_H__
+#include <errno.h>
 
 #if !NRFX_CHECK(NRFX_CUSTOM_ERROR_CODES)
 
