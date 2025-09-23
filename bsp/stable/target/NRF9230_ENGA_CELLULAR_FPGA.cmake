@@ -1,5 +1,0 @@
-###############################################################################
-#  DEVKIT-related
-#
-
-select_cpu_board(NRF9230_ENGA_CELLULAR FPGA_HALTIUM)
