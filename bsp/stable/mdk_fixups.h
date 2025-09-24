@@ -106,6 +106,7 @@
     #define SPIM_IFTIMING_CSNDUR_ResetValue  0x2UL
     #define SPIM_CSNPOL_ResetValue           0x0UL
     #define SPIM_IFTIMING_RXDELAY_ResetValue 0x2UL
+    #define SPIM_DCX_DISCONNECTED_READBACK   0x11F
     #if defined(NRF_APPLICATION)
         #define VMC_RAM_SECTION_COUNT   16
         #define NVMC_FLASH_BASE_ADDRESS 0
@@ -140,7 +141,7 @@
     #define QSPI_SCK_DEDICATED NRF_GPIO_PIN_MAP(0, 17)
     #define QSPI_CSN_DEDICATED NRF_GPIO_PIN_MAP(0, 18)
 
-    #if defined(NRF_SPIM4)
+    #if defined(NRF_APPLICATION)
         #define SPIM_SCK_DEDICATED  NRF_GPIO_PIN_MAP(0, 8)
         #define SPIM_MOSI_DEDICATED NRF_GPIO_PIN_MAP(0, 9)
         #define SPIM_MISO_DEDICATED NRF_GPIO_PIN_MAP(0, 10)

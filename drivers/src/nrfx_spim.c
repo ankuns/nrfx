@@ -565,7 +565,11 @@ int nrfx_spim_reconfigure(nrfx_spim_t *              p_instance,
 
 static void spim_pin_uninit(uint32_t pin)
 {
-    if (pin == NRF_SPIM_PIN_NOT_CONNECTED)
+    if (pin == NRF_SPIM_PIN_NOT_CONNECTED ||
+#if defined(SPIM_DCX_DISCONNECTED_READBACK)
+        pin == SPIM_DCX_DISCONNECTED_READBACK ||
+#endif
+        0)
     {
         return;
     }
