@@ -200,7 +200,7 @@
 /**************************************************************************************************/
 
 #if defined(HALTIUM_XXAA)
-    #include "haltium_interim.h"
+    #include "stable/mdk/haltium_interim.h"
 
     #define EASYVDMA_PRESENT
 
@@ -474,7 +474,7 @@
 /**************************************************************************************************/
 
 #if defined(NRF54H20_XXAA)
-    #include "nrf54h20_interim.h"
+    #include "stable/mdk/nrf54h20_interim.h"
 
     #define RESETHUB_HAS_NETWORK
 
@@ -494,7 +494,7 @@
 /**************************************************************************************************/
 
 #if defined(NRF54L05_XXAA)
-    #include "nrf54l05_interim.h"
+    #include "stable/mdk/nrf54l05_interim.h"
     #define CLOCK_STATIC_IRQ
     #define TRNG_CLK_DIV 0
     #define I2S_MCKFREQ_FACTOR 1048576
@@ -509,7 +509,7 @@
 /**************************************************************************************************/
 
 #if defined(NRF54L10_XXAA)
-    #include "nrf54l10_interim.h"
+    #include "stable/mdk/nrf54l10_interim.h"
     #define CLOCK_STATIC_IRQ
     #define TRNG_CLK_DIV 0
     #define I2S_MCKFREQ_FACTOR 1048576
@@ -524,7 +524,7 @@
 /**************************************************************************************************/
 
 #if defined(NRF54L15_XXAA)
-    #include "nrf54l15_interim.h"
+    #include "stable/mdk/nrf54l15_interim.h"
     #define CLOCK_STATIC_IRQ
     #define TRNG_CLK_DIV 0
     #define I2S_MCKFREQ_FACTOR 1048576
@@ -539,7 +539,7 @@
 /**************************************************************************************************/
 
 #if defined(NRF54LM20A_ENGA_XXAA)
-    #include "nrf54lm20a_enga_interim.h"
+    #include "stable/mdk/nrf54lm20a_enga_interim.h"
     #define TRNG_CLK_DIV 1
     #define I2S_MCKFREQ_FACTOR 1048576
 #endif
@@ -553,7 +553,7 @@
 /**************************************************************************************************/
 
 #if defined(NRF54LS05B_ENGA_XXAA)
-    #include "nrf54ls05b_enga_interim.h"
+    #include "stable/mdk/nrf54ls05b_enga_interim.h"
     #define GPIOTE_SECURE_SUFFIX_OVERRIDE NONSECURE
     #define TRNG_CLK_DIV 1
 #endif
@@ -579,7 +579,7 @@
 /**************************************************************************************************/
 
 #if defined(NRF7120_ENGA_XXAA)
-    #include "nrf7120_enga_interim.h"
+    #include "stable/mdk/nrf7120_enga_interim.h"
 
     #define ADDRESS_BUS_Pos (18UL)
     #define ADDRESS_BUS_Msk (0x3FUL << ADDRESS_BUS_Pos)
@@ -638,7 +638,7 @@
     #define PWM_SHORTS_LOOPSDONE_DMA_SEQ1_START_Disabled (0x0UL)
     #define PWM_SHORTS_LOOPSDONE_DMA_SEQ1_START_Enabled (0x1UL)
 
-    #include "nrf9230_engb_interim.h"
+    #include "stable/mdk/nrf9230_engb_interim.h"
 
     // Old HFXO modes are not supported
     #ifdef BICR_HFXO_CONFIG_MODE_Pierce

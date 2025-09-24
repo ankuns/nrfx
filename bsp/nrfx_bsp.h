@@ -4,29 +4,9 @@
 #define NRFX_BSP_H__
 
 #ifndef NRFX_BSP_NRF_PATH
-#define NRFX_BSP_NRF_PATH "stable/mdk/nrf.h"
-#endif
-
-#ifndef NRFX_BSP_ERRATAS_PATH
-#define NRFX_BSP_ERRATAS_PATH "stable/mdk/nrf_erratas.h"
-#endif
-
-#ifndef NRFX_BSP_SOC_IRQS_PATH
-#define NRFX_BSP_SOC_IRQS_PATH "stable/soc/nrfx_irqs.h"
-#endif
-
-#ifndef NRFX_BSP_NRFX_EXT_PATH
-#define NRFX_BSP_NRFX_EXT_PATH "stable/nrfx_ext.h"
-#endif
-
-#ifndef NRFX_BSP_NRFX_COREDEP_PATH
-#define NRFX_BSP_NRFX_COREDEP_PATH "stable/soc/nrfx_coredep_defs.h"
+#define NRFX_BSP_NRF_PATH "stable/bsp.h"
 #endif
 
 #include NRFX_BSP_NRF_PATH
-#include NRFX_BSP_ERRATAS_PATH
-#include NRFX_BSP_NRFX_EXT_PATH
 
-#include "stable/soc/nrfx_mdk_fixups.h"
-
-#endif
+#endif // NRFX_BSP_H__

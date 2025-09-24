@@ -3,8 +3,6 @@
 #ifndef NRF_COMMON_H__
 #define NRF_COMMON_H__
 
-#include <nrf_erratas.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
