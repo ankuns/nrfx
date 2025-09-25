@@ -843,6 +843,9 @@
 
 #if defined(NRF7120_ENGA_XXAA)
     #include "nrf7120_enga_interim.h"
+
+    #define ADDRESS_BUS_Pos (18UL)
+    #define ADDRESS_BUS_Msk (0x3FUL << ADDRESS_BUS_Pos)
 #endif
 
 /**************************************************************************************************/
