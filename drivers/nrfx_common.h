@@ -201,6 +201,16 @@ extern "C" {
 #define NRFX_ABS(a) ((a) < (0) ? -(a) : (a))
 
 /**
+ * @brief Macro for computing the difference between two unsigned values.
+ *
+ * @param[in] a First input value.
+ * @param[in] b Second input value.
+ *
+ * @return Difference.
+ */
+#define NRFX_DIFF(a, b) ((a) < (b) ? ((b) - (a)) : ((a) - (b)))
+
+/**
  * @brief Macro for checking whether any of the instance of the specified peripheral supports a given feature.
  *
  * Macro checks flags set in \<device\>_peripherals.h file.
