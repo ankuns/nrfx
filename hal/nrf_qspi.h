@@ -44,6 +44,9 @@ extern "C" {
 #define NRF_QSPI_HAS_MODE_1 0
 #endif
 
+/** @brief Value representing QSPI base clock frequency. */
+#define NRF_QSPI_BASE_CLOCK_FREQ QSPI_BASE_CLOCK_FREQ
+
 /**
  * @brief This value can be used as a parameter for the @ref nrf_qspi_pins_set
  *        function to specify that a given QSPI signal (SCK, CSN, IO0, IO1, IO2, or IO3)
