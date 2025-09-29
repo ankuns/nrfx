@@ -44,21 +44,6 @@ extern "C" {
             (NRF_GPIO_PIN_SEL_CELLULAR = GPIO_PIN_CNF_CTRLSEL_CELL), ())
 #endif
 
-#if defined(NRF9230_ENGA_XXAA)
-    #define NRF_GPIO_RETAIN_EXT                                               \
-        NRF_GPIO_RETAIN_SECURE_MASK          = GPIO_RETAIN_SECURE_Msk,        \
-        NRF_GPIO_RETAIN_CELLULAR_MASK        = GPIO_RETAIN_CELLCORE_Msk,      \
-        NRF_GPIO_RETAIN_CELL_DSP_MASK        = GPIO_RETAIN_CELLDSP_Msk,       \
-        NRF_GPIO_RETAIN_CELL_RF_MASK         = GPIO_RETAIN_CELLRF_Msk,        \
-        NRF_GPIO_RETAIN_GLOBAL_SLOW_MASK     = GPIO_RETAIN_GDMAINSLOW_Msk,    \
-        NRF_GPIO_RETAIN_GLOBAL_FAST_MASK     = GPIO_RETAIN_GDMAINFAST_Msk,    \
-        NRF_GPIO_RETAIN_GLOBAL_ACTIVE_1_MASK = GPIO_RETAIN_GDACTIVECORE1_Msk, \
-        NRF_GPIO_RETAIN_GLOBAL_ACTIVE_2_MASK = GPIO_RETAIN_GDACTIVECORE2_Msk, \
-        NRF_GPIO_RETAIN_GLOBAL_ACTIVE_3_MASK = GPIO_RETAIN_GDACTIVECORE3_Msk, \
-        NRF_GPIO_RETAIN_DISPLAY_MASK         = GPIO_RETAIN_DISPLAYSS_Msk,     \
-        NRF_GPIO_RETAIN_DEBUG_MASK           = GPIO_RETAIN_TDD_Msk,
-#endif
-
 /*------------------------------------------------------------------------------------------------*/
 /* End of GPIO Extended section                                                                   */
 /*------------------------------------------------------------------------------------------------*/
@@ -78,8 +63,7 @@ extern "C" {
 #endif
 
 #if defined(NRF_GPIOTE131) && \
-    (defined(NRF_CELLCORE) || ((defined(NRF9230_ENGA_XXAA) || defined(NRF9230_ENGB_XXAA)) && \
-     defined(NRF_SYSCTRL)))
+    (defined(NRF_CELLCORE) || (defined(NRF9230_ENGB_XXAA) && defined(NRF_SYSCTRL)))
     #define NRF_GPIOTE_IRQn_EXT GPIOTE131_IRQn
     #define NRF_GPIOTE_INDEX 131
 #endif
@@ -151,7 +135,7 @@ extern "C" {
 /* Start of IDS Extended section                                                                  */
 /*------------------------------------------------------------------------------------------------*/
 
-#if defined(NRF9230_ENGA_XXAA) || defined(NRF9230_ENGB_XXAA)
+#if defined(NRF9230_ENGB_XXAA)
 #define NRFX_IDS_DOMAIN_ENUM_EXT NRFX_IDS_DOMAIN_CELL = NRF_PROCESSOR_CELLCORE,
 #define NRFX_IDS_DOMAIN_EXT                  \
         case NRFX_IDS_DOMAIN_CELL:           \
@@ -190,7 +174,7 @@ extern "C" {
 /* Start of PRS Extended section                                                                  */
 /*------------------------------------------------------------------------------------------------*/
 
-#if defined(NRF7140_XXAA) || defined(NRF9230_ENGA_XXAA) || defined(NRF9230_XXAA)
+#if defined(NRF7140_XXAA) || defined(NRF9230_XXAA)
     #define NRF_PRS_BOX_EXT
     #define NRFX_PRS_BOX_0_ADDR NRF_UARTE130
     #define NRFX_PRS_BOX_1_ADDR NRF_UARTE131
@@ -288,7 +272,7 @@ extern "C" {
     #elif defined(BOARD_FPGA)
         #define NRFX_DELAY_CPU_FREQ_MHZ ((SystemCoreClock / 1000000) / CONFIG_NRFX_SYS_CLOCK_DIV)
         #define NRFX_DELAY_DWT_PRESENT  1
-    #elif defined(NRF7140_XXAA) || defined(NRF9230_ENGA_XXAA) || defined(NRF9220_XXAA)
+    #elif defined(NRF7140_XXAA) || defined(NRF9220_XXAA)
         #define NRFX_DELAY_CPU_FREQ_MHZ (SystemCoreClock / 1000000)
         #define NRFX_DELAY_DWT_PRESENT  0
     #endif
