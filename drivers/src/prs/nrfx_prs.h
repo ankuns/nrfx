@@ -3,8 +3,6 @@
 #ifndef NRFX_PRS_H__
 #define NRFX_PRS_H__
 
-#include <nrfx_prs_boxes.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

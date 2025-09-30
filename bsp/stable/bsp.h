@@ -12,6 +12,8 @@
 #include "stable/mdk/nrf_peripherals.h"
 #include "stable/mdk/nrf_mem.h"
 #include "stable/nrfx_ext.h"
+#include "stable/nrfx_prs_boxes.h"
+#include "stable/nrfx_ram_sections.h"
 #include "stable/soc/nrfx_irqs.h"
 #include "stable/soc/nrfx_mdk_fixups.h"
 

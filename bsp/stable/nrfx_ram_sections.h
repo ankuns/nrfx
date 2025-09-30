@@ -10,7 +10,6 @@
 #define RAM_UNIFORM_BLOCKS             4
 #define RAM_UNIFORM_SECTIONS_PER_BLOCK 1
 #define RAM_UNIFORM_SECTIONS_TOTAL     4
-#error "Unsupported device."
 #elif defined(NRF52805_XXAA) || defined(NRF52810_XXAA) || defined(NRF52811_XXAA)
 #define RAM_SECTION_UNIT_SIZE          4096
 #define RAM_UNIFORM_BLOCKS             3
@@ -121,8 +120,6 @@
 #define RAM_UNIFORM_BLOCKS             8
 #define RAM_UNIFORM_SECTIONS_PER_BLOCK 4
 #define RAM_UNIFORM_SECTIONS_TOTAL     32
-#elif !defined(RAM_SECTION_UNIT_SIZE)
-#error "Unsupported device."
 #endif
 
 #endif
