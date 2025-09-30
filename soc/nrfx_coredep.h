@@ -5,8 +5,6 @@
 
 #include <nrfx.h>
 
-#include NRFX_BSP_NRFX_COREDEP_PATH
-
 #if NRFX_CHECK(ISA_RISCV)
 #include <hal/nrf_vpr_csr.h>
 #include <hal/nrf_vpr_csr_vtim.h>
@@ -19,20 +17,32 @@
  * @brief Module containing functions with core-dependent implementation, like delay.
  */
 
-#if defined(__NRFX_DOXYGEN__)
-
 /** @brief Core frequency (in MHz). */
-#define NRFX_DELAY_CPU_FREQ_MHZ
+#if !defined(NRFX_DELAY_CPU_FREQ_MHZ) || defined (__NRFX_DOXYGEN__)
+#define NRFX_DELAY_CPU_FREQ_MHZ (SystemCoreClock / 1000000)
+#endif
+
 /** @brief Availability of Data Watchpoint and Trace (DWT) unit in the given SoC. */
-#define NRFX_DELAY_DWT_PRESENT
+#if !defined(NRFX_DELAY_DWT_PRESENT) || defined (__NRFX_DOXYGEN__)
+#if defined(DWT_MISSING)
+#define NRFX_DELAY_DWT_PRESENT 0
+#else
+#define NRFX_DELAY_DWT_PRESENT 1
+#endif
+#endif
+
 /**
  * @brief Number of cycles consumed by one iteration of the internal loop
  *        in the function @ref nrfx_coredep_delay_us.
  *
  * This value can be specified externally (for example, when the SoC is emulated).
  */
-#define NRFX_COREDEP_DELAY_US_LOOP_CYCLES
-
+#if !defined(NRFX_COREDEP_DELAY_US_LOOP_CYCLES) || defined (__NRFX_DOXYGEN__)
+#if defined(DELAY_CUSTOM_CYCLES)
+#define NRFX_COREDEP_DELAY_US_LOOP_CYCLES DELAY_CUSTOM_CYCLES
+#else
+#define NRFX_COREDEP_DELAY_US_LOOP_CYCLES 3
+#endif
 #endif
 
 /**
