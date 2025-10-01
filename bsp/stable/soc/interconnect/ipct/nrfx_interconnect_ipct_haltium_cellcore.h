@@ -3,6 +3,8 @@
 #ifndef NRFX_INTERCONNECT_IPCT_HALTIUM_CELLCORE_H__
 #define NRFX_INTERCONNECT_IPCT_HALTIUM_CELLCORE_H__
 
+#include "drivers/nrfx_utils.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -3,6 +3,8 @@
 #ifndef NRFX_IRQS_NRF51_H__
 #define NRFX_IRQS_NRF51_H__
 
+#include "drivers/nrfx_utils.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

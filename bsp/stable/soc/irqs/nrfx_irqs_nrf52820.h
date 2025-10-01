@@ -3,6 +3,8 @@
 #ifndef NRFX_IRQS_NRF52820_H__
 #define NRFX_IRQS_NRF52820_H__
 
+#include "drivers/nrfx_utils.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

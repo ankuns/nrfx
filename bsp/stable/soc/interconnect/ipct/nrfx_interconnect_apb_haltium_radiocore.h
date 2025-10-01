@@ -3,6 +3,8 @@
 #ifndef NRFX_INTERCONNECT_APB_HALTIUM_RADIOCORE_H__
 #define NRFX_INTERCONNECT_APB_HALTIUM_RADIOCORE_H__
 
+#include "drivers/nrfx_utils.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
