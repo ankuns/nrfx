@@ -4,9 +4,9 @@
 #define NRFX_IRQS_EXT_H__
 
 #if defined(NRF54H20_XXAA) || defined(NRF7140_XXAA) || defined(NRF9220_XXAA)
-    #include <soc/nrfx_irqs_haltium.h>
+    #include "stable/soc/irqs/nrfx_irqs_haltium.h"
 #elif defined(NRF9230_ENGB_XXAA) || defined(NRF9230_XXAA)
-    #include <soc/nrfx_irqs_nrf9230.h>
+    #include "stable/soc/irqs/nrfx_irqs_nrf9230.h"
 #else
     #error "Unknown device."
 #endif
