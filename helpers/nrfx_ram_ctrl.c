@@ -1,7 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2023>$$$*/
 
 #include <helpers/nrfx_ram_ctrl.h>
-#include <nrfx_ram_sections.h>
 
 typedef struct
 {
