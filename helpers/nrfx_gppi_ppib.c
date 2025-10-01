@@ -36,8 +36,6 @@ typedef struct
     bool                   ppib_inverted; ///< True if PPIB connection goes from second to first PPIB peripherial instance, false otherwise.
 } interconnect_dppic_to_dppic_path_t;
 
-#include <soc/interconnect/dppic_ppib/nrfx_interconnect_dppic_ppib_lumos.h>
-
 static interconnect_dppic_t interconnect_dppic[] = NRFX_INTERCONNECT_DPPIC_MAP;
 
 /* Each PPIB must be connected with one DPPI. */

@@ -25,28 +25,9 @@ typedef struct {
     uint32_t        ipct_sub_channels_mask; ///< Mask of configurable IPCT subscribe channels.
 } interconnect_ipct_t;
 
-#include <soc/interconnect/apb/nrfx_interconnect_apb_haltium_global.h>
-#include <soc/interconnect/ipct/nrfx_interconnect_ipct_haltium_global.h>
-
-#if defined(NRF_RADIOCORE)
-    #include <soc/interconnect/apb/nrfx_interconnect_apb_haltium_radiocore.h>
-    #include <soc/interconnect/ipct/nrfx_interconnect_ipct_haltium_radiocore.h>
-#elif defined(NRF_APPLICATION)
-    #include <soc/interconnect/apb/nrfx_interconnect_apb_haltium_application.h>
-    #include <soc/interconnect/ipct/nrfx_interconnect_ipct_haltium_application.h>
-#elif defined(NRF_PPR)
-    #include <soc/interconnect/apb/nrfx_interconnect_apb_haltium_ppr.h>
-    #include <soc/interconnect/ipct/nrfx_interconnect_ipct_haltium_ppr.h>
-#elif defined(NRF_FLPR)
-    #include <soc/interconnect/apb/nrfx_interconnect_apb_haltium_flpr.h>
-    #include <soc/interconnect/ipct/nrfx_interconnect_ipct_haltium_flpr.h>
-#else
-    #include <soc/interconnect/apb/nrfx_interconnect_apb_haltium_ext.h>
-    #include <soc/interconnect/ipct/nrfx_interconnect_ipct_haltium_ext.h>
-#endif
-
 NRFX_INTERCONNECT_APB_GLOBAL_DPPI_DEFINE;
 NRFX_INTERCONNECT_APB_LOCAL_DPPI_DEFINE;
+
 static const interconnect_apb_t m_local_apb_interconnect[] =
                                      NRFX_INTERCONNECT_APB_LOCAL_BUSES_PROP;
 static const interconnect_apb_t m_global_apb_interconnect[] =

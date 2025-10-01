@@ -1,10 +1,7 @@
 /*$$$LICENCE_NORDIC_STANDARD<2023>$$$*/
 
-#ifndef NRFX_INTERCONNECT_DPPIC_PPIB_LUMOS_H__
-#define NRFX_INTERCONNECT_DPPIC_PPIB_LUMOS_H__
-
-#include <nrfx.h>
-#include <nrfx_ppib.h>
+#ifndef NRFX_INTERCONNECT_PPIB_H__
+#define NRFX_INTERCONNECT_PPIB_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,8 +16,6 @@ extern "C" {
 }
 
 #define DPPI_INSTANCE(idx) .dppic = NRFX_DPPI_INSTANCE(idx)
-
-#if defined(NRF54L_SERIES) || defined(NRF7120_ENGA_XXAA)
 
 #define NRFX_INTERCONNECT_PPIB_MAP  \
 {                                   \
@@ -90,8 +85,6 @@ extern "C" {
     },                                                     \
 }
 
-#endif
-
 #define NRFX_INTERCONNECT_DPPIC_COUNT      DPPIC_COUNT
 #define NRFX_INTERCONNECT_DPPIC_PPIB_COUNT PPIB_COUNT
 #define NRFX_INTERCONNECT_PPIB_COUNT       (NRFX_INTERCONNECT_DPPIC_PPIB_COUNT / 2)
@@ -100,4 +93,4 @@ extern "C" {
 }
 #endif
 
-#endif // NRFX_INTERCONNECT_DPPIC_PPIB_LUMOS_H__
+#endif // NRFX_INTERCONNECT_PPIB_H__
