@@ -494,11 +494,9 @@ void nrfx_grtc_active_request_set(bool active);
 /**
  * @brief Function for reading the GRTC SYSCOUNTER value.
  *
- * @param[out] p_counter p_counter Pointer to the variable to be filled with the SYSCOUNTER value.
- *
- * @retval NRFX_SUCCESS        The procedure was successful.
+ * @return SYSCOUNTER value.
  */
-nrfx_err_t nrfx_grtc_syscounter_get(uint64_t * p_counter);
+uint64_t nrfx_grtc_syscounter_get(void);
 
 /**
  * @brief Function for retrieving the address of the specified GRTC task.
