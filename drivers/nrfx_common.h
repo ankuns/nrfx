@@ -384,6 +384,23 @@ extern "C" {
     NRFX_FOREACH_ENABLED(periph_name, _NRFX_IRQ_HANDLER_LIST, (), (), periph_name_small)
 
 /**
+ * @brief Macro for generating instance specific interrupt handler for a
+ *        specific driver.
+ *
+ * This macro should be called in user code outside of function if user wants to
+ * use interrupts with given peripheral instance.
+ *
+ * @param[in] periph_name_small Peripheral name written with small letters, e.g. spim.
+ * @param[in] inst_idx          Instance index.
+ * @param[in] p_instance        Pointer to the driver instance object.
+ */
+#define NRFX_INSTANCE_IRQ_HANDLER_DEFINE(periph_name_small, inst_idx, p_instance) \
+    void NRFX_CONCAT(nrfx_, periph_name_small, _, inst_idx, _irq_handler)(void)   \
+    {                                                                             \
+        NRFX_CONCAT(nrfx_, periph_name_small, _irq_handler)(p_instance);          \
+    }
+
+/**
  * @brief Macro for checking if given peripheral instance is present on the target.
  *
  * Macro utilizes the fact that for each existing instance a define is created which points to
