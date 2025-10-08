@@ -244,9 +244,14 @@ uint64_t nrfx_grtc_syscounter_get(void)
     NRFX_ASSERT(m_cb.state == NRFX_DRV_STATE_INITIALIZED);
     uint64_t val;
 
+#if !(NRFX_CHECK(ISA_ARM) && (__CORTEX_M == 33U))
+    /* On ARM Cortex-M33 there is a double word read instruction so no need for locking. */
     NRFX_CRITICAL_SECTION_ENTER();
+#endif
     val = nrfy_grtc_sys_counter_get(NRF_GRTC);
+#if !(NRFX_CHECK(ISA_ARM) && (__CORTEX_M == 33U))
     NRFX_CRITICAL_SECTION_EXIT();
+#endif
 
     return val;
 }
