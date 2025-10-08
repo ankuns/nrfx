@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2015>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_QDEC_ENABLED)
-
 #include <nrfx_qdec.h>
 
 #if !NRFX_FEATURE_PRESENT(NRFX_QDEC, _ENABLED)
@@ -250,5 +247,3 @@ static void irq_handler(NRF_QDEC_Type * p_qdec, qdec_control_block_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(QDEC, qdec)
-
-#endif // NRFX_CHECK(NRFX_QDEC_ENABLED)

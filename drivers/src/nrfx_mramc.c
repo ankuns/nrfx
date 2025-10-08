@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2025>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_MRAMC_ENABLED)
-
 #include <nrfx_mramc.h>
 #include <hal/nrf_ficr.h>
 
@@ -303,5 +300,3 @@ void nrfx_mramc_irq_handler(void)
         m_cb.handler(NRF_MRAMC_EVENT_ACCESSERR);
     }
 }
-
-#endif // NRFX_CHECK(NRFX_MRAMC_ENABLED)

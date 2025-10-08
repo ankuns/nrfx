@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2016>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_USBD_ENABLED)
-
 #include <nrfx_usbd.h>
 #include "nrfx_usbd_errata.h"
 #include <string.h>
@@ -2274,5 +2271,3 @@ void nrfx_usbd_transfer_out_drop(nrfx_usbd_ep_t ep)
     }
     NRFX_CRITICAL_SECTION_EXIT();
 }
-
-#endif // NRFX_CHECK(NRFX_USBD_ENABLED)

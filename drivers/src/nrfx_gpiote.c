@@ -1,8 +1,5 @@
 /*$$$LICENCE_NORDIC_STANDARD<2015>$$$*/
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_GPIOTE_ENABLED)
-
 #include <nrfx_gpiote.h>
 #include <helpers/nrfx_flag32_allocator.h>
 #include "nrf_bitmask.h"
@@ -1557,5 +1554,3 @@ static void irq_handler(NRF_GPIOTE_Type * p_gpiote, gpiote_control_block_t * p_c
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(GPIOTE, gpiote)
-
-#endif // NRFX_CHECK(NRFX_GPIOTE_ENABLED)

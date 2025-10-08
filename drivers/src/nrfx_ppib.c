@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2024>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_PPIB_ENABLED)
-
 #include <nrfx_ppib.h>
 #include <helpers/nrfx_flag32_allocator.h>
 
@@ -141,5 +138,3 @@ nrfx_err_t nrfx_ppib_channel_free(nrfx_ppib_interconnect_t const * p_instance, u
 
     return nrfx_flag32_free(&p_cb->allocated_channels, channel);
 }
-
-#endif // defined(PPIB_PRESENT)

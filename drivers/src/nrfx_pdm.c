@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2015>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_PDM_ENABLED)
-
 #include <nrfx_pdm.h>
 #include <haly/nrfy_pdm.h>
 #include <haly/nrfy_gpio.h>
@@ -516,5 +513,3 @@ static void irq_handler(NRF_PDM_Type * p_pdm, nrfx_pdm_cb_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(PDM, pdm)
-
-#endif // NRFX_CHECK(NRFX_PDM_ENABLED)

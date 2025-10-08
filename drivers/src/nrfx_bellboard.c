@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2021>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_BELLBOARD_ENABLED)
-
 #include <nrfx_bellboard.h>
 #include <nrf_bitmask.h>
 
@@ -119,5 +116,3 @@ static void irq_handler(void * unused, nrfx_bellboard_cb_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(BELLBOARD, bellboard)
-
-#endif // NRFX_CHECK(NRFX_BELLBOARD_ENABLED)

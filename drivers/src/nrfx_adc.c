@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2015>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_ADC_ENABLED)
-
 #include <nrfx_adc.h>
 
 #define NRFX_LOG_MODULE ADC
@@ -307,5 +304,3 @@ void nrfx_adc_irq_handler(void)
         m_cb.event_handler(&evt);
     }
 }
-
-#endif // NRFX_CHECK(NRFX_ADC_ENABLED)

@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_UARTE_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_UARTE, _ENABLED)
 #error "No enabled UARTE instances. Check <nrfx_config.h>."
 #endif
@@ -2035,5 +2033,3 @@ static void irq_handler(NRF_UARTE_Type * p_uarte, uarte_control_block_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(UARTE, uarte)
-
-#endif // NRFX_CHECK(NRFX_UARTE_ENABLED)

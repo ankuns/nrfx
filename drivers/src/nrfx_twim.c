@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_TWIM_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_TWIM, _ENABLED)
 #error "No enabled TWIM instances. Check <nrfx_config.h>."
 #endif
@@ -896,5 +894,3 @@ static void irq_handler(NRF_TWIM_Type * p_twim, twim_control_block_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(TWIM, twim)
-
-#endif // NRFX_CHECK(NRFX_TWIM_ENABLED)

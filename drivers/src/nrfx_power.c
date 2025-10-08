@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2017>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_POWER_ENABLED)
-
 #include <nrfx_power.h>
 
 #if NRFX_CHECK(NRFX_CLOCK_ENABLED)
@@ -398,5 +395,3 @@ void nrfx_power_clock_irq_handler(void)
     nrfx_clock_irq_handler();
 }
 #endif
-
-#endif // NRFX_CHECK(NRFX_POWER_ENABLED)

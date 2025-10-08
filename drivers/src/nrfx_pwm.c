@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_PWM_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_PWM, _ENABLED)
 #error "No enabled PWM instances. Check <nrfx_config.h>."
 #endif
@@ -519,5 +517,3 @@ void DMA_ISSUE_EGU_IRQHandler(void)
 #endif
 
 NRFX_INSTANCE_IRQ_HANDLERS(PWM, pwm)
-
-#endif // NRFX_CHECK(NRFX_PWM_ENABLED)

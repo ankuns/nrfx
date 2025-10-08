@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_EGU_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_EGU, _ENABLED)
 #error "No enabled EGU instances. Check <nrfx_config.h>."
 #endif
@@ -151,5 +149,3 @@ static void irq_handler(NRF_EGU_Type * p_reg, egu_control_block_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(EGU, egu)
-
-#endif // NRFX_CHECK(NRFX_EGU_ENABLED)

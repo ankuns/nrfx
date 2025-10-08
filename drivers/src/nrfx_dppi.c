@@ -1,10 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2018>$$$*/
 
 #include <nrfx.h>
-
-// Driver for single instance DPPI
-#if NRFX_CHECK(NRFX_DPPI_ENABLED)
-
 #include <nrfx_dppi.h>
 #include <helpers/nrfx_flag32_allocator.h>
 
@@ -578,5 +574,3 @@ nrfx_err_t nrfx_dppi_group_disable(nrfx_dppi_t const *      p_instance,
 {
     return dppi_group_disable(p_instance, group);
 }
-
-#endif // NRFX_CHECK(NRFX_DPPI_ENABLED)

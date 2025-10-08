@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2023>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_RRAMC_ENABLED)
-
 #include <nrfx_rramc.h>
 #include <hal/nrf_ficr.h>
 
@@ -275,5 +272,3 @@ void nrfx_rramc_irq_handler(void)
         m_cb.handler(NRF_RRAMC_EVENT_WOKENUP);
     }
 }
-
-#endif // NRFX_CHECK(NRFX_RRAMC_ENABLED)

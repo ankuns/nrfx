@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_TIMER_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_TIMER, _ENABLED)
 #error "No enabled TIMER instances. Check <nrfx_config.h>."
 #endif
@@ -344,5 +342,3 @@ static void irq_handler(NRF_TIMER_Type * p_reg, timer_control_block_t * p_cb, ui
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS_EXT(TIMER, timer, NRF_TIMER_CC_CHANNEL_COUNT)
-
-#endif // NRFX_CHECK(NRFX_TIMER_ENABLED)

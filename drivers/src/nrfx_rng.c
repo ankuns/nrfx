@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2016>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_RNG_ENABLED)
-
 #include <nrfx_rng.h>
 
 #define NRFX_LOG_MODULE RNG
@@ -85,5 +82,3 @@ void nrfx_rng_irq_handler(void)
 
     NRFX_LOG_DEBUG("Event: NRF_RNG_EVENT_VALRDY.");
 }
-
-#endif // NRFX_CHECK(NRFX_RNG_ENABLED)

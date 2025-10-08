@@ -1,10 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2020>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_MVDMA_ENABLED) || NRFX_CHECK(NRFX_GMVDMA_ENABLED) || \
-    NRFX_CHECK(NRFX_MVDMA110_ENABLED)
-
 #include <nrfx_mvdma.h>
 
 #define NRFX_LOG_MODULE MVDMA
@@ -475,5 +471,3 @@ void nrfx_mvdma121_irq_handler(void)
     mvdma_irq_handler(NRF_MVDMA121, &m_cb[NRFX_MVDMA121_INST_IDX]);
 }
 #endif
-
-#endif // NRFX_CHECK(NRFX_MVDMA_ENABLED) || NRFX_CHECK(NRFX_GMVDMA_ENABLED)

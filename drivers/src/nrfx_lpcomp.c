@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2015>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_LPCOMP_ENABLED)
-
 #include <nrfx_lpcomp.h>
 #include "prs/nrfx_prs.h"
 
@@ -217,5 +214,3 @@ uint32_t nrfx_lpcomp_sample(void)
 
     return nrfy_lpcomp_sample(NRF_LPCOMP);
 }
-
-#endif // NRFX_CHECK(NRFX_LPCOMP_ENABLED)

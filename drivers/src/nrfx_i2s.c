@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2015>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_I2S_ENABLED)
-
 #include <nrfx_i2s.h>
 #include <haly/nrfy_gpio.h>
 
@@ -542,5 +539,3 @@ static void irq_handler(NRF_I2S_Type * p_reg, nrfx_i2s_cb_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(I2S, i2s)
-
-#endif // NRFX_CHECK(NRFX_I2S_ENABLED)

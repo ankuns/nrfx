@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_SPI_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_SPI, _ENABLED)
 #error "No enabled SPI instances. Check <nrfx_config.h>."
 #endif
@@ -424,5 +422,3 @@ static void irq_handler(NRF_SPI_Type * p_spi, spi_control_block_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(SPI, spi)
-
-#endif // NRFX_CHECK(NRFX_SPI_ENABLED)

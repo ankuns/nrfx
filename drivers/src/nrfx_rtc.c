@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_RTC_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_RTC, _ENABLED)
 #error "No enabled RTC instances. Check <nrfx_config.h>."
 #endif
@@ -278,5 +276,3 @@ static void irq_handler(NRF_RTC_Type  * p_reg,
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS_EXT(RTC, rtc, NRF_RTC_CC_CHANNEL_COUNT)
-
-#endif // NRFX_CHECK(NRFX_RTC_ENABLED)

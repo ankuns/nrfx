@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2016>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_QSPI_ENABLED)
-
 #include <nrfx_qspi.h>
 #include <hal/nrf_clock.h>
 #include <hal/nrf_gpio.h>
@@ -983,5 +980,3 @@ void nrfx_qspi_irq_handler(void)
         m_cb.evt_ext.type = NRFX_QSPI_EVENT_NONE;
     }
 }
-
-#endif // NRFX_CHECK(NRFX_QSPI_ENABLED)

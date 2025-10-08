@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2019>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_TEMP_ENABLED)
-
 #include <nrfx_temp.h>
 
 /** @brief Time of one check attempt.*/
@@ -110,5 +107,3 @@ void nrfx_temp_irq_handler(void)
     int32_t raw_temp = nrfx_temp_result_get();
     m_data_handler(raw_temp);
 }
-
-#endif // NRFX_CHECK(NRFX_TEMP_ENABLED)

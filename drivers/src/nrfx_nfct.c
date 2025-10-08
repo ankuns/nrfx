@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2018>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_NFCT_ENABLED)
-
 #include <nrfx_nfct.h>
 #include <hal/nrf_ficr.h>
 
@@ -1061,5 +1058,3 @@ void nrfx_nfct_irq_handler(void)
         NRFX_LOG_DEBUG("Tx fend");
     }
 }
-
-#endif // NRFX_CHECK(NRFX_NFCT_ENABLED)

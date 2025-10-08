@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2016>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_CLOCK_ENABLED)
-
 #include <nrfx_clock.h>
 
 #define NRFX_LOG_MODULE CLOCK
@@ -839,5 +836,3 @@ void nrfx_clock_irq_handler(void)
 #endif
     }
 }
-
-#endif // NRFX_CHECK(NRFX_CLOCK_ENABLED)

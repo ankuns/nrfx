@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2021>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_GRTC_ENABLED)
-
 #include <nrfx_grtc.h>
 #include <soc/nrfx_coredep.h>
 #include <helpers/nrfx_flag32_allocator.h>
@@ -988,5 +985,3 @@ void nrfx_grtc_irq_handler(void)
 {
     grtc_irq_handler();
 }
-
-#endif // NRFX_CHECK(NRFX_GRTC_ENABLED)

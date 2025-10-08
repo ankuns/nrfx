@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2015>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_WDT_ENABLED)
-
 #include <nrfx_wdt.h>
 
 #if !NRFX_FEATURE_PRESENT(NRFX_WDT, _ENABLED)
@@ -291,5 +288,3 @@ static void irq_handler(NRF_WDT_Type * p_reg, wdt_control_block_t * p_cb)
 NRFX_INSTANCE_IRQ_HANDLERS(WDT, wdt)
 
 #endif // !NRFX_CHECK(NRFX_WDT_CONFIG_NO_IRQ)
-
-#endif // NRFX_CHECK(NRFX_WDT_ENABLED)

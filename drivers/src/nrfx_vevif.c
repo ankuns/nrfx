@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2021>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_VEVIF_ENABLED)
-
 #include <nrfx_vevif.h>
 #include <nrf_bitmask.h>
 #include <hal/nrf_vpr.h>
@@ -112,5 +109,3 @@ static void nrfx_vevif_irq_handler(uint8_t irq_idx)
 
 /* Define interrupt handlers for 0..31 NRF_VEVIF driver instances. */
 NRFX_LISTIFY(32, NRFX_VEVIF_IRQ_HANDLER_DEFINE, (;), _)
-
-#endif // NRFX_CHECK(NRFX_VEVIF_ENABLED)

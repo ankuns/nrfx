@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_SPIM_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_SPIM, _ENABLED)
 #error "No enabled SPIM instances. Check <nrfx_config.h>."
 #endif
@@ -1119,5 +1117,3 @@ static void irq_handler(NRF_SPIM_Type * p_spim, spim_control_block_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(SPIM, spim)
-
-#endif // NRFX_CHECK(NRFX_SPIM_ENABLED)

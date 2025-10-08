@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_TWI_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_TWI, _ENABLED)
 #error "No enabled TWI instances. Check <nrfx_config.h>."
 #endif
@@ -761,5 +759,3 @@ static void irq_handler(NRF_TWI_Type * p_twi, twi_control_block_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(TWI, twi)
-
-#endif // NRFX_CHECK(NRFX_TWI_ENABLED)

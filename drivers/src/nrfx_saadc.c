@@ -1,7 +1,5 @@
 /*$$$LICENCE_NORDIC_STANDARD<2015>$$$*/
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_SAADC_ENABLED)
 #include <nrfx_saadc.h>
 
 #define NRFX_LOG_MODULE SAADC
@@ -951,5 +949,3 @@ void nrfx_saadc_irq_handler(void)
         saadc_event_limits_handle();
     }
 }
-
-#endif // NRFX_CHECK(NRFX_SAADC_ENABLED)

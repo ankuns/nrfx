@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_SPIS_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_SPIS, _ENABLED)
 #error "No enabled SPIS instances. Check <nrfx_config.h>."
 #endif
@@ -585,5 +583,3 @@ static void irq_handler(NRF_SPIS_Type * p_spis, spis_cb_t * p_cb)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(SPIS, spis)
-
-#endif // NRFX_CHECK(NRFX_SPIS_ENABLED)

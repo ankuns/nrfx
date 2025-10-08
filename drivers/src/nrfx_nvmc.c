@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2019>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_NVMC_ENABLED)
-
 #include <nrfx_nvmc.h>
 
 /**
@@ -430,5 +427,3 @@ uint32_t nrfx_nvmc_flash_page_count_get(void)
 {
     return flash_page_count_get();
 }
-
-#endif // NRFX_CHECK(NRFX_NVMC_ENABLED)

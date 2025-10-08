@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2019>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_IPC_ENABLED)
-
 #include <nrfx_ipc.h>
 
 #define NRFX_LOG_MODULE IPC
@@ -160,5 +157,3 @@ void nrfx_ipc_irq_handler(void)
         }
     }
 }
-
-#endif // NRFX_CHECK(NRFX_IPC_ENABLED)

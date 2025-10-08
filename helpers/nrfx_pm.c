@@ -1,8 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2020>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_PM_ENABLED)
 #include <helpers/nrfx_pm_driver.h>
 
 #define NRFX_LOG_MODULE PM
@@ -113,5 +111,3 @@ void nrfx_pm_busy_set(nrfx_pm_t *p_pm, bool is_busy)
     nrfx_pm_t *p_driver_pm = (nrfx_pm_t *)p_pm;
     p_driver_pm->peripheral_busy = is_busy;
 }
-
-#endif // NRFX_CHECK(NRFX_PM_ENABLED)

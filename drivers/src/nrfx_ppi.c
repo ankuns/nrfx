@@ -1,9 +1,6 @@
 /*$$$LICENCE_NORDIC_STANDARD<2015>$$$*/
 
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_PPI_ENABLED)
-
 #include <nrfx_ppi.h>
 #include <helpers/nrfx_flag32_allocator.h>
 
@@ -331,4 +328,3 @@ nrfx_err_t nrfx_ppi_channels_include_in_group(uint32_t                channel_ma
     NRFX_LOG_INFO("Function: %s, error code: %s.", __func__, NRFX_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
-#endif // NRFX_CHECK(NRFX_PPI_ENABLED)

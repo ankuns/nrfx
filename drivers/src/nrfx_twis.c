@@ -2,8 +2,6 @@
 
 #include <nrfx.h>
 
-#if NRFX_CHECK(NRFX_TWIS_ENABLED)
-
 #if !NRFX_FEATURE_PRESENT(NRFX_TWIS, _ENABLED)
 #error "No enabled TWIS instances. Check <nrfx_config.h>."
 #endif
@@ -848,5 +846,3 @@ bool nrfx_twis_is_pending_rx(nrfx_twis_t const * p_instance)
 }
 
 NRFX_INSTANCE_IRQ_HANDLERS(TWIS, twis)
-
-#endif // NRFX_CHECK(NRFX_TWIS_ENABLED)
