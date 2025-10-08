@@ -305,7 +305,11 @@ NRFY_STATIC_INLINE uint64_t nrfy_grtc_sys_counter_get(NRF_GRTC_Type const * p_re
     do {
         counter = nrf_grtc_sys_counter_get(p_reg);
     } while (counter & NRFY_GRTC_SYSCOUNTER_RETRY_MASK);
-    return (counter & NRFY_GRTC_SYSCOUNTER_MASK);
+#if NRFX_CHECK(NRFY_GRTC_HAS_SYSCOUNTER_LOADED)
+    return counter & NRF_GRTC_SYSCOUNTERH_VALUE_MASK;
+#else
+    return counter;
+#endif
 #else
     uint32_t counter_l, counter_h;
 
@@ -315,7 +319,11 @@ NRFY_STATIC_INLINE uint64_t nrfy_grtc_sys_counter_get(NRF_GRTC_Type const * p_re
         counter_h = nrf_grtc_sys_counter_high_get(p_reg);
         nrf_barrier_r();
     } while (counter_h & NRFY_GRTC_SYSCOUNTER_RETRY_MASK);
+#if NRFX_CHECK(NRFY_GRTC_HAS_SYSCOUNTER_LOADED)
     return (uint64_t)counter_l | ((uint64_t)(counter_h & NRF_GRTC_SYSCOUNTERH_VALUE_MASK) << 32);
+#else
+    return (uint64_t)counter_l | ((uint64_t)counter_h << 32);
+#endif
 #endif // NRFX_CHECK(ISA_ARM) && (__CORTEX_M == 33U)
 }
 
