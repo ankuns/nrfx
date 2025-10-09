@@ -18,47 +18,77 @@ extern "C" {
  * @brief   Serial Peripheral Interface Slave with EasyDMA (SPIS) driver.
  */
 
-/** @brief Data structure for the Serial Peripheral Interface Slave with EasyDMA (SPIS) driver instance. */
-typedef struct
-{
-    NRF_SPIS_Type * p_reg;          //!< Pointer to a structure with SPIS registers.
-    uint8_t         drv_inst_idx;   //!< Index of the driver instance. For internal use only.
-} nrfx_spis_t;
-
-#ifndef __NRFX_DOXYGEN__
-enum {
-    /* List all enabled driver instances (in the format NRFX_\<instance_name\>_INST_IDX). */
-    NRFX_INSTANCE_ENUM_LIST(SPIS)
-    NRFX_SPIS_ENABLED_COUNT
-};
-#endif
-
-/** @brief Macro for creating an instance of the SPI slave driver. */
-#define NRFX_SPIS_INSTANCE(id)                               \
-{                                                            \
-    .p_reg        = NRFX_CONCAT(NRF_, SPIS, id),             \
-    .drv_inst_idx = NRFX_CONCAT(NRFX_SPIS, id, _INST_IDX),   \
-}
-
 /** @brief SPI slave driver event types. */
 typedef enum
 {
     NRFX_SPIS_BUFFERS_SET_DONE, //!< Memory buffer set event. Memory buffers have been set successfully to the SPI slave device, and SPI transaction can be done.
     NRFX_SPIS_XFER_DONE,        //!< SPI transaction event. SPI transaction has been completed.
     NRFX_SPIS_EVT_TYPE_MAX      //!< Enumeration upper bound.
-} nrfx_spis_evt_type_t;
+} nrfx_spis_event_type_t;
 
 /** @brief SPI slave driver event structure. */
 typedef struct
 {
-    nrfx_spis_evt_type_t evt_type;    //!< Type of the event.
-    size_t               rx_amount;   //!< Number of bytes received in the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
-    size_t               tx_amount;   //!< Number of bytes transmitted in the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
-    void *               p_tx_buf;    //!< Pointer to the TX buffer used in the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
-    void *               p_rx_buf;    //!< Pointer to the RX buffer used in the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
-    size_t               tx_buf_size; //!< Size of the TX buffer used int the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
-    size_t               rx_buf_size; //!< Size of the RX buffer used int the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
-} nrfx_spis_evt_t;
+    nrfx_spis_event_type_t evt_type;    //!< Type of the event.
+    size_t                 rx_amount;   //!< Number of bytes received in the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
+    size_t                 tx_amount;   //!< Number of bytes transmitted in the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
+    void *                 p_tx_buf;    //!< Pointer to the TX buffer used in the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
+    void *                 p_rx_buf;    //!< Pointer to the RX buffer used in the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
+    size_t                 tx_buf_size; //!< Size of the TX buffer used int the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
+    size_t                 rx_buf_size; //!< Size of the RX buffer used int the last transaction. This parameter is only valid for @ref NRFX_SPIS_XFER_DONE events.
+} nrfx_spis_event_t;
+
+/**
+ * @brief SPI slave driver event handler type.
+ *
+ * @param[in] p_event   Pointer to the event structure. The structure is
+ *                      allocated on the stack so it is valid only until
+ *                      the event handler returns.
+ * @param[in] p_context Context set on initialization.
+ */
+typedef void (*nrfx_spis_event_handler_t)(nrfx_spis_event_t const * p_event,
+                                          void *                    p_context);
+
+/** @cond Driver internal data. */
+typedef enum
+{
+    SPIS_STATE_INIT,
+    SPIS_BUFFER_RESOURCE_REQUESTED,
+    SPIS_BUFFER_RESOURCE_CONFIGURED,
+    SPIS_XFER_COMPLETED
+} nrfx_spis_state_t;
+
+typedef struct
+{
+    volatile uint32_t          tx_buffer_size;
+    volatile uint32_t          rx_buffer_size;
+    nrfx_spis_event_handler_t  handler;
+    volatile const uint8_t *   tx_buffer;
+    volatile uint8_t *         rx_buffer;
+    nrfx_drv_state_t           state;
+    volatile nrfx_spis_state_t spi_state;
+    void *                     p_context;
+    bool                       skip_gpio_cfg;
+#if NRF_ERRATA_STATIC_CHECK(52, 109)
+    uint32_t                   csn_pin;
+    uint8_t                    gpiote_ch;
+#endif
+} nrfx_spis_control_block_t;
+/** @endcond */
+
+/** @brief Data structure for the Serial Peripheral Interface Slave with EasyDMA (SPIS) driver instance. */
+typedef struct
+{
+    NRF_SPIS_Type *           p_reg; //!< Pointer to the structure of registers of the peripheral.
+    nrfx_spis_control_block_t cb;    //!< Driver internal data.
+} nrfx_spis_t;
+
+/** @brief Macro for creating an instance of the SPI slave driver. */
+#define NRFX_SPIS_INSTANCE(reg)    \
+{                                  \
+    .p_reg = (NRF_SPIS_Type *)reg, \
+    .cb    = {0},                  \
+}
 
 /**
  * @brief SPIS driver default configuration.
@@ -127,18 +157,6 @@ typedef struct
                                          *   as they are ignored anyway. */
 } nrfx_spis_config_t;
 
-
-/**
- * @brief SPI slave driver event handler type.
- *
- * @param[in] p_event    Pointer to the event structure. The structure is
- *                       allocated on the stack so it is valid only until
- *                       the event handler returns.
- * @param[in] p_context  Context set on initialization.
- */
-typedef void (*nrfx_spis_event_handler_t)(nrfx_spis_evt_t const * p_event,
-                                          void *                  p_context);
-
 /**
  * @brief Function for initializing the SPI slave driver instance.
  *
@@ -163,7 +181,7 @@ typedef void (*nrfx_spis_event_handler_t)(nrfx_spis_evt_t const * p_event,
  *                                  on CSN pin cannot be initialized. Possible
  *                                  only when using nRF52 Anomaly 109 workaround.
  */
-nrfx_err_t nrfx_spis_init(nrfx_spis_t const *        p_instance,
+nrfx_err_t nrfx_spis_init(nrfx_spis_t *              p_instance,
                           nrfx_spis_config_t const * p_config,
                           nrfx_spis_event_handler_t  event_handler,
                           void *                     p_context);
@@ -178,7 +196,7 @@ nrfx_err_t nrfx_spis_init(nrfx_spis_t const *        p_instance,
  * @retval NRFX_ERROR_BUSY          The driver is during transfer.
  * @retval NRFX_ERROR_INVALID_STATE The driver is uninitialized.
  */
-nrfx_err_t nrfx_spis_reconfigure(nrfx_spis_t const *        p_instance,
+nrfx_err_t nrfx_spis_reconfigure(nrfx_spis_t *              p_instance,
                                  nrfx_spis_config_t const * p_config);
 
 /**
@@ -186,7 +204,7 @@ nrfx_err_t nrfx_spis_reconfigure(nrfx_spis_t const *        p_instance,
  *
  * @param[in] p_instance Pointer to the driver instance structure.
  */
-void nrfx_spis_uninit(nrfx_spis_t const * p_instance);
+void nrfx_spis_uninit(nrfx_spis_t * p_instance);
 
 /**
  * @brief Function for checking if the SPIS driver instance is initialized.
@@ -206,7 +224,7 @@ bool nrfx_spis_init_check(nrfx_spis_t const * p_instance);
  *
  * When either the memory buffer configuration or the SPI transaction has been
  * completed, the event callback function will be called with the appropriate event
- * @ref nrfx_spis_evt_type_t. The callback function can be called before returning from
+ * @ref nrfx_spis_event_type_t. The callback function can be called before returning from
  * this function, because it is called from the SPI slave interrupt context.
  *
  * @note This function can be called from the callback function context.
@@ -231,37 +249,20 @@ bool nrfx_spis_init_check(nrfx_spis_t const * p_instance);
  * @retval NRFX_ERROR_INVALID_LENGTH Provided lengths exceed the EasyDMA limits for the peripheral.
  * @retval NRFX_ERROR_INTERNAL       The operation failed because of an internal error.
  */
-nrfx_err_t nrfx_spis_buffers_set(nrfx_spis_t const * p_instance,
+nrfx_err_t nrfx_spis_buffers_set(nrfx_spis_t *       p_instance,
                                  uint8_t const *     p_tx_buffer,
                                  size_t              tx_buffer_length,
                                  uint8_t *           p_rx_buffer,
                                  size_t              rx_buffer_length);
 
 /**
- * @brief Macro returning SPIS interrupt handler.
+ * @brief Driver interrupt handler.
  *
- * param[in] idx SPIS index.
- *
- * @return Interrupt handler.
+ * @param[in] p_instance Pointer to the driver instance structure.
  */
-#define NRFX_SPIS_INST_HANDLER_GET(idx) NRFX_CONCAT_3(nrfx_spis_, idx, _irq_handler)
+void nrfx_spis_irq_handler(nrfx_spis_t * p_instance);
 
 /** @} */
-
-/*
- * Declare interrupt handlers for all enabled driver instances in the following format:
- * nrfx_\<periph_name\>_\<idx\>_irq_handler (for example, nrfx_spis_0_irq_handler).
- *
- * A specific interrupt handler for the driver instance can be retrieved by using
- * the NRFX_SPIS_INST_HANDLER_GET macro.
- *
- * Here is a sample of using the NRFX_SPIS_INST_HANDLER_GET macro to map an interrupt handler
- * in a Zephyr application:
- *
- * IRQ_CONNECT(NRFX_IRQ_NUMBER_GET(NRF_SPIS_INST_GET(\<instance_index\>)), \<priority\>,
- *             NRFX_SPIS_INST_HANDLER_GET(\<instance_index\>), 0, 0);
- */
-NRFX_INSTANCE_IRQ_HANDLERS_DECLARE(SPIS, spis)
 
 #ifdef __cplusplus
 }
