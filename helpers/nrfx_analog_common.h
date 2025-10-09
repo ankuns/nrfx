@@ -20,16 +20,8 @@ extern "C" {
  * @brief Helper layer that provides the common functionality of SAADC, COMP and LPCOMP drivers.
  */
 
-#if defined(NRF54LV10A_ENGA_XXAA) || defined(__NRFX_DOXYGEN__)
 /** @brief Symbol specifying internal reference voltage. */
-#define NRFX_ANALOG_REF_INTERNAL_VAL 1300
-#elif defined(HALTIUM_XXAA) || defined(NRF7120_ENGA_XXAA) || defined(NRF54LS05B_ENGA_XXAA)
-#define NRFX_ANALOG_REF_INTERNAL_VAL 1024
-#elif defined(LUMOS_XXAA)
-#define NRFX_ANALOG_REF_INTERNAL_VAL 900
-#else
-#define NRFX_ANALOG_REF_INTERNAL_VAL 600
-#endif
+#define NRFX_ANALOG_REF_INTERNAL_VAL ANALOG_REF_INTERNAL_VAL
 
 /** @brief Symbol specifying internal inputs offset. */
 #define NRFX_ANALOG_AIN_INTERNAL_OFFSET 128
