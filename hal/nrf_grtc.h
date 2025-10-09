@@ -65,6 +65,13 @@ extern "C" {
 #define NRF_GRTC_HAS_SYSCOUNTERVALID 0
 #endif
 
+#if defined(GRTC_SYSCOUNTER_SYSCOUNTERH_LOADED_Msk) || defined(__NRFX_DOXYGEN__)
+/** @brief Symbol indicating whether SYSCOUNTERH LOADED bit is present. */
+#define NRF_GRTC_HAS_SYSCOUNTER_LOADED 1
+#else
+#define NRF_GRTC_HAS_SYSCOUNTER_LOADED 0
+#endif
+
 #if defined(GRTC_KEEPRUNNING_DOMAIN0_Msk) || defined(GRTC_KEEPRUNNING_REQUEST0_Msk) || \
     defined(__NRFX_DOXYGEN__)
 /** @brief Symbol indicating whether KEEPRUNNING register is present. */
