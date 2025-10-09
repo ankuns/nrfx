@@ -840,42 +840,6 @@
 #endif
 
 /**
- * @brief NRFX_SPIS0_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS0_ENABLED
-#define NRFX_SPIS0_ENABLED 0
-#endif
-
-/**
- * @brief NRFX_SPIS1_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS1_ENABLED
-#define NRFX_SPIS1_ENABLED 0
-#endif
-
-/**
- * @brief NRFX_SPIS2_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS2_ENABLED
-#define NRFX_SPIS2_ENABLED 0
-#endif
-
-/**
- * @brief NRFX_SPIS3_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS3_ENABLED
-#define NRFX_SPIS3_ENABLED 0
-#endif
-
-/**
  * @brief NRFX_SYSTICK_ENABLED
  *
  * Boolean. Accepted values: 0 and 1.

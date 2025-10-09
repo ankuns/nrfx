@@ -898,51 +898,6 @@
 #endif
 
 /**
- * @brief NRFX_SPIS120_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS120_ENABLED
-#define NRFX_SPIS120_ENABLED 0
-#endif
-
-/**
- * @brief NRFX_SPIS130_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS130_ENABLED
-#define NRFX_SPIS130_ENABLED 0
-#endif
-
-/**
- * @brief NRFX_SPIS131_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS131_ENABLED
-#define NRFX_SPIS131_ENABLED 0
-#endif
-
-/**
- * @brief NRFX_SPIS132_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS132_ENABLED
-#define NRFX_SPIS132_ENABLED 0
-#endif
-
-/**
- * @brief NRFX_SPIS133_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS133_ENABLED
-#define NRFX_SPIS133_ENABLED 0
-#endif
-
-/**
  * @brief NRFX_TEMP_ENABLED
  *
  * Boolean. Accepted values: 0 and 1.

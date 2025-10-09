@@ -574,15 +574,6 @@
 #endif
 
 /**
- * @brief NRFX_SPIS1_ENABLED
- *
- * Boolean. Accepted values: 0 and 1.
- */
-#ifndef NRFX_SPIS1_ENABLED
-#define NRFX_SPIS1_ENABLED 0
-#endif
-
-/**
  * @brief NRFX_SYSTICK_ENABLED
  *
  * Boolean. Accepted values: 0 and 1.
