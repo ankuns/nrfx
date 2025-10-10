@@ -163,26 +163,26 @@ static bool spis_configure(nrfx_spis_t *              p_instance,
     return true;
 }
 
-nrfx_err_t nrfx_spis_init(nrfx_spis_t *              p_instance,
-                          nrfx_spis_config_t const * p_config,
-                          nrfx_spis_event_handler_t  event_handler,
-                          void *                     p_context)
+int nrfx_spis_init(nrfx_spis_t *              p_instance,
+                   nrfx_spis_config_t const * p_config,
+                   nrfx_spis_event_handler_t  event_handler,
+                   void *                     p_context)
 {
     NRFX_ASSERT(p_instance);
     NRFX_ASSERT(p_config);
     NRFX_ASSERT(event_handler);
 
     nrfx_spis_control_block_t * p_cb = &p_instance->cb;
-    nrfx_err_t err_code;
+    int err_code;
 
     NRF_SPIS_Type * p_spis = p_instance->p_reg;
 
     if (p_cb->state != NRFX_DRV_STATE_UNINITIALIZED)
     {
-        err_code = NRFX_ERROR_ALREADY;
+        err_code = -EALREADY;
         NRFX_LOG_WARNING("Function: %s, error code: %s.",
                          __func__,
-                         NRFX_LOG_ERROR_STRING_GET(err_code));
+                         NRFX_NEW_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -190,10 +190,10 @@ nrfx_err_t nrfx_spis_init(nrfx_spis_t *              p_instance,
     if (nrfx_new_prs_acquire(p_spis,
             (nrfx_new_irq_handler_t)nrfx_spis_irq_handler, p_instance) != NRFX_SUCCESS)
     {
-        err_code = NRFX_ERROR_BUSY;
+        err_code = -EBUSY;
         NRFX_LOG_WARNING("Function: %s, error code: %s.",
                          __func__,
-                         NRFX_LOG_ERROR_STRING_GET(err_code));
+                         NRFX_NEW_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 #endif // NRFX_CHECK(NRFX_PRS_ENABLED)
@@ -213,15 +213,15 @@ nrfx_err_t nrfx_spis_init(nrfx_spis_t *              p_instance,
         (void)nrfx_gpiote_init(&gpiote, NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY);
         err_code = nrfx_gpiote_channel_alloc(&gpiote, &p_cb->gpiote_ch);
 
-        if (err_code != NRFX_SUCCESS)
+        if (err_code != 0)
         {
 #if NRFX_CHECK(NRFX_PRS_ENABLED)
             nrfx_prs_release(p_spis);
 #endif
-            err_code = NRFX_ERROR_INTERNAL;
+            err_code = -ECANCELED;
             NRFX_LOG_ERROR("Function: %s, error code: %s.",
                             __func__,
-                            NRFX_LOG_ERROR_STRING_GET(err_code));
+                            NRFX_NEW_LOG_ERROR_STRING_GET(err_code));
             return err_code;
         }
     }
@@ -239,10 +239,10 @@ nrfx_err_t nrfx_spis_init(nrfx_spis_t *              p_instance,
                 nrfx_gpiote_channel_free(&gpiote, p_cb->gpiote_ch);
             }
 #endif
-            err_code = NRFX_ERROR_INVALID_PARAM;
+            err_code = -EINVAL;
             NRFX_LOG_WARNING("Function: %s, error code: %s.",
                             __func__,
-                            NRFX_LOG_ERROR_STRING_GET(err_code));
+                            NRFX_NEW_LOG_ERROR_STRING_GET(err_code));
 #if NRFX_CHECK(NRFX_PRS_ENABLED)
             nrfx_prs_release(p_spis);
 #endif
@@ -264,30 +264,30 @@ nrfx_err_t nrfx_spis_init(nrfx_spis_t *              p_instance,
     nrf_spis_enable(p_spis);
 
     NRFX_LOG_INFO("Initialized.");
-    return NRFX_SUCCESS;
+    return 0;
 }
 
-nrfx_err_t nrfx_spis_reconfigure(nrfx_spis_t *              p_instance,
-                                 nrfx_spis_config_t const * p_config)
+int nrfx_spis_reconfigure(nrfx_spis_t *              p_instance,
+                          nrfx_spis_config_t const * p_config)
 {
     NRFX_ASSERT(p_instance);
     NRFX_ASSERT(p_config);
 
-    nrfx_err_t err_code;
+    int err_code;
     nrfx_spis_control_block_t * p_cb = &p_instance->cb;
 
     if (p_cb->state == NRFX_DRV_STATE_UNINITIALIZED)
     {
-        return NRFX_ERROR_INVALID_STATE;
+        return -EINPROGRESS;
     }
     nrf_spis_disable(p_instance->p_reg);
     if (spis_configure(p_instance, p_config))
     {
-        err_code = NRFX_SUCCESS;
+        err_code = 0;
     }
     else
     {
-        err_code = NRFX_ERROR_INVALID_PARAM;
+        err_code = -EINVAL;
     }
     nrf_spis_enable(p_instance->p_reg);
     return err_code;
@@ -426,16 +426,16 @@ static void spis_state_change(nrfx_spis_t * p_instance,
     spis_state_entry_action_execute(p_instance);
 }
 
-nrfx_err_t nrfx_spis_buffers_set(nrfx_spis_t *       p_instance,
-                                 uint8_t const *     p_tx_buffer,
-                                 size_t              tx_buffer_length,
-                                 uint8_t *           p_rx_buffer,
-                                 size_t              rx_buffer_length)
+int nrfx_spis_buffers_set(nrfx_spis_t *   p_instance,
+                          uint8_t const * p_tx_buffer,
+                          size_t          tx_buffer_length,
+                          uint8_t *       p_rx_buffer,
+                          size_t          rx_buffer_length)
 {
     NRFX_ASSERT(p_instance);
 
     nrfx_spis_control_block_t * p_cb = &p_instance->cb;
-    nrfx_err_t err_code;
+    int err_code;
 
     NRFX_ASSERT(p_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
     NRFX_ASSERT(p_tx_buffer != NULL || tx_buffer_length == 0);
@@ -446,10 +446,10 @@ nrfx_err_t nrfx_spis_buffers_set(nrfx_spis_t *       p_instance,
     if ((p_tx_buffer != NULL && !nrfx_is_in_ram(p_tx_buffer)) ||
         (p_rx_buffer != NULL && !nrfx_is_in_ram(p_rx_buffer)))
     {
-        err_code = NRFX_ERROR_INVALID_ADDR;
+        err_code = -EACCES;
         NRFX_LOG_WARNING("Function: %s, error code: %s.",
                          __func__,
-                         NRFX_LOG_ERROR_STRING_GET(err_code));
+                         NRFX_NEW_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -462,22 +462,24 @@ nrfx_err_t nrfx_spis_buffers_set(nrfx_spis_t *       p_instance,
             p_cb->rx_buffer      = p_rx_buffer;
             p_cb->tx_buffer_size = tx_buffer_length;
             p_cb->rx_buffer_size = rx_buffer_length;
-            err_code             = NRFX_SUCCESS;
+            err_code             = 0;
 
             spis_state_change(p_instance, SPIS_BUFFER_RESOURCE_REQUESTED);
             break;
 
         case SPIS_BUFFER_RESOURCE_REQUESTED:
-            err_code = NRFX_ERROR_INVALID_STATE;
+            err_code = -EINPROGRESS;
             break;
 
         default:
             // @note: execution of this code path would imply internal error in the design.
-            err_code = NRFX_ERROR_INTERNAL;
+            err_code = -ECANCELED;
             break;
     }
 
-    NRFX_LOG_INFO("Function: %s, error code: %s.", __func__, NRFX_LOG_ERROR_STRING_GET(err_code));
+    NRFX_LOG_INFO("Function: %s, error code: %s.",
+                  __func__,
+                  NRFX_NEW_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 

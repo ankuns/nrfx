@@ -170,21 +170,18 @@ typedef struct
  *                          Must not be NULL.
  * @param[in] p_context     Context passed to the event handler.
  *
- * @retval NRFX_SUCCESS             The initialization was successful.
- * @retval NRFX_ERROR_ALREADY       The driver is already initialized.
- * @retval NRFX_ERROR_INVALID_PARAM Invalid parameter is supplied.
- * @retval NRFX_ERROR_BUSY          Some other peripheral with the same
- *                                  instance ID is already in use. This is
- *                                  possible only if @ref nrfx_prs module
- *                                  is enabled.
- * @retval NRFX_ERROR_INTERNAL      GPIOTE channel for detecting falling edges
- *                                  on CSN pin cannot be initialized. Possible
- *                                  only when using nRF52 Anomaly 109 workaround.
+ * @retval 0          The initialization was successful.
+ * @retval -EALREADY  The driver is already initialized.
+ * @retval -EINVAL    Invalid parameter is supplied.
+ * @retval -EBUSY     Some other peripheral with the same instance ID is already in use.
+ *                    This is possible only if @ref nrfx_prs module is enabled.
+ * @retval -ECANCELED GPIOTE channel for detecting falling edges on CSN pin cannot
+ *                    be initialized. Possible only when using nRF52 Anomaly 109 workaround.
  */
-nrfx_err_t nrfx_spis_init(nrfx_spis_t *              p_instance,
-                          nrfx_spis_config_t const * p_config,
-                          nrfx_spis_event_handler_t  event_handler,
-                          void *                     p_context);
+int nrfx_spis_init(nrfx_spis_t *              p_instance,
+                   nrfx_spis_config_t const * p_config,
+                   nrfx_spis_event_handler_t  event_handler,
+                   void *                     p_context);
 
 /**
  * @brief Function for reconfiguring the SPI slave driver instance.
@@ -192,12 +189,12 @@ nrfx_err_t nrfx_spis_init(nrfx_spis_t *              p_instance,
  * @param[in] p_instance Pointer to the driver instance structure.
  * @param[in] p_config   Pointer to the structure with the configuration.
  *
- * @retval NRFX_SUCCESS             Reconfiguration was successful.
- * @retval NRFX_ERROR_BUSY          The driver is during transfer.
- * @retval NRFX_ERROR_INVALID_STATE The driver is uninitialized.
+ * @retval 0            Reconfiguration was successful.
+ * @retval -EBUSY       The driver is during transfer.
+ * @retval -EINPROGRESS The driver is uninitialized.
  */
-nrfx_err_t nrfx_spis_reconfigure(nrfx_spis_t *              p_instance,
-                                 nrfx_spis_config_t const * p_config);
+int nrfx_spis_reconfigure(nrfx_spis_t *              p_instance,
+                          nrfx_spis_config_t const * p_config);
 
 /**
  * @brief Function for uninitializing the SPI slave driver instance.
@@ -234,7 +231,7 @@ bool nrfx_spis_init_check(nrfx_spis_t const * p_instance);
  *
  * @note Peripherals using EasyDMA (including SPIS) require the transfer buffers
  *       to be placed in the Data RAM region. If this condition is not met,
- *       this function will fail with the error code NRFX_ERROR_INVALID_ADDR.
+ *       this function will fail with the error code -EACCES.
  *
  * @param[in] p_instance       Pointer to the driver instance structure.
  * @param[in] p_tx_buffer      Pointer to the TX buffer. Can be NULL when the buffer length is zero.
@@ -242,18 +239,17 @@ bool nrfx_spis_init_check(nrfx_spis_t const * p_instance);
  * @param[in] tx_buffer_length Length of the TX buffer in bytes.
  * @param[in] rx_buffer_length Length of the RX buffer in bytes.
  *
- * @retval NRFX_SUCCESS              The operation was successful.
- * @retval NRFX_ERROR_INVALID_STATE  The operation failed because the SPI slave device is in an incorrect state.
- * @retval NRFX_ERROR_INVALID_ADDR   The provided buffers are not placed in the Data
- *                                   RAM region.
- * @retval NRFX_ERROR_INVALID_LENGTH Provided lengths exceed the EasyDMA limits for the peripheral.
- * @retval NRFX_ERROR_INTERNAL       The operation failed because of an internal error.
+ * @retval 0            The operation was successful.
+ * @retval -EINPROGRESS The operation failed because the SPI slave device is in an incorrect state.
+ * @retval -EACCES      The provided buffers are not placed in the Data RAM region.
+ * @retval -E2BIG       Provided lengths exceed the EasyDMA limits for the peripheral.
+ * @retval -ECANCELED   The operation failed because of an internal error.
  */
-nrfx_err_t nrfx_spis_buffers_set(nrfx_spis_t *       p_instance,
-                                 uint8_t const *     p_tx_buffer,
-                                 size_t              tx_buffer_length,
-                                 uint8_t *           p_rx_buffer,
-                                 size_t              rx_buffer_length);
+int nrfx_spis_buffers_set(nrfx_spis_t *   p_instance,
+                          uint8_t const * p_tx_buffer,
+                          size_t          tx_buffer_length,
+                          uint8_t *       p_rx_buffer,
+                          size_t          rx_buffer_length);
 
 /**
  * @brief Driver interrupt handler.
