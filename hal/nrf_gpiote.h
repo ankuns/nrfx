@@ -868,9 +868,8 @@ NRF_STATIC_INLINE void nrf_gpiote_task_force(NRF_GPIOTE_Type *    p_reg,
 NRF_STATIC_INLINE void nrf_gpiote_te_default(NRF_GPIOTE_Type * p_reg, uint32_t idx)
 {
     p_reg->CONFIG[idx] = 0;
-#if !defined(NRF51_SERIES) && !defined(NRF52_SERIES)
+    // CONFIG.MODE needs to be disabled first, only then writes to CONFIG.PSEL have an effect.
     p_reg->CONFIG[idx] = 0;
-#endif
 }
 
 NRF_STATIC_INLINE bool nrf_gpiote_te_is_enabled(NRF_GPIOTE_Type const * p_reg, uint32_t idx)
