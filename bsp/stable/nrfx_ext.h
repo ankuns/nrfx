@@ -174,7 +174,6 @@ extern "C" {
 /*------------------------------------------------------------------------------------------------*/
 
 #if defined(NRF7140_XXAA) || defined(NRF9230_XXAA)
-    #define NRF_PRS_BOX_EXT
     #define NRFX_PRS_BOX_0_ADDR NRF_UARTE130
     #define NRFX_PRS_BOX_1_ADDR NRF_UARTE131
     #define NRFX_PRS_BOX_2_ADDR NRF_UARTE132
@@ -189,7 +188,6 @@ extern "C" {
 
 
 #if defined(NRF9220_XXAA)
-   #define NRF_PRS_BOX_EXT
    // SPIM120, SPIS120, UARTE120
    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE120
    // SPIM130, SPIS130, TWIM130, TWIS130, UARTE130

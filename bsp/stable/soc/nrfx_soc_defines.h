@@ -9,6 +9,8 @@
 extern "C" {
 #endif
 
+/* Analog pins definitions. */
+
 #if defined(NRF54LV10A_ENGA_XXAA)
 #define ANALOG_REF_INTERNAL_VAL 1300
 #elif defined(HALTIUM_XXAA) || defined(NRF7120_ENGA_XXAA) || defined(NRF54LS05B_ENGA_XXAA)
@@ -476,6 +478,300 @@ extern "C" {
             (NRF_SAADC_INPUT_VDDHDIV5,), (NRFX_SAADC_INPUT_NOT_PRESENT,))
 #endif
 
+/* Ram sections definitions. */
+
+#define RAM_NON_UNIFORM_SECTION_DECLARE(i, _block, _section) {.decoded = {_block, _section}}
+
+#if defined(NRF51)
+#define RAM_SECTION_UNIT_SIZE          8192
+#define RAM_UNIFORM_BLOCKS             4
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 1
+#define RAM_UNIFORM_SECTIONS_TOTAL     4
+#elif defined(NRF52805_XXAA) || defined(NRF52810_XXAA) || defined(NRF52811_XXAA)
+#define RAM_SECTION_UNIT_SIZE          4096
+#define RAM_UNIFORM_BLOCKS             3
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 2
+#define RAM_UNIFORM_SECTIONS_TOTAL     6
+#elif defined(NRF52820_XXAA)
+#define RAM_SECTION_UNIT_SIZE          4096
+#define RAM_UNIFORM_BLOCKS             4
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 2
+#define RAM_UNIFORM_SECTIONS_TOTAL     8
+#elif defined(NRF52832_XXAA)
+#define RAM_SECTION_UNIT_SIZE          4096
+#define RAM_UNIFORM_BLOCKS             8
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 2
+#define RAM_UNIFORM_SECTIONS_TOTAL     16
+#elif defined(NRF52833_XXAA)
+#define RAM_SECTION_UNIT_SIZE          4096
+#define RAM_UNIFORM_BLOCKS             8
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 2
+#define RAM_UNIFORM_SECTIONS_TOTAL     16
+#define RAM_NON_UNIFORM_BLOCK_INDEX    8
+#define RAM_NON_UNIFORM_BLOCK_UNITS    8
+#define RAM_NON_UNIFORM_SECTIONS                                                               \
+    NRFX_LISTIFY(RAM_NON_UNIFORM_BLOCK_UNITS,                                                  \
+                 RAM_NON_UNIFORM_SECTION_DECLARE, (,),                                         \
+                 RAM_NON_UNIFORM_BLOCK_INDEX, 0), /* Section 0 of block 8 - 8 * 4 kB units. */ \
+    NRFX_LISTIFY(RAM_NON_UNIFORM_BLOCK_UNITS,                                                  \
+                 RAM_NON_UNIFORM_SECTION_DECLARE, (,),                                         \
+                 RAM_NON_UNIFORM_BLOCK_INDEX, 1)  /* Section 1 of block 8 - 8 * 4 kB units. */
+#elif defined(NRF52840_XXAA)
+#define RAM_SECTION_UNIT_SIZE          4096
+#define RAM_UNIFORM_BLOCKS             8
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 2
+#define RAM_UNIFORM_SECTIONS_TOTAL     16
+#define RAM_NON_UNIFORM_BLOCK_INDEX    8
+#define RAM_NON_UNIFORM_BLOCK_UNITS    8
+#define RAM_NON_UNIFORM_SECTIONS                                                               \
+    NRFX_LISTIFY(RAM_NON_UNIFORM_BLOCK_UNITS,                                                  \
+                 RAM_NON_UNIFORM_SECTION_DECLARE, (,),                                         \
+                 RAM_NON_UNIFORM_BLOCK_INDEX, 0), /* Section 0 of block 8 - 8 * 4 kB units. */ \
+    NRFX_LISTIFY(RAM_NON_UNIFORM_BLOCK_UNITS,                                                  \
+                 RAM_NON_UNIFORM_SECTION_DECLARE, (,),                                         \
+                 RAM_NON_UNIFORM_BLOCK_INDEX, 1), /* Section 1 of block 8 - 8 * 4 kB units. */ \
+    NRFX_LISTIFY(RAM_NON_UNIFORM_BLOCK_UNITS,                                                  \
+                 RAM_NON_UNIFORM_SECTION_DECLARE, (,),                                         \
+                 RAM_NON_UNIFORM_BLOCK_INDEX, 2), /* Section 2 of block 8 - 8 * 4 kB units. */ \
+    NRFX_LISTIFY(RAM_NON_UNIFORM_BLOCK_UNITS,                                                  \
+                 RAM_NON_UNIFORM_SECTION_DECLARE, (,),                                         \
+                 RAM_NON_UNIFORM_BLOCK_INDEX, 3), /* Section 3 of block 8 - 8 * 4 kB units. */ \
+    NRFX_LISTIFY(RAM_NON_UNIFORM_BLOCK_UNITS,                                                  \
+                 RAM_NON_UNIFORM_SECTION_DECLARE, (,),                                         \
+                 RAM_NON_UNIFORM_BLOCK_INDEX, 4), /* Section 4 of block 8 - 8 * 4 kB units. */ \
+    NRFX_LISTIFY(RAM_NON_UNIFORM_BLOCK_UNITS,                                                  \
+                 RAM_NON_UNIFORM_SECTION_DECLARE, (,),                                         \
+                 RAM_NON_UNIFORM_BLOCK_INDEX, 5)  /* Section 5 of block 8 - 8 * 4 kB units. */
+#elif defined(NRF5340_XXAA_APPLICATION)
+#define RAM_SECTION_UNIT_SIZE          4096
+#define RAM_UNIFORM_BLOCKS             8
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 16
+#define RAM_UNIFORM_SECTIONS_TOTAL     128
+#elif defined(NRF5340_XXAA_NETWORK)
+#define RAM_SECTION_UNIT_SIZE          4096
+#define RAM_UNIFORM_BLOCKS             4
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 4
+#define RAM_UNIFORM_SECTIONS_TOTAL     16
+#elif defined(NRF54H20_XXAA) && defined(NRF_APPLICATION)
+#define RAM_SECTION_UNIT_SIZE          (32UL * 1024UL)
+#define RAM_UNIFORM_BLOCKS             1
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 1
+#define RAM_UNIFORM_SECTIONS_TOTAL     1
+#elif defined(NRF54H20_XXAA) && defined(NRF_RADIOCORE)
+#define RAM_SECTION_UNIT_SIZE          (2UL * 16UL * 1024UL) /* Consider both banks as single unit */
+#define RAM_UNIFORM_BLOCKS             1
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 6
+#define RAM_UNIFORM_SECTIONS_TOTAL     6
+#elif defined(NRF54L05_XXAA)
+#define RAM_SECTION_UNIT_SIZE          (32UL * 1024UL)
+#define RAM_UNIFORM_BLOCKS             1
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 3
+#define RAM_UNIFORM_SECTIONS_TOTAL     3
+#elif defined(NRF54L10_XXAA)
+#define RAM_SECTION_UNIT_SIZE          (32UL * 1024UL)
+#define RAM_UNIFORM_BLOCKS             1
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 6
+#define RAM_UNIFORM_SECTIONS_TOTAL     6
+#elif defined(NRF54L15_XXAA)
+#define RAM_SECTION_UNIT_SIZE          (32UL * 1024UL)
+#define RAM_UNIFORM_BLOCKS             1
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 8
+#define RAM_UNIFORM_SECTIONS_TOTAL     8
+#elif defined(NRF54LM20A_ENGA_XXAA)
+#define RAM_SECTION_UNIT_SIZE          (32UL * 1024UL)
+#define RAM_UNIFORM_BLOCKS             1
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 16
+#define RAM_UNIFORM_SECTIONS_TOTAL     16
+#elif defined(NRF54LS05B_ENGA_XXAA)
+#define RAM_SECTION_UNIT_SIZE          (32UL * 1024UL)
+#define RAM_UNIFORM_BLOCKS             1
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 2
+#define RAM_UNIFORM_SECTIONS_TOTAL     2
+#elif defined(NRF54LV10A_ENGA_XXAA)
+#define RAM_SECTION_UNIT_SIZE          (32UL * 1024UL)
+#define RAM_UNIFORM_BLOCKS             1
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 6
+#define RAM_UNIFORM_SECTIONS_TOTAL     6
+#elif defined(NRF9120_XXAA) || defined(NRF9160_XXAA)
+#define RAM_SECTION_UNIT_SIZE          8192
+#define RAM_UNIFORM_BLOCKS             8
+#define RAM_UNIFORM_SECTIONS_PER_BLOCK 4
+#define RAM_UNIFORM_SECTIONS_TOTAL     32
+#endif
+
+/* PRS boxes definitions. */
+
+#if defined(NRF51)
+    // SPI0, TWI0
+    #define NRFX_PRS_BOX_0_ADDR     NRF_SPI0
+    // SPI1, SPIS1, TWI1
+    #define NRFX_PRS_BOX_1_ADDR     NRF_SPI1
+#elif defined(NRF52805_XXAA) || defined(NRF52810_XXAA)
+    // TWIM0, TWIS0, TWI0
+    #define NRFX_PRS_BOX_0_ADDR     NRF_TWIM0
+    // SPIM0, SPIS0, SPI0
+    #define NRFX_PRS_BOX_1_ADDR     NRF_SPIM0
+    // UARTE0, UART0
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE0
+#elif defined(NRF52811_XXAA)
+    // TWIM0, TWIS0, TWI0, SPIM1, SPIS1, SPI1
+    #define NRFX_PRS_BOX_0_ADDR     NRF_TWIM0
+    // SPIM0, SPIS0, SPI0
+    #define NRFX_PRS_BOX_1_ADDR     NRF_SPIM0
+    // UART0, UARTE0
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UART0
+#elif defined(NRF52820_XXAA)
+    // SPIM0, SPIS0, TWIM0, TWIS0, SPI0, TWI0
+    #define NRFX_PRS_BOX_0_ADDR     NRF_SPIM0
+    // SPIM1, SPIS1, TWIM1, TWIS1, SPI1, TWI1
+    #define NRFX_PRS_BOX_1_ADDR     NRF_SPIM1
+    // UARTE0, UART0
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE0
+#elif defined(NRF52832_XXAA) || defined(NRF52832_XXAB) || \
+      defined(NRF52833_XXAA) || defined(NRF52840_XXAA)
+    // SPIM0, SPIS0, TWIM0, TWIS0, SPI0, TWI0
+    #define NRFX_PRS_BOX_0_ADDR     NRF_SPIM0
+    // SPIM1, SPIS1, TWIM1, TWIS1, SPI1, TWI1
+    #define NRFX_PRS_BOX_1_ADDR     NRF_SPIM1
+    // SPIM2, SPIS2, SPI2
+    #define NRFX_PRS_BOX_2_ADDR     NRF_SPIM2
+    // COMP, LPCOMP
+    #define NRFX_PRS_BOX_3_ADDR     NRF_COMP
+    // UARTE0, UART0
+    #define NRFX_PRS_BOX_4_ADDR     NRF_UARTE0
+#elif defined(NRF5340_XXAA_APPLICATION)
+    // SPIM0, SPIS0, TWIM0, TWIS0, UARTE0
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE0
+    // SPIM1, SPIS1, TWIM1, TWIS1, UARTE1
+    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE1
+    // SPIM2, SPIS2, TWIM2, TWIS2, UARTE2
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE2
+    // SPIM3, SPIS3, TWIM3, TWIS3, UARTE3
+    #define NRFX_PRS_BOX_3_ADDR     NRF_UARTE3
+    // COMP, LPCOMP
+    #define NRFX_PRS_BOX_4_ADDR     NRF_COMP
+#elif defined(NRF5340_XXAA_NETWORK)
+    // SPIM0, SPIS0, TWIM0, TWIS0, UARTE0
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE0
+#elif defined(NRF54H20_XXAA)
+    // SPIM130, SPIS130, TWIM130, TWIS130, UARTE130
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE130
+    // SPIM131, SPIS131, TWIM131, TWIS131, UARTE131
+    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE131
+    // SPIM132, SPIS132, TWIM132, TWIS132, UARTE132
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE132
+    // SPIM133, SPIS133, TWIM133, TWIS133, UARTE133
+    #define NRFX_PRS_BOX_3_ADDR     NRF_UARTE133
+    // SPIM134, SPIS134, TWIM134, TWIS134, UARTE134
+    #define NRFX_PRS_BOX_4_ADDR     NRF_UARTE134
+    // SPIM135, SPIS135, TWIM135, TWIS135, UARTE135
+    #define NRFX_PRS_BOX_5_ADDR     NRF_UARTE135
+    // SPIM136, SPIS136, TWIM136, TWIS136, UARTE136
+    #define NRFX_PRS_BOX_6_ADDR     NRF_UARTE136
+    // SPIM137, SPIS137, TWIM137, TWIS137, UARTE137
+    #define NRFX_PRS_BOX_7_ADDR     NRF_UARTE137
+    // SPIM120, UARTE120
+    #define NRFX_PRS_BOX_8_ADDR     NRF_UARTE120
+    // COMP, LPCOMP
+    #define NRFX_PRS_BOX_9_ADDR     NRF_COMP
+#elif defined(NRF54L05_XXAA) || defined(NRF54L10_XXAA) || defined(NRF54L15_XXAA)
+    // SPIM00, SPIS00, UARTE00
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE00
+    // SPIM20, SPIS20, TWIM20, TWIS20, UARTE20
+    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE20
+    // SPIM21, SPIS21, TWIM21, TWIS21, UARTE21
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE21
+    // SPIM22, SPIS22, TWIM22, TWIS22, UARTE22
+    #define NRFX_PRS_BOX_3_ADDR     NRF_UARTE22
+    // SPIM30, SPIS30, TWIM30, TWIS30, UARTE30
+    #define NRFX_PRS_BOX_4_ADDR     NRF_UARTE30
+    // COMP, LPCOMP
+    #define NRFX_PRS_BOX_5_ADDR     NRF_COMP
+#elif defined(NRF54LM20A_ENGA_XXAA)
+    // SPIM00, SPIS00, UARTE00
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE00
+    // SPIM20, SPIS20, TWIM20, TWIS20, UARTE20
+    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE20
+    // SPIM21, SPIS21, TWIM21, TWIS21, UARTE21
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE21
+    // SPIM22, SPIS22, TWIM22, TWIS22, UARTE22
+    #define NRFX_PRS_BOX_3_ADDR     NRF_UARTE22
+    // SPIM23, SPIS23, TWIM23, TWIS23, UARTE23
+    #define NRFX_PRS_BOX_4_ADDR     NRF_UARTE23
+    // SPIM24, SPIS24, TWIM24, TWIS24, UARTE23
+    #define NRFX_PRS_BOX_5_ADDR     NRF_UARTE24
+    // SPIM30, SPIS30, TWIM30, TWIS30, UARTE30
+    #define NRFX_PRS_BOX_6_ADDR     NRF_UARTE30
+    // COMP, LPCOMP
+    #define NRFX_PRS_BOX_7_ADDR     NRF_COMP
+#elif defined(NRF54LS05B_ENGA_XXAA)
+    // SPIM20, SPIS20, TWIM20, TWIS20, UARTE20
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE20
+    // SPIM21, SPIS21, TWIM21, TWIS21, UARTE21
+    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE21
+    // SPIM32, SPIS32, TWIM32, TWIS32, UARTE32
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE22
+#elif defined(NRF54LV10A_ENGA_XXAA)
+    // SPIM20, SPIS20, TWIM20, TWIS20, UARTE20
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE20
+    // SPIM21, SPIS21, TWIM21, TWIS21, UARTE21
+    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE21
+    // SPIM30, SPIS30, TWIM30, TWIS30, UARTE30
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE30
+    // COMP, LPCOMP
+    #define NRFX_PRS_BOX_3_ADDR     NRF_COMP
+#elif defined(NRF7120_ENGA_XXAA)
+    // SPIM00, UARTE00
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE00
+    // SPIM01
+    #define NRFX_PRS_BOX_1_ADDR     NRF_SPIM01
+    // SPIM02
+    #define NRFX_PRS_BOX_2_ADDR     NRF_SPIM02
+    // SPIM20, SPIS20, TWIM20, TWIS20, UARTE20
+    #define NRFX_PRS_BOX_3_ADDR     NRF_UARTE20
+    // SPIM21, SPIS21, TWIM21, TWIS21, UARTE21
+    #define NRFX_PRS_BOX_4_ADDR     NRF_UARTE21
+    // SPIM22, SPIS22, TWIM22, TWIS22, UARTE22
+    #define NRFX_PRS_BOX_5_ADDR     NRF_UARTE22
+    // SPIM23, SPIS23, TWIM23, TWIS23, UARTE23
+    #define NRFX_PRS_BOX_6_ADDR     NRF_UARTE23
+    // SPIM24, SPIS24, TWIM24, TWIS24, UARTE24
+    #define NRFX_PRS_BOX_7_ADDR     NRF_UARTE24
+    // SPIM30, SPIS30, TWIM30, TWIS30, UARTE30
+    #define NRFX_PRS_BOX_8_ADDR     NRF_UARTE30
+    // COMP, LPCOMP
+    #define NRFX_PRS_BOX_9_ADDR     NRF_COMP
+#elif defined(NRF91_SERIES)
+    // UARTE0, SPIM0, SPIS0, TWIM0, TWIS0
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE0
+    // UARTE1, SPIM1, SPIS1, TWIM1, TWIS1
+    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE1
+    // UARTE2, SPIM2, SPIS2, TWIM2, TWIS2
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE2
+    // UARTE3, SPIM3, SPIS3, TWIM3, TWIS3
+    #define NRFX_PRS_BOX_3_ADDR     NRF_UARTE3
+#elif defined(NRF9230_ENGB_XXAA)
+    // SPIM130, SPIS130, TWIM130, TWIS130, UARTE130
+    #define NRFX_PRS_BOX_0_ADDR     NRF_UARTE130
+    // SPIM131, SPIS131, TWIM131, TWIS131, UARTE131
+    #define NRFX_PRS_BOX_1_ADDR     NRF_UARTE131
+    // SPIM132, SPIS132, TWIM132, TWIS132, UARTE132
+    #define NRFX_PRS_BOX_2_ADDR     NRF_UARTE132
+    // SPIM133, SPIS133, TWIM133, TWIS133, UARTE133
+    #define NRFX_PRS_BOX_3_ADDR     NRF_UARTE133
+    // SPIM134, SPIS134, TWIM134, TWIS134, UARTE134
+    #define NRFX_PRS_BOX_4_ADDR     NRF_UARTE134
+    // SPIM135, SPIS135, TWIM135, TWIS135, UARTE135
+    #define NRFX_PRS_BOX_5_ADDR     NRF_UARTE135
+    // SPIM136, SPIS136, TWIM136, TWIS136, UARTE136
+    #define NRFX_PRS_BOX_6_ADDR     NRF_UARTE136
+    // SPIM137, SPIS137, TWIM137, TWIS137, UARTE137
+    #define NRFX_PRS_BOX_7_ADDR     NRF_UARTE137
+    // SPIS120, UARTE120
+    #define NRFX_PRS_BOX_8_ADDR     NRF_UARTE120
+    // COMP, LPCOMP
+    #define NRFX_PRS_BOX_9_ADDR     NRF_COMP
+#endif
 
 #ifdef __cplusplus
 }

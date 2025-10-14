@@ -12,7 +12,5 @@
 #include "stable/soc/nrfx_interconnect.h"
 #include "stable/soc/nrfx_soc_defines.h"
 #include "stable/nrfx_ext.h"
-#include "stable/nrfx_prs_boxes.h"
-#include "stable/nrfx_ram_sections.h"
 
 #endif // BSP_H__
