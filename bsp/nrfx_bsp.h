@@ -27,4 +27,6 @@
 #include NRFX_BSP_ERRATAS_PATH
 #include NRFX_BSP_NRFX_EXT_PATH
 
+#include "stable/soc/nrfx_mdk_fixups.h"
+
 #endif
