@@ -35,6 +35,9 @@
     #define AAR_IRKPTR_IRKPTR_Msk
     #define AAR_ADDRPTR_ADDRPTR_Msk
     #define AAR_SCRATCHPTR_SCRATCHPTR_Msk
+
+    #define DELAY_CUSTOM_CYCLES 4
+    #define DWT_MISSING
 #endif
 
 /**************************************************************************************************/
@@ -67,6 +70,11 @@
     #if defined(NRF52810_XXAA) || defined(NRF52811_XXAA) || \
         defined(NRF52832_XXAA) || defined(NRF52834_XXAA)
         #define PDM_RATIO_VALUE 64
+    #endif
+    #if defined(NRF52805_XXAA) || defined(NRF52810_XXAA) || \
+        defined(NRF52811_XXAA) || defined(NRF52820_XXAA)
+        #define DELAY_CUSTOM_CYCLES 7
+        #define DWT_MISSING
     #endif
 #endif
 /**************************************************************************************************/
@@ -483,6 +491,8 @@
 
     #define PDM_PDMCLKCTRL_FACTOR 8192
     #define PDM_FREQ_FACTOR       1048576ULL
+
+    #define DWT_MISSING
 #endif
 
 /**************************************************************************************************/
@@ -675,6 +685,8 @@
     #define RESETHUB_HAS_NETWORK
     #define RESETHUB_HAS_CELLULAR
     #define RESETHUB_HAS_ISIM
+
+    #define DWT_MISSING
 #endif /* defined(NRF9230_ENGB_XXAA) */
 
 /**************************************************************************************************/
