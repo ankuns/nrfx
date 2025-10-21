@@ -88,6 +88,7 @@ extern "C" {
          retrieve `size` parameter by instance number. There is also need to use `p_ppib` field
          only by local domains and SecDom thus we can eventualy move it out from here.
          However we would still need such parameter then. Ticket: NRFX-3226. */
+#undef NRFX_INTERCONNECT_APB_GLOBAL_BUSES_PROP
 #define NRFX_INTERCONNECT_APB_GLOBAL_BUSES_PROP                                     \
 {                                                                                   \
     NRFX_INTERCONNECT_APB_PROP_ENTRY(120, NRF_SYSCTRL_PPIB121, 0x10000) /* APB22 */ \
