@@ -306,7 +306,7 @@ NRFY_STATIC_INLINE uint64_t nrfy_grtc_sys_counter_get(NRF_GRTC_Type const * p_re
         counter = nrf_grtc_sys_counter_get(p_reg);
     } while (counter & NRFY_GRTC_SYSCOUNTER_RETRY_MASK);
 #if NRFX_CHECK(NRFY_GRTC_HAS_SYSCOUNTER_LOADED)
-    return counter & NRF_GRTC_SYSCOUNTERH_VALUE_MASK;
+    return counter & NRFY_GRTC_SYSCOUNTER_MASK;
 #else
     return counter;
 #endif
