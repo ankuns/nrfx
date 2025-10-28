@@ -5,6 +5,7 @@
 
 #include <nrfx.h>
 #include <haly/nrfy_timer.h>
+#include <nrfx_used_resources.h>
 
 #ifdef __cplusplus
 extern "C" {

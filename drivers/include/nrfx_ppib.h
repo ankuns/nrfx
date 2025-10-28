@@ -5,6 +5,7 @@
 
 #include <nrfx.h>
 #include <hal/nrf_ppib.h>
+#include <nrfx_used_resources.h>
 
 /**
  * @defgroup nrfx_ppib PPIB allocator

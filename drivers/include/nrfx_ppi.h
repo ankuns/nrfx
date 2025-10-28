@@ -5,6 +5,7 @@
 
 #include <nrfx.h>
 #include <hal/nrf_ppi.h>
+#include <nrfx_used_resources.h>
 
 /**
  * @defgroup nrfx_ppi PPI allocator

@@ -6,6 +6,7 @@
 #include <nrfx.h>
 #include <haly/nrfy_gpiote.h>
 #include <haly/nrfy_gpio.h>
+#include <nrfx_used_resources.h>
 
 #ifdef __cplusplus
 extern "C" {

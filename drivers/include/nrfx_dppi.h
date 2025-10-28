@@ -5,6 +5,7 @@
 
 #include <nrfx.h>
 #include <haly/nrfy_dppi.h>
+#include <nrfx_used_resources.h>
 
 /* On devices with single instance (with no ID) use instance 0. */
 #if defined(NRF_DPPIC) && defined(NRFX_DPPI_ENABLED) && !defined(NRFX_DPPI0_ENABLED)
